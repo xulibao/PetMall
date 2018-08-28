@@ -1,0 +1,47 @@
+//
+//  SnailTruck.pch
+//  SnailTruck
+//
+//  Created by 曼 on 15/10/23.
+//  Copyright (c) 2015年 GM. All rights reserved.
+//
+
+#ifndef SnailTruck_SnailTruck_pch
+#define SnailTruck_SnailTruck_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+/**
+ *  如果引用C语言头文件，必须加此宏判断
+ */
+#ifdef __OBJC__
+
+
+#import "STConstant.h" // 常量
+#import "STMethodMacro.h" // 方法
+
+//#import "QiniuSDK.h"
+//#import "IQKeyboardManager.h"
+//#import "UIImageView+WebCache.h"
+//#import "MJRefresh.h"
+
+#import "NetworkAndDebug_Header.h"
+#import "GA_Base_CategoryHeader.h"
+#import "STUrlPathMacro.h"
+#import "SAApplication.h"
+#import "STHelpTools.h"
+//#import "JPUSHService.h"
+//#import "SDAutoLayout.h"
+//#import "NSObject+GAAddMonitor.h" // 通知
+// 事件统计
+#import "STMobClick.h"
+// SDWBimage
+//#import "UIImageView+WebCache.h"
+//#import "UIButton+WebCache.h"
+// YYWebImage
+//#import <YYWebImage/YYWebImage.h>
+// 全局数据共享
+
+#endif
+
+#endif /* PrefixHeader_pch */
