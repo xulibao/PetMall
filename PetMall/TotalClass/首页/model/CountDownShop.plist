@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>discount</key>
+		<string>5.7</string>
+		<key>image_url</key>
+		<string>http://gfs1.gomein.net.cn/T1f.CTByCv1RCvBVdK_160.jpeg?v=20170510</string>
+		<key>price</key>
+		<integer>58</integer>
+		<key>stock</key>
+		<integer>88</integer>
+		<key>nature</key>
+		<string>宠物零食营养牛肉条</string>
+	</dict>
+	<dict>
+		<key>discount</key>
+		<string>6.8</string>
+		<key>image_url</key>
+		<string>http://gfs.gomein.net.cn/T1aVbTBCET1RCvBVdK_160.jpg</string>
+		<key>price</key>
+		<integer>45</integer>
+		<key>stock</key>
+		<integer>99</integer>
+		<key>nature</key>
+		<string>止痒防螨除菌沐浴香波</string>
+	</dict>
+	<dict>
+		<key>discount</key>
+		<string>4.8</string>
+		<key>image_url</key>
+		<string>http://gfs.gomein.net.cn/T1CVLTBbhT1RCvBVdK_160.jpg</string>
+		<key>price</key>
+		<integer>68</integer>
+		<key>stock</key>
+		<integer>108</integer>
+		<key>nature</key>
+		<string>营养牛肉丁</string>
+	</dict>
+	<dict>
+		<key>discount</key>
+		<string>7.8</string>
+		<key>image_url</key>
+		<string>http://gfs.gomein.net.cn/T12oVTB5bT1RCvBVdK_160.jpg</string>
+		<key>price</key>
+		<integer>34</integer>
+		<key>stock</key>
+		<integer>45</integer>
+		<key>nature</key>
+		<string>迪尤克奶糕</string>
+	</dict>
+	<dict>
+		<key>discount</key>
+		<string>8.8</string>
+		<key>image_url</key>
+		<string>http://gfs.gomein.net.cn/T1aVbTBCET1RCvBVdK_160.jpg</string>
+		<key>price</key>
+		<integer>24</integer>
+		<key>stock</key>
+		<integer>35</integer>
+		<key>nature</key>
+		<string>棉垫</string>
+	</dict>
+</array>
+</plist>

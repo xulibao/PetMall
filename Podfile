@@ -18,6 +18,8 @@ target 'PetMall' do
   pod 'MJExtension'
   pod 'MJRefresh'
   pod 'IQKeyboardManager'
+  pod 'SDCycleScrollView'
+
 
 
   # Uncomment the next line if you're using Swift or would like to use dynamic frameworks

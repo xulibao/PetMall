@@ -60,6 +60,8 @@
 #define STMineReleaseCellRowHeigiht (kMainBoundsWidth * 0.35)
 #define STMineReleaseCellRowMargin kMainBoundsWidth/37.5
 
+
+#define kColorFAFAFA            [UIColor colorWithHexStr:@"#FAFAFA"]
 #define kColor666666            [UIColor colorWithHexStr:@"#666666"]
 #define kColorD8D8D8            [UIColor colorWithHexStr:@"#D8D8D8"]
 #define kColor979797            [UIColor colorWithHexStr:@"#979797"]

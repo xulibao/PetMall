@@ -6,8 +6,12 @@
 //  Copyright © 2018年 ios@xulibao. All rights reserved.
 //
 
+#import "SAIndicatorSegmentViewController.h"
 #import "STBaseViewController.h"
+@interface PMHomeViewController : SAIndicatorSegmentViewController
 
-@interface PMHomeViewController : STBaseViewController
+@end
+
+@interface PMHomeListViewController :STBaseViewController
 
 @end

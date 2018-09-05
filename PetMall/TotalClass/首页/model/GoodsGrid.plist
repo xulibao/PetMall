@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>iconImage</key>
+		<string>home_miaosha</string>
+		<key>gridTitle</key>
+		<string>限时秒杀</string>
+		<key>gridTag</key>
+		<string></string>
+		<key>gridColor</key>
+		<string></string>
+	</dict>
+	<dict>
+		<key>iconImage</key>
+		<string>home_chaopingyushou</string>
+		<key>gridTitle</key>
+		<string>潮品预售</string>
+		<key>gridTag</key>
+		<string></string>
+		<key>gridColor</key>
+		<string></string>
+	</dict>
+	<dict>
+		<key>iconImage</key>
+		<string>home_tuangou</string>
+		<key>gridTitle</key>
+		<string>团购活动</string>
+		<key>gridTag</key>
+		<string></string>
+		<key>gridColor</key>
+		<string></string>
+	</dict>
+	<dict>
+		<key>iconImage</key>
+		<string>home_jifengshangcheng</string>
+		<key>gridTitle</key>
+		<string>积分商城</string>
+		<key>gridTag</key>
+		<string></string>
+		<key>gridColor</key>
+		<string></string>
+	</dict>
+	<dict>
+		<key>iconImage</key>
+		<string>home_tejiaqingcang</string>
+		<key>gridTitle</key>
+		<string>特价清仓</string>
+		<key>gridTag</key>
+		<string></string>
+		<key>gridColor</key>
+		<string></string>
+	</dict>
+</array>
+</plist>
