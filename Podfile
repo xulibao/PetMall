@@ -6,7 +6,6 @@ target 'PetMall' do
 
   pod 'SDWebImage'
   pod 'MBProgressHUD'
-  pod 'SSKeychain'
   pod 'FMDB'
   pod "YTKNetwork"
   pod 'Masonry'

@@ -25,6 +25,28 @@
 #define kTabBarHeight           49.f
 //#define kTabBarIconSide         25.f
 
+/** 屏幕高度 */
+#define ScreenH [UIScreen mainScreen].bounds.size.height
+/** 屏幕宽度 */
+#define ScreenW [UIScreen mainScreen].bounds.size.width
+//全局背景色
+#define DCBGColor RGB(245,245,245)
+#define PFR [[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0 ? @"PingFangSC-Regular" : @"PingFang SC"
+/** 弱引用 */
+#define WEAKSELF __weak typeof(self) weakSelf = self;
+
+#define PFR20Font [UIFont fontWithName:PFR size:20];
+#define PFR18Font [UIFont fontWithName:PFR size:18];
+#define PFR16Font [UIFont fontWithName:PFR size:16];
+#define PFR15Font [UIFont fontWithName:PFR size:15];
+#define PFR14Font [UIFont fontWithName:PFR size:14];
+#define PFR13Font [UIFont fontWithName:PFR size:13];
+#define PFR12Font [UIFont fontWithName:PFR size:12];
+#define PFR11Font [UIFont fontWithName:PFR size:11];
+#define PFR10Font [UIFont fontWithName:PFR size:10];
+#define PFR9Font [UIFont fontWithName:PFR size:9];
+#define PFR8Font [UIFont fontWithName:PFR size:8];
+
 // 自定义NavigationBar属性
 #define kNavgationBarHeight     (44)
 #define kIphoneXBottomHeight    (iPhoneX ? 34 : 0)

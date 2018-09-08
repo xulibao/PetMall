@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "IQKeyboardReturnKeyHandler.h"
+//#import "IQKeyboardReturnKeyHandler.h"
 
 typedef enum
 {
@@ -51,9 +51,9 @@ static NSInteger getVerTime = 60;
 + (UIViewController *)getCurrentVC;
 
 
-//启动键盘监听-
-+ (void)openMonitorKeyBorad;
-+ (void)stopMonitorKeyBoradWithReturnKeyHandler:(IQKeyboardReturnKeyHandler *)returnKeyHandler;
+////启动键盘监听-
+//+ (void)openMonitorKeyBorad;
+//+ (void)stopMonitorKeyBoradWithReturnKeyHandler:(IQKeyboardReturnKeyHandler *)returnKeyHandler;
 // json转字典
 + (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString;
 

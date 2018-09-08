@@ -14,7 +14,7 @@
 
 #import "UIImage+GIF.h"
 
-#import <IQKeyboardManager.h>
+//#import <IQKeyboardManager.h>
 
 #import "NSString+STValid.h"
 
@@ -317,20 +317,20 @@ static NSString *userUuid;
     dispatch_resume(_timer);
 }
 
-// 启动键盘监听
-+ (void)openMonitorKeyBorad
-{
-    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
-    manager.enable = YES;
-    manager.shouldResignOnTouchOutside = YES;
-    manager.shouldToolbarUsesTextFieldTintColor = YES;
-    manager.enableAutoToolbar = NO;
-}
-
-+ (void)stopMonitorKeyBoradWithReturnKeyHandler:(IQKeyboardReturnKeyHandler *)returnKeyHandler
-{
-    returnKeyHandler = nil;
-}
+//// 启动键盘监听
+//+ (void)openMonitorKeyBorad
+//{
+//    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+//    manager.enable = YES;
+//    manager.shouldResignOnTouchOutside = YES;
+//    manager.shouldToolbarUsesTextFieldTintColor = YES;
+//    manager.enableAutoToolbar = NO;
+//}
+//
+//+ (void)stopMonitorKeyBoradWithReturnKeyHandler:(IQKeyboardReturnKeyHandler *)returnKeyHandler
+//{
+//    returnKeyHandler = nil;
+//}
 
 // json转字典
 + (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString {
