@@ -27,16 +27,13 @@
 @implementation DCDetailShowTypeCell
 
 #pragma mark - Intial
-- (instancetype)initWithFrame:(CGRect)frame {
-    
-    self = [super initWithFrame:frame];
-    if (self) {
-        
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         [self setUpUI];
+        
     }
     return self;
 }
-
 - (void)setUpUI
 {
     self.backgroundColor = [UIColor whiteColor];
@@ -57,7 +54,7 @@
     [self addSubview:_hintLabel];
     
     _indicateButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_indicateButton setImage:[UIImage imageNamed:@"icon_charge_jiantou"] forState:UIControlStateNormal];
+    [_indicateButton setImage:[UIImage imageNamed:@"home_youjiantou"] forState:UIControlStateNormal];
     _isHasindicateButton = YES;
 }
 

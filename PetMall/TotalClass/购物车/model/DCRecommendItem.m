@@ -12,3 +12,7 @@
 
 
 @end
+
+@implementation PMCartItem
+
+@end

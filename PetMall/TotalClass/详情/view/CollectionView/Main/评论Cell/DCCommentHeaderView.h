@@ -8,12 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DCCommentHeaderCell : UICollectionViewCell
+@interface DCCommentHeaderView : UIView
 
 /* 评论数量 */
 @property (copy , nonatomic)NSString *comNum;
 
 /* 好评比 */
 @property (copy , nonatomic)NSString *wellPer;
+
+@property(nonatomic, copy) void (^callBack)();
 
 @end

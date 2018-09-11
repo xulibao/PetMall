@@ -40,7 +40,7 @@
 
 - (void)setUpData
 {
-    self.hintLabel.text = @"可选增值服务";
+//    self.hintLabel.text = @"可选增值服务";
 }
 
 - (void)layoutSubviews
@@ -54,10 +54,10 @@
         make.centerY.mas_equalTo(self.leftTitleLable);
     }];
     
-    [self.hintLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.contentLabel);
-        [make.top.mas_equalTo(self.contentLabel.mas_bottom)setOffset:8];
-    }];
+//    [self.hintLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.mas_equalTo(self.contentLabel);
+//        [make.top.mas_equalTo(self.contentLabel.mas_bottom)setOffset:8];
+//    }];
 }
 
 #pragma mark - Setter Getter Methods

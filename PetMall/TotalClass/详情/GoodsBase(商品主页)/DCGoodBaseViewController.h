@@ -6,9 +6,8 @@
 //  Copyright © 2017年 RocketsChen. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
-@interface DCGoodBaseViewController : UIViewController
+#import "STBaseNonSystemNavViewController.h"
+@interface DCGoodBaseViewController : STBaseNonSystemNavViewController
 
 /** 更改标题 */
 @property (nonatomic , copy) void(^changeTitleBlock)(BOOL isChange);

@@ -8,12 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DCDetailGoodReferralCell : UICollectionViewCell
+@interface DCDetailGoodReferralCell : UITableViewCell
 
 /* 商品标题 */
 @property (strong , nonatomic)UILabel *goodTitleLabel;
 /* 商品价格 */
 @property (strong , nonatomic)UILabel *goodPriceLabel;
+@property (strong , nonatomic)UILabel *goodSubPriceLabel;
+@property (strong , nonatomic)UILabel *shouHuoCount;
+
 /* 商品小标题 */
 @property (strong , nonatomic)UILabel *goodSubtitleLabel;
 

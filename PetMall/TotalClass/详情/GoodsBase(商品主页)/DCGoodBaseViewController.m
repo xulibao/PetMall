@@ -15,10 +15,10 @@
 #import "DCFillinOrderViewController.h"
 //#import "DCLoginViewController.h"
 // Models
-
+#import "DCGoodCommentViewController.h"
 // Views
 #import "DCLIRLButton.h"
-
+#import "DCCommentsItem.h"
 #import "DCDetailShufflingHeadView.h" //头部轮播
 #import "DCDetailGoodReferralCell.h"  //商品标题价格介绍
 #import "DCDetailShowTypeCell.h"      //种类
@@ -29,8 +29,9 @@
 #import "DCDetailServicetCell.h"      //服务
 #import "DCDetailLikeCell.h"          //猜你喜欢
 #import "DCDetailOverFooterView.h"    //尾部结束
-#import "DCDetailPartCommentCell.h"   //部分评论
 #import "DCDeatilCustomHeadView.h"    //自定义头部
+#import "DCCommentsCntCell.h"
+#import "DCCommentHeaderView.h"
 // Vendors
 #import "AddressPickerView.h"
 #import <WebKit/WebKit.h>
@@ -42,10 +43,10 @@
 #import "UIViewController+XWTransition.h"
 // Others
 
-@interface DCGoodBaseViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,WKNavigationDelegate>
+@interface DCGoodBaseViewController ()<UITableViewDataSource,UITableViewDelegate,WKNavigationDelegate>
 
 @property (strong, nonatomic) UIScrollView *scrollerView;
-@property (strong, nonatomic) UICollectionView *collectionView;
+@property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) WKWebView *webView;
 /* 选择地址弹框 */
 @property (strong , nonatomic)AddressPickerView *adPickerView;
@@ -53,6 +54,8 @@
 @property (strong , nonatomic)UIButton *backTopButton;
 /* 通知 */
 @property (weak ,nonatomic) id dcObj;
+
+@property(nonatomic, strong) NSArray *commentsItem;
 
 @end
 
@@ -69,7 +72,7 @@ static NSString *DCShowTypeFourCellID = @"DCShowTypeFourCell";
 
 static NSString *DCDetailServicetCellID = @"DCDetailServicetCell";
 static NSString *DCDetailLikeCellID = @"DCDetailLikeCell";
-static NSString *DCDetailPartCommentCellID = @"DCDetailPartCommentCell";
+static NSString *DCCommentsCntCellID = @"DCCommentsCntCell";
 //footer
 static NSString *DCDetailOverFooterViewID = @"DCDetailOverFooterView";
 
@@ -85,7 +88,7 @@ static NSArray *lastSeleArray_;
     if (!_scrollerView) {
         _scrollerView = [[UIScrollView alloc] initWithFrame:CGRectZero];
         _scrollerView.frame = self.view.bounds;
-        _scrollerView.contentSize = CGSizeMake(ScreenW, (ScreenH - 50) * 2);
+        _scrollerView.contentSize = CGSizeMake(ScreenW, (ScreenH) * 2);
         _scrollerView.pagingEnabled = YES;
         _scrollerView.scrollEnabled = NO;
         [self.view addSubview:_scrollerView];
@@ -93,44 +96,39 @@ static NSArray *lastSeleArray_;
     return _scrollerView;
 }
 
-- (UICollectionView *)collectionView
+- (UITableView *)tableView
 {
-    if (!_collectionView) {
-        UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
-        layout.minimumLineSpacing = 0; //Y
-        layout.minimumInteritemSpacing = 0; //X
-        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
-        _collectionView.delegate = self;
-        _collectionView.dataSource = self;
-        _collectionView.frame = CGRectMake(0, DCTopNavH, ScreenW, ScreenH - DCTopNavH - 50);
-        _collectionView.showsVerticalScrollIndicator = NO;
-        [self.scrollerView addSubview:_collectionView];
+    if (!_tableView) {
+        _tableView = [[UITableView alloc] initWithFrame:CGRectZero];
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        _tableView.frame = CGRectMake(0, 0, ScreenW, ScreenH );
+        _tableView.showsVerticalScrollIndicator = NO;
+        [self.scrollerView addSubview:_tableView];
         
         //注册header
-        [_collectionView registerClass:[DCDetailShufflingHeadView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:DCDetailShufflingHeadViewID];
-        [_collectionView registerClass:[DCDeatilCustomHeadView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:DCDeatilCustomHeadViewID];
         //注册Cell
-        [_collectionView registerClass:[DCDetailGoodReferralCell class] forCellWithReuseIdentifier:DCDetailGoodReferralCellID];
-        [_collectionView registerClass:[DCShowTypeOneCell class] forCellWithReuseIdentifier:DCShowTypeOneCellID];
-        [_collectionView registerClass:[DCShowTypeTwoCell class] forCellWithReuseIdentifier:DCShowTypeTwoCellID];
-        [_collectionView registerClass:[DCShowTypeThreeCell class] forCellWithReuseIdentifier:DCShowTypeThreeCellID];
-        [_collectionView registerClass:[DCShowTypeFourCell class] forCellWithReuseIdentifier:DCShowTypeFourCellID];
-        [_collectionView registerClass:[DCDetailLikeCell class] forCellWithReuseIdentifier:DCDetailLikeCellID];
-        [_collectionView registerClass:[DCDetailPartCommentCell class] forCellWithReuseIdentifier:DCDetailPartCommentCellID];
-        [_collectionView registerClass:[DCDetailServicetCell class] forCellWithReuseIdentifier:DCDetailServicetCellID];
-        //注册Footer
-        [_collectionView registerClass:[DCDetailOverFooterView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:DCDetailOverFooterViewID];
-        [_collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"UICollectionElementKindSectionFooter"]; //间隔
+        [_tableView registerClass:[DCDetailGoodReferralCell class] forCellReuseIdentifier:DCDetailGoodReferralCellID];
+        [_tableView registerClass:[DCShowTypeOneCell class] forCellReuseIdentifier:DCShowTypeOneCellID];
+        [_tableView registerClass:[DCShowTypeTwoCell class] forCellReuseIdentifier:DCShowTypeTwoCellID];
+        [_tableView registerClass:[DCShowTypeThreeCell class] forCellReuseIdentifier:DCShowTypeThreeCellID];
+        [_tableView registerClass:[DCShowTypeFourCell class] forCellReuseIdentifier:DCShowTypeFourCellID];
+//        [_tableView registerClass:[DCDetailLikeCell class] forCellReuseIdentifier:DCDetailLikeCellID];
+//        [_tableView registerClass:[DCDetailPartCommentCell class] forCellWithReuseIdentifier:DCDetailPartCommentCellID];
+        [_tableView registerNib:[UINib nibWithNibName:NSStringFromClass([DCCommentsCntCell class]) bundle:nil] forCellReuseIdentifier:DCCommentsCntCellID];
+
+//        [_tableView registerClass:[DCDetailServicetCell class] forCellReuseIdentifier:DCDetailServicetCellID];
+
         
     }
-    return _collectionView;
+    return _tableView;
 }
 
 - (WKWebView *)webView
 {
     if (!_webView) {
         _webView = [[WKWebView alloc] initWithFrame:CGRectZero];
-        _webView.frame = CGRectMake(0,ScreenH , ScreenW, ScreenH - 50);
+        _webView.frame = CGRectMake(0,ScreenH , ScreenW, ScreenH);
         _webView.scrollView.contentInset = UIEdgeInsetsMake(DCTopNavH, 0, 0, 0);
         _webView.scrollView.scrollIndicatorInsets = _webView.scrollView.contentInset;
         [self.scrollerView addSubview:_webView];
@@ -154,17 +152,39 @@ static NSArray *lastSeleArray_;
 
     
     [self acceptanceNote];
+    
+    _commentsItem = [DCCommentsItem mj_objectArrayWithFilename:@"CommentData.plist"];
+
+    [self setUpBottomButton];
+
+
 }
 
 
 
+- (void)setupNavgationBar {
+    [super setupNavgationBar];
+    
+    UIColor *tintColor = [UIColor whiteColor];
+    [self.navgationBar.leftBarButton setTintColor:tintColor];
+    self.navgationBar.navigationBarBg.alpha = 0;
+    self.navgationBar.titleLabel.alpha = 0;
+    self.statusBarView.alpha = 0;
+}
+
+- (void)initSubviews {
+    [super initSubviews];
+}
+- (BOOL)shouldInitSTNavgationBar {
+    return YES;
+}
 
 #pragma mark - initialize
 - (void)setUpInit
 {
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.view.backgroundColor = DCBGColor;
-    self.collectionView.backgroundColor = self.view.backgroundColor;
+    self.tableView.backgroundColor = self.view.backgroundColor;
     self.scrollerView.backgroundColor = self.view.backgroundColor;
 
     //初始化
@@ -216,7 +236,7 @@ static NSArray *lastSeleArray_;
         lastNum_ = num;
         lastSeleArray_ = selectArray;
         
-        [weakSelf.collectionView reloadData];
+        [weakSelf.tableView reloadData];
         
         if ([buttonTag isEqualToString:@"0"]) { //加入购物车
             
@@ -245,7 +265,7 @@ static NSArray *lastSeleArray_;
 #pragma mark - 记载图文详情
 - (void)setUpGoodsWKWebView
 {
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"www.baidu.com"]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"https://royalcanin.tmall.com/?spm=a220o.1000855.w5003-17355747065.1.5257703eeUhds1&scene=taobao_shop"]];
     [self.webView loadRequest:request];
     
     //下拉返回商品详情View
@@ -263,139 +283,106 @@ static NSArray *lastSeleArray_;
     [self.webView.scrollView addSubview:topHitView];
 }
 
-#pragma mark - <UICollectionViewDataSource>
-- (NSInteger) numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 6;
+#pragma mark - <UItableViewDataSource>
+- (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
+    return 3;
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return (section == 0 ||section == 2 || section == 3) ? 2 : 1;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (2 == section) {
+        return _commentsItem.count;
+    }
+    return  1;
 }
 
-#pragma mark - <UICollectionViewDelegate>
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *gridcell = nil;
+
+#pragma mark - <UItableViewDelegate>
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *gridcell = nil;
 //    DCUserInfo *userInfo = UserInfoData;
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-            DCDetailGoodReferralCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DCDetailGoodReferralCellID forIndexPath:indexPath];
+            DCDetailGoodReferralCell *cell = [tableView dequeueReusableCellWithIdentifier:DCDetailGoodReferralCellID forIndexPath:indexPath];
             cell.goodTitleLabel.text = _goodTitle;
             cell.goodPriceLabel.text = [NSString stringWithFormat:@"¥ %@",_goodPrice];
-            cell.goodSubtitleLabel.text = _goodSubtitle;
+//            cell.goodSubtitleLabel.text = _goodSubtitle;
          
             WEAKSELF
             cell.shareButtonClickBlock = ^{
-                [weakSelf setUpAlterViewControllerWith:[DCShareToViewController new] WithDistance:300 WithDirection:XWDrawerAnimatorDirectionBottom WithParallaxEnable:NO WithFlipEnable:NO];
+//                [weakSelf setUpAlterViewControllerWith:[DCShareToViewController new] WithDistance:300 WithDirection:XWDrawerAnimatorDirectionBottom WithParallaxEnable:NO WithFlipEnable:NO];
             };
             gridcell = cell;
-        }else if (indexPath.row == 1){
-            DCShowTypeFourCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DCShowTypeFourCellID forIndexPath:indexPath];
-
-            gridcell = cell;
         }
-
-    }else if (indexPath.section == 1 || indexPath.section == 2 ){
-        if (indexPath.section == 1) {
-            DCShowTypeOneCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DCShowTypeOneCellID forIndexPath:indexPath];
+    }else if (indexPath.section == 1){
+            DCShowTypeOneCell *cell = [tableView dequeueReusableCellWithIdentifier:DCShowTypeOneCellID forIndexPath:indexPath];
 
             NSString *result = [NSString stringWithFormat:@"%@ %@件",[lastSeleArray_ componentsJoinedByString:@"，"],lastNum_];
             
-            cell.leftTitleLable.text = (lastSeleArray_.count == 0) ? @"点击" : @"已选";
+            cell.leftTitleLable.text = (lastSeleArray_.count == 0) ? @"规格" : @"已选";
             cell.contentLabel.text = (lastSeleArray_.count == 0) ? @"请选择该商品属性" : result;
-            
             gridcell = cell;
-        }else{
-            if (indexPath.row == 0) {
-                DCShowTypeTwoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DCShowTypeTwoCellID forIndexPath:indexPath];
-//                cell.contentLabel.text = (![[DCObjManager dc_readUserDataForKey:@"isLogin"] isEqualToString:@"1"]) ? @"预送地址" : userInfo.defaultAddress;//地址
-                gridcell = cell;
-            }else{
-                DCShowTypeThreeCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DCShowTypeThreeCellID forIndexPath:indexPath];
-                gridcell = cell;
-            }
-        }
-    }else if (indexPath.section == 3){
-        DCDetailServicetCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DCDetailServicetCellID forIndexPath:indexPath];
-        NSArray *btnTitles = @[@"以旧换新",@"可选增值服务"];
-        NSArray *btnImages = @[@"detail_xiangqingye_yijiuhuanxin",@"ptgd_icon_zengzhifuwu"];
-        NSArray *titles = @[@"以旧换新再送好礼",@"为商品保价护航"];
-        [cell.serviceButton setTitle:btnTitles[indexPath.row] forState:UIControlStateNormal];
-        [cell.serviceButton setImage:[UIImage imageNamed:btnImages[indexPath.row]] forState:UIControlStateNormal];
-        cell.serviceLabel.text = titles[indexPath.row];
-        if (indexPath.row == 0) {//分割线
-//            [DCSpeedy dc_setUpLongLineWith:cell WithColor:[[UIColor lightGrayColor]colorWithAlphaComponent:0.4] WithHightRatio:0.6];
-        }
-        gridcell = cell;
-    }else if (indexPath.section == 4){
-        DCDetailPartCommentCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DCDetailPartCommentCellID forIndexPath:indexPath];
-        cell.backgroundColor = [UIColor orangeColor];
-        gridcell = cell;
-    }else if (indexPath.section == 5){
-        DCDetailLikeCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DCDetailLikeCellID forIndexPath:indexPath];
+    }else if (indexPath.section == 2){
+        DCCommentsCntCell *cell = [tableView dequeueReusableCellWithIdentifier:DCCommentsCntCellID forIndexPath:indexPath];
+        cell.commentsItem = _commentsItem[indexPath.row];
         gridcell = cell;
     }
     
     return gridcell;
 }
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    if (section == 0) {
+        DCDetailShufflingHeadView *headerView = [[DCDetailShufflingHeadView alloc] initWithFrame:CGRectMake(0, 0, kMainBoundsWidth, ScreenH * 0.55)];
+        headerView.shufflingArray = _shufflingArray;
+        return headerView;
 
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    
-    UICollectionReusableView *reusableview = nil;
-    if (kind == UICollectionElementKindSectionHeader){
-        if (indexPath.section == 0) {
-            DCDetailShufflingHeadView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:DCDetailShufflingHeadViewID forIndexPath:indexPath];
-            headerView.shufflingArray = _shufflingArray;
-            reusableview = headerView;
-        }else if (indexPath.section == 5){
-            DCDeatilCustomHeadView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:DCDeatilCustomHeadViewID forIndexPath:indexPath];
-            reusableview = headerView;
-        }
-    }else if (kind == UICollectionElementKindSectionFooter){
-        if (indexPath.section == 5) {
-            DCDetailOverFooterView *footerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:DCDetailOverFooterViewID forIndexPath:indexPath];
-            reusableview = footerView;
-        }else{
-            UICollectionReusableView *footerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"UICollectionElementKindSectionFooter" forIndexPath:indexPath];
-            footerView.backgroundColor = DCBGColor;
-            reusableview = footerView;
-        }
+    }else if (2 == section){
+        DCCommentHeaderView *headerView = [[DCCommentHeaderView alloc] initWithFrame:CGRectMake(0, 0, kMainBoundsWidth, 50)];
+        headerView.callBack = ^{
+            DCGoodCommentViewController * vc = [[DCGoodCommentViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        };
+        headerView.comNum = @"1130";
+        headerView.wellPer = @"98.5";
+        return headerView;
+
     }
-    return reusableview;
-    
-    ;
+    return nil;
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    UIView * view= [[UIView alloc] init];
+    return view;
+}
 #pragma mark - item宽高
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) { //商品详情
-        return  CGSizeMake(ScreenW, 35);
+        return   100;
     }else if (indexPath.section == 1){//商品属性选择
-        return CGSizeMake(ScreenW, 60);
-    }else if (indexPath.section == 2){//商品快递信息
-        return CGSizeMake(ScreenW, 60);
-    }else if (indexPath.section == 3){//商品保价
-        return CGSizeMake(ScreenW / 2, 60);
-    }else if (indexPath.section == 4){//商品评价部分展示
-        return CGSizeMake(ScreenW, 270);
-    }else if (indexPath.section == 5){//商品猜你喜欢
-        return CGSizeMake(ScreenW, (ScreenW / 3 + 60) * 2 + 20);
-    }else{
-        return CGSizeZero;
+        return  44;
+    }else if (indexPath.section == 2){//商品评价部分展示
+        DCCommentsItem * item = _commentsItem[indexPath.row];
+        return  item.cellHeight;
     }
-}
+    return 0;
 
+}
 
 #pragma mark - head宽高
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-    return (section == 0) ?  CGSizeMake(ScreenW, ScreenH * 0.55) : ( section == 5) ? CGSizeMake(ScreenW, 30) : CGSizeZero;
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+        if (0 == section) {
+            return ScreenH * 0.55;
+        }else if (2 == section){
+            return 50;
+        }
+        return 0;
 }
 
-#pragma mark - foot宽高
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
-    return (section == 5) ? CGSizeMake(ScreenW, 35) : CGSizeMake(ScreenW, DCMargin);
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return 10;
 }
-
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+#pragma mark -
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
     if (indexPath.section == 0 && indexPath.row == 0) {
         [self scrollToDetailsPage]; //滚动到详情页面
     }else if (indexPath.section == 2 && indexPath.row == 0) {
@@ -413,12 +400,12 @@ static NSArray *lastSeleArray_;
 #pragma mark - 视图滚动
 - (void)setUpViewScroller{
     WEAKSELF
-    self.collectionView.mj_footer = [MJRefreshBackFooter footerWithRefreshingBlock:^{
+    self.tableView.mj_footer = [MJRefreshBackFooter footerWithRefreshingBlock:^{
         [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionLayoutSubviews animations:^{
             !weakSelf.changeTitleBlock ? : weakSelf.changeTitleBlock(YES);
             weakSelf.scrollerView.contentOffset = CGPointMake(0, ScreenH);
         } completion:^(BOOL finished) {
-            [weakSelf.collectionView.mj_footer endRefreshing];
+            [weakSelf.tableView.mj_footer endRefreshing];
         }];
     }];
     
@@ -442,8 +429,7 @@ static NSArray *lastSeleArray_;
 
 #pragma mark - 点击事件
 #pragma mark - 更换地址
-- (void)chageUserAdress
-{
+- (void)chageUserAdress{
 //    if (![[DCObjManager dc_readUserDataForKey:@"isLogin"] isEqualToString:@"1"]) {
 //        DCLoginViewController *dcLoginVc = [DCLoginViewController new];
 //        [self presentViewController:dcLoginVc animated:YES completion:nil];
@@ -462,7 +448,7 @@ static NSArray *lastSeleArray_;
 //        }
 //        userInfo.defaultAddress = newAdress;
 //        [userInfo save];
-        [weakSelf.collectionView reloadData];
+        [weakSelf.tableView reloadData];
     };
 }
 
@@ -474,20 +460,97 @@ static NSArray *lastSeleArray_;
     });
 }
 
-#pragma mark - collectionView滚回顶部
+#pragma mark - tableView滚回顶部
 - (void)ScrollToTop
 {
     if (self.scrollerView.contentOffset.y > ScreenH) {
-        [self.collectionView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
+        [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
     }else{
         WEAKSELF
         [UIView animateWithDuration:0.5 animations:^{
             weakSelf.scrollerView.contentOffset = CGPointMake(0, 0);
         } completion:^(BOOL finished) {
-            [weakSelf.collectionView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
+            [weakSelf.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
         }];
     }
     !_changeTitleBlock ? : _changeTitleBlock(NO);
+}
+#pragma mark - 底部按钮(收藏 购物车 加入购物车 立即购买)
+- (void)setUpBottomButton
+{
+    [self setUpLeftTwoButton];//收藏 购物车
+    
+    [self setUpRightTwoButton];//加入购物车 立即购买
+}
+#pragma mark - 收藏 购物车
+- (void)setUpLeftTwoButton
+{
+    NSArray *imagesNor = @[@"detail_shoucang"];
+    NSArray *imagesSel = @[@"detail_shoucang_selected"];
+    CGFloat buttonW = ScreenW * 0.2;
+    CGFloat buttonH = 50;
+    CGFloat buttonY = ScreenH - buttonH;
+    
+    for (NSInteger i = 0; i < imagesNor.count; i++) {
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [button setImage:[UIImage imageNamed:imagesNor[i]] forState:UIControlStateNormal];
+        button.backgroundColor = [UIColor whiteColor];
+        [button setImage:[UIImage imageNamed:imagesSel[i]] forState:UIControlStateSelected];
+        button.tag = i;
+        [button addTarget:self action:@selector(bottomButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        CGFloat buttonX = (buttonW * i);
+        button.frame = CGRectMake(buttonX, buttonY, buttonW, buttonH);
+        
+        [self.view addSubview:button];
+    }
+}
+#pragma mark - 加入购物车 立即购买
+- (void)setUpRightTwoButton
+{
+    NSArray *titles = @[@"加入购物车",@"立即购买"];
+    CGFloat buttonW = ScreenW * 0.8 * 0.5;
+    CGFloat buttonH = 50;
+    CGFloat buttonY = ScreenH - buttonH;
+    for (NSInteger i = 0; i < titles.count; i++) {
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        button.titleLabel.font = PFR16Font;
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        button.tag = i + 2;
+        [button setTitle:titles[i] forState:UIControlStateNormal];
+        button.backgroundColor = (i == 0) ? [UIColor redColor] : RGB(249, 125, 10);
+        [button addTarget:self action:@selector(bottomButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        CGFloat buttonX = ScreenW * 0.2 + (buttonW * i);
+        button.frame = CGRectMake(buttonX, buttonY, buttonW, buttonH);
+        
+        [self.view addSubview:button];
+    }
+}
+
+
+#pragma mark - 点击工具条
+- (void)toolItemClick
+{
+    [self setUpAlterViewControllerWith:[DCToolsViewController new] WithDistance:150 WithDirection:XWDrawerAnimatorDirectionTop WithParallaxEnable:NO WithFlipEnable:NO];
+}
+
+- (void)bottomButtonClick:(UIButton *)button
+{
+    if (button.tag == 0) {
+        NSLog(@"收藏");
+        button.selected = !button.selected;
+    }else if(button.tag == 1){
+        NSLog(@"购物车");
+        //        DCMyTrolleyViewController *shopCarVc = [[DCMyTrolleyViewController alloc] init];
+        //        shopCarVc.isTabBar = YES;
+        //        shopCarVc.title = @"购物车";
+        //        [self.navigationController pushViewController:shopCarVc animated:YES];
+    }else  if (button.tag == 2 || button.tag == 3) { //父控制器的加入购物车和立即购买
+        //异步发通知
+        dispatch_sync(dispatch_get_global_queue(0, 0), ^{
+            NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%zd",button.tag],@"buttonTag", nil];
+            [[NSNotificationCenter defaultCenter]postNotificationName:SELECTCARTORBUY object:nil userInfo:dict];
+        });
+    }
 }
 
 #pragma mark - 转场动画弹出控制器

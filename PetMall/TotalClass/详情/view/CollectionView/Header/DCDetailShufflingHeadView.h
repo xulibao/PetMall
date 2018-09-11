@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DCDetailShufflingHeadView : UICollectionReusableView
+@interface DCDetailShufflingHeadView : UIView
 
 /** 轮播数组 */
 @property (nonatomic, copy) NSArray *shufflingArray;

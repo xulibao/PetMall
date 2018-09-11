@@ -220,7 +220,7 @@
     UIControl *gestureView = [UIControl new];
     [gestureView addTarget:self action:@selector(_xw_backConfig) forControlEvents:UIControlEventTouchUpInside];
     gestureView.frame = CGRectMake(x, y, width, height);
-    gestureView.backgroundColor = [UIColor clearColor];
+    gestureView.backgroundColor =  RGBA(0, 0, 0, 0.3);
     //第一种情况，toView已经添加了返回手势，我们直接拿到该手势的target和action
     if (target) {
         //给containerView添加全局手势
@@ -255,7 +255,8 @@
         UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:target action:NSSelectorFromString(@"_xw_handleGesture:")];
         gestureView = [UIControl new];
         [gestureView addTarget:self action:@selector(_xw_backConfig) forControlEvents:UIControlEventTouchUpInside];
-        gestureView.backgroundColor = [UIColor clearColor];
+        gestureView.backgroundColor = RGBA(0, 0, 0, 0.3);
+;
         [gestureView addGestureRecognizer:pan];
     }
     return gestureView;

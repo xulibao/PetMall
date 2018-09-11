@@ -6,8 +6,8 @@
 //  Copyright © 2018年 ios@xulibao. All rights reserved.
 //
 
-#import "STBaseViewController.h"
+#import "STBaseTableViewController.h"
 
-@interface PMMineViewController : STBaseViewController
+@interface PMMineViewController : STBaseTableViewController
 
 @end

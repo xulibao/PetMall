@@ -29,6 +29,8 @@
 /* 百分比label */
 @property (strong , nonatomic)UILabel *percentageLabel;
 
+@property(nonatomic, strong) UIImageView *topImageView;
+
 /* collectionView */
 @property (strong , nonatomic)UICollectionView *collectionView;
 
@@ -73,50 +75,56 @@ static NSString *const DCCometItemCellID = @"DCCometItemCell";
 - (void)setUpUI
 {
     self.backgroundColor = [UIColor whiteColor];
-    self.collectionView.backgroundColor = [UIColor whiteColor];
+//    self.collectionView.backgroundColor = [UIColor whiteColor];
+//
+//    NSIndexPath *index = [NSIndexPath indexPathForRow:0 inSection:0];
+//    [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionNone]; //默认选择
     
-    NSIndexPath *index = [NSIndexPath indexPathForRow:0 inSection:0];
-    [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionNone]; //默认选择
+    UIImageView * topImageView = [[UIImageView alloc] init];
+    topImageView.image = IMAGE(@"detail_haoping");
+    [self addSubview:topImageView];
     
     _tipLabel = [UILabel new];
+    _tipLabel.font = PFR18Font;
+    _tipLabel.textColor = RGB(235, 0, 72);
     [self addSubview:_tipLabel];
-    _tipLabel.text = @"好评度";
-    _tipLabel.textColor = [UIColor darkGrayColor];
-    _tipLabel.font = PFR13Font;
+    _tipLabel.text = @"97.6%好评";
+   
     
     
     _percentageLabel = [UILabel new];
-    _percentageLabel.font = PFR18Font;
-    _percentageLabel.textColor = RGB(235, 0, 72);
+    _percentageLabel.textColor = [UIColor darkGrayColor];
+    _percentageLabel.font = PFR13Font;
     [self addSubview:_percentageLabel];
-    _percentageLabel.text = @"99%";
+    _percentageLabel.text = @"(12390)";
     
-}
+    UIView * view = [[UIView alloc] init];
+    view.backgroundColor = [UIColor colorWithHexStr:@"#fafafa"];
+    [self addSubview:view];
 
-- (void)layoutSubviews
-{
-    [super layoutSubviews];
     
+    [topImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(20);
+        make.centerX.mas_equalTo(self);
+    }];
     [_tipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        [make.top.mas_equalTo(self)setOffset:DCMargin];
-        make.width.mas_equalTo(@50);
-        [make.right.mas_equalTo(self)setOffset:- 2 * DCMargin];
-        
+        [make.top.mas_equalTo(topImageView.mas_bottom)setOffset:DCMargin];
+        make.centerX.mas_equalTo(self);
+
     }];
     
     [_percentageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_tipLabel.mas_bottom);
-        make.width.mas_equalTo(@50);
-        make.right.mas_equalTo(_tipLabel);
+        make.top.mas_equalTo(_tipLabel.mas_bottom).mas_offset(2);
+        make.centerX.mas_equalTo(self);
     }];
     
-    [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self);
-        make.top.mas_equalTo(self);
-        make.bottom.mas_equalTo(self);
-        [make.right.mas_equalTo(_tipLabel.mas_left)setOffset:-5];
+    [view mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.bottom.mas_equalTo(self);
+        make.height.mas_equalTo(10);
     }];
+
 }
+
 
 
 #pragma mark - <UICollectionViewDataSource>

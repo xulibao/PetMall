@@ -14,6 +14,7 @@
 #import "DCCommentsItem.h"
 // Views
 #import "DCComImagesView.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 // Vendors
 
 // Categories
@@ -51,6 +52,9 @@
     _comImagesView = [DCComImagesView new];
     _comImagesView.backgroundColor = [UIColor whiteColor];
     [self addSubview:_comImagesView];
+    
+    _comIconImageView.layer.cornerRadius = 15;
+    _comIconImageView.clipsToBounds = YES;
 }
 
 
@@ -60,15 +64,16 @@
 {
     _commentsItem = commentsItem;
     
-    _comBgImageView.hidden = (commentsItem.comReBack.length == 0) ? YES : NO;
-    _bottomCons.constant = (commentsItem.comReBack.length == 0) ? -29 : 5; //label有响应尺寸的默认高24；-29 = -24-5；
-    _rebackLabel.hidden = _comBgImageView.hidden;
+    [_comIconImageView sd_setImageWithURL:[NSURL URLWithString:@"https://pic4.zhimg.com/383179a483ae1074efaf091c89c8a103_l.jpg"]];
     
-    _comNameLabel.text = commentsItem.comName;
+    _comBgImageView.hidden = YES;
+    _bottomCons.constant = 4; //label有响应尺寸的默认高24；-29 = -24-5；
+    _rebackLabel.hidden = _comBgImageView.hidden;
+    _comNameLabel.text = [DCSpeedy dc_encryptionDisplayMessageWith:commentsItem.comName WithFirstIndex:2];
     _comTimeLabel.text = commentsItem.comTime;
     _comContentLabel.text = commentsItem.comContent;
-    _specificationsLabel.text = [NSString stringWithFormat:@"规格：%@",commentsItem.comSpecifications];
-    _rebackLabel.text = [NSString stringWithFormat:@"店家回复：%@",commentsItem.comReBack];
+//    _specificationsLabel.text = [NSString stringWithFormat:@"规格：%@",commentsItem.comSpecifications];
+//    _rebackLabel.text = [NSString stringWithFormat:@"店家回复：%@",commentsItem.comReBack];
     
     if (commentsItem.imgsArray != nil){
         //传输图片

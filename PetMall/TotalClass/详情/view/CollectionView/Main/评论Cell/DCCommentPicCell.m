@@ -100,6 +100,7 @@
 //    _nickName.text = [DCSpeedy dc_encryptionDisplayMessageWith:picItem.nickName WithFirstIndex:2];
     
     _imagesArray = picItem.images;
+
 }
 
 #pragma mark - 图片点击

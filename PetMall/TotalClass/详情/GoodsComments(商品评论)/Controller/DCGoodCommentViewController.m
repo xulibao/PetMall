@@ -45,7 +45,7 @@ static NSString *const DCCommentsCntCellID = @"DCCommentsCntCell";
         _tableView = [[UITableView alloc] initWithFrame:CGRectZero];
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        _tableView.frame = CGRectMake(0, DCTopNavH, ScreenW, ScreenH - DCTopNavH - 55);
+        _tableView.frame = CGRectMake(0, 0, ScreenW, ScreenH - 55);
         
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [self.view addSubview:_tableView];
@@ -67,7 +67,7 @@ static NSString *const DCCommentsCntCellID = @"DCCommentsCntCell";
 #pragma mark - LifeCyle
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    self.title = @"商品评价";
     [self setUpBase];
     
     [self setUpHeadView];
@@ -85,7 +85,7 @@ static NSString *const DCCommentsCntCellID = @"DCCommentsCntCell";
 - (void)setUpHeadView
 {
     _headView = [DCComHeadView new];
-    _headView.dc_height = 90;
+    _headView.dc_height = 140;
     WEAKSELF
     _headView.comTypeBlock = ^(NSInteger index) {
         if (index == 2) { //中评论

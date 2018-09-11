@@ -5,7 +5,7 @@
 //  Created by 陈甸甸 on 2018/2/23.
 //Copyright © 2018年 RocketsChen. All rights reserved.
 //
-#define MiddleImageH  (CGRectGetWidth([UIScreen mainScreen].bounds) - 40)/5
+#define MiddleImageH  (ScreenW - 50)/4
 #define MiddleImageW  MiddleImageH
 
 #import "DCComImagesView.h"
@@ -41,8 +41,8 @@ static NSString *const DCItemImageCellID = @"DCItemImageCell";
     if (!_collectionView) {
         
         UICollectionViewFlowLayout *dcFlowLayout = [UICollectionViewFlowLayout new];
-        dcFlowLayout.minimumLineSpacing = 5;
-        dcFlowLayout.minimumInteritemSpacing = 0;
+//        dcFlowLayout.minimumLineSpacing = 5;
+        dcFlowLayout.minimumInteritemSpacing = 10.f;
         
         dcFlowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:dcFlowLayout];
@@ -86,14 +86,26 @@ static NSString *const DCItemImageCellID = @"DCItemImageCell";
     [super layoutSubviews];
     
     self.collectionView.frame = self.bounds;
+}
+
+- (void)setPicUrlArray:(NSArray *)picUrlArray{
+    _picUrlArray = picUrlArray;
     [self.collectionView reloadData];
+
+}
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+    if (_picUrlArray.count > 4) {
+        return 4;
+    }else{
+        return  _picUrlArray.count;
+    }
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+#pragma mark  定义整个CollectionViewCell与整个View的间距
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-    return _picUrlArray.count;
+    return UIEdgeInsetsMake(0, 0, 0, 0);//（上、左、下、右）
 }
-
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -104,6 +116,7 @@ static NSString *const DCItemImageCellID = @"DCItemImageCell";
     
     return cell;
 }
+
 
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath

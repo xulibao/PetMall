@@ -27,7 +27,7 @@
 #import "DCOverFootView.h"       //结束
 #import "DCScrollAdFootView.h"   //底滚动广告
 #import <UIImageView+WebCache.h>
-
+#import "DCGoodBaseViewController.h"
 /* cell */
 static NSString *const DCGoodsCountDownCellID = @"DCGoodsCountDownCell";
 static NSString *const DCNewWelfareCellID = @"DCNewWelfareCell";
@@ -367,6 +367,16 @@ static NSString *const DCScrollAdFootViewID = @"DCScrollAdFootView";
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    DCGoodBaseViewController * vc = [[DCGoodBaseViewController alloc] init];
+    DCRecommendItem * item = _youLikeItem[indexPath.row];
+    vc.goodTitle = item.main_title;
+    vc.goodPrice = item.price;
+    vc.goodSubtitle = item.goods_title;
+    vc.shufflingArray = item.images;
+    vc.goodImageView = item.image_url;
+
+    [self.navigationController pushViewController:vc  animated:YES];
     if (indexPath.section == 0) {//10
         
 //        DCGoodsSetViewController *goodSetVc = [[DCGoodsSetViewController alloc] init];

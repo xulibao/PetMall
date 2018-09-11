@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface DCDetailShowTypeCell : UICollectionViewCell
+@interface DCDetailShowTypeCell : UITableViewCell
 
 /** 是否有指示箭头 */
 @property (nonatomic,assign)BOOL isHasindicateButton;
