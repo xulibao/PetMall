@@ -361,6 +361,15 @@
 		5AEA6B802146A30A00A2E6E8 /* PMConfirmOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA6B7F2146A30A00A2E6E8 /* PMConfirmOrderViewController.m */; };
 		5AEA6B852146A34700A2E6E8 /* PMConfirmOrderHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA6B842146A34700A2E6E8 /* PMConfirmOrderHeaderView.m */; };
 		5AEA6B882146C1C300A2E6E8 /* PMConfirmOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA6B872146C1C300A2E6E8 /* PMConfirmOrderCell.m */; };
+		5AEA6B8F2147A08B00A2E6E8 /* PMOrderSelectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA6B8E2147A08B00A2E6E8 /* PMOrderSelectCell.m */; };
+		5AEA6B922147B76F00A2E6E8 /* PMOrderSelectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA6B912147B76F00A2E6E8 /* PMOrderSelectModel.m */; };
+		5AEA6B952147DE0000A2E6E8 /* PMCoverCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA6B942147DE0000A2E6E8 /* PMCoverCell.m */; };
+		5AEA6B982147E35B00A2E6E8 /* PMVoucherCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA6B972147E35B00A2E6E8 /* PMVoucherCell.m */; };
+		5AEA6B9B2147F54E00A2E6E8 /* PMVoucherModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA6B9A2147F54E00A2E6E8 /* PMVoucherModel.m */; };
+		5AEA6B9E2148AAC800A2E6E8 /* PMExpressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA6B9D2148AAC800A2E6E8 /* PMExpressModel.m */; };
+		5AEA6BA12148BB7D00A2E6E8 /* PMConfirmPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA6BA02148BB7D00A2E6E8 /* PMConfirmPayViewController.m */; };
+		5AEA6BA42148BC9600A2E6E8 /* SAWithdrawalsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA6BA32148BC9600A2E6E8 /* SAWithdrawalsCell.m */; };
+		5AEA6BA72148BCA200A2E6E8 /* SAWithdrawalsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA6BA52148BCA100A2E6E8 /* SAWithdrawalsModel.m */; };
 		CF09BFBB42A2B5B726F9B524 /* libPods-PetMallUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2152ED3BF8DBA0E2D69B0DB6 /* libPods-PetMallUITests.a */; };
 		F3FC7FD8B7AA30DC8E173814 /* libPods-PetMallTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D688D7BF9B6020CB6621DF92 /* libPods-PetMallTests.a */; };
 		F565FB0A2010B0E7F7F3E9CC /* libPods-PetMall.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B6AB8A4ACE45C4CBF621C56 /* libPods-PetMall.a */; };
@@ -1077,6 +1086,24 @@
 		5AEA6B842146A34700A2E6E8 /* PMConfirmOrderHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMConfirmOrderHeaderView.m; sourceTree = "<group>"; };
 		5AEA6B862146C1C200A2E6E8 /* PMConfirmOrderCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMConfirmOrderCell.h; sourceTree = "<group>"; };
 		5AEA6B872146C1C300A2E6E8 /* PMConfirmOrderCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMConfirmOrderCell.m; sourceTree = "<group>"; };
+		5AEA6B8D2147A08B00A2E6E8 /* PMOrderSelectCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMOrderSelectCell.h; sourceTree = "<group>"; };
+		5AEA6B8E2147A08B00A2E6E8 /* PMOrderSelectCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMOrderSelectCell.m; sourceTree = "<group>"; };
+		5AEA6B902147B76F00A2E6E8 /* PMOrderSelectModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMOrderSelectModel.h; sourceTree = "<group>"; };
+		5AEA6B912147B76F00A2E6E8 /* PMOrderSelectModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMOrderSelectModel.m; sourceTree = "<group>"; };
+		5AEA6B932147DE0000A2E6E8 /* PMCoverCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMCoverCell.h; sourceTree = "<group>"; };
+		5AEA6B942147DE0000A2E6E8 /* PMCoverCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMCoverCell.m; sourceTree = "<group>"; };
+		5AEA6B962147E35B00A2E6E8 /* PMVoucherCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMVoucherCell.h; sourceTree = "<group>"; };
+		5AEA6B972147E35B00A2E6E8 /* PMVoucherCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMVoucherCell.m; sourceTree = "<group>"; };
+		5AEA6B992147F54E00A2E6E8 /* PMVoucherModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMVoucherModel.h; sourceTree = "<group>"; };
+		5AEA6B9A2147F54E00A2E6E8 /* PMVoucherModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMVoucherModel.m; sourceTree = "<group>"; };
+		5AEA6B9C2148AAC800A2E6E8 /* PMExpressModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMExpressModel.h; sourceTree = "<group>"; };
+		5AEA6B9D2148AAC800A2E6E8 /* PMExpressModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMExpressModel.m; sourceTree = "<group>"; };
+		5AEA6B9F2148BB7D00A2E6E8 /* PMConfirmPayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMConfirmPayViewController.h; sourceTree = "<group>"; };
+		5AEA6BA02148BB7D00A2E6E8 /* PMConfirmPayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMConfirmPayViewController.m; sourceTree = "<group>"; };
+		5AEA6BA22148BC9500A2E6E8 /* SAWithdrawalsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SAWithdrawalsCell.h; sourceTree = "<group>"; };
+		5AEA6BA32148BC9600A2E6E8 /* SAWithdrawalsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SAWithdrawalsCell.m; sourceTree = "<group>"; };
+		5AEA6BA52148BCA100A2E6E8 /* SAWithdrawalsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SAWithdrawalsModel.m; sourceTree = "<group>"; };
+		5AEA6BA62148BCA100A2E6E8 /* SAWithdrawalsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SAWithdrawalsModel.h; sourceTree = "<group>"; };
 		5B6AB8A4ACE45C4CBF621C56 /* libPods-PetMall.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PetMall.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D688D7BF9B6020CB6621DF92 /* libPods-PetMallTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PetMallTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F476B99AA877ABBE9E03F4B2 /* Pods-PetMallTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PetMallTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PetMallTests/Pods-PetMallTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -2810,6 +2837,8 @@
 				5AEA6B812146A31D00A2E6E8 /* view */,
 				5AEA6B7E2146A30A00A2E6E8 /* PMConfirmOrderViewController.h */,
 				5AEA6B7F2146A30A00A2E6E8 /* PMConfirmOrderViewController.m */,
+				5AEA6B9F2148BB7D00A2E6E8 /* PMConfirmPayViewController.h */,
+				5AEA6BA02148BB7D00A2E6E8 /* PMConfirmPayViewController.m */,
 			);
 			path = "确认订单";
 			sourceTree = "<group>";
@@ -2817,10 +2846,18 @@
 		5AEA6B812146A31D00A2E6E8 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				5AEA6BA22148BC9500A2E6E8 /* SAWithdrawalsCell.h */,
+				5AEA6BA32148BC9600A2E6E8 /* SAWithdrawalsCell.m */,
 				5AEA6B832146A34700A2E6E8 /* PMConfirmOrderHeaderView.h */,
 				5AEA6B842146A34700A2E6E8 /* PMConfirmOrderHeaderView.m */,
 				5AEA6B862146C1C200A2E6E8 /* PMConfirmOrderCell.h */,
 				5AEA6B872146C1C300A2E6E8 /* PMConfirmOrderCell.m */,
+				5AEA6B8D2147A08B00A2E6E8 /* PMOrderSelectCell.h */,
+				5AEA6B8E2147A08B00A2E6E8 /* PMOrderSelectCell.m */,
+				5AEA6B932147DE0000A2E6E8 /* PMCoverCell.h */,
+				5AEA6B942147DE0000A2E6E8 /* PMCoverCell.m */,
+				5AEA6B962147E35B00A2E6E8 /* PMVoucherCell.h */,
+				5AEA6B972147E35B00A2E6E8 /* PMVoucherCell.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -2828,6 +2865,14 @@
 		5AEA6B822146A32700A2E6E8 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				5AEA6BA62148BCA100A2E6E8 /* SAWithdrawalsModel.h */,
+				5AEA6BA52148BCA100A2E6E8 /* SAWithdrawalsModel.m */,
+				5AEA6B902147B76F00A2E6E8 /* PMOrderSelectModel.h */,
+				5AEA6B912147B76F00A2E6E8 /* PMOrderSelectModel.m */,
+				5AEA6B992147F54E00A2E6E8 /* PMVoucherModel.h */,
+				5AEA6B9A2147F54E00A2E6E8 /* PMVoucherModel.m */,
+				5AEA6B9C2148AAC800A2E6E8 /* PMExpressModel.h */,
+				5AEA6B9D2148AAC800A2E6E8 /* PMExpressModel.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -3137,6 +3182,7 @@
 				5A54CB672143C73800971D83 /* XWCoolAnimator+XWScanning.m in Sources */,
 				5A54CAEB2143C5F500971D83 /* DCGoodCommentViewController.m in Sources */,
 				5A4AF5712134F9FA00F8190B /* NSAttributedString+STAttributedString.m in Sources */,
+				5AEA6B952147DE0000A2E6E8 /* PMCoverCell.m in Sources */,
 				5A4AF6AF2134FDD400F8190B /* NSDate+GADateItem.m in Sources */,
 				5A4AF64B2134FA0F00F8190B /* GADebugPerformance.m in Sources */,
 				5A6ACF92213D2181001FB644 /* UIView+DCRolling.m in Sources */,
@@ -3157,6 +3203,7 @@
 				5A54CAE82143C5F500971D83 /* DCFeatureSelectionViewController.m in Sources */,
 				5A4AF66F2134FA0F00F8190B /* GADebugCrashView.m in Sources */,
 				5A4AF66E2134FA0F00F8190B /* GARequestBaseModel.m in Sources */,
+				5AEA6B922147B76F00A2E6E8 /* PMOrderSelectModel.m in Sources */,
 				5A4AF5A92134F9FA00F8190B /* SACustomLimitTextView.m in Sources */,
 				5A4AF5992134F9FA00F8190B /* SACommonInfoCell.m in Sources */,
 				5A4AF6BA2134FDD400F8190B /* UIView+GHExtension.m in Sources */,
@@ -3174,6 +3221,7 @@
 				5A54CAD92143C5F500971D83 /* DCFiltrateItem.m in Sources */,
 				5A4AF58E2134F9FA00F8190B /* STTabBarBtn.m in Sources */,
 				5A6ACF9D213D220F001FB644 /* DCZuoWenRightButton.m in Sources */,
+				5AEA6B9E2148AAC800A2E6E8 /* PMExpressModel.m in Sources */,
 				5A4AF5B02134F9FA00F8190B /* STCommonTableViewCell.m in Sources */,
 				5AEA6B772145678300A2E6E8 /* SAMessageButton.m in Sources */,
 				5A4AF6AB2134FDD400F8190B /* UIImage+GHExtension.m in Sources */,
@@ -3218,6 +3266,7 @@
 				5A6ACF91213D2181001FB644 /* DCTitleRolling.m in Sources */,
 				5AC95CC921352E1A00BDA95D /* PMCategoryViewController.m in Sources */,
 				5A4AF5782134F9FA00F8190B /* SAPriceUpdateEpisode.m in Sources */,
+				5AEA6B9B2147F54E00A2E6E8 /* PMVoucherModel.m in Sources */,
 				5A4AF6B02134FDD400F8190B /* NSString+GHExtension.m in Sources */,
 				5A6ACF9F213D220F001FB644 /* DCCustionButton.m in Sources */,
 				5A4AF5C32134F9FB00F8190B /* SAInfoListFilterViewController.m in Sources */,
@@ -3230,6 +3279,8 @@
 				5A54CB5D2143C73800971D83 /* XWFilterAnimator+XWPageCurl.m in Sources */,
 				5A4AF5AE2134F9FA00F8190B /* STMenuRecordView.m in Sources */,
 				5A4AF6502134FA0F00F8190B /* GATempViewController.m in Sources */,
+				5AEA6B8F2147A08B00A2E6E8 /* PMOrderSelectCell.m in Sources */,
+				5AEA6BA72148BCA200A2E6E8 /* SAWithdrawalsModel.m in Sources */,
 				5A6ACF78213D1C81001FB644 /* DCExceedApplianceCell.m in Sources */,
 				5A54CAF52143C5F500971D83 /* DCDetailOverFooterView.m in Sources */,
 				5A54CAE32143C5F500971D83 /* DCFeatureList.m in Sources */,
@@ -3256,6 +3307,7 @@
 				5A4AF6B72134FDD400F8190B /* UITextField+GHExtension.m in Sources */,
 				5A54CA3221418AA900971D83 /* DCFootprintCell.m in Sources */,
 				5A6ACF7A213D1C81001FB644 /* DCGoodsHandheldCell.m in Sources */,
+				5AEA6BA42148BC9600A2E6E8 /* SAWithdrawalsCell.m in Sources */,
 				5A4AF5862134F9FA00F8190B /* SATruckInfoBaseBottomView.m in Sources */,
 				5A4AF59A2134F9FA00F8190B /* STRightImageButton.m in Sources */,
 				5A54CB072143C5F500971D83 /* DCFeatureHeaderView.m in Sources */,
@@ -3391,6 +3443,7 @@
 				5AC95CB32135246F00BDA95D /* SAApplication.m in Sources */,
 				5A6ACF74213D1C81001FB644 /* DCOverFootView.m in Sources */,
 				5A4AF5A42134F9FA00F8190B /* SADropDownCollectionModel.m in Sources */,
+				5AEA6BA12148BB7D00A2E6E8 /* PMConfirmPayViewController.m in Sources */,
 				5A54CB6D2143C73800971D83 /* XWCoolAnimator+XWMiddlePageFlip.m in Sources */,
 				5A4AF5752134F9FA00F8190B /* STTabBtnModel.m in Sources */,
 				5A54CAF32143C5F500971D83 /* DCComHeadView.m in Sources */,
@@ -3412,6 +3465,7 @@
 				5A54CB612143C73800971D83 /* XWFilterAnimator+XWMod.m in Sources */,
 				5A4AF6B52134FDD400F8190B /* UIButton+GHExtension.m in Sources */,
 				5A54CB652143C73800971D83 /* XWFilterTransitionView.m in Sources */,
+				5AEA6B982147E35B00A2E6E8 /* PMVoucherCell.m in Sources */,
 				5A4AF66C2134FA0F00F8190B /* GADebugNetworkView.m in Sources */,
 				5A6ACF72213D1C81001FB644 /* DCScrollAdFootView.m in Sources */,
 				5A4AF57D2134F9FA00F8190B /* SAModalPresentationViewController.m in Sources */,
