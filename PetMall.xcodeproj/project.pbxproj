@@ -370,6 +370,7 @@
 		5AEA6BA12148BB7D00A2E6E8 /* PMConfirmPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA6BA02148BB7D00A2E6E8 /* PMConfirmPayViewController.m */; };
 		5AEA6BA42148BC9600A2E6E8 /* SAWithdrawalsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA6BA32148BC9600A2E6E8 /* SAWithdrawalsCell.m */; };
 		5AEA6BA72148BCA200A2E6E8 /* SAWithdrawalsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA6BA52148BCA100A2E6E8 /* SAWithdrawalsModel.m */; };
+		5AEA6BBC2149388E00A2E6E8 /* PMPayResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA6BBB2149388E00A2E6E8 /* PMPayResultViewController.m */; };
 		CF09BFBB42A2B5B726F9B524 /* libPods-PetMallUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2152ED3BF8DBA0E2D69B0DB6 /* libPods-PetMallUITests.a */; };
 		F3FC7FD8B7AA30DC8E173814 /* libPods-PetMallTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D688D7BF9B6020CB6621DF92 /* libPods-PetMallTests.a */; };
 		F565FB0A2010B0E7F7F3E9CC /* libPods-PetMall.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B6AB8A4ACE45C4CBF621C56 /* libPods-PetMall.a */; };
@@ -1104,6 +1105,8 @@
 		5AEA6BA32148BC9600A2E6E8 /* SAWithdrawalsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SAWithdrawalsCell.m; sourceTree = "<group>"; };
 		5AEA6BA52148BCA100A2E6E8 /* SAWithdrawalsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SAWithdrawalsModel.m; sourceTree = "<group>"; };
 		5AEA6BA62148BCA100A2E6E8 /* SAWithdrawalsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SAWithdrawalsModel.h; sourceTree = "<group>"; };
+		5AEA6BBA2149388E00A2E6E8 /* PMPayResultViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMPayResultViewController.h; sourceTree = "<group>"; };
+		5AEA6BBB2149388E00A2E6E8 /* PMPayResultViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMPayResultViewController.m; sourceTree = "<group>"; };
 		5B6AB8A4ACE45C4CBF621C56 /* libPods-PetMall.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PetMall.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D688D7BF9B6020CB6621DF92 /* libPods-PetMallTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PetMallTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F476B99AA877ABBE9E03F4B2 /* Pods-PetMallTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PetMallTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PetMallTests/Pods-PetMallTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -2809,13 +2812,13 @@
 		5AEA6B692145678200A2E6E8 /* view */ = {
 			isa = PBXGroup;
 			children = (
-				5AEA6B6A2145678200A2E6E8 /* SAMineHeadView.m */,
-				5AEA6B6B2145678300A2E6E8 /* SAMineCell.m */,
 				5AEA6B6C2145678300A2E6E8 /* SAMessageButton.h */,
-				5AEA6B6D2145678300A2E6E8 /* SAMineOrderCell.h */,
-				5AEA6B6E2145678300A2E6E8 /* SAMineHeadView.h */,
 				5AEA6B6F2145678300A2E6E8 /* SAMessageButton.m */,
 				5AEA6B702145678300A2E6E8 /* SAMineCell.h */,
+				5AEA6B6B2145678300A2E6E8 /* SAMineCell.m */,
+				5AEA6B6E2145678300A2E6E8 /* SAMineHeadView.h */,
+				5AEA6B6A2145678200A2E6E8 /* SAMineHeadView.m */,
+				5AEA6B6D2145678300A2E6E8 /* SAMineOrderCell.h */,
 				5AEA6B712145678300A2E6E8 /* SAMineOrderCell.m */,
 			);
 			path = view;
@@ -2839,6 +2842,8 @@
 				5AEA6B7F2146A30A00A2E6E8 /* PMConfirmOrderViewController.m */,
 				5AEA6B9F2148BB7D00A2E6E8 /* PMConfirmPayViewController.h */,
 				5AEA6BA02148BB7D00A2E6E8 /* PMConfirmPayViewController.m */,
+				5AEA6BBA2149388E00A2E6E8 /* PMPayResultViewController.h */,
+				5AEA6BBB2149388E00A2E6E8 /* PMPayResultViewController.m */,
 			);
 			path = "确认订单";
 			sourceTree = "<group>";
@@ -3373,6 +3378,7 @@
 				5AEA6B732145678300A2E6E8 /* SAAccount.m in Sources */,
 				5A4AF5902134F9FA00F8190B /* STGroupSectionView.m in Sources */,
 				5A4AF6662134FA0F00F8190B /* ABCrashReport.m in Sources */,
+				5AEA6BBC2149388E00A2E6E8 /* PMPayResultViewController.m in Sources */,
 				5A4AF6602134FA0F00F8190B /* GARequest.m in Sources */,
 				5A54CB0A2143C5F500971D83 /* DCShareItemCell.m in Sources */,
 				5AC95CC321352C0300BDA95D /* PMRegisterViewController.m in Sources */,

@@ -86,9 +86,10 @@
     //    }];
 }
 - (void)fecthSubViews{
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     SAMineModel * model = [[SAMineModel alloc] init];
     self.moneyModel = model;
-    model.iconImage = @"detail_shoucang";
+    model.iconImage = @"mine_tuangou";
     model.titleName = @"我的团购";
     model.descTitle = [NSString stringWithFormat:@"%@元",self.personCenterModel.availableBond];
     [self.dataArray addObject:model];
@@ -102,7 +103,7 @@
     };
     
     model = [[SAMineModel alloc] init];
-    model.iconImage = @"detail_shoucang";
+    model.iconImage = @"mine_duihuan";
     model.titleName = @"我的兑换";
     [self.dataArray addObject:model];
     model.cellAction = ^(SAMineModel *model) {
@@ -111,8 +112,8 @@
     };
     
     model = [[SAMineModel alloc] init];
-    model.iconImage = @"detail_shoucang";
-    model.titleName = @"我的评价";
+    model.iconImage = @"mine_shoucang";
+    model.titleName = @"我的收藏";
     [self.dataArray addObject:model];
     model.cellAction = ^(SAMineModel *model) {
         //        SAMyCouponViewController *vc = [[SAMyCouponViewController alloc] init];
@@ -120,7 +121,7 @@
     };
     
     model = [[SAMineModel alloc] init];
-    model.iconImage = @"detail_shoucang";
+    model.iconImage = @"mine_pingjia";
     model.titleName = @"我的评价";
     [self.dataArray addObject:model];
     model.cellAction = ^(SAMineModel *model) {
@@ -129,7 +130,7 @@
     };
     
     model = [[SAMineModel alloc] init];
-    model.iconImage = @"detail_shoucang";
+    model.iconImage = @"mine_dizhi";
     model.titleName = @"我的地址";
     [self.dataArray addObject:model];
     //我的关注
@@ -139,14 +140,14 @@
     };
     
         model = [[SAMineModel alloc] init];
-        model.iconImage = @"detail_shoucang";
+        model.iconImage = @"mine_bangzhu";
         model.titleName = @"帮助/问题";
         [self.dataArray addObject:model];
         //我的出价
         model.cellAction = ^(SAMineModel *model) {
                 };
         model = [[SAMineModel alloc] init];
-        model.iconImage = @"detail_shoucang";
+        model.iconImage = @"mine_fengxiang";
         model.titleName = @"分享";
         //商户必读
         model.cellAction = ^(SAMineModel *model) {
@@ -156,7 +157,7 @@
     model.cellAction = ^(SAMineModel *model) {
     };
     model = [[SAMineModel alloc] init];
-    model.iconImage = @"detail_shoucang";
+    model.iconImage = @"mine_lianxikefu";
     model.titleName = @"联系客服";
     //商户必读
     model.cellAction = ^(SAMineModel *model) {
@@ -190,7 +191,7 @@
     self.headerView = headerView;
     headerView.delegate = self;
     headerView.width = kMainBoundsWidth;
-    headerView.height = 190;
+    headerView.height = 255;
     [headerView setIsLogin:YES];
     self.tableView.tableHeaderView = headerView;
     
@@ -286,7 +287,7 @@
     if (0 == indexPath.section) {
         return 135;
     }else{
-        return 45;
+        return 54;
     }
 }
 

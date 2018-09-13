@@ -160,13 +160,12 @@ static NSArray *lastSeleArray_;
 
 }
 
-
-
 - (void)setupNavgationBar {
     [super setupNavgationBar];
     
     UIColor *tintColor = [UIColor whiteColor];
-    [self.navgationBar.leftBarButton setTintColor:tintColor];
+    [self.navgationBar.leftBarButton setImage:IMAGE(@"detail_back") forState:UIControlStateNormal];
+    self.navgationBar.leftBarButton.frame = (CGRect){12,(self.navgationBar.height - 44) / 2, 44,44};
     self.navgationBar.navigationBarBg.alpha = 0;
     self.navgationBar.titleLabel.alpha = 0;
     self.statusBarView.alpha = 0;

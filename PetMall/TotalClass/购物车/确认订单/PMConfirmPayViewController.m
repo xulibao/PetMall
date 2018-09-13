@@ -9,7 +9,7 @@
 #import "PMConfirmPayViewController.h"
 #import "SAWithdrawalsCell.h"
 #import "STCommonTableViewModel.h"
-
+#import "PMPayResultViewController.h"
 @interface PMConfirmPayViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property(nonatomic, strong) STCommonTableViewModel *viewModel;
 @property(nonatomic, copy) NSString *payType;
@@ -140,6 +140,7 @@
             return;
         }
         if (1 == [self.payType integerValue]) { //微信
+            [self rechargeOrPaySuccess];
 //            if ([WXApi isWXAppInstalled] == NO) {
 //                [self showErrow:@"您没有安装微信客户端，建议您使用支付宝支付"];
 //                return;
@@ -168,6 +169,7 @@
 //            } failure:NULL];
             
         }else if (2 == [self.payType integerValue]) { //支付宝
+            [self rechargeOrPaySuccess];
 //            [self requestMethod:GARequestMethodGET URLString:API_recharge_getRechargeAndCallback parameters:@{@"userId":[SAApplication userID],@"payType":self.payType,@"money":self.moneyTextField.text} resKeyPath:@"data" resClass:[SAAlipayToolModel class] retry:YES success:^(__kindof SARequest *request, id responseObject) {
 //                __weak typeof(self)weakSelf = self;
 //                [[SAAlipayTool sharedSAAlipayTool] payByAilPay:responseObject];
@@ -188,17 +190,8 @@
 
 // 充值或支付完成
 - (void)rechargeOrPaySuccess{
-//    SARechargeResultViewController * vc = [[SARechargeResultViewController alloc] init];
-//    vc.callBack = ^{
-//        if (self.actionCallBack) {
-//            self.actionCallBack();
-//        }
-//    };
-//    vc.type = self.type;
-//    [self  pushViewController:vc];
-//    if (self.reloadCallBack) {
-//        self.reloadCallBack();
-//    }
+    PMPayResultViewController * vc = [[PMPayResultViewController alloc] init];
+    [self pushViewController:vc];
 }
 - (void)payment{
 //    [self requestGET:API_video_payOrder parameters:@{@"vaId":self.vaId,@"lotId":self.lotId,@"userId":[SAApplication userID]} success:^(__kindof SARequest *request, id responseObject) {

@@ -22,6 +22,7 @@
 @property (nonatomic, strong) UIButton * youhuiBtn; //
 @property (nonatomic, strong) UIButton * jifengBtn; //折扣
 
+@property(nonatomic, strong) UIButton * voucherBtn;
 
 @end
 
@@ -29,6 +30,7 @@
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
+        self.backgroundColor = [UIColor whiteColor];
         self.headImageBg = [[UIImageView alloc] init];
         CAGradientLayer *gradientLayer = [CAGradientLayer layer];
         gradientLayer.colors = @[(__bridge id)[UIColor colorWithHexStr:@"#FF3945"].CGColor, (__bridge id)[UIColor colorWithHexStr:@"#F63677"].CGColor];
@@ -41,7 +43,8 @@
         self.clipsToBounds = YES;
         [self addSubview:self.headImageBg];
         [self.headImageBg mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.bottom.left.right.mas_equalTo(self);
+            make.top.left.right.mas_equalTo(self);
+            make.height.mas_equalTo(190);
         }];
         //自定义登录状态
         [self initLoginViews];
@@ -102,6 +105,15 @@
     [jifengBtn addTarget:self action:@selector(sellCarBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [jifengBtn setTitle:@"417\n积分" forState:UIControlStateNormal];    self.jifengBtn = jifengBtn;
     [self addSubview:jifengBtn];
+    
+    UIButton *voucherBtn = [[UIButton alloc] init];
+    [voucherBtn setImage:IMAGE(@"home_newUser") forState:UIControlStateNormal];
+    [self addSubview:voucherBtn];
+    [voucherBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.headImageBg.mas_bottom).mas_offset(-15);
+        make.centerX.mas_equalTo(self);
+    }];
+    
 }
 
 - (void)sellCarBtnClick{

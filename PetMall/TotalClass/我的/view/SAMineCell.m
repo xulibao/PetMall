@@ -31,8 +31,8 @@
     
     UILabel * label0 = [[UILabel alloc] init];
     self.label0 = label0;
-    label0.font = [UIFont systemFontOfSize:15];
-    label0.textColor = kColor5C5C5C;
+    label0.textColor = [UIColor colorWithHexStr:@"#333333"];
+    label0.font = [UIFont systemFontOfSize:13];
     [self.contentView  addSubview:label0];
     
     UILabel * label1 = [[UILabel alloc] init];
@@ -52,30 +52,29 @@
     
     
     [label0 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(imageView0.mas_right).mas_offset(5);
+        make.left.mas_equalTo(imageView0.mas_right).mas_offset(12);
         make.centerY.mas_equalTo(imageView0);
     }];
     
-    [label1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.mas_equalTo(imageView0);
-        make.right.mas_equalTo(self.contentView ).mas_offset(-10);
-    }];
+//    [label1 mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.mas_equalTo(imageView0);
+//        make.right.mas_equalTo(self.contentView ).mas_offset(-10);
+//    }];
     
-    [imageView1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(self.contentView);
-        make.centerY.mas_equalTo(imageView0);
-        
-    }];
+//    [imageView1 mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.right.mas_equalTo(self.contentView);
+//        make.centerY.mas_equalTo(imageView0);
+//
+//    }];
     
-    [self.contentView  sp_addBottomLineWithLeftMargin:15 rightMargin:0];
-    
+    [self sp_addBottomLineWithLeftMargin:0 rightMargin:0];
 }
 
 - (void)setModel:(SAMineModel *)model{
     _model = model;
     self.imageView0.image = IMAGE(model.iconImage);
     self.label0.text = model.titleName;
-    self.label1.text = model.descTitle;
+//    self.label1.text = model.descTitle;
     
 }
 

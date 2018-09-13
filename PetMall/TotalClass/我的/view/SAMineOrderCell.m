@@ -27,20 +27,20 @@
     
     UILabel * label0 = [[UILabel alloc] init];
     label0.text = @"我的订单";
-    label0.font = [UIFont systemFontOfSize:18];
+    label0.font = [UIFont systemFontOfSize:15];
     label0.textColor = kColorTextBlack;
     [topView addSubview:label0];
     
-    UILabel * label1 = [[UILabel alloc] init];
-    label1.text = @"全部订单";
-    label1.font = [UIFont systemFontOfSize:14];
-    label1.textColor = kColor878787;
-    [topView addSubview:label1];
-    [label1 handleTapActionWithBlock:^(UIView *sender) {
-        if ([self.delegate respondsToSelector:@selector(mineOrderClickWithType:)]) {
-            [self.delegate mineOrderClickWithType:SAMineOrderTypeAll];
-        }
-    }];
+//    UILabel * label1 = [[UILabel alloc] init];
+//    label1.text = @"全部订单";
+//    label1.font = [UIFont systemFontOfSize:14];
+//    label1.textColor = kColor878787;
+//    [topView addSubview:label1];
+//    [label1 handleTapActionWithBlock:^(UIView *sender) {
+//        if ([self.delegate respondsToSelector:@selector(mineOrderClickWithType:)]) {
+//            [self.delegate mineOrderClickWithType:SAMineOrderTypeAll];
+//        }
+//    }];
 
     
     UIImageView * imageView1 = [[UIImageView alloc] init];
@@ -48,7 +48,7 @@
     
     [topView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.mas_equalTo(self.contentView);
-        make.height.mas_equalTo(55);
+        make.height.mas_equalTo(45);
     }];
     
     [imageView0 mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -62,10 +62,10 @@
         make.centerY.mas_equalTo(imageView0);
     }];
     
-    [label1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.mas_equalTo(imageView0);
-        make.right.mas_equalTo(topView).mas_offset(-22);
-    }];
+//    [label1 mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.mas_equalTo(imageView0);
+//        make.right.mas_equalTo(topView).mas_offset(-22);
+//    }];
     
     [imageView1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(topView).mas_offset(-15);
@@ -73,21 +73,21 @@
 
     }];
     
-    [topView sp_addBottomLineWithLeftMargin:15 rightMargin:0];
+//    [topView sp_addBottomLineWithLeftMargin:15 rightMargin:0];
     
     UIView * bottomView = [[UIView alloc] init];
     self.bottomView = bottomView;
     [self.contentView addSubview:bottomView];
     
     // 待确认
-    UIView * bottomView0 = [self bottomViewTopImage:@"mine_daiqueren" bottomText:@"待确认"];
+    UIView * bottomView0 = [self bottomViewTopImage:@"mine_daifukuan" bottomText:@"待付款"];
     [bottomView0 handleTapActionWithBlock:^(UIView *sender) {
         if ([self.delegate respondsToSelector:@selector(mineOrderClickWithType:)]) {
             [self.delegate mineOrderClickWithType:SAMineOrderTypeConfirming];
         }
     }];
     // 待付款
-    UIView * bottomView1 = [self bottomViewTopImage:@"mine_daifukuan" bottomText:@"待付款"];
+    UIView * bottomView1 = [self bottomViewTopImage:@"mine_daifahuo" bottomText:@"待发货"];
     [bottomView1 handleTapActionWithBlock:^(UIView *sender) {
         if ([self.delegate respondsToSelector:@selector(mineOrderClickWithType:)]) {
             [self.delegate mineOrderClickWithType:SAMineOrderTypePayment];
@@ -95,7 +95,7 @@
     }];
     
     // 待过户
-    UIView * bottomView2 = [self bottomViewTopImage:@"mine_daiguohu" bottomText:@"待过户"];
+    UIView * bottomView2 = [self bottomViewTopImage:@"mine_daishouhuo" bottomText:@"待收货"];
     [bottomView2 handleTapActionWithBlock:^(UIView *sender) {
         if ([self.delegate respondsToSelector:@selector(mineOrderClickWithType:)]) {
             [self.delegate mineOrderClickWithType:SAMineOrderTypeTransfer];
@@ -103,7 +103,7 @@
 
     }];
     // 已完成
-    UIView * bottomView3 = [self bottomViewTopImage:@"mine_jiaoyiwancheng" bottomText:@"已完成"];
+    UIView * bottomView3 = [self bottomViewTopImage:@"mine_daipinlun" bottomText:@"待评价"];
     [bottomView3 handleTapActionWithBlock:^(UIView *sender) {
         if ([self.delegate respondsToSelector:@selector(mineOrderClickWithType:)]) {
             [self.delegate mineOrderClickWithType:SAMineOrderTypeComplete];
@@ -111,7 +111,7 @@
     }];
     
     // 已失败
-    UIView * bottomView4 = [self bottomViewTopImage:@"mine_yishibai" bottomText:@"已失败"];
+    UIView * bottomView4 = [self bottomViewTopImage:@"mine_tuikuan" bottomText:@"退款/售后"];
     [bottomView4 handleTapActionWithBlock:^(UIView *sender) {
         if ([self.delegate respondsToSelector:@selector(mineOrderClickWithType:)]) {
             [self.delegate mineOrderClickWithType:SAMineOrderTypeFail];
@@ -160,7 +160,7 @@
     [view addSubview:topImageView];
     
     UILabel *bottomLabel = [[UILabel alloc] init];
-    bottomLabel.font = [UIFont systemFontOfSize:15];
+    bottomLabel.font = [UIFont systemFontOfSize:13];
     bottomLabel.textColor = kColor878787;
     bottomLabel.text = bottomStr;
     [view addSubview:bottomLabel];
