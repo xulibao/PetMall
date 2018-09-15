@@ -19,6 +19,7 @@
 
 #import "SAUserInfoEntity.h"
 //#import "STAppUpdateAlert.h"
+#import <BaiduMapAPI_Base/BMKMapManager.h>
 
 #ifdef DEBUG
 //#define DEBUGVIDEOCHATCALL
@@ -38,6 +39,7 @@ static dispatch_queue_t conversationsJoinSerialQueue = NULL;
 @property(nonatomic, copy) NSString *updateUrl;
 @property(nonatomic, strong) dispatch_source_t timer;
 @property(nonatomic, strong) SAAlertController *alertController;
+@property(nonatomic, strong)   BMKMapManager *mapManager;
 
 @end
 
@@ -62,6 +64,17 @@ static dispatch_queue_t conversationsJoinSerialQueue = NULL;
         [self initWindow];
         [self initRootViewController];
         [self initCountDownTimer];
+        
+        NSString *mapKey = @"v9Bt1S4HMVMyf7uABt6zGLw3wdwRcIHO";
+        _mapManager = [[BMKMapManager alloc]init];
+        
+        // 如果要关注网络及授权验证事件，请设定generalDelegate参数
+        BOOL ret = [_mapManager start:mapKey generalDelegate:nil];
+        if (ret) {
+            NSLog(@"百度引擎设置成功！");
+        }
+
+        
 //        [self checkVersion];
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{

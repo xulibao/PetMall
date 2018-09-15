@@ -9,7 +9,7 @@
 #ifndef GA_Base_CategoryHeader_h
 #define GA_Base_CategoryHeader_h
 
-#import <YYCategories/YYCategories.h>
+#import <YYKit.h>
 #import "UIView+GHExtension.h"
 #import "UIView+SPLine.h" // 添加线
 #import "NSTimer+GHExtension.h"
@@ -28,7 +28,6 @@
 #import "UITextField+GHExtension.h"
 // 第三方库
 #import "Masonry.h"
-#import "YYCategories.h"
 #import "UITableView+FDTemplateLayoutCell.h"
 
 

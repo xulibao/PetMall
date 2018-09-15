@@ -14,8 +14,13 @@
 #import "SAMineHeadView.h"
 #import "SAPersonCenterModel.h"
 #import "SAMessageButton.h"
-
-
+#import "PMOrderViewController.h"
+#import "PMLogisticsInformationViewController.h"
+#import "PMMyGroupPurchaseViewController.h"
+#import "PMMyExchangeViewController.h"
+#import "PMMyCollectionViewController.h"
+#import "PMMyIntegralViewController.h"
+#import "PMMyAddressViewController.h"
 @interface PMMineViewController ()<UITableViewDelegate,UITableViewDataSource,SAMineHeadViewDelegate,SAMineOrderDelegate>
 @property (nonatomic,strong) SAMineHeadView * headerView;
 @property (nonatomic,strong) NSMutableArray *dataArray;
@@ -94,12 +99,8 @@
     model.descTitle = [NSString stringWithFormat:@"%@元",self.personCenterModel.availableBond];
     [self.dataArray addObject:model];
     model.cellAction = ^(SAMineModel *model) {
-//        SAMyWalletViewController * vc = [[SAMyWalletViewController alloc] init];
-//        vc.type = self.personCenterModel.type;
-//        vc.callBack = ^{
-//            [self fecthNetData];
-//        };
-//        [self.navigationController pushViewController:vc animated:YES];
+        PMMyGroupPurchaseViewController * vc = [[PMMyGroupPurchaseViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
     };
     
     model = [[SAMineModel alloc] init];
@@ -107,8 +108,8 @@
     model.titleName = @"我的兑换";
     [self.dataArray addObject:model];
     model.cellAction = ^(SAMineModel *model) {
-//        SAVideoApplicationViewController *vc = [[SAVideoApplicationViewController alloc] init];
-//        [self.navigationController pushViewController:vc animated:YES];
+        PMMyExchangeViewController *vc = [[PMMyExchangeViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
     };
     
     model = [[SAMineModel alloc] init];
@@ -116,8 +117,8 @@
     model.titleName = @"我的收藏";
     [self.dataArray addObject:model];
     model.cellAction = ^(SAMineModel *model) {
-        //        SAMyCouponViewController *vc = [[SAMyCouponViewController alloc] init];
-        //        [self.navigationController pushViewController:vc animated:YES];
+                PMMyCollectionViewController *vc = [[PMMyCollectionViewController alloc] init];
+                [self.navigationController pushViewController:vc animated:YES];
     };
     
     model = [[SAMineModel alloc] init];
@@ -133,10 +134,9 @@
     model.iconImage = @"mine_dizhi";
     model.titleName = @"我的地址";
     [self.dataArray addObject:model];
-    //我的关注
     model.cellAction = ^(SAMineModel *model) {
-//        SAAttentionViewController * vc = [[SAAttentionViewController alloc] init];
-//        [self.navigationController pushViewController:vc animated:YES];
+        PMMyAddressViewController * vc = [[PMMyAddressViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
     };
     
         model = [[SAMineModel alloc] init];
@@ -248,11 +248,6 @@
 
 #pragma mark - MineOrderDelegate
 
-- (void)mineOrderClickWithType:(SAMineOrderType)type{
-//    SAOrderListViewController *vc = [[SAOrderListViewController alloc] initWithType:type];
-//    [self pushViewController:vc];
-}
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 2;
 }
@@ -318,9 +313,20 @@
 }
 
 #pragma mark - mineHeadViewDelegate
+- (void)mineOrderClickWithType:(SAMineOrderType)type{
+    
+    PMOrderViewController * vc = [PMOrderViewController new];
+    [self.navigationController pushViewController:vc animated:YES];
+//    PMLogisticsInformationViewController * vc = [PMLogisticsInformationViewController new];
+//    [self.navigationController pushViewController:vc animated:YES];
+}
+- (void)mineHeadViewClickYouhui{
+    
+}
 
-- (void)mineHeadViewClickSellCar{
-
+- (void)mineHeadViewClickJifeng{
+    PMMyIntegralViewController * vc = [PMMyIntegralViewController new];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end

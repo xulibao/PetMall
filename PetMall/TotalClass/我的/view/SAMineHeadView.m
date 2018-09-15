@@ -93,7 +93,7 @@
       youhuiBtn.titleLabel.font = [UIFont systemFontOfSize:16];
     self.youhuiBtn = youhuiBtn;
     [self addSubview:youhuiBtn];
-    [youhuiBtn addTarget:self action:@selector(sellCarBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [youhuiBtn addTarget:self action:@selector(youhuiBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [youhuiBtn setTitle:@"3\n优惠券" forState:UIControlStateNormal];
     
     UIButton *jifengBtn = [[UIButton alloc] init];
@@ -102,7 +102,7 @@
     jifengBtn.titleLabel.font = [UIFont systemFontOfSize:16];
     self.jifengBtn = jifengBtn;
     [self addSubview:jifengBtn];
-    [jifengBtn addTarget:self action:@selector(sellCarBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [jifengBtn addTarget:self action:@selector(jifengBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [jifengBtn setTitle:@"417\n积分" forState:UIControlStateNormal];    self.jifengBtn = jifengBtn;
     [self addSubview:jifengBtn];
     
@@ -115,10 +115,14 @@
     }];
     
 }
-
-- (void)sellCarBtnClick{
-    if ([self.delegate respondsToSelector:@selector(mineHeadViewClickSellCar)]) {
-        [self.delegate mineHeadViewClickSellCar];
+- (void)youhuiBtnClick{
+    if ([self.delegate respondsToSelector:@selector(mineHeadViewClickYouhui)]) {
+        [self.delegate mineHeadViewClickYouhui];
+    }
+}
+- (void)jifengBtnClick{
+    if ([self.delegate respondsToSelector:@selector(mineHeadViewClickJifeng)]) {
+        [self.delegate mineHeadViewClickJifeng];
     }
 }
 

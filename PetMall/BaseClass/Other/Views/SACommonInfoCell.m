@@ -15,7 +15,7 @@
 
 #import "SAInfoItemProtocol.h"
 //#import <YYWebImage/YYWebImage.h>
-#import <UIImageView+WebCache.h>
+#import <SDWebImage/UIImageView+WebCache.h>
 
 #import "SALotInfoItem.h"
 

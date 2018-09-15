@@ -12,13 +12,13 @@ target 'PetMall' do
   pod 'Masonry'
   pod 'KINWebBrowser'
   pod 'AFNetworking'
-  pod 'YYCategories'
-  pod 'YYImage'
+  pod 'YYKit'
   pod 'UITableView+FDTemplateLayoutCell'
   pod 'MJExtension'
   pod 'MJRefresh'
   pod 'IQKeyboardManager'
   pod 'SDCycleScrollView'
+  pod 'BaiduMapKit'
 
 
 

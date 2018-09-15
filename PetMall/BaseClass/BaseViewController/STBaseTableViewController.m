@@ -11,7 +11,6 @@
 #import "UITableView+SATableView.h"
 
 #import "SATableViewHeaderFooterView.h"
-#import <YYImage/YYImage.h>
 
 const UIEdgeInsets SABaseTableViewControllerInitialContentInsetNotSet = {-1, -1, -1, -1};
 NSString *const SATableViewControllerSectionHeaderIdentifier = @"SASectionHeaderView";

@@ -28,6 +28,8 @@
 #import "DCScrollAdFootView.h"   //底滚动广告
 #import <UIImageView+WebCache.h>
 #import "DCGoodBaseViewController.h"
+#import "PMLogisticsInformationViewController.h"
+#import "YWAddressDataTool.h"
 /* cell */
 static NSString *const DCGoodsCountDownCellID = @"DCGoodsCountDownCell";
 static NSString *const DCNewWelfareCellID = @"DCNewWelfareCell";
@@ -134,6 +136,7 @@ static NSString *const DCScrollAdFootViewID = @"DCScrollAdFootView";
 - (void)viewDidLoad{
     [super viewDidLoad];
 //    [self setUpBase];
+    [[YWAddressDataTool sharedManager] requestGetData];
 
     [self setUpGoodsData];
     [self setUpGIFRrfresh];

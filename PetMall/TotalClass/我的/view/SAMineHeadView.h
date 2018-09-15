@@ -17,7 +17,9 @@
 //- (void)mineHeadViewClickMenuButton:(SAMineMenuButton * )menuButton;
 - (void)mineHeadViewClickCertification;
 - (void)mineHeadViewClickUserInfo;
-- (void)mineHeadViewClickSellCar;
+- (void)mineHeadViewClickYouhui;
+- (void)mineHeadViewClickJifeng;
+
 
 
 @end

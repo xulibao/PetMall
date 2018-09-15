@@ -8,7 +8,7 @@
 
 #import "STBaseViewController.h"
 #import "GAToastTipsView.h"
-#import <YYImage/YYImage.h>
+#import <YYKit.h>
 
 @interface STBaseViewController ()
 
