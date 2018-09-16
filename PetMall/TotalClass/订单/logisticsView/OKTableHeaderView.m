@@ -24,6 +24,8 @@
     
     self=[super initWithFrame:frame];
     if (self) {
+        self.image = IMAGE(@"order_shadowBg");
+        
         [self setupUI];
     }
     return self;
@@ -67,8 +69,6 @@
     
 }
 - (void)setupUI {
-    self.backgroundColor = [UIColor whiteColor];
-    
     self.goodsPic.frame=CGRectMake(15, 15, 40,40);
     self.goodsPic.image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"hh" ofType:@"jpg"]];
     [self addSubview:self.goodsPic];

@@ -6,8 +6,8 @@
 //  Copyright © 2018年 ios@xulibao. All rights reserved.
 //
 
-#import "STBaseViewController.h"
+#import "SAInfoListViewController.h"
 
-@interface PMGroupPurchaseViewController : STBaseViewController
+@interface PMGroupPurchaseViewController : SAInfoListViewController
 
 @end

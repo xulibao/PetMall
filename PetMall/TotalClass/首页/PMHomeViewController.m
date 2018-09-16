@@ -29,7 +29,10 @@
 #import <UIImageView+WebCache.h>
 #import "DCGoodBaseViewController.h"
 #import "PMLogisticsInformationViewController.h"
+#import "PMTimeLimitViewController.h"
+#import "PMSearchViewController.h"
 #import "YWAddressDataTool.h"
+#import "STCoverView.h"
 /* cell */
 static NSString *const DCGoodsCountDownCellID = @"DCGoodsCountDownCell";
 static NSString *const DCNewWelfareCellID = @"DCNewWelfareCell";
@@ -49,6 +52,7 @@ static NSString *const DCOverFootViewID = @"DCOverFootView";
 static NSString *const DCScrollAdFootViewID = @"DCScrollAdFootView";
 @interface PMHomeViewController ()
 @property(nonatomic, strong) STHomeVCTopView *topView;
+
 @end
 
 @implementation PMHomeViewController
@@ -87,6 +91,14 @@ static NSString *const DCScrollAdFootViewID = @"DCScrollAdFootView";
 #pragma mark - 导航栏处理
 - (void)fecthNavTopView{
    self.topView = [[STHomeVCTopView alloc] initWithFrame:CGRectMake(0, 0, UI_SCREEN_WIDTH, 44)];
+    @weakify(self)
+    self.topView.searchClick = ^{
+        @strongify(self)
+        PMSearchViewController * vc = [[PMSearchViewController alloc ] init];
+        [self presentViewController:vc animated:YES completion:^{
+            
+        }];
+    };
     [self.navgationBar addSubview:_topView];
 
 }
@@ -109,6 +121,9 @@ static NSString *const DCScrollAdFootViewID = @"DCScrollAdFootView";
 
 /* 推荐商品属性 */
 @property (strong , nonatomic)NSMutableArray *youLikeItem;
+
+@property(nonatomic, strong) UIView *youhuiView;
+@property(nonatomic, strong) UIView *coverBtn;
 @end
 
 @implementation PMHomeListViewController
@@ -136,8 +151,6 @@ static NSString *const DCScrollAdFootViewID = @"DCScrollAdFootView";
 - (void)viewDidLoad{
     [super viewDidLoad];
 //    [self setUpBase];
-    [[YWAddressDataTool sharedManager] requestGetData];
-
     [self setUpGoodsData];
     [self setUpGIFRrfresh];
     
@@ -292,6 +305,9 @@ static NSString *const DCScrollAdFootViewID = @"DCScrollAdFootView";
     if (kind == UICollectionElementKindSectionFooter) {
         if (indexPath.section == 0) {
             DCTopLineFootView *footview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:DCTopLineFootViewID forIndexPath:indexPath];
+            footview.DCTopLineFootViewCallBack = ^{
+                [self showYouHui];
+            };
             reusableview = footview;
         }
 //        else if (indexPath.section == 5) {
@@ -371,32 +387,24 @@ static NSString *const DCScrollAdFootViewID = @"DCScrollAdFootView";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    DCGoodBaseViewController * vc = [[DCGoodBaseViewController alloc] init];
-    DCRecommendItem * item = _youLikeItem[indexPath.row];
-    vc.goodTitle = item.main_title;
-    vc.goodPrice = item.price;
-    vc.goodSubtitle = item.goods_title;
-    vc.shufflingArray = item.images;
-    vc.goodImageView = item.image_url;
-
-    [self.navigationController pushViewController:vc  animated:YES];
+ 
     if (indexPath.section == 0) {//10
-        
-//        DCGoodsSetViewController *goodSetVc = [[DCGoodsSetViewController alloc] init];
-//        goodSetVc.goodPlisName = @"ClasiftyGoods.plist";
-//        [self.navigationController pushViewController:goodSetVc animated:YES];
+
+        PMTimeLimitViewController * vc = [[PMTimeLimitViewController alloc] init];
+        [self pushViewController:vc];
         NSLog(@"点击了10个属性第%zd",indexPath.row);
     }else if (indexPath.section == 5){
         NSLog(@"点击了推荐的第%zd个商品",indexPath.row);
         
-//        DCGoodDetailViewController *dcVc = [[DCGoodDetailViewController alloc] init];
-//        dcVc.goodTitle = _youLikeItem[indexPath.row].main_title;
-//        dcVc.goodPrice = _youLikeItem[indexPath.row].price;
-//        dcVc.goodSubtitle = _youLikeItem[indexPath.row].goods_title;
-//        dcVc.shufflingArray = _youLikeItem[indexPath.row].images;
-//        dcVc.goodImageView = _youLikeItem[indexPath.row].image_url;
-//
-//        [self.navigationController pushViewController:dcVc animated:YES];
+        DCGoodBaseViewController * vc = [[DCGoodBaseViewController alloc] init];
+        DCRecommendItem * item = _youLikeItem[indexPath.row];
+        vc.goodTitle = item.main_title;
+        vc.goodPrice = item.price;
+        vc.goodSubtitle = item.goods_title;
+        vc.shufflingArray = item.images;
+        vc.goodImageView = item.image_url;
+        
+        [self.navigationController pushViewController:vc  animated:YES];
     }
 }
 
@@ -407,5 +415,87 @@ static NSString *const DCScrollAdFootViewID = @"DCScrollAdFootView";
 {
     [self.collectionView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
 }
+- (UIView *)youhuiView{
+    if (_youhuiView == nil) {
+        _youhuiView = [[UIView alloc] init];
 
+        UIImageView * imageView = [UIImageView new];
+        imageView.image = IMAGE(@"home_youhui");
+        [_youhuiView addSubview:imageView];
+        
+        [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.center.mas_equalTo(_youhuiView);
+        }];
+        
+        UIButton * cancelBtn = [UIButton new];
+        [cancelBtn addTarget:self action:@selector(cancelBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        [cancelBtn setImage:IMAGE(@"home_youhui_closed") forState:UIControlStateNormal];
+        [_youhuiView addSubview:cancelBtn];
+        [cancelBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(imageView.mas_right).mas_offset(0);
+            make.bottom.mas_equalTo(imageView.mas_top).mas_offset(0);
+        }];
+        
+        UIButton * linquBtn = [UIButton new];
+        [linquBtn setTitle:@"点击领取" forState:UIControlStateNormal];
+        [linquBtn setTitleColor:[UIColor colorWithHexStr:@"#D54931"] forState:UIControlStateNormal];
+        linquBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+        [linquBtn addTarget:self action:@selector(linquBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        [_youhuiView addSubview:linquBtn];
+        [linquBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.mas_equalTo(imageView).mas_offset(-5);
+            make.centerX.mas_equalTo(imageView);
+        }];
+        
+        UILabel * label = [UILabel new];
+        label.text = @"满299元使用";
+        label.textColor = [UIColor colorWithHexString:@"#D54931"];
+        label.font = [UIFont systemFontOfSize:16];
+        [imageView addSubview:label];
+        UILabel * label1 = [UILabel new];
+        label1.text = @"100";
+        label1.textColor = [UIColor colorWithHexString:@"#D54931"];
+        label1.font = [UIFont boldSystemFontOfSize:50];
+        [imageView addSubview:label1];
+        
+        [label1 mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.mas_equalTo(linquBtn.mas_top).mas_equalTo(-20);
+            make.centerX.mas_equalTo(imageView);
+        }];
+        [label mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.mas_equalTo(label1.mas_top).mas_equalTo(-5);
+            make.centerX.mas_equalTo(imageView);
+        }];
+
+    }
+    return _youhuiView;
+}
+
+- (void)showYouHui{
+    self.coverBtn = [[STCoverView alloc] initWithSuperView:kWindow complete:^(UIView *cover) {
+        [cover removeFromSuperview];
+        [self.youhuiView removeFromSuperview];
+    }];
+    
+    [self.coverBtn addSubview:self.youhuiView];
+    [self.youhuiView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.mas_equalTo(self.coverBtn);
+    }];
+    @weakify(self)
+//    self.youhuiView.cancel = ^{
+//        @strongify(self)
+//        [self.coverBtn removeFromSuperview];
+//        [self.youhuiView removeFromSuperview];
+////        self.shareView.transform = CGAffineTransformMakeTranslation(0, 0);
+//    };
+    
+}
+- (void)linquBtnClick{
+    
+}
+
+- (void)cancelBtnClick{
+    [self.coverBtn removeFromSuperview];
+    [self.youhuiView removeFromSuperview];
+}
 @end

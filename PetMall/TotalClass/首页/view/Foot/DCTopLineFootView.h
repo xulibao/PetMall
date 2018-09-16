@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface DCTopLineFootView : UICollectionReusableView
-
+@property(nonatomic, copy) void (^DCTopLineFootViewCallBack)();
 @end

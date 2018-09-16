@@ -7,12 +7,14 @@
 //
 
 #import "PMMyAddressCell.h"
+#import "PMMyAddressItem.h"
 @interface PMMyAddressCell()
 @property(nonatomic, strong) UILabel *nameLabel;
 @property(nonatomic, strong) UILabel *phoneLabel;
 @property(nonatomic, strong) UILabel *addressLabel;
 @property(nonatomic, strong) UILabel *defaultLabel;
 @property(nonatomic, strong) UIButton *editBtn;
+@property(nonatomic, strong) PMMyAddressItem *item;
 @end
 
 @implementation PMMyAddressCell
@@ -29,6 +31,7 @@
 
 - (void)tableView:(UITableView *)tableView configViewWithData:(PMMyAddressItem *)data AtIndexPath:(NSIndexPath *)indexPath {
     [super tableView:tableView configViewWithData:data AtIndexPath:indexPath];
+    self.item = data;
     self.nameLabel.text = data.nameStr;
     self.phoneLabel.text = data.phoneStr;
     self.addressLabel.text = [NSString stringWithFormat:@"收货地址：%@%@",data.areaAddress,data.detailAddress] ;
@@ -71,6 +74,7 @@
     [self.contentView addSubview:defaultLabel];
     
     UIButton * editBtn = [[UIButton alloc] init];
+    [editBtn addTarget:self action:@selector(editBtnClick) forControlEvents:UIControlEventTouchUpInside];
     self.editBtn = editBtn;
     [self.contentView addSubview:editBtn];
     [editBtn setImage:IMAGE(@"mine_address_edit") forState:UIControlStateNormal];
@@ -107,6 +111,12 @@
         make.bottom.mas_equalTo(-28.5);
     }];
     
+}
+
+- (void)editBtnClick{
+    if ([self.cellDelegate respondsToSelector:@selector(PMMyAddressCellEdit:)]) {
+        [self.cellDelegate PMMyAddressCellEdit:self.item];
+    }
 }
 
 @end

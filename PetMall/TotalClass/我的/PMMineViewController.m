@@ -12,14 +12,17 @@
 #import "SAMineOrderCell.h"
 #import "SAMineModel.h"
 #import "SAMineHeadView.h"
+#import "PMShareView.h"
 #import "SAPersonCenterModel.h"
 #import "SAMessageButton.h"
+#import "STCoverView.h"
 #import "PMOrderViewController.h"
 #import "PMLogisticsInformationViewController.h"
 #import "PMMyGroupPurchaseViewController.h"
 #import "PMMyExchangeViewController.h"
 #import "PMMyCollectionViewController.h"
 #import "PMMyIntegralViewController.h"
+#import "PMMyCouponViewController.h"
 #import "PMMyAddressViewController.h"
 @interface PMMineViewController ()<UITableViewDelegate,UITableViewDataSource,SAMineHeadViewDelegate,SAMineOrderDelegate>
 @property (nonatomic,strong) SAMineHeadView * headerView;
@@ -29,6 +32,8 @@
 @property (nonatomic, strong) UIButton *giftButton;
 @property (nonatomic, strong) SAMessageButton *messageButton;
 @property(nonatomic, strong) SAMineModel * moneyModel;
+@property (nonatomic, strong) STCoverView *coverBtn;
+@property(nonatomic, strong) PMShareView *shareView;
 @end
 
 @implementation PMMineViewController
@@ -38,6 +43,20 @@
         _dataArray = [NSMutableArray arrayWithCapacity:2];
     }
     return _dataArray;
+}
+
+- (PMShareView *)shareView{
+    if (_shareView == nil) {
+        _shareView = [[PMShareView alloc] init];
+        NSArray * array = @[@"share_wechat",
+                            @"share_pengyouquan",
+                            @"share_qq",
+                            @"share_zone"
+                            
+                            ];
+        _shareView.btnArray = array;
+    }
+    return _shareView;
 }
 
 - (BOOL)shouldHiddenSystemNavgation {
@@ -143,29 +162,49 @@
         model.iconImage = @"mine_bangzhu";
         model.titleName = @"帮助/问题";
         [self.dataArray addObject:model];
-        //我的出价
+        //分享
         model.cellAction = ^(SAMineModel *model) {
                 };
         model = [[SAMineModel alloc] init];
+        [self.dataArray addObject:model];
         model.iconImage = @"mine_fengxiang";
         model.titleName = @"分享";
-        //商户必读
+        //
         model.cellAction = ^(SAMineModel *model) {
-
+            [self share];
         };
-    //我的出价
-    model.cellAction = ^(SAMineModel *model) {
-    };
+    
+    //联系客服
     model = [[SAMineModel alloc] init];
     model.iconImage = @"mine_lianxikefu";
     model.titleName = @"联系客服";
-    //商户必读
     model.cellAction = ^(SAMineModel *model) {
         
     };
 
         [self.dataArray addObject:model];
     [self.tableView reloadData];
+}
+
+- (void)share{
+    self.coverBtn = [[STCoverView alloc] initWithSuperView:kWindow complete:^(UIView *cover) {
+        [cover removeFromSuperview];
+        [self.shareView removeFromSuperview];
+        self.shareView.transform = CGAffineTransformMakeTranslation(0, 0);
+    }];
+    
+    [self.coverBtn addSubview:self.shareView];
+    self.shareView.frame = CGRectMake(0, kMainBoundsHeight, kMainBoundsWidth,115);
+    @weakify(self)
+    self.shareView.cancel = ^{
+        @strongify(self)
+        [self.coverBtn removeFromSuperview];
+        [self.shareView removeFromSuperview];
+        self.shareView.transform = CGAffineTransformMakeTranslation(0, 0);
+    };
+    [UIView animateWithDuration:0.3 animations:^{
+        self.shareView.transform = CGAffineTransformMakeTranslation(0, -115);
+    }];
 }
 - (void)initSubviews {
     [super initSubviews];
@@ -321,7 +360,8 @@
 //    [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)mineHeadViewClickYouhui{
-    
+    PMMyCouponViewController * vc = [[PMMyCouponViewController alloc] init];
+    [self pushViewController:vc];
 }
 
 - (void)mineHeadViewClickJifeng{

@@ -7,7 +7,6 @@
 //
 
 #import "PMMyAddressItem.h"
-#import "PMMyAddressCell.h"
 @implementation PMMyAddressItem
 @synthesize cellClass = _cellClass;
 - (Class)cellClass {

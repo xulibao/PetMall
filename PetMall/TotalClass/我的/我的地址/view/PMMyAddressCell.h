@@ -7,7 +7,12 @@
 //
 
 #import "STCommonTableViewCell.h"
-#import "PMMyAddressItem.h"
+@class PMMyAddressItem;
+@protocol PMMyAddressCellDelegate <STCommonTableViewCellDelegate>
+- (void)PMMyAddressCellEdit:(PMMyAddressItem *)item;
+@end
 @interface PMMyAddressCell : STCommonTableViewCell
+
+@property(nonatomic, weak) id<PMMyAddressCellDelegate> cellDelegate;
 
 @end

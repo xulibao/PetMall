@@ -86,7 +86,9 @@
 
 // 点击搜索按钮
 - (void)searchButtonClick{
-    
+    if (self.searchClick) {
+        self.searchClick();
+    }
 }
 
 - (void)messageClick{

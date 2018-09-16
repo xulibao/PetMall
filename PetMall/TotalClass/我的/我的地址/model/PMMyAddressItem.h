@@ -7,6 +7,7 @@
 //
 
 #import "STCommonTableViewBaseItem.h"
+#import "PMMyAddressCell.h"
 
 @interface PMMyAddressItem : STCommonBaseTableRowItem
 @property (nonatomic, copy) NSString * phoneStr;            // 电话

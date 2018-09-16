@@ -43,7 +43,7 @@
 // YYWebImage
 //#import <YYWebImage/YYWebImage.h>
 // 全局数据共享
-
+#import "NSObject+Splicing.h"
 #endif
 
 #endif /* PrefixHeader_pch */

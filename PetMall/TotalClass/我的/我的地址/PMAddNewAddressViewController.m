@@ -34,6 +34,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = kColorFAFAFA;
     [self initUserDataSource];
     [self initUserInterface];
     [self initBottomView];
@@ -76,7 +77,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textViewPlaceholder) name:UITextViewTextDidChangeNotification object:nil];
     
     [self.view addSubview:self.tableView];
-    [self.view addSubview:self.coverView];
+    [kWindow addSubview:self.coverView];
     
 }
 
@@ -102,19 +103,20 @@
     _model.isDefaultAddress = defaultCell.rightSwitch.isOn;
     
     if (_model.nameStr.length == 0) {
-        [YWTool showAlterWithViewController:self Message:@"请填写收货人姓名！"];
+        [self showWaring:@"请填写收货人姓名！"];
         return;
     } else if (_model.phoneStr.length == 0) {
-        [YWTool showAlterWithViewController:self Message:@"请填写收货人电话！"];
+        [self showWaring:@"请填写收货人电话！"];
         return;
     } else if (_model.phoneStr.length != 11) {
-        [YWTool showAlterWithViewController:self Message:@"手机号为11位，如果为座机请加上区号"];
+        [self showWaring:@"手机号为11位，如果为座机请加上区号"];
         return;
     } else if ([_model.areaAddress isEqualToString:@"请选择"]) {
-        [YWTool showAlterWithViewController:self Message:@"请选择所在地区"];
+         [self showWaring:@"请选择所在地区"];
         return;
     } else if (_model.detailAddress.length == 0 || _model.detailAddress.length < 5) {
-        [YWTool showAlterWithViewController:self Message:@"请填写详细地址，不少与5字"];
+        [self showWaring:@"请填写详细地址，不少与5字"];
+
         return;
     }
     
@@ -258,6 +260,7 @@
         } else {
             YWAddressTableViewCell2 *cell = [tableView dequeueReusableCellWithIdentifier:CELL_IDENTIFIER2 forIndexPath:indexPath];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            [cell sp_addBottomLineWithLeftMargin:0 rightMargin:0];
             cell.leftStr = _dataSource[indexPath.section][indexPath.row];
             cell.rightStr = _model.areaAddress;
             if (![_model.areaAddress isEqualToString:@""] && ![_model.areaAddress isEqualToString:@"请选择"]) {
@@ -322,12 +325,12 @@
 
 - (UITableView *)tableView {
     if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kMainBoundsWidth, kMainBoundsHeight) style:UITableViewStylePlain];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kMainBoundsWidth,300) style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.backgroundColor = kColorFAFAFA;
         _tableView.rowHeight = 50;
-        _tableView.tableFooterView = [UIView new];
+        _tableView.tableFooterView = nil;
         // 设置分割线
         [_tableView setSeparatorInset:UIEdgeInsetsZero];
         [_tableView setLayoutMargins:UIEdgeInsetsZero];
@@ -341,8 +344,8 @@
 
 - (UITextView *)detailTextViw {
     if (!_detailTextViw) {
-        _detailTextViw = [[UITextView alloc] initWithFrame:CGRectMake(100, 1, kMainBoundsWidth - 100, 80)];
-        _detailTextViw.textContainerInset = UIEdgeInsetsMake(5, 15, 5, 15);
+        _detailTextViw = [[UITextView alloc] initWithFrame:CGRectMake(95, 1, kMainBoundsWidth - 95, 80)];
+        _detailTextViw.textContainerInset = UIEdgeInsetsMake(5, 0, 5, 15);
         _detailTextViw.font = [UIFont systemFontOfSize:14];
         [_detailTextViw addSubview:self.promptLable];
         if (_model.detailAddress.length > 0) {
@@ -355,7 +358,7 @@
 
 - (UILabel *)promptLable {
     if (!_promptLable) {
-        _promptLable = [[UILabel alloc] initWithFrame:CGRectMake(20 , 2, kMainBoundsWidth, 24)];
+        _promptLable = [[UILabel alloc] initWithFrame:CGRectMake(0 , 5, kMainBoundsWidth, 24)];
         _promptLable.text = @"街道、楼牌号等";
         _promptLable.numberOfLines = 0;
         _promptLable.textColor = RGBA(200, 200, 200, 1);
@@ -374,7 +377,21 @@
         }
         
         _chooseAddressView.address = _model.areaAddress;
-        
+        _chooseAddressView.closed = ^{
+            @strongify(self)
+            self.coverView.backgroundColor = [UIColor clearColor];
+            NSLog(@"选择的地区为：%@", self.chooseAddressView.address);
+            self.model.areaAddress = self.chooseAddressView.address;
+            if (self.model.areaAddress.length == 0) {
+                self.model.areaAddress = @"请选择";
+            }
+            [self.tableView reloadData];
+            // 隐藏视图 - 动画
+            [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+                self.coverView.frame = CGRectMake(0, kMainBoundsHeight, kMainBoundsWidth, kMainBoundsHeight);
+                self.chooseAddressView.hidden = NO;
+            } completion:nil];
+        };
         _chooseAddressView.chooseFinish = ^{
             @strongify(self)
             self.coverView.backgroundColor = [UIColor clearColor];

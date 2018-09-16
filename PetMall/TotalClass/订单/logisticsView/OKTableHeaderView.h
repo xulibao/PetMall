@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface OKTableHeaderView : UIView
+@interface OKTableHeaderView : UIImageView
 
 @property (copy, nonatomic)NSString *number;
 @property (copy, nonatomic)NSString *company;

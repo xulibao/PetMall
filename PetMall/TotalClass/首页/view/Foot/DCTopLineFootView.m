@@ -49,6 +49,11 @@
 
 - (void)setUpUI{
     _topAdImageView = [[UIImageView alloc] init];
+    [_topAdImageView handleTapActionWithBlock:^(UIView *sender) {
+        if (self.DCTopLineFootViewCallBack) {
+            self.DCTopLineFootViewCallBack();
+        }
+    }];
     _topAdImageView.image = IMAGE(@"home_ad_conpou");
     _topAdImageView.contentMode = UIViewContentModeScaleAspectFit;
     [self addSubview:_topAdImageView];

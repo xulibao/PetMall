@@ -36,7 +36,11 @@ static  CGFloat  const  kHYTopTabbarHeight = 30; //地址标签栏的高度
     }
     return self;
 }
-
+- (void)closedBtnClick{
+    if (self.closed) {
+        self.closed();
+    }
+}
 #pragma mark - setUp UI
 
 - (void)setUp {
@@ -44,36 +48,50 @@ static  CGFloat  const  kHYTopTabbarHeight = 30; //地址标签栏的高度
     UIView * topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, kHYTopViewHeight)];
     [self addSubview:topView];
     UILabel * titleLabel = [[UILabel alloc]init];
-    titleLabel.text = @"选择您所在地区";
+    titleLabel.text = @"选择地区";
+    titleLabel.textColor = kColor999999;
+    titleLabel.font = [UIFont systemFontOfSize:14];
     [titleLabel sizeToFit];
     [topView addSubview:titleLabel];
+    
+    UIButton * closedBtn = [[UIButton alloc] init];
+    [closedBtn addTarget:self action:@selector(closedBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [closedBtn setImage:IMAGE(@"mine_address_closed") forState:UIControlStateNormal];
+    [topView addSubview:closedBtn];
+    [closedBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(15);
+        make.centerY.mas_equalTo(topView);
+    }];
+
+
+    
     titleLabel.centerY = topView.height * 0.5;
     titleLabel.centerX = topView.width * 0.5;
     UIView * separateLine = [self separateLine];
     [topView addSubview: separateLine];
     separateLine.top = topView.height - separateLine.height;
     topView.backgroundColor = [UIColor whiteColor];
-
+    
     
     YWAddressView * topTabbar = [[YWAddressView alloc]initWithFrame:CGRectMake(0, topView.height, self.frame.size.width, kHYTopViewHeight)];
     [self addSubview:topTabbar];
     _topTabbar = topTabbar;
     [self addTopBarItem];
-    UIView * separateLine1 = [self separateLine];
-    [topTabbar addSubview: separateLine1];
-    separateLine1.top = topTabbar.height - separateLine.height;
+//    UIView * separateLine1 = [self separateLine];
+//    [topTabbar addSubview: separateLine1];
+//    separateLine1.top = topTabbar.height - separateLine.height;
     [_topTabbar layoutIfNeeded];
     topTabbar.backgroundColor = [UIColor whiteColor];
     
     UIView * underLine = [[UIView alloc] initWithFrame:CGRectZero];
     [topTabbar addSubview:underLine];
     _underLine = underLine;
-    underLine.height = 2.0f;
+    underLine.height = 0.5f;
     UIButton * btn = self.topTabbarItems.lastObject;
     [self changeUnderLineFrame:btn];
-    underLine.top = separateLine1.top - underLine.height;
+    underLine.top = topTabbar.height - separateLine.height - underLine.height;
     
-    _underLine.backgroundColor = [UIColor orangeColor];
+    _underLine.backgroundColor = kColorFF3945;
     UIScrollView * contentView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(topTabbar.frame), self.frame.size.width, self.height - kHYTopViewHeight - kHYTopTabbarHeight)];
     contentView.contentSize = CGSizeMake(kMainBoundsWidth, 0);
     [self addSubview:contentView];
@@ -117,9 +135,10 @@ static  CGFloat  const  kHYTopTabbarHeight = 30; //地址标签栏的高度
 - (void)addTopBarItem {
     
     UIButton * topBarItem = [UIButton buttonWithType:UIButtonTypeCustom];
+    topBarItem.titleLabel.font = [UIFont systemFontOfSize:14];
     [topBarItem setTitle:@"请选择" forState:UIControlStateNormal];
-    [topBarItem setTitleColor:RGBA(43, 43, 43, 1) forState:UIControlStateNormal];
-    [topBarItem setTitleColor:RGBA(255, 85, 0, 1) forState:UIControlStateSelected];
+    [topBarItem setTitleColor:kColor333333 forState:UIControlStateNormal];
+    [topBarItem setTitleColor:kColorFF3945 forState:UIControlStateSelected];
     [topBarItem sizeToFit];
      topBarItem.centerY = _topTabbar.height * 0.5;
     [self.topTabbarItems addObject:topBarItem];
@@ -447,7 +466,7 @@ static  CGFloat  const  kHYTopTabbarHeight = 30; //地址标签栏的高度
 - (UIView *)separateLine {
     
     UIView * separateLine = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, 1 / [UIScreen mainScreen].scale)];
-    separateLine.backgroundColor = RGBA(222, 222, 222, 1);
+    separateLine.backgroundColor = [UIColor colorWithHexStr:@"#f4f4f4"];
     return separateLine;
 }
 

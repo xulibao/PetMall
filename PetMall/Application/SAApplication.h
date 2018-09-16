@@ -10,7 +10,7 @@
 #import "PMLoginViewController.h"
 
 #if DEBUG
-//#define DEVELOPER_TEST_VIEWCONTROLLER @"SAVideoViewerViewController"
+//#define DEVELOPER_TEST_VIEWCONTROLLER @"PMLoginViewController"
 #endif
 
 @class SALotPriceInfoEntity;

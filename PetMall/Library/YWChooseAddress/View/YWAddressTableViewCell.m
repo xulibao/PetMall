@@ -35,17 +35,17 @@ static  CGFloat  const  YWFontH = 22; //地址字体高度限制
     
     _item = item;
     _addressNameLabel.text = item.name;
-    CGSize fontSize = [self getSizeByString:item.name sizeConstraint:CGSizeMake(kMainBoundsWidth, 22) font:[UIFont systemFontOfSize:16]];
+    CGSize fontSize = [self getSizeByString:item.name sizeConstraint:CGSizeMake(kMainBoundsWidth, 22) font:[UIFont systemFontOfSize:14]];
     _addressNameLabel.frame = CGRectMake(20, 10, fontSize.width, YWFontH);
-    _addressNameLabel.textColor = item.isSelected ? RGBA(255, 85, 0, 1) : [UIColor blackColor];
+    _addressNameLabel.textColor = item.isSelected ? kColorFF3945 : [UIColor blackColor];
     _selectFlagImageView.hidden = !item.isSelected;
-    _selectFlagImageView.frame = CGRectMake(CGRectGetMaxX(_addressNameLabel.frame) + 5, 14.5, 15, 15);
+    _selectFlagImageView.frame = CGRectMake(CGRectGetMaxX(_addressNameLabel.frame) + 5, 14.5, 11, 8);
 }
 
 - (UILabel *)addressNameLabel {
     if (!_addressNameLabel) {
         _addressNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, 100, YWFontH)];
-        _addressNameLabel.font = [UIFont systemFontOfSize:16];
+        _addressNameLabel.font = [UIFont systemFontOfSize:14];
         _addressNameLabel.textColor = [UIColor blackColor];
     }
     return _addressNameLabel;
@@ -53,7 +53,7 @@ static  CGFloat  const  YWFontH = 22; //地址字体高度限制
 
 - (UIImageView *)selectFlagImageView {
     if (!_selectFlagImageView) {
-        _selectFlagImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"btn_check"]];
+        _selectFlagImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mine_address_duigou"]];
         _selectFlagImageView.frame = CGRectMake(CGRectGetMaxX(self.addressNameLabel.frame) + 5, 14.5, 15, 15);
         _selectFlagImageView.hidden = YES;
     }

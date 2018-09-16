@@ -7,7 +7,7 @@
 //
 
 #import "PMPayResultViewController.h"
-
+#import "PMOrderDetailViewController.h"
 #import "PMHomeViewController.h"
 #import "STTabBarController.h"
 @interface PMPayResultViewController ()
@@ -39,6 +39,7 @@
 }
 - (void)fectchSubViews{
     UIImageView * bgView = [[UIImageView alloc] init];
+    bgView.userInteractionEnabled = YES;
     [self.view addSubview:bgView];
     if (kMainBoundsHeight == 480) {
         bgView.image = IMAGE(@"640x960");
@@ -113,12 +114,12 @@
 //返回首页
 - (void)backHome{
         [self.navigationController popToRootViewControllerAnimated:YES];
-        [[SAApplication sharedApplication].mainTabBarController select:0];
+        [[SAApplication sharedApplication].mainTabBarController setSelectedIndex:0];
 }
 //查看订单
 - (void)bidClick{
-//    SAMyWalletViewController * vc = [[SAMyWalletViewController alloc] init];
-//    [self pushViewController:vc];
+    PMOrderDetailViewController * vc = [[PMOrderDetailViewController alloc] init];
+    [self pushViewController:vc];
 }
 
 @end

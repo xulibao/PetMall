@@ -63,9 +63,9 @@
     statueLabel.textColor = [UIColor colorWithHexStr:@"#999999"];    [self addSubview:statueLabel];
     _statueLabel = statueLabel;
     
-    UILabel *line = [[UILabel alloc]init];
-    line.backgroundColor = RGB(238, 238, 238);
-    [self addSubview:line];
+//    UILabel *line = [[UILabel alloc]init];
+//    line.backgroundColor = RGB(238, 238, 238);
+//    [self addSubview:line];
     CGFloat offX =  0.5 *(kMainBoundsWidth  - 24) - kLeftMagin - kImageWidth * 0.5;
     [stateImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(self).offset(-offX);
@@ -86,12 +86,12 @@
     }];
     
     
-    [line mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self).offset(50);
-        make.right.mas_equalTo(self);
-        make.bottom.mas_equalTo(self);
-        make.height.mas_equalTo(@1);
-    }];
+//    [line mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.mas_equalTo(self).offset(50);
+//        make.right.mas_equalTo(self);
+//        make.bottom.mas_equalTo(self);
+//        make.height.mas_equalTo(@1);
+//    }];
     
 }
 

@@ -156,14 +156,14 @@ static dispatch_queue_t conversationsJoinSerialQueue = NULL;
 }
 
 - (void)initRootViewController {
-    [self.navigationController setViewControllers:@[self.mainTabBarController]
-                                         animated:NO];
-//    if (self.userInfo) {
-//        [self signIn];
-//    } else {
-//        [self.navigationController setViewControllers:@[self.signInController]
-//                                            animated:NO];
-//    }
+//    [self.navigationController setViewControllers:@[self.mainTabBarController]
+//                                         animated:NO];
+    if (self.userInfo) {
+        [self signIn];
+    } else {
+        [self.navigationController setViewControllers:@[self.signInController]
+                                            animated:NO];
+    }
 }
 
 - (void)initUser {

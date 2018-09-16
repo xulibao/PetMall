@@ -9,7 +9,8 @@
 #import "PMMyAddressViewController.h"
 #import "PMMyAddressItem.h"
 #import "PMAddNewAddressViewController.h"
-@interface PMMyAddressViewController ()
+#import "YWAddressDataTool.h"
+@interface PMMyAddressViewController ()<PMMyAddressCellDelegate>
 @property(nonatomic, strong) NSMutableArray *dataArray;
 @end
 
@@ -17,8 +18,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[YWAddressDataTool sharedManager] requestGetData];
     self.title = @"我的地址";
     [self fetchData];
+    self.tableView.mj_header.hidden = YES;
+    self.viewModel.cellDelegate = self;
 }
 
 - (void)refreshingAction {
@@ -27,6 +31,7 @@
 
 - (void)initSubviews{
     [super initSubviews];
+    
     UIButton * addAddressBtn = [UIButton new];
     [self.view addSubview:addAddressBtn];
 
@@ -57,6 +62,35 @@
 }
 - (void)addAddressBtnClick{
     PMAddNewAddressViewController * vc = [[PMAddNewAddressViewController alloc] init];
+    vc.addressBlock = ^(PMMyAddressItem *model) {
+        [self showSuccess:@"添加地址成功"];
+        if (model.isDefaultAddress) {
+            for (PMMyAddressItem *model in self.dataArray) {
+                model.isDefaultAddress = NO;
+            }
+        }
+        [self.dataArray addObject:model];
+        [self setItems:self.dataArray];
+    };
+    [self pushViewController:vc];
+}
+
+- (void)PMMyAddressCellEdit:(id)item{
+    PMMyAddressItem * addressItem = (PMMyAddressItem *)item;
+    NSInteger  index = [self.dataArray indexOfObject:addressItem];
+    PMAddNewAddressViewController * vc = [[PMAddNewAddressViewController alloc] init];
+    vc.model = addressItem;
+    vc.addressBlock = ^(PMMyAddressItem *model) {
+        [self showSuccess:@"编辑地址成功"];
+        if (model.isDefaultAddress) {
+            for (PMMyAddressItem *item in self.dataArray) {
+                item.isDefaultAddress = NO;
+            }
+            model.isDefaultAddress = YES;
+        }
+        [self.dataArray replaceObjectAtIndex:index withObject:model];
+        [self setItems:self.dataArray];
+    };
     [self pushViewController:vc];
 }
 

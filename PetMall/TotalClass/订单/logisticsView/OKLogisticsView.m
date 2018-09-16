@@ -21,7 +21,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        [self setupUI];
+//        [self setupUI];
     }
     
     return self;
@@ -31,7 +31,7 @@
     self = [super init];
     if (self) {
         
-        [self setupUI];
+//        [self setupUI];
     }
     
     return self;
@@ -40,9 +40,8 @@
 - (instancetype)initWithDatas:(NSArray*)array {
     self = [super init];
     if (self) {
-        
         [self.dataArray addObjectsFromArray:array];
-        //        [self setupUI];
+                [self setupUI];
     }
     
     return self;
@@ -91,19 +90,29 @@
 
 - (void)setupUI {
     self.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.0f];
+    UIImageView * bgImageView = [UIImageView new];
+    bgImageView.image = IMAGE(@"order_shadowBg");
+    [self addSubview:bgImageView];
+    
     UITableView *table = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
+    table.tableFooterView = nil;
     table.layer.cornerRadius = 5;
     table.delegate = self;
     table.dataSource = self;
     table.scrollEnabled = NO;
     table.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self addSubview:table];
+//    [self addSubview:table];
     [table setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
     self.table = table;
-    
+    [bgImageView addSubview:self.table];
     [table mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.left.mas_equalTo(10);
+        make.right.bottom.mas_equalTo(-10);
+    }];
+    CGFloat h = (64 * self.dataArray.count + 25 ) > (kMainBoundsHeight - 90 - 64) ? (kMainBoundsHeight - 90 - 64) : (64 * self.dataArray.count + 25 );
+    [bgImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(90);
-        make.bottom.mas_equalTo(self);
+        make.height.mas_equalTo(h);
         make.left.mas_equalTo(12);
         make.right.mas_equalTo(-12);
     }];
@@ -112,7 +121,6 @@
     self.header = [[OKTableHeaderView alloc] init] ;
     self.header.layer.cornerRadius = 5;
     self.header.clipsToBounds = YES;
-    self.header.backgroundColor = [UIColor whiteColor];
 //    self.header.layer.shadowColor=[UIColor grayColor].CGColor;
 //    self.header.layer.shadowRadius=5;　　　　　　　　　　　　　　　//设置阴影的宽
 //    self.header.layer.shadowOffset=CGSizeMake(2,2);　　　　　　//设置偏

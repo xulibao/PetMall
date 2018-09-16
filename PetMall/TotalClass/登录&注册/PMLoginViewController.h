@@ -6,8 +6,8 @@
 //  Copyright © 2018年 ios@xulibao. All rights reserved.
 //
 
-#import "STBaseTableViewController.h"
+#import "STBaseNonSystemNavViewController.h"
 
-@interface PMLoginViewController : STBaseTableViewController
+@interface PMLoginViewController : STBaseNonSystemNavViewController
 @property(nonatomic, copy) void (^callBack)(PMLoginViewController *viewController);
 @end

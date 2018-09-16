@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "OKTableHeaderView.h"
-@interface OKLogisticsView : UIView
+@interface OKLogisticsView : UIImageView
 
 /**
  运单号码
