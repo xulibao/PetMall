@@ -23,7 +23,7 @@
         self.backgroundColor = [UIColor clearColor];
         // 消息
         _messageBtn = [[STHomeVCTopViewMessageBtn alloc] init];
-        [_messageBtn addTarget:self action:@selector(messageClick) forControlEvents:UIControlEventTouchUpInside];
+        [_messageBtn addTarget:self action:@selector(messageBtnClick) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_messageBtn];
         //
         _cityBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -63,7 +63,7 @@
         
         [_topSearchView mas_makeConstraints:^(MASConstraintMaker *make) {
             [make.left.mas_equalTo(self.cityBtn.mas_right)setOffset:5];
-            [make.right.mas_equalTo(self.messageBtn.mas_left)setOffset:5];
+            [make.right.mas_equalTo(self.messageBtn.mas_left)setOffset:-5];
             make.height.mas_equalTo(@(32));
             make.centerY.mas_equalTo(self.cityBtn);
             
@@ -91,8 +91,10 @@
     }
 }
 
-- (void)messageClick{
-    
+- (void)messageBtnClick{
+    if (self.messageClick) {
+        self.messageClick();
+    }
 }
 
 @end

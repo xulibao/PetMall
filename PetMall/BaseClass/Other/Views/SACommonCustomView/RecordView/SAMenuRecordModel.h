@@ -14,6 +14,8 @@
 // 给服务器的id
 @property(nonatomic, copy) NSString * serveID;
 
+@property(nonatomic, copy) NSString * serveValue;
+
 @property(nonatomic, copy) NSString * serveSubID; //针对年份和公里范围
 
 @property(nonatomic, copy) NSString * serveKey;
@@ -29,5 +31,6 @@
 @property(nonatomic, copy) NSString * tmId;
 
 @property(nonatomic, assign) BOOL isSelect;
+@property(nonatomic, assign) BOOL isShowArrow;
 
 @end

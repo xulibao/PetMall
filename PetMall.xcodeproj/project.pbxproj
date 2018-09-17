@@ -74,7 +74,6 @@
 		5A4AF5A32134F9FA00F8190B /* SADropDownMenuCollectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4AF5152134F9F900F8190B /* SADropDownMenuCollectionHeaderView.m */; };
 		5A4AF5A42134F9FA00F8190B /* SADropDownCollectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4AF5162134F9F900F8190B /* SADropDownCollectionModel.m */; };
 		5A4AF5A52134F9FA00F8190B /* SADropDownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4AF5192134F9F900F8190B /* SADropDownMenu.m */; };
-		5A4AF5A62134F9FA00F8190B /* SADropDownMenuCollectionFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4AF51C2134F9F900F8190B /* SADropDownMenuCollectionFooterView.m */; };
 		5A4AF5A72134F9FA00F8190B /* SAButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4AF51D2134F9F900F8190B /* SAButton.m */; };
 		5A4AF5A82134F9FA00F8190B /* SABaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4AF51F2134F9F900F8190B /* SABaseCell.m */; };
 		5A4AF5A92134F9FA00F8190B /* SACustomLimitTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4AF5252134F9F900F8190B /* SACustomLimitTextView.m */; };
@@ -322,6 +321,23 @@
 		5A6ACF9E213D220F001FB644 /* DCUpDownButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A6ACF99213D220F001FB644 /* DCUpDownButton.m */; };
 		5A6ACF9F213D220F001FB644 /* DCCustionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A6ACF9A213D220F001FB644 /* DCCustionButton.m */; };
 		5A6ACFA2213D238D001FB644 /* DCNewWelfareLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A6ACFA1213D238D001FB644 /* DCNewWelfareLayout.m */; };
+		5AA570D5214F7905009015D9 /* PMGoodsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA570D4214F7905009015D9 /* PMGoodsListViewController.m */; };
+		5AA570D9214F8E36009015D9 /* PMHomeSubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA570D8214F8E36009015D9 /* PMHomeSubViewController.m */; };
+		5AA570DC214FA4DD009015D9 /* PMMyCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA570DB214FA4DD009015D9 /* PMMyCommentViewController.m */; };
+		5AA570E1214FA514009015D9 /* PMMyCommentItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA570E0214FA514009015D9 /* PMMyCommentItem.m */; };
+		5AA570E4214FA545009015D9 /* PMMyCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA570E3214FA545009015D9 /* PMMyCommentCell.m */; };
+		5AA570E7214FC4E5009015D9 /* PMSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA570E6214FC4E5009015D9 /* PMSetViewController.m */; };
+		5AA570EC214FC55F009015D9 /* PMSetItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA570EA214FC55E009015D9 /* PMSetItem.m */; };
+		5AA570EF214FC566009015D9 /* PMSetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA570EE214FC566009015D9 /* PMSetCell.m */; };
+		5AA570F2214FCBF2009015D9 /* PMContactUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA570F1214FCBF2009015D9 /* PMContactUsViewController.m */; };
+		5AA570F6214FD23C009015D9 /* PMMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA570F5214FD23C009015D9 /* PMMessageViewController.m */; };
+		5AA570FD214FD27F009015D9 /* PMMessageItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA570F8214FD27E009015D9 /* PMMessageItem.m */; };
+		5AA570FE214FD27F009015D9 /* PMMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA570FB214FD27E009015D9 /* PMMessageCell.m */; };
+		5AA57101214FD9EC009015D9 /* PMMessageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA57100214FD9EC009015D9 /* PMMessageDetailViewController.m */; };
+		5AA5710421500339009015D9 /* PMSendCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA5710321500339009015D9 /* PMSendCommentViewController.m */; };
+		5AA5716621501877009015D9 /* SDPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA5716021501877009015D9 /* SDPhotoBrowser.m */; };
+		5AA5716721501877009015D9 /* SDWaitingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA5716121501877009015D9 /* SDWaitingView.m */; };
+		5AA5716821501877009015D9 /* SDBrowserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA5716221501877009015D9 /* SDBrowserImageView.m */; };
 		5AC465A6213FEC56006F0AC5 /* PMSpecialClearanceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC465A5213FEC56006F0AC5 /* PMSpecialClearanceCell.m */; };
 		5AC465A9213FEE64006F0AC5 /* PMSpecialClearanceSubCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC465A8213FEE64006F0AC5 /* PMSpecialClearanceSubCell.m */; };
 		5AC95CA92135206C00BDA95D /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC95CA82135206C00BDA95D /* HMSegmentedControl.m */; };
@@ -610,12 +626,10 @@
 		5A4AF5142134F9F900F8190B /* SADropDownMenuTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SADropDownMenuTableCell.m; sourceTree = "<group>"; };
 		5A4AF5152134F9F900F8190B /* SADropDownMenuCollectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SADropDownMenuCollectionHeaderView.m; sourceTree = "<group>"; };
 		5A4AF5162134F9F900F8190B /* SADropDownCollectionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SADropDownCollectionModel.m; sourceTree = "<group>"; };
-		5A4AF5172134F9F900F8190B /* SADropDownMenuCollectionFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SADropDownMenuCollectionFooterView.h; sourceTree = "<group>"; };
 		5A4AF5182134F9F900F8190B /* SADropDownMenuTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SADropDownMenuTableCell.h; sourceTree = "<group>"; };
 		5A4AF5192134F9F900F8190B /* SADropDownMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SADropDownMenu.m; sourceTree = "<group>"; };
 		5A4AF51A2134F9F900F8190B /* SADropDownCollectionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SADropDownCollectionModel.h; sourceTree = "<group>"; };
 		5A4AF51B2134F9F900F8190B /* SADropDownMenuCollectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SADropDownMenuCollectionHeaderView.h; sourceTree = "<group>"; };
-		5A4AF51C2134F9F900F8190B /* SADropDownMenuCollectionFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SADropDownMenuCollectionFooterView.m; sourceTree = "<group>"; };
 		5A4AF51D2134F9F900F8190B /* SAButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SAButton.m; sourceTree = "<group>"; };
 		5A4AF51E2134F9F900F8190B /* SACustomLimitTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SACustomLimitTextView.h; sourceTree = "<group>"; };
 		5A4AF51F2134F9F900F8190B /* SABaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SABaseCell.m; sourceTree = "<group>"; };
@@ -1101,6 +1115,41 @@
 		5A6ACF9B213D220F001FB644 /* DCLIRLButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCLIRLButton.h; sourceTree = "<group>"; };
 		5A6ACFA0213D238D001FB644 /* DCNewWelfareLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCNewWelfareLayout.h; sourceTree = "<group>"; };
 		5A6ACFA1213D238D001FB644 /* DCNewWelfareLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCNewWelfareLayout.m; sourceTree = "<group>"; };
+		5AA570D3214F7905009015D9 /* PMGoodsListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMGoodsListViewController.h; sourceTree = "<group>"; };
+		5AA570D4214F7905009015D9 /* PMGoodsListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMGoodsListViewController.m; sourceTree = "<group>"; };
+		5AA570D7214F8E36009015D9 /* PMHomeSubViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMHomeSubViewController.h; sourceTree = "<group>"; };
+		5AA570D8214F8E36009015D9 /* PMHomeSubViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMHomeSubViewController.m; sourceTree = "<group>"; };
+		5AA570DA214FA4DD009015D9 /* PMMyCommentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMMyCommentViewController.h; sourceTree = "<group>"; };
+		5AA570DB214FA4DD009015D9 /* PMMyCommentViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMMyCommentViewController.m; sourceTree = "<group>"; };
+		5AA570DF214FA514009015D9 /* PMMyCommentItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMMyCommentItem.h; sourceTree = "<group>"; };
+		5AA570E0214FA514009015D9 /* PMMyCommentItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMMyCommentItem.m; sourceTree = "<group>"; };
+		5AA570E2214FA545009015D9 /* PMMyCommentCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMMyCommentCell.h; sourceTree = "<group>"; };
+		5AA570E3214FA545009015D9 /* PMMyCommentCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMMyCommentCell.m; sourceTree = "<group>"; };
+		5AA570E5214FC4E5009015D9 /* PMSetViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMSetViewController.h; sourceTree = "<group>"; };
+		5AA570E6214FC4E5009015D9 /* PMSetViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMSetViewController.m; sourceTree = "<group>"; };
+		5AA570EA214FC55E009015D9 /* PMSetItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMSetItem.m; sourceTree = "<group>"; };
+		5AA570EB214FC55F009015D9 /* PMSetItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMSetItem.h; sourceTree = "<group>"; };
+		5AA570ED214FC566009015D9 /* PMSetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMSetCell.h; sourceTree = "<group>"; };
+		5AA570EE214FC566009015D9 /* PMSetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMSetCell.m; sourceTree = "<group>"; };
+		5AA570F0214FCBF2009015D9 /* PMContactUsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMContactUsViewController.h; sourceTree = "<group>"; };
+		5AA570F1214FCBF2009015D9 /* PMContactUsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMContactUsViewController.m; sourceTree = "<group>"; };
+		5AA570F4214FD23C009015D9 /* PMMessageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMMessageViewController.h; sourceTree = "<group>"; };
+		5AA570F5214FD23C009015D9 /* PMMessageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMMessageViewController.m; sourceTree = "<group>"; };
+		5AA570F8214FD27E009015D9 /* PMMessageItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMMessageItem.m; sourceTree = "<group>"; };
+		5AA570F9214FD27E009015D9 /* PMMessageItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMMessageItem.h; sourceTree = "<group>"; };
+		5AA570FB214FD27E009015D9 /* PMMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMMessageCell.m; sourceTree = "<group>"; };
+		5AA570FC214FD27E009015D9 /* PMMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMMessageCell.h; sourceTree = "<group>"; };
+		5AA570FF214FD9EC009015D9 /* PMMessageDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMMessageDetailViewController.h; sourceTree = "<group>"; };
+		5AA57100214FD9EC009015D9 /* PMMessageDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMMessageDetailViewController.m; sourceTree = "<group>"; };
+		5AA5710221500339009015D9 /* PMSendCommentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMSendCommentViewController.h; sourceTree = "<group>"; };
+		5AA5710321500339009015D9 /* PMSendCommentViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMSendCommentViewController.m; sourceTree = "<group>"; };
+		5AA5715F21501877009015D9 /* SDPhotoBrowserConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDPhotoBrowserConfig.h; sourceTree = "<group>"; };
+		5AA5716021501877009015D9 /* SDPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDPhotoBrowser.m; sourceTree = "<group>"; };
+		5AA5716121501877009015D9 /* SDWaitingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWaitingView.m; sourceTree = "<group>"; };
+		5AA5716221501877009015D9 /* SDBrowserImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDBrowserImageView.m; sourceTree = "<group>"; };
+		5AA5716321501877009015D9 /* SDWaitingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWaitingView.h; sourceTree = "<group>"; };
+		5AA5716421501877009015D9 /* SDPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDPhotoBrowser.h; sourceTree = "<group>"; };
+		5AA5716521501877009015D9 /* SDBrowserImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDBrowserImageView.h; sourceTree = "<group>"; };
 		5AC465A4213FEC56006F0AC5 /* PMSpecialClearanceCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMSpecialClearanceCell.h; sourceTree = "<group>"; };
 		5AC465A5213FEC56006F0AC5 /* PMSpecialClearanceCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMSpecialClearanceCell.m; sourceTree = "<group>"; };
 		5AC465A7213FEE64006F0AC5 /* PMSpecialClearanceSubCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMSpecialClearanceSubCell.h; sourceTree = "<group>"; };
@@ -1550,59 +1599,59 @@
 		5A4AF4C12134F9F900F8190B /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				5A4AF4C22134F9F900F8190B /* STGroupSectionView.h */,
-				5A4AF4C32134F9F900F8190B /* SAGridView.m */,
-				5A4AF4C42134F9F900F8190B /* SAFloatLayoutView.m */,
-				5A4AF4C52134F9F900F8190B /* STRefreshTableView.h */,
-				5A4AF4C62134F9F900F8190B /* STInsetsTextField.m */,
-				5A4AF4C72134F9F900F8190B /* STTabBarBtn.h */,
-				5A4AF4C82134F9F900F8190B /* STEmptyView.h */,
-				5A4AF4C92134F9F900F8190B /* STTabBarView.m */,
-				5A4AF4CA2134F9F900F8190B /* STGraphValidateCode.h */,
-				5A4AF4CB2134F9F900F8190B /* STInsetsLabel.m */,
-				5A4AF4CC2134F9F900F8190B /* STGroupPlainTextView.h */,
-				5A4AF4CD2134F9F900F8190B /* SAInfoBaseView */,
-				5A4AF4D82134F9F900F8190B /* SAEventHandleLabel.h */,
-				5A4AF4D92134F9F900F8190B /* STRightImageButton.h */,
-				5A4AF4DA2134F9F900F8190B /* SACommonInfoCell.h */,
-				5A4AF4DE2134F9F900F8190B /* SACommonSegment.h */,
-				5A4AF4DF2134F9F900F8190B /* SACSButton.m */,
-				5A4AF4E02134F9F900F8190B /* SAGradientView.h */,
-				5A4AF4E12134F9F900F8190B /* STCommonTableViewCell.h */,
-				5A4AF4E22134F9F900F8190B /* STCoverView.h */,
-				5A4AF4E32134F9F900F8190B /* SATableViewHeaderFooterView.m */,
-				5A4AF4E42134F9F900F8190B /* STCarInfoMarginLabel.m */,
-				5A4AF4E52134F9F900F8190B /* STGroupListView.m */,
-				5A4AF4E62134F9F900F8190B /* STEqualMarginLabel.m */,
-				5A4AF4E72134F9F900F8190B /* STTabBarBtn.m */,
-				5A4AF4E82134F9F900F8190B /* STInsetsTextField.h */,
-				5A4AF4E92134F9F900F8190B /* STRefreshTableView.m */,
-				5A4AF4EA2134F9F900F8190B /* SAFloatLayoutView.h */,
-				5A4AF4EB2134F9F900F8190B /* SAGridView.h */,
-				5A4AF4EC2134F9F900F8190B /* STGroupSectionView.m */,
-				5A4AF4ED2134F9F900F8190B /* STValueSlider */,
-				5A4AF4F02134F9F900F8190B /* STGroupPlainTextView.m */,
-				5A4AF4F12134F9F900F8190B /* STInsetsLabel.h */,
-				5A4AF4F22134F9F900F8190B /* STGraphValidateCode.m */,
-				5A4AF4F32134F9F900F8190B /* STTabBarView.h */,
-				5A4AF4F42134F9F900F8190B /* STEmptyView.m */,
-				5A4AF4F52134F9F900F8190B /* MarqueeLabel */,
-				5A4AF4F82134F9F900F8190B /* SAGradientView.m */,
-				5A4AF4F92134F9F900F8190B /* SACSButton.h */,
-				5A4AF4FA2134F9F900F8190B /* SACommonSegment.m */,
 				5A4AF4FB2134F9F900F8190B /* GAActionSheetView */,
-				5A4AF4FE2134F9F900F8190B /* SACommonInfoCell.m */,
-				5A4AF4FF2134F9F900F8190B /* STRightImageButton.m */,
-				5A4AF5002134F9F900F8190B /* SAEventHandleLabel.m */,
-				5A4AF5012134F9F900F8190B /* STEqualMarginLabel.h */,
-				5A4AF5022134F9F900F8190B /* STGroupListView.h */,
-				5A4AF5032134F9F900F8190B /* SATableViewHeaderFooterView.h */,
-				5A4AF5042134F9F900F8190B /* STCarInfoMarginLabel.h */,
-				5A4AF5052134F9F900F8190B /* SATextFieldInputValidTextField */,
-				5A4AF50C2134F9F900F8190B /* SARefresh */,
-				5A4AF50F2134F9F900F8190B /* STCoverView.m */,
+				5A4AF4F52134F9F900F8190B /* MarqueeLabel */,
 				5A4AF5102134F9F900F8190B /* SACommonCustomView */,
+				5A4AF4DA2134F9F900F8190B /* SACommonInfoCell.h */,
+				5A4AF4FE2134F9F900F8190B /* SACommonInfoCell.m */,
+				5A4AF4DE2134F9F900F8190B /* SACommonSegment.h */,
+				5A4AF4FA2134F9F900F8190B /* SACommonSegment.m */,
+				5A4AF4F92134F9F900F8190B /* SACSButton.h */,
+				5A4AF4DF2134F9F900F8190B /* SACSButton.m */,
+				5A4AF4D82134F9F900F8190B /* SAEventHandleLabel.h */,
+				5A4AF5002134F9F900F8190B /* SAEventHandleLabel.m */,
+				5A4AF4EA2134F9F900F8190B /* SAFloatLayoutView.h */,
+				5A4AF4C42134F9F900F8190B /* SAFloatLayoutView.m */,
+				5A4AF4E02134F9F900F8190B /* SAGradientView.h */,
+				5A4AF4F82134F9F900F8190B /* SAGradientView.m */,
+				5A4AF4EB2134F9F900F8190B /* SAGridView.h */,
+				5A4AF4C32134F9F900F8190B /* SAGridView.m */,
+				5A4AF4CD2134F9F900F8190B /* SAInfoBaseView */,
+				5A4AF50C2134F9F900F8190B /* SARefresh */,
+				5A4AF5032134F9F900F8190B /* SATableViewHeaderFooterView.h */,
+				5A4AF4E32134F9F900F8190B /* SATableViewHeaderFooterView.m */,
+				5A4AF5052134F9F900F8190B /* SATextFieldInputValidTextField */,
+				5A4AF5042134F9F900F8190B /* STCarInfoMarginLabel.h */,
+				5A4AF4E42134F9F900F8190B /* STCarInfoMarginLabel.m */,
+				5A4AF4E12134F9F900F8190B /* STCommonTableViewCell.h */,
 				5A4AF5312134F9F900F8190B /* STCommonTableViewCell.m */,
+				5A4AF4E22134F9F900F8190B /* STCoverView.h */,
+				5A4AF50F2134F9F900F8190B /* STCoverView.m */,
+				5A4AF4C82134F9F900F8190B /* STEmptyView.h */,
+				5A4AF4F42134F9F900F8190B /* STEmptyView.m */,
+				5A4AF5012134F9F900F8190B /* STEqualMarginLabel.h */,
+				5A4AF4E62134F9F900F8190B /* STEqualMarginLabel.m */,
+				5A4AF4CA2134F9F900F8190B /* STGraphValidateCode.h */,
+				5A4AF4F22134F9F900F8190B /* STGraphValidateCode.m */,
+				5A4AF5022134F9F900F8190B /* STGroupListView.h */,
+				5A4AF4E52134F9F900F8190B /* STGroupListView.m */,
+				5A4AF4CC2134F9F900F8190B /* STGroupPlainTextView.h */,
+				5A4AF4F02134F9F900F8190B /* STGroupPlainTextView.m */,
+				5A4AF4C22134F9F900F8190B /* STGroupSectionView.h */,
+				5A4AF4EC2134F9F900F8190B /* STGroupSectionView.m */,
+				5A4AF4F12134F9F900F8190B /* STInsetsLabel.h */,
+				5A4AF4CB2134F9F900F8190B /* STInsetsLabel.m */,
+				5A4AF4E82134F9F900F8190B /* STInsetsTextField.h */,
+				5A4AF4C62134F9F900F8190B /* STInsetsTextField.m */,
+				5A4AF4C52134F9F900F8190B /* STRefreshTableView.h */,
+				5A4AF4E92134F9F900F8190B /* STRefreshTableView.m */,
+				5A4AF4D92134F9F900F8190B /* STRightImageButton.h */,
+				5A4AF4FF2134F9F900F8190B /* STRightImageButton.m */,
+				5A4AF4C72134F9F900F8190B /* STTabBarBtn.h */,
+				5A4AF4E72134F9F900F8190B /* STTabBarBtn.m */,
+				5A4AF4F32134F9F900F8190B /* STTabBarView.h */,
+				5A4AF4C92134F9F900F8190B /* STTabBarView.m */,
+				5A4AF4ED2134F9F900F8190B /* STValueSlider */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1676,20 +1725,20 @@
 		5A4AF5102134F9F900F8190B /* SACommonCustomView */ = {
 			isa = PBXGroup;
 			children = (
-				5A4AF5112134F9F900F8190B /* SACustomStepView.m */,
 				5A4AF5122134F9F900F8190B /* DropDownMenuView */,
-				5A4AF51D2134F9F900F8190B /* SAButton.m */,
-				5A4AF51E2134F9F900F8190B /* SACustomLimitTextView.h */,
-				5A4AF51F2134F9F900F8190B /* SABaseCell.m */,
-				5A4AF5202134F9F900F8190B /* SACustomBottomView.h */,
-				5A4AF5212134F9F900F8190B /* SABaseTextField.h */,
-				5A4AF5222134F9F900F8190B /* SAButton.h */,
-				5A4AF5232134F9F900F8190B /* SACustomStepView.h */,
-				5A4AF5242134F9F900F8190B /* SABaseCell.h */,
-				5A4AF5252134F9F900F8190B /* SACustomLimitTextView.m */,
-				5A4AF5262134F9F900F8190B /* SACustomBottomView.m */,
 				5A4AF5272134F9F900F8190B /* RecordView */,
+				5A4AF5242134F9F900F8190B /* SABaseCell.h */,
+				5A4AF51F2134F9F900F8190B /* SABaseCell.m */,
+				5A4AF5212134F9F900F8190B /* SABaseTextField.h */,
 				5A4AF5302134F9F900F8190B /* SABaseTextField.m */,
+				5A4AF5222134F9F900F8190B /* SAButton.h */,
+				5A4AF51D2134F9F900F8190B /* SAButton.m */,
+				5A4AF5202134F9F900F8190B /* SACustomBottomView.h */,
+				5A4AF5262134F9F900F8190B /* SACustomBottomView.m */,
+				5A4AF51E2134F9F900F8190B /* SACustomLimitTextView.h */,
+				5A4AF5252134F9F900F8190B /* SACustomLimitTextView.m */,
+				5A4AF5232134F9F900F8190B /* SACustomStepView.h */,
+				5A4AF5112134F9F900F8190B /* SACustomStepView.m */,
 			);
 			path = SACommonCustomView;
 			sourceTree = "<group>";
@@ -1697,16 +1746,14 @@
 		5A4AF5122134F9F900F8190B /* DropDownMenuView */ = {
 			isa = PBXGroup;
 			children = (
-				5A4AF5132134F9F900F8190B /* SADropDownMenu.h */,
-				5A4AF5142134F9F900F8190B /* SADropDownMenuTableCell.m */,
-				5A4AF5152134F9F900F8190B /* SADropDownMenuCollectionHeaderView.m */,
-				5A4AF5162134F9F900F8190B /* SADropDownCollectionModel.m */,
-				5A4AF5172134F9F900F8190B /* SADropDownMenuCollectionFooterView.h */,
-				5A4AF5182134F9F900F8190B /* SADropDownMenuTableCell.h */,
-				5A4AF5192134F9F900F8190B /* SADropDownMenu.m */,
 				5A4AF51A2134F9F900F8190B /* SADropDownCollectionModel.h */,
+				5A4AF5162134F9F900F8190B /* SADropDownCollectionModel.m */,
+				5A4AF5132134F9F900F8190B /* SADropDownMenu.h */,
+				5A4AF5192134F9F900F8190B /* SADropDownMenu.m */,
 				5A4AF51B2134F9F900F8190B /* SADropDownMenuCollectionHeaderView.h */,
-				5A4AF51C2134F9F900F8190B /* SADropDownMenuCollectionFooterView.m */,
+				5A4AF5152134F9F900F8190B /* SADropDownMenuCollectionHeaderView.m */,
+				5A4AF5182134F9F900F8190B /* SADropDownMenuTableCell.h */,
+				5A4AF5142134F9F900F8190B /* SADropDownMenuTableCell.m */,
 			);
 			path = DropDownMenuView;
 			sourceTree = "<group>";
@@ -2879,9 +2926,109 @@
 			path = CustionButton;
 			sourceTree = "<group>";
 		};
+		5AA570D2214F78DE009015D9 /* 商品列表 */ = {
+			isa = PBXGroup;
+			children = (
+				5AA570D3214F7905009015D9 /* PMGoodsListViewController.h */,
+				5AA570D4214F7905009015D9 /* PMGoodsListViewController.m */,
+			);
+			path = "商品列表";
+			sourceTree = "<group>";
+		};
+		5AA570D6214F8DE8009015D9 /* 狗粮 */ = {
+			isa = PBXGroup;
+			children = (
+				5AA570D7214F8E36009015D9 /* PMHomeSubViewController.h */,
+				5AA570D8214F8E36009015D9 /* PMHomeSubViewController.m */,
+			);
+			path = "狗粮";
+			sourceTree = "<group>";
+		};
+		5AA570DD214FA4E3009015D9 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				5AA570E2214FA545009015D9 /* PMMyCommentCell.h */,
+				5AA570E3214FA545009015D9 /* PMMyCommentCell.m */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		5AA570DE214FA4E6009015D9 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				5AA570DF214FA514009015D9 /* PMMyCommentItem.h */,
+				5AA570E0214FA514009015D9 /* PMMyCommentItem.m */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		5AA570E8214FC4F4009015D9 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				5AA570ED214FC566009015D9 /* PMSetCell.h */,
+				5AA570EE214FC566009015D9 /* PMSetCell.m */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		5AA570E9214FC4F7009015D9 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				5AA570EB214FC55F009015D9 /* PMSetItem.h */,
+				5AA570EA214FC55E009015D9 /* PMSetItem.m */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		5AA570F3214FD21E009015D9 /* 消息 */ = {
+			isa = PBXGroup;
+			children = (
+				5AA570F7214FD27E009015D9 /* model */,
+				5AA570FA214FD27E009015D9 /* view */,
+				5AA570F4214FD23C009015D9 /* PMMessageViewController.h */,
+				5AA570F5214FD23C009015D9 /* PMMessageViewController.m */,
+				5AA570FF214FD9EC009015D9 /* PMMessageDetailViewController.h */,
+				5AA57100214FD9EC009015D9 /* PMMessageDetailViewController.m */,
+			);
+			path = "消息";
+			sourceTree = "<group>";
+		};
+		5AA570F7214FD27E009015D9 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				5AA570F8214FD27E009015D9 /* PMMessageItem.m */,
+				5AA570F9214FD27E009015D9 /* PMMessageItem.h */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		5AA570FA214FD27E009015D9 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				5AA570FB214FD27E009015D9 /* PMMessageCell.m */,
+				5AA570FC214FD27E009015D9 /* PMMessageCell.h */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		5AA5715E21501877009015D9 /* SDPhotoBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				5AA5715F21501877009015D9 /* SDPhotoBrowserConfig.h */,
+				5AA5716021501877009015D9 /* SDPhotoBrowser.m */,
+				5AA5716121501877009015D9 /* SDWaitingView.m */,
+				5AA5716221501877009015D9 /* SDBrowserImageView.m */,
+				5AA5716321501877009015D9 /* SDWaitingView.h */,
+				5AA5716421501877009015D9 /* SDPhotoBrowser.h */,
+				5AA5716521501877009015D9 /* SDBrowserImageView.h */,
+			);
+			path = SDPhotoBrowser;
+			sourceTree = "<group>";
+		};
 		5AC95CA52135204B00BDA95D /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				5AA5715E21501877009015D9 /* SDPhotoBrowser */,
 				5AF24CB2214E589300EDDD27 /* NSStringSplicingTool */,
 				5AEA6C7F214D13AA00A2E6E8 /* YWChooseAddress */,
 				5AEA6BE2214A4A5200A2E6E8 /* Resources */,
@@ -2913,14 +3060,14 @@
 		5AC95CB721352C0300BDA95D /* TotalClass */ = {
 			isa = PBXGroup;
 			children = (
-				5AEA6BBD214A3C7100A2E6E8 /* 订单 */,
-				5A54CA4A2143C41200971D83 /* 详情 */,
-				5AC95CB821352C0300BDA95D /* 我的 */,
-				5AC95CB921352C0300BDA95D /* 首页 */,
 				5AC95CBA21352C0300BDA95D /* 登录&注册 */,
+				5AEA6BBD214A3C7100A2E6E8 /* 订单 */,
 				5AC95CBF21352C0300BDA95D /* 分类 */,
 				5AC95CC021352C0300BDA95D /* 购物车 */,
+				5AC95CB921352C0300BDA95D /* 首页 */,
 				5AC95CC121352C0300BDA95D /* 团购活动 */,
+				5AC95CB821352C0300BDA95D /* 我的 */,
+				5A54CA4A2143C41200971D83 /* 详情 */,
 			);
 			path = TotalClass;
 			sourceTree = "<group>";
@@ -2928,6 +3075,7 @@
 		5AC95CB821352C0300BDA95D /* 我的 */ = {
 			isa = PBXGroup;
 			children = (
+				5AA570F3214FD21E009015D9 /* 消息 */,
 				5AF24CBC214E789800EDDD27 /* 设置 */,
 				5AF24C86214DDCF600EDDD27 /* 分享 */,
 				5AEA6C54214CDB9C00A2E6E8 /* 我的积分 */,
@@ -2948,6 +3096,8 @@
 		5AC95CB921352C0300BDA95D /* 首页 */ = {
 			isa = PBXGroup;
 			children = (
+				5AA570D6214F8DE8009015D9 /* 狗粮 */,
+				5AA570D2214F78DE009015D9 /* 商品列表 */,
 				5AF24C8E214DF8DC00EDDD27 /* 限时秒杀 */,
 				5AF24C8A214DEC3900EDDD27 /* 搜索 */,
 				5A6ACF51213D10C6001FB644 /* model */,
@@ -3236,6 +3386,12 @@
 		5AEA6C40214C9B5700A2E6E8 /* 我的评价 */ = {
 			isa = PBXGroup;
 			children = (
+				5AA570DE214FA4E6009015D9 /* model */,
+				5AA570DD214FA4E3009015D9 /* view */,
+				5AA570DA214FA4DD009015D9 /* PMMyCommentViewController.h */,
+				5AA570DB214FA4DD009015D9 /* PMMyCommentViewController.m */,
+				5AA5710221500339009015D9 /* PMSendCommentViewController.h */,
+				5AA5710321500339009015D9 /* PMSendCommentViewController.m */,
 			);
 			path = "我的评价";
 			sourceTree = "<group>";
@@ -3487,6 +3643,12 @@
 		5AF24CBC214E789800EDDD27 /* 设置 */ = {
 			isa = PBXGroup;
 			children = (
+				5AA570E9214FC4F7009015D9 /* model */,
+				5AA570E8214FC4F4009015D9 /* view */,
+				5AA570E5214FC4E5009015D9 /* PMSetViewController.h */,
+				5AA570E6214FC4E5009015D9 /* PMSetViewController.m */,
+				5AA570F0214FCBF2009015D9 /* PMContactUsViewController.h */,
+				5AA570F1214FCBF2009015D9 /* PMContactUsViewController.m */,
 			);
 			path = "设置";
 			sourceTree = "<group>";
@@ -3844,6 +4006,7 @@
 				5A54CAE82143C5F500971D83 /* DCFeatureSelectionViewController.m in Sources */,
 				5A4AF66F2134FA0F00F8190B /* GADebugCrashView.m in Sources */,
 				5A4AF66E2134FA0F00F8190B /* GARequestBaseModel.m in Sources */,
+				5AA570FD214FD27F009015D9 /* PMMessageItem.m in Sources */,
 				5AEA6C4F214CD99700A2E6E8 /* PMMyExchangeViewController.m in Sources */,
 				5AEA6C7C214D12FA00A2E6E8 /* YWAddressTableViewCell1.m in Sources */,
 				5AEA6B922147B76F00A2E6E8 /* PMOrderSelectModel.m in Sources */,
@@ -3894,6 +4057,7 @@
 				5A4AF6702134FA0F00F8190B /* GADebugViewController.m in Sources */,
 				5A4AF5832134F9FA00F8190B /* SATruckInfoBaseTopView.m in Sources */,
 				5A4AF5BD2134F9FA00F8190B /* STAPIBaseResponse.m in Sources */,
+				5AA570F6214FD23C009015D9 /* PMMessageViewController.m in Sources */,
 				5A4AF6412134FA0F00F8190B /* GADeviceUtil.m in Sources */,
 				5AEA6B802146A30A00A2E6E8 /* PMConfirmOrderViewController.m in Sources */,
 				5A4AF6B12134FDD400F8190B /* NSNull+IsSafeDictNull.m in Sources */,
@@ -3939,6 +4103,7 @@
 				5AEA6B8F2147A08B00A2E6E8 /* PMOrderSelectCell.m in Sources */,
 				5AEA6BA72148BCA200A2E6E8 /* SAWithdrawalsModel.m in Sources */,
 				5A6ACF78213D1C81001FB644 /* DCExceedApplianceCell.m in Sources */,
+				5AA57101214FD9EC009015D9 /* PMMessageDetailViewController.m in Sources */,
 				5A54CAF52143C5F500971D83 /* DCDetailOverFooterView.m in Sources */,
 				5A54CAE32143C5F500971D83 /* DCFeatureList.m in Sources */,
 				5A4AF57A2134F9FA00F8190B /* SACountdownEpisode.m in Sources */,
@@ -3947,7 +4112,6 @@
 				5AF24C9A214E55E500EDDD27 /* SPForgotPasswordViewController.m in Sources */,
 				5A4AF5C22134F9FB00F8190B /* STBaseViewController.m in Sources */,
 				5A4AF5B92134F9FA00F8190B /* STNetworkAgent.m in Sources */,
-				5A4AF5A62134F9FA00F8190B /* SADropDownMenuCollectionFooterView.m in Sources */,
 				5A4AF6572134FA0F00F8190B /* GADebugUILineView.m in Sources */,
 				5A6ACF79213D1C81001FB644 /* DCNewWelfareCell.m in Sources */,
 				5A4AF58B2134F9FA00F8190B /* STCarInfoMarginLabel.m in Sources */,
@@ -3961,7 +4125,9 @@
 				5A4AF6B62134FDD400F8190B /* UIScrollView+GHExtension.m in Sources */,
 				5A4AF6542134FA0F00F8190B /* GADebugCrash.m in Sources */,
 				5A4AF59B2134F9FA00F8190B /* SAEventHandleLabel.m in Sources */,
+				5AA570EF214FC566009015D9 /* PMSetCell.m in Sources */,
 				5A4AF64F2134FA0F00F8190B /* KMCGeigerCounter.m in Sources */,
+				5AA570D5214F7905009015D9 /* PMGoodsListViewController.m in Sources */,
 				5A54CAFB2143C5F500971D83 /* DCShowTypeThreeCell.m in Sources */,
 				5A4AF6B72134FDD400F8190B /* UITextField+GHExtension.m in Sources */,
 				5A54CA3221418AA900971D83 /* DCFootprintCell.m in Sources */,
@@ -3988,6 +4154,7 @@
 				5A54CB872143CABA00971D83 /* AddressPickerView.m in Sources */,
 				5A4AF6732134FA0F00F8190B /* GADebugManager.m in Sources */,
 				5A4AF6642134FA0F00F8190B /* UIDevice+Hardware.m in Sources */,
+				5AA5710421500339009015D9 /* PMSendCommentViewController.m in Sources */,
 				5A4AF6AC2134FDD400F8190B /* NSTimer+GHExtension.m in Sources */,
 				5AF24CB0214E560700EDDD27 /* SPInputMsgBaseCell.m in Sources */,
 				5A6ACF8B213D213B001FB644 /* DCRecommendItem.m in Sources */,
@@ -4048,6 +4215,7 @@
 				5A54CAE42143C5F500971D83 /* DCShareItem.m in Sources */,
 				5AEA6C49214C9F4300A2E6E8 /* PMCommonGoodsItem.m in Sources */,
 				5A4AF5942134F9FA00F8190B /* STEmptyView.m in Sources */,
+				5AA5716621501877009015D9 /* SDPhotoBrowser.m in Sources */,
 				5AEA6B732145678300A2E6E8 /* SAAccount.m in Sources */,
 				5A4AF5902134F9FA00F8190B /* STGroupSectionView.m in Sources */,
 				5A4AF6662134FA0F00F8190B /* ABCrashReport.m in Sources */,
@@ -4067,6 +4235,7 @@
 				5A54CA3121418AA900971D83 /* DCClassCategoryCell.m in Sources */,
 				5A4AF6AA2134FDD400F8190B /* UINavigationController+GAFullscreenPopGesture.m in Sources */,
 				5AEA6BFE214A655F00A2E6E8 /* OKTableHeaderView.m in Sources */,
+				5AA570EC214FC55F009015D9 /* PMSetItem.m in Sources */,
 				5A4AF5B62134F9FA00F8190B /* STRequest.m in Sources */,
 				5A4AF5C42134F9FB00F8190B /* SAIndicatorSegmentViewController.m in Sources */,
 				5A4AF6482134FA0F00F8190B /* GADebugObject.m in Sources */,
@@ -4077,9 +4246,11 @@
 				5A4AF6612134FA0F00F8190B /* GAURLSessionConfiguration.m in Sources */,
 				5A4AF5702134F9FA00F8190B /* UITableView+SATableView.m in Sources */,
 				5A4AF6462134FA0F00F8190B /* GADebugCrashModel.m in Sources */,
+				5AA570F2214FCBF2009015D9 /* PMContactUsViewController.m in Sources */,
 				5AC95CCC21352E5100BDA95D /* PMCartViewController.m in Sources */,
 				5AEA6B7C2146588500A2E6E8 /* PMCartCell.m in Sources */,
 				5A54CB032143C5F500971D83 /* DCPartCommentHeadView.m in Sources */,
+				5AA570DC214FA4DD009015D9 /* PMMyCommentViewController.m in Sources */,
 				5A4AF5AC2134F9FA00F8190B /* STTopSelectBtn.m in Sources */,
 				5AEA6B752145678300A2E6E8 /* SAMineHeadView.m in Sources */,
 				5A54CB022143C5F500971D83 /* DCCommentHeaderView.m in Sources */,
@@ -4106,6 +4277,7 @@
 				5AEA6C36214C7D0300A2E6E8 /* PMOrderDetailCell.m in Sources */,
 				5A54CAEE2143C5F500971D83 /* DCComImagesView.m in Sources */,
 				5A6ACF7E213D1C81001FB644 /* DCGoodsSurplusCell.m in Sources */,
+				5AA5716721501877009015D9 /* SDWaitingView.m in Sources */,
 				5A4AF5AA2134F9FA00F8190B /* SACustomBottomView.m in Sources */,
 				5A4AF48A2134F94300F8190B /* AppDelegate.mm in Sources */,
 				5A54CB6B2143C73800971D83 /* XWCoolAnimator+XWFold.m in Sources */,
@@ -4123,6 +4295,7 @@
 				5A4AF64A2134FA0F00F8190B /* GADebugKeychainModel.m in Sources */,
 				5A4AF56C2134F9FA00F8190B /* UIScrollView+SAScrollView.m in Sources */,
 				5A4AF65D2134FA0F00F8190B /* GAUITestViewFrame.m in Sources */,
+				5AA570E7214FC4E5009015D9 /* PMSetViewController.m in Sources */,
 				5A54CAF42143C5F500971D83 /* DCFeatureChoseTopCell.m in Sources */,
 				5AEA6BF8214A655F00A2E6E8 /* OKTableCellContentView.m in Sources */,
 				5A54CA2A21418AA900971D83 /* DCGoodsSortCell.m in Sources */,
@@ -4132,6 +4305,7 @@
 				5A6ACF74213D1C81001FB644 /* DCOverFootView.m in Sources */,
 				5A4AF5A42134F9FA00F8190B /* SADropDownCollectionModel.m in Sources */,
 				5AEA6C6D214D121100A2E6E8 /* PMAddNewAddressViewController.m in Sources */,
+				5AA5716821501877009015D9 /* SDBrowserImageView.m in Sources */,
 				5AEA6BA12148BB7D00A2E6E8 /* PMConfirmPayViewController.m in Sources */,
 				5A54CB6D2143C73800971D83 /* XWCoolAnimator+XWMiddlePageFlip.m in Sources */,
 				5A4AF5752134F9FA00F8190B /* STTabBtnModel.m in Sources */,
@@ -4144,6 +4318,7 @@
 				5AEA6C8D214D13AB00A2E6E8 /* YWAddressView.m in Sources */,
 				5A4AF6592134FA0F00F8190B /* GADebugActionView.m in Sources */,
 				5AEA6BE7214A4A9E00A2E6E8 /* PMLogisticsInformationViewController.m in Sources */,
+				5AA570E4214FA545009015D9 /* PMMyCommentCell.m in Sources */,
 				5A54CB592143C73800971D83 /* SDPhotoBrowser.m in Sources */,
 				5A4AF5C62134F9FB00F8190B /* SAInfoListViewController.m in Sources */,
 				5A54CB692143C73800971D83 /* XWCoolAnimator+XWLines.m in Sources */,
@@ -4168,11 +4343,14 @@
 				5AEA6C4C214C9F5400A2E6E8 /* PMCommonGoodsCell.m in Sources */,
 				5A6ACF77213D1C81001FB644 /* DCSlideshowHeadView.m in Sources */,
 				5AF24C91214DF8F500EDDD27 /* PMTimeLimitViewController.m in Sources */,
+				5AA570E1214FA514009015D9 /* PMMyCommentItem.m in Sources */,
 				5A54CAFF2143C5F500971D83 /* DCCommentCell.m in Sources */,
 				5A4AF67E2134FA5100F8190B /* AppID.m in Sources */,
+				5AA570FE214FD27F009015D9 /* PMMessageCell.m in Sources */,
 				5A54CAD82143C5F500971D83 /* DCFiltrateViewController.m in Sources */,
 				5A54CA2E21418AA900971D83 /* DCHoverFlowLayout.m in Sources */,
 				5A4AF6692134FA0F00F8190B /* ABNotice.m in Sources */,
+				5AA570D9214F8E36009015D9 /* PMHomeSubViewController.m in Sources */,
 				5A4AF5842134F9FA00F8190B /* SATuckInfoTagView.m in Sources */,
 				5A54CB562143C73800971D83 /* UIView+Snapshot.m in Sources */,
 				5A4AF5822134F9FA00F8190B /* STInsetsLabel.m in Sources */,

@@ -7,7 +7,8 @@
 //
 
 #import "SADropDownMenu.h"
-#import "SADropDownMenuCollectionHeaderView.h"
+#import "SAButton.h"
+#import "SPInfoListFilterViewController.h"
 #define BackColor [UIColor whiteColor]
 // 选中颜色加深
 #define SelectColor [UIColor whiteColor]
@@ -46,60 +47,6 @@
 }
 
 @end
-
-@interface SACollectionViewCell : UICollectionViewCell
-
-@property (nonatomic,strong) UILabel *titleLable;
-
-@property (nonatomic,strong) SADropDownCollectionModel *model;
-
-@end
-@implementation SACollectionViewCell
-
--(instancetype)initWithFrame:(CGRect)frame
-{
-    if (self = [super initWithFrame:frame]) {
-        self.backgroundColor=[UIColor whiteColor];
-        self.layer.borderWidth=.5;
-        self.layer.borderColor=[UIColor colorWithHexStr:@"#D8D8D8"].CGColor;
-        self.clipsToBounds = YES;
-        _titleLable=[[UILabel alloc]init];
-        [self addSubview:_titleLable];
-        //        _titleLable.lineBreakMode=NSLineBreakByTruncatingMiddle;
-        _titleLable.font=[UIFont systemFontOfSize:14];
-        _titleLable.textAlignment=YES;
-        //        _titleLable.adjustsFontSizeToFitWidth = YES;
-        [_titleLable mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.bottom.left.right.equalTo(self);
-        }];
-        
-        
-    }return self;
-}
-
-- (void)setModel:(SADropDownCollectionModel *)model{
-    _model = model;
-    if (model.name.length >= 7) {
-        NSString * name = [[[model.name substringWithRange:NSMakeRange(0, 2)] stringByAppendingString:@"…"] stringByAppendingString:[model.name substringWithRange:NSMakeRange(model.name.length - 3, 3)]];
-        [self.titleLable setText:name];
-    }else{
-        [self.titleLable setText:model.name];
-    }
-    if (model.isSelect) {
-        self.layer.borderColor=[UIColor colorWithHexStr:@"#F25555"].CGColor;
-        self.titleLable.backgroundColor = kColorBGPink;
-        self.titleLable.textColor = kColorCityTextRed;
-    }else{
-        self.layer.borderColor=[UIColor colorWithHexStr:@"#D8D8D8"].CGColor;
-        self.titleLable.backgroundColor = [UIColor whiteColor];
-        self.titleLable.textColor = kColorTextBlack;
-    }
-    
-}
-
-@end
-
-
 
 @interface SATableViewCell : UITableViewCell
 
@@ -177,7 +124,6 @@
     return indexPath;
 }
 @end
-
 #pragma mark - menu implementation
 
 @interface SADropDownMenu ()
@@ -194,9 +140,7 @@
 @property (nonatomic, copy) NSArray *indicators;
 @property (nonatomic, copy) NSArray *bgLayers;
 @property (nonatomic, assign) BOOL hadSelected;
-
 @property(nonatomic, strong) NSMutableArray *recordArray;
-
 
 @end
 
@@ -237,56 +181,69 @@
 }
 
 #pragma mark - setter
+- (void)setIsSaled:(BOOL)isSaled{
+    _isSaled = isSaled;
+}
+
 - (void)setDataSource:(id<SADropDownMenuDataSource>)dataSource {
+    _btnArray = [NSMutableArray array];
     _dataSource = dataSource;
-    
-    //configure view
     if ([_dataSource respondsToSelector:@selector(numberOfColumnsInMenu:)]) {
         _numOfMenu = [_dataSource numberOfColumnsInMenu:self];
     } else {
         _numOfMenu = 1;
     }
     
-    CGFloat textLayerInterval = self.frame.size.width / ( _numOfMenu * 2);
-    
-    CGFloat separatorLineInterval = self.frame.size.width / _numOfMenu;
-    
-    CGFloat bgLayerInterval = self.frame.size.width / _numOfMenu;
-    
-    NSMutableArray *tempTitles = [[NSMutableArray alloc] initWithCapacity:_numOfMenu];
-    NSMutableArray *tempIndicators = [[NSMutableArray alloc] initWithCapacity:_numOfMenu];
-    NSMutableArray *tempBgLayers = [[NSMutableArray alloc] initWithCapacity:_numOfMenu];
-    
+    CGFloat width = kMainBoundsWidth / _numOfMenu;
     for (int i = 0; i < _numOfMenu; i++) {
-        //bgLayer
-        CGPoint bgLayerPosition = CGPointMake((i+0.5)*bgLayerInterval, self.frame.size.height/2);
-        CALayer *bgLayer = [self createBgLayerWithColor:BackColor andPosition:bgLayerPosition];
-        [self.layer addSublayer:bgLayer];
-        [tempBgLayers addObject:bgLayer];
-        //title
-        CGPoint titlePosition = CGPointMake( (i * 2 + 1) * textLayerInterval , self.frame.size.height / 2);
-        NSString *titleString = [_dataSource menu:self titleForColumn:i];
-        CATextLayer *title = [self createTextLayerWithNSString:titleString withColor:self.textColor andPosition:titlePosition];
-        [self.layer addSublayer:title];
-        [tempTitles addObject:title];
-        //indicator
-        CAShapeLayer *indicator = [self createIndicatorWithColor:self.indicatorColor andPosition:CGPointMake(titlePosition.x + title.bounds.size.width / 2 + 8, self.frame.size.height / 2)];
-        [self.layer addSublayer:indicator];
-        [tempIndicators addObject:indicator];
-        
-        //separator
-        if (i != _numOfMenu - 1) {
-            CGPoint separatorPosition = CGPointMake((i + 1) * separatorLineInterval, self.frame.size.height/2);
-            CAShapeLayer *separator = [self createSeparatorLineWithColor:self.separatorColor andPosition:separatorPosition];
-            [self.layer addSublayer:separator];
+        SAButton * btn = [[SAButton alloc] init];
+        if (i == 0) {
+            btn.selected = YES;
+        }
+        [_btnArray addObject:btn];
+        btn.titleLabel.font = [UIFont systemFontOfSize:14];
+        [btn setTitleColor:kColor333333 forState:UIControlStateNormal];
+        [btn setTitleColor:kColorFF3945 forState:UIControlStateSelected];
+        btn.imagePosition = SAButtonImagePositionRight;
+        btn.spacingBetweenImageAndTitle = 3;
+         NSString *titleString = [_dataSource menu:self titleForColumn:i];
+        SPInfoListFilterModel * filterModel = [_dataSource menu:self modelForColumn:i];
+        [btn setImage:IMAGE(filterModel.imageNomalStr) forState:UIControlStateNormal];
+        [btn setImage:IMAGE(filterModel.imageSelectStr) forState:UIControlStateSelected];        [btn setImage:IMAGE(filterModel.imageSelectStr) forState:UIControlStateHighlighted];
+        [self addSubview:btn];
+        btn.tag = i;
+        [btn setTitle:titleString forState:UIControlStateNormal];
+        [btn setTitleColor:kColor333333 forState:UIControlStateNormal];
+        [btn addTarget:self action:@selector(menuTapped:) forControlEvents:UIControlEventTouchUpInside];
+        [btn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(i * width);
+            make.top.bottom.mas_equalTo(self);
+            make.width.mas_equalTo(width);
+        }];
+    }
+}
+#pragma mark - action
+- (void)menuTapped:(UIButton *)selectBtn {
+
+    if (selectBtn.tag != 0) {
+        selectBtn.selected = !selectBtn.selected;
+        for (SAButton * btn in self.btnArray) {
+            if (selectBtn.tag != btn.tag) {
+                btn.selected = NO;
+            }
+        }
+    }else{
+        if (!selectBtn.selected) {
+            selectBtn.selected = YES;
         }
     }
-    
-    _bottomShadow.backgroundColor = self.separatorColor;
-    
-    _titles = [tempTitles copy];
-    _indicators = [tempIndicators copy];
-    _bgLayers = [tempBgLayers copy];
+    NSInteger tapIndex = selectBtn.tag;
+    self.currentSelectedMenudIndex = tapIndex;
+    if ([self.delegate respondsToSelector:@selector(menu:tabIndex:)]) {
+        [self.delegate menu:self tabIndex:tapIndex];
+    }else{
+        [self showOrDismissWithIndex:tapIndex];
+    }
 }
 
 #pragma mark - init method
@@ -297,38 +254,16 @@
         _origin = origin;
         _currentSelectedMenudIndex = -1;
         _show = NO;
-        
         _hadSelected = NO;
-        
-        
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(self.frame.size.width, self.frame.origin.y + self.frame.size.height, 0, 0) style:UITableViewStylePlain];
         _tableView.rowHeight = 38;
         _tableView.separatorColor = [UIColor colorWithRed:220.f/255.0f green:220.f/255.0f blue:220.f/255.0f alpha:1.0];
         _tableView.dataSource = self;
         _tableView.delegate = self;
-        
-        UICollectionViewFlowLayout *flowLayout=[[UICollectionViewFlowLayout alloc] init];
-        flowLayout.minimumInteritemSpacing = 0;
-        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width, kMainBoundsHeight - 152) collectionViewLayout:flowLayout];
-        
-        [_collectionView registerClass:[SACollectionViewCell class] forCellWithReuseIdentifier:@"CollectionCell"];
-        [_collectionView registerClass:[SADropDownMenuCollectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headView"];
-        
-        [_collectionView registerClass:[SADropDownMenuCollectionFooterView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"footerView"];
-        [_collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"footerViewEmpt"];
-        _collectionView.backgroundColor = kColorBackground;
-        _collectionView.dataSource = self;
-        _collectionView.delegate = self;
-        
-        
-        self.autoresizesSubviews = NO;
         _tableView.autoresizesSubviews = NO;
-        _collectionView.autoresizesSubviews = NO;
-        
+        self.autoresizesSubviews = NO;
         //self tapped
         self.backgroundColor = [UIColor whiteColor];
-        UIGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(menuTapped:)];
-        [self addGestureRecognizer:tapGesture];
         
         //background init and tapped
         _backGroundView = [[UIView alloc] initWithFrame:CGRectMake(origin.x, origin.y, screenSize.width, screenSize.height)];
@@ -407,7 +342,7 @@
     
     CATextLayer *layer = [CATextLayer new];
     CGFloat sizeWidth = (size.width < (self.frame.size.width / _numOfMenu) - 25) ? size.width : self.frame.size.width / _numOfMenu - 25;
-    layer.bounds = CGRectMake(0, 0, sizeWidth, size.height);
+    layer.bounds = CGRectMake(0, 0, sizeWidth + 5, size.height + 0.5);
     layer.string = string;
     layer.fontSize = 15.0;
     layer.alignmentMode = kCAAlignmentCenter;
@@ -428,41 +363,49 @@
     return size;
 }
 
-#pragma mark - gesture handle
-- (void)menuTapped:(UITapGestureRecognizer *)paramSender {
-    CGPoint touchPoint = [paramSender locationInView:self];
-    //calculate index
-    
-    NSInteger tapIndex = touchPoint.x / (self.frame.size.width / _numOfMenu);
-    
-    if ([self.delegate respondsToSelector:@selector(menu:tabIndex:)]) {
-        [self.delegate menu:self tabIndex:tapIndex];
-    }else{
-        [self showOrDismissWithIndex:tapIndex];
+#pragma mark - tool
+- (void)showOrDismissWithIndex:(NSInteger)tapIndex{
+    for (int i = 0; i < _numOfMenu; i++) {
+        if (i != tapIndex) {
+            [self animateIndicator:_indicators[i] Forward:NO complete:^{
+                [self animateTitle:_titles[i] show:NO complete:^{
+                    
+                }];
+            }];
+            [(CALayer *)self.bgLayers[i] setBackgroundColor:BackColor.CGColor];
+        }
     }
     
-}
+    if (tapIndex == _currentSelectedMenudIndex && _show) { // 闭合
 
-- (void)backgroundTapped:(UITapGestureRecognizer *)paramSender
-{
-    BOOL displayByCollectionView = NO;
-    
-    if ([_dataSource respondsToSelector:@selector(displayByCollectionViewInColumn:)]) {
-        
-        displayByCollectionView = [_dataSource displayByCollectionViewInColumn:_currentSelectedMenudIndex];
-    }
-    if (displayByCollectionView) {
-        
-        [self animateIdicator:_indicators[_currentSelectedMenudIndex] background:_backGroundView collectionView:_collectionView title:_titles[_currentSelectedMenudIndex] forward:NO complecte:^{
-            _show = NO;
-        }];
-        
-    } else{
         [self animateIdicator:_indicators[_currentSelectedMenudIndex] background:_backGroundView tableView:_tableView  title:_titles[_currentSelectedMenudIndex] forward:NO complecte:^{
             _show = NO;
+            _currentSelectedMenudIndex = tapIndex;
         }];
+        
+        [(CALayer *)self.bgLayers[tapIndex] setBackgroundColor:BackColor.CGColor];
+    } else { //展开
+        _hadSelected = NO;
+        _currentSelectedMenudIndex = tapIndex;
+      
+        self.tableView.tableFooterView = [[UIView alloc] init];
+        [_tableView reloadData];
+        
+        if (_tableView) {
+            _tableView.frame = CGRectMake(_tableView.frame.origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width, 0);
+        }
+            [self animateIdicator:_indicators[tapIndex] background:_backGroundView tableView:_tableView  title:_titles[tapIndex] forward:YES complecte:^{
+                _show = YES;
+            }];
+        [(CALayer *)self.bgLayers[tapIndex] setBackgroundColor:SelectColor.CGColor];
     }
-    
+}
+
+
+- (void)backgroundTapped:(UITapGestureRecognizer *)paramSender{
+    [self animateIdicator:_indicators[_currentSelectedMenudIndex] background:_backGroundView tableView:_tableView  title:_titles[_currentSelectedMenudIndex] forward:NO complecte:^{
+            _show = NO;
+        }];
     [(CALayer *)self.bgLayers[_currentSelectedMenudIndex] setBackgroundColor:BackColor.CGColor];
 }
 
@@ -578,7 +521,7 @@
 - (void)animateTitle:(CATextLayer *)title show:(BOOL)show complete:(void(^)())complete {
     CGSize size = [self calculateTitleSizeWithString:title.string];
     CGFloat sizeWidth = (size.width < (self.frame.size.width / _numOfMenu) - 25) ? size.width : self.frame.size.width / _numOfMenu - 25;
-    title.bounds = CGRectMake(0, 0, sizeWidth, size.height);
+    title.bounds = CGRectMake(0, 0, sizeWidth + 5, size.height + 0.5);
     complete();
 }
 
@@ -596,23 +539,10 @@
     complete();
 }
 
-- (void)animateIdicator:(CAShapeLayer *)indicator background:(UIView *)background collectionView:(UICollectionView *)collectionView title:(CATextLayer *)title forward:(BOOL)forward complecte:(void(^)())complete{
-    
-    [self animateIndicator:indicator Forward:forward complete:^{
-        [self animateTitle:title show:forward complete:^{
-            [self animateBackGroundView:background show:forward complete:^{
-                [self animateCollectionView:collectionView show:forward complete:^{
-                    
-                }];
-                
-            }];
-        }];
-    }];
-    
-    complete();
-}
 
-#pragma mark - table datasource
+#pragma mark - tableView Set
+
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSAssert(self.dataSource != nil, @"menu's dataSource shouldn't be nil");
     if ([self.dataSource respondsToSelector:@selector(menu:numberOfRowsInColumn:)]) {
@@ -640,6 +570,9 @@
 
 #pragma mark - tableview delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+     SAMenuRecordModel *model = [self.dataSource menu:self modelForRowAtIndexPath:[SADropDownIndexPath indexPathWithCol:self.currentSelectedMenudIndex leftOrRight:-1 leftRow:-1 row:indexPath.row]];
+     SAButton * selectBtn = self.btnArray[self.currentSelectedMenudIndex];
+    [selectBtn setTitle:model.name forState:UIControlStateSelected];
     if (self.delegate || [self.delegate respondsToSelector:@selector(menu:didSelectRowAtIndexPath:)]) {
         [self.delegate menu:self didSelectRowAtIndexPath:[SADropDownIndexPath indexPathWithCol:self.currentSelectedMenudIndex leftOrRight:-1 leftRow:-1 row:indexPath.row]];
     } else {
@@ -648,225 +581,6 @@
 }
 
 
-#pragma mark - UICollectionViewDataSource
-
--(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
-    return 3;
-}
-
--(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-
-    if (0 == section) {
-        return self.qudongArray.count;
-    }else if (1 == section){
-        return self.ranliaoArray.count;
-    }else{
-        return self.paifangArray.count;
-    }
-}
-
--(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    
-    static NSString *collectionCell = @"CollectionCell";
-    SACollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:collectionCell forIndexPath:indexPath];
-    SADropDownCollectionModel *model;
-    if (0 == indexPath.section) {
-        model = self.qudongArray[indexPath.row];
-    }else if (1 == indexPath.section){
-        model = self.ranliaoArray[indexPath.row];
-    }else {
-        model = self.paifangArray[indexPath.row];
-    }
-    cell.model = model;
-    return cell;
-}
-
--(CGSize)collectionView:(UICollectionView *)collectionView
-                 layout:(UICollectionViewLayout *)collectionViewLayout
-referenceSizeForHeaderInSection:(NSInteger)section{
-    
-        return CGSizeMake(kMainBoundsWidth, 40);
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section{
-    if (section == 2) {
-        return CGSizeMake(kMainBoundsWidth, 250);
-    }else{
-        return CGSizeMake(CGFLOAT_MIN, CGFLOAT_MIN);
-    }
-}
-
--(UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
-          viewForSupplementaryElementOfKind:(NSString *)kind
-                                atIndexPath:(NSIndexPath *)indexPath{
-    
-    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
-        SADropDownMenuCollectionHeaderView *reuseableView=[collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headView" forIndexPath:indexPath];
-        if (0 == indexPath.section) {
-            reuseableView.headerStr = @"驱动";
-        }else if (1 == indexPath.section){
-            reuseableView.headerStr = @"燃料类型";
-        }else if (2 == indexPath.section){
-            reuseableView.headerStr = @"排放标准";
-        }
-        return reuseableView;
-    }else if ([kind isEqualToString:UICollectionElementKindSectionFooter]){
-        if (2 == indexPath.section){
-            SADropDownMenuCollectionFooterView * footerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"footerView" forIndexPath:indexPath];
-            self.footerView = footerView;
-            //确定请求
-            footerView.confiremCallBack = ^(NSArray *recordArry) {
-                [self.recordArray removeAllObjects];
-                
-                for (SADropDownCollectionModel *model in self.qudongArray) {
-                    if (model.isSelect) {
-                        SAMenuRecordModel *recordModel = [[SAMenuRecordModel alloc] init];
-                        recordModel.name = model.name;
-                        recordModel.serveID = model.serveID;
-                        recordModel.serveKey = model.serveKey;
-                        [self.recordArray addObject:recordModel];
-                        break;
-                    }
-                }
-                for (SADropDownCollectionModel *model  in self.ranliaoArray) {
-                    if (model.isSelect) {
-                        SAMenuRecordModel *recordModel = [[SAMenuRecordModel alloc] init];
-                        recordModel.name = model.name;
-                        recordModel.serveID = model.serveID;
-                        recordModel.serveKey = model.serveKey;
-                        [self.recordArray addObject:recordModel];
-                        break;
-                    }
-                }
-                for (SADropDownCollectionModel *model in self.paifangArray) {
-                    if (model.isSelect) {
-                        SAMenuRecordModel *recordModel = [[SAMenuRecordModel alloc] init];
-                        recordModel.name = model.name;
-                        recordModel.serveID = model.serveID;
-                        recordModel.serveKey = model.serveKey;
-                        [self.recordArray addObject:recordModel];
-                        break;
-                    }
-                }
-                //添加底部的recordArray
-                [self.recordArray addObjectsFromArray:recordArry];
-                if ([self.delegate respondsToSelector:@selector(menuDidConfirm:recordArray:)]) {
-                    [self.delegate menuDidConfirm:self recordArray:self.recordArray];
-                }
-            
-                [self showOrDismissWithIndex:2];
-            };
-            return footerView;
-        }else{
-            UICollectionReusableView * footerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"footerViewEmpt" forIndexPath:indexPath];
-            return footerView;
-        }
-        
-    }
-    return nil;
-}
-
-- (void)showOrDismissWithIndex:(NSInteger)tapIndex{
-    for (int i = 0; i < _numOfMenu; i++) {
-        if (i != tapIndex) {
-            [self animateIndicator:_indicators[i] Forward:NO complete:^{
-                [self animateTitle:_titles[i] show:NO complete:^{
-                    
-                }];
-            }];
-            [(CALayer *)self.bgLayers[i] setBackgroundColor:BackColor.CGColor];
-        }
-    }
-    
-    BOOL displayByCollectionView = NO;
-    
-    if ([_dataSource respondsToSelector:@selector(displayByCollectionViewInColumn:)]) {
-        
-        displayByCollectionView = [_dataSource displayByCollectionViewInColumn:tapIndex];
-    }
-    
-    //显示collectionView
-    if (displayByCollectionView) {
-        
-        UICollectionView *collectionView = _collectionView;
-        if (tapIndex == _currentSelectedMenudIndex && _show) {
-            [self animateIdicator:_indicators[_currentSelectedMenudIndex] background:_backGroundView collectionView:collectionView title:_titles[_currentSelectedMenudIndex] forward:NO complecte:^{
-                _currentSelectedMenudIndex = tapIndex;
-                _show = NO;
-            }];
-            
-            [(CALayer *)self.bgLayers[tapIndex] setBackgroundColor:BackColor.CGColor];
-        } else {
-            _currentSelectedMenudIndex = tapIndex;
-            [_collectionView reloadData];
-            
-            if (_currentSelectedMenudIndex!=-1) {
-                // 需要隐藏tableview
-                [self animateTableView:_tableView
-                                      show:NO complete:^{
-                    [self animateIdicator:_indicators[tapIndex] background:_backGroundView collectionView:collectionView title:_titles[tapIndex] forward:YES complecte:^{
-                        _show = YES;
-                    }];
-                }];
-            } else{
-                [self animateIdicator:_indicators[tapIndex] background:_backGroundView collectionView:collectionView title:_titles[tapIndex] forward:YES complecte:^{
-                    _show = YES;
-                }];
-            }
-            [(CALayer *)self.bgLayers[tapIndex] setBackgroundColor:SelectColor.CGColor];
-        }
-        
-    } else{
-      
-        if (tapIndex == _currentSelectedMenudIndex && _show) {
-            
-            [self animateIdicator:_indicators[_currentSelectedMenudIndex] background:_backGroundView tableView:_tableView  title:_titles[_currentSelectedMenudIndex] forward:NO complecte:^{
-                _show = NO;
-                _currentSelectedMenudIndex = tapIndex;
-            }];
-            
-            [(CALayer *)self.bgLayers[tapIndex] setBackgroundColor:BackColor.CGColor];
-        } else {
-            
-            _hadSelected = NO;
-            
-            _currentSelectedMenudIndex = tapIndex;
-            
-            [_tableView reloadData];
-       
-            if (_tableView) {
-                _tableView.frame = CGRectMake(_tableView.frame.origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width, 0);
-            }
-            
-          
-            if (_currentSelectedMenudIndex!=-1) {
-                // 需要隐藏collectionview
-                [self animateCollectionView:_collectionView show:NO complete:^{
-                    
-                    [self animateIdicator:_indicators[tapIndex] background:_backGroundView tableView:_tableView  title:_titles[tapIndex] forward:YES complecte:^{
-                        _show = YES;
-                    }];
-                }];
-                
-            } else{
-                [self animateIdicator:_indicators[tapIndex] background:_backGroundView tableView:_tableView  title:_titles[tapIndex] forward:YES complecte:^{
-                    _show = YES;
-                }];
-            }
-            [(CALayer *)self.bgLayers[tapIndex] setBackgroundColor:SelectColor.CGColor];
-        }
-    }
-}
-
-#pragma mark --UICollectionViewDelegateFlowLayout
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    return CGSizeMake((kMainBoundsWidth - 30 - 10)/3, 33);
-}
-
--(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
-{
-    return UIEdgeInsetsMake(10, 15, 10, 15);
-}
 
 #pragma mark --UICollectionViewDelegate
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -914,22 +628,4 @@ referenceSizeForHeaderInSection:(NSInteger)section{
 //    }
 }
 
-- (void)confiMenuWithSelectRow:(NSInteger)row{
-    CATextLayer *title = (CATextLayer *)_titles[_currentSelectedMenudIndex];
-    title.string = [self.dataSource menu:self titleForRowAtIndexPath:[SADropDownIndexPath indexPathWithCol:self.currentSelectedMenudIndex leftOrRight:-1 leftRow:-1 row:row]];
-    
-    [self animateIdicator:_indicators[_currentSelectedMenudIndex] background:_backGroundView collectionView:_collectionView title:_titles[_currentSelectedMenudIndex] forward:NO complecte:^{
-        _show = NO;
-    }];
-    
-    [(CALayer *)self.bgLayers[_currentSelectedMenudIndex] setBackgroundColor:BackColor.CGColor];
-    
-    CAShapeLayer *indicator = (CAShapeLayer *)_indicators[_currentSelectedMenudIndex];
-    indicator.position = CGPointMake(title.position.x + title.frame.size.width / 2 + 8, indicator.position.y);
-}
-
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section{
-    
-    return 15;
-}
 @end

@@ -210,8 +210,7 @@
 
 /** 选中标签 */
 - (void)tagDidCLick:(UITapGestureRecognizer *)gr{
-    PMSearchResultViewController * vc = [PMSearchResultViewController new];
-    [self presentViewController:vc animated:YES completion:nil];
+    [self resultResult];
 }
 
 
@@ -304,8 +303,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    PMSearchResultViewController * vc = [PMSearchResultViewController new];
-    [self presentViewController:vc animated:YES completion:nil];
+    [self resultResult];
  
 }
 
@@ -379,11 +377,11 @@
 
 #pragma mark - UISearchBarDelegate
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-    PMSearchResultViewController * vc = [PMSearchResultViewController new];
-    [self presentViewController:vc animated:YES completion:nil];
+    [self resultResult];
 }
 
 - (void)resultResult{
-    
+    PMSearchResultViewController * vc = [PMSearchResultViewController new];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 @end

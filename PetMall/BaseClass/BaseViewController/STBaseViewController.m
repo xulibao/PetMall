@@ -43,7 +43,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.edgesForExtendedLayout = UIRectEdgeNone;
-    self.view.backgroundColor = kColorBackground;
+    self.view.backgroundColor = kColorFAFAFA;
     [self initSubviews];
 }
 

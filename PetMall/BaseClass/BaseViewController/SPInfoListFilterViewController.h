@@ -7,18 +7,24 @@
 //
 
 #import "SAInfoListViewController.h"
-#import "STMenuRecordView.h"
 #import "SADropDownMenu.h"
 
 @interface SPInfoListFilterModel : NSObject
 @property(nonatomic, assign) NSInteger index;
+@property(nonatomic, copy) NSString *title;
+@property(nonatomic, copy) NSString *imageNomalStr;
+@property(nonatomic, copy) NSString *imageSelectStr;
 
+@property(nonatomic, strong) NSMutableArray *dataList;
+@property(nonatomic, assign) BOOL isShuaiXuan;
+@property(nonatomic, copy) void (^tapClick)();
+
+@property(nonatomic, copy) void (^cellDidSelect)(SADropDownIndexPath *indexPath);
 @end
 
-@interface SPInfoListFilterViewController : SAInfoListViewController
+@interface SPInfoListFilterViewController : SAInfoListViewController<SADropDownMenuDataSource,SADropDownMenuDelegate,UISearchBarDelegate>
 @property (nonatomic,strong) NSMutableArray * dataList;
 @property(nonatomic, strong) SADropDownMenu *filterView;
-@property(nonatomic, strong) STMenuRecordView *recordView;
 
 @property(nonatomic, copy) NSDictionary *filterParameters;
 @end
@@ -28,7 +34,7 @@
 - (void)initFilterView;
 - (void)layoutFilterView;
 
-- (void)initRecordView;
+- (void)initTopView;
 
 - (void)updateFilterWithParameters:(NSDictionary *)parameters;
 

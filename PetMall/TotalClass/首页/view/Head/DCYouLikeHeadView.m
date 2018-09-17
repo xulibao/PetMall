@@ -40,6 +40,7 @@
     self.moreBtn = moreBtn;
     moreBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [moreBtn setImage:[UIImage imageNamed:@"home_youjiantou"] forState:UIControlStateNormal];
+    [moreBtn addTarget:self action:@selector(moreBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [moreBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     [moreBtn setTitle:@"更多" forState:UIControlStateNormal];
     [self addSubview:moreBtn];
@@ -79,7 +80,11 @@
     }
 }
 
-#pragma mark - Setter Getter Methods
+- (void)moreBtnClick{
+    if (self.more) {
+        self.more();
+    }
+}
 
 
 @end

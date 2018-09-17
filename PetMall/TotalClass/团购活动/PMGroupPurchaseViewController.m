@@ -27,7 +27,7 @@
 - (void)initSubviews{
     [super initSubviews];
     UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kMainBoundsWidth, 190)];
-    imageView.image = IMAGE(@"mine_integralMall");
+    imageView.image = IMAGE(@"tuangou_header");
     self.tableView.tableHeaderView = imageView;
     self.tableView.mj_header.hidden = YES;
 }

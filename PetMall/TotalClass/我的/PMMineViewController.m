@@ -24,6 +24,9 @@
 #import "PMMyIntegralViewController.h"
 #import "PMMyCouponViewController.h"
 #import "PMMyAddressViewController.h"
+#import "PMMyCommentViewController.h"
+#import "PMSetViewController.h"
+#import "PMMessageViewController.h"
 @interface PMMineViewController ()<UITableViewDelegate,UITableViewDataSource,SAMineHeadViewDelegate,SAMineOrderDelegate>
 @property (nonatomic,strong) SAMineHeadView * headerView;
 @property (nonatomic,strong) NSMutableArray *dataArray;
@@ -145,8 +148,8 @@
     model.titleName = @"我的评价";
     [self.dataArray addObject:model];
     model.cellAction = ^(SAMineModel *model) {
-//        SAMyCouponViewController *vc = [[SAMyCouponViewController alloc] init];
-//        [self.navigationController pushViewController:vc animated:YES];
+        PMMyCommentViewController *vc = [[PMMyCommentViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
     };
     
     model = [[SAMineModel alloc] init];
@@ -279,10 +282,12 @@
 
 //消息
 - (void)messageButtonClick{
+   
 }
 //设置
 - (void)settingButtonClick{
-    
+    PMSetViewController * vc = [PMSetViewController new];
+    [self pushViewController:vc];
 }
 
 #pragma mark - MineOrderDelegate

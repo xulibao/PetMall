@@ -85,7 +85,6 @@
 
 - (void)initTableView {
     [super initTableView];
-    self.title = @"找回密码";
     self.tableView.scrollEnabled = NO;
     self.tableView.backgroundColor = kColorFAFAFA;
     self.view.backgroundColor = kColorFAFAFA;
@@ -142,26 +141,29 @@
 
 -(void)loginClick{
     [self.view endEditing:YES];
-    NSMutableDictionary * dict = [NSMutableDictionary dictionary];
-    NSArray * array = [self.viewModel rowsAtSection:0];
-    for (id model in array) {
-        if ([model isKindOfClass:[SPVerificationBaseModel class]]) {
-            SPVerificationBaseModel *baseModel =  (SPVerificationBaseModel *)model;
-            if (0 == [baseModel.severValue length]) {
-                [self showWaring:[NSString stringWithFormat:@"请输入%@！",baseModel.feildPlace]];
-                return;
-            }
-            [dict setObject:baseModel.severValue forKey:baseModel.severKey];
-        }else if([model isKindOfClass:[SPCodeForgotModel class]]){
-            SPCodeForgotModel *forgotModel =  (SPCodeForgotModel *)model;
-            if (forgotModel.companyId.length == 0) {
-                [self showWaring:@"请选择所属公司"];
-                return;
-            }
-            [dict setObject:forgotModel.companyId forKey:@"companyId"];
-            [dict setObject:forgotModel.managerPhone forKey:@"mobile"];
-        }
-    }
+    
+    [self showSuccess:@"更改密码成功"];
+    [self.navigationController popViewControllerAnimated:YES];
+//    NSMutableDictionary * dict = [NSMutableDictionary dictionary];
+//    NSArray * array = [self.viewModel rowsAtSection:0];
+//    for (id model in array) {
+//        if ([model isKindOfClass:[SPVerificationBaseModel class]]) {
+//            SPVerificationBaseModel *baseModel =  (SPVerificationBaseModel *)model;
+//            if (0 == [baseModel.severValue length]) {
+//                [self showWaring:[NSString stringWithFormat:@"请输入%@！",baseModel.feildPlace]];
+//                return;
+//            }
+//            [dict setObject:baseModel.severValue forKey:baseModel.severKey];
+//        }else if([model isKindOfClass:[SPCodeForgotModel class]]){
+//            SPCodeForgotModel *forgotModel =  (SPCodeForgotModel *)model;
+//            if (forgotModel.companyId.length == 0) {
+//                [self showWaring:@"请选择所属公司"];
+//                return;
+//            }
+//            [dict setObject:forgotModel.companyId forKey:@"companyId"];
+//            [dict setObject:forgotModel.managerPhone forKey:@"mobile"];
+//        }
+//    }
 }
 
 

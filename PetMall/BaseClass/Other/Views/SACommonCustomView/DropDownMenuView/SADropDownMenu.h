@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "SADropDownCollectionModel.h"
-#import "SADropDownMenuCollectionFooterView.h"
 #import "SAMenuRecordModel.h"
 #import "SADropDownMenuTableCell.h"
 @interface SADropDownIndexPath : NSObject
@@ -28,7 +27,7 @@
 
 #pragma mark - data source protocol
 @class SADropDownMenu;
-
+@class SPInfoListFilterModel;
 @protocol SADropDownMenuDataSource <NSObject>
 
 @required
@@ -38,6 +37,7 @@
 - (SAMenuRecordModel *)menu:(SADropDownMenu *)menu modelForRowAtIndexPath:(SADropDownIndexPath *)indexPath;
 
 - (NSString *)menu:(SADropDownMenu *)menu titleForColumn:(NSInteger)column;
+- (SPInfoListFilterModel *)menu:(SADropDownMenu *)menu modelForColumn:(NSInteger)column;
 
 - (SADropDownCollectionModel *)menu:(SADropDownMenu *)menu titleForRowAtIndexPath:(SADropDownIndexPath *)indexPath;
 
@@ -67,6 +67,9 @@
 
 @property (nonatomic, weak) id <SADropDownMenuDataSource> dataSource;
 @property (nonatomic, weak) id <SADropDownMenuDelegate> delegate;
+@property(nonatomic, assign) BOOL isSaled;
+@property(nonatomic, assign) BOOL isShuaiXuan;
+@property(nonatomic, strong) NSMutableArray *exterRecordArray; // 外部标签
 
 @property (nonatomic, strong) UIColor *indicatorColor;
 @property (nonatomic, strong) UIColor *textColor;
@@ -76,8 +79,10 @@
 @property (nonatomic, strong) NSArray *qudongArray;
 @property (nonatomic, strong) NSArray *ranliaoArray;
 @property (nonatomic, strong) NSArray *paifangArray;
-@property(nonatomic, strong) SADropDownMenuCollectionFooterView * footerView;
+@property (nonatomic, strong) NSArray *data3; //刷选 数据
 - (void)showOrDismissWithIndex:(NSInteger)index;
+
+@property(nonatomic, strong) NSMutableArray *btnArray;
 
 /**
  

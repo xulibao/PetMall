@@ -31,8 +31,11 @@
 #import "PMLogisticsInformationViewController.h"
 #import "PMTimeLimitViewController.h"
 #import "PMSearchViewController.h"
+#import "PMGoodsListViewController.h"
 #import "YWAddressDataTool.h"
 #import "STCoverView.h"
+#import "PMHomeSubViewController.h"
+#import "PMMessageViewController.h"
 /* cell */
 static NSString *const DCGoodsCountDownCellID = @"DCGoodsCountDownCell";
 static NSString *const DCNewWelfareCellID = @"DCNewWelfareCell";
@@ -66,17 +69,17 @@ static NSString *const DCScrollAdFootViewID = @"DCScrollAdFootView";
     PMHomeListViewController *vc0 = [[PMHomeListViewController alloc] init];
     vc0.title = @"首页";
 
-    PMHomeListViewController *vc1 = [[PMHomeListViewController alloc] init];
+    PMHomeSubViewController *vc1 = [[PMHomeSubViewController alloc] init];
     vc1.title = @"狗粮";
     
-    PMHomeListViewController *vc2 = [[PMHomeListViewController alloc] init];
+    PMHomeSubViewController *vc2 = [[PMHomeSubViewController alloc] init];
     vc2.title = @"零食";
     
-    PMHomeListViewController *vc3 = [[PMHomeListViewController alloc] init];
+    PMHomeSubViewController *vc3 = [[PMHomeSubViewController alloc] init];
     vc3.title = @"玩具";
-    PMHomeListViewController *vc4 = [[PMHomeListViewController alloc] init];
+    PMHomeSubViewController *vc4 = [[PMHomeSubViewController alloc] init];
     vc4.title = @"出行";
-    PMHomeListViewController *vc5 = [[PMHomeListViewController alloc] init];
+    PMHomeSubViewController *vc5 = [[PMHomeSubViewController alloc] init];
     vc5.title = @"医疗";
     self.viewControllers = @[vc0,
                              vc1,
@@ -96,8 +99,12 @@ static NSString *const DCScrollAdFootViewID = @"DCScrollAdFootView";
         @strongify(self)
         PMSearchViewController * vc = [[PMSearchViewController alloc ] init];
         [self presentViewController:vc animated:YES completion:^{
-            
         }];
+    };
+    self.topView.messageClick = ^{
+        @strongify(self)
+        PMMessageViewController * vc = [PMMessageViewController new];
+        [self pushViewController:vc];
     };
     [self.navgationBar addSubview:_topView];
 
@@ -286,6 +293,9 @@ static NSString *const DCScrollAdFootViewID = @"DCScrollAdFootView";
             reusableview = headerView;
         }else if (indexPath.section == 2){
             DCYouLikeHeadView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:DCYouLikeHeadViewID forIndexPath:indexPath];
+            headerView.more = ^{
+                [self moreGoods];
+            };
             headerView.titleLabel.text = @"潮品预售";
             reusableview = headerView;
         }else if (indexPath.section == 3){
@@ -497,5 +507,10 @@ static NSString *const DCScrollAdFootViewID = @"DCScrollAdFootView";
 - (void)cancelBtnClick{
     [self.coverBtn removeFromSuperview];
     [self.youhuiView removeFromSuperview];
+}
+
+- (void)moreGoods{
+    PMGoodsListViewController * vc = [PMGoodsListViewController new];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 @end
