@@ -11,7 +11,7 @@
 #import "PMOrderDetailHeaderView.h"
 #import "PMOrderDetailBottomView.h"
 #import "PMOrderDetailItem.h"
-
+#import "PMSendCommentViewController.h"
 @interface PMOrderDetailViewController ()
 @property(nonatomic, strong) PMOrderDetailHeaderView *headerView;
 
@@ -54,6 +54,10 @@
     PMOrderDetailBottomView * bottomView = [[PMOrderDetailBottomView alloc] initWithFrame:CGRectMake(0, 0, kMainBoundsWidth, 174)];
     bottomView.copyBlcok = ^{
         [self showSuccess:@"复制成功!"];
+    };
+    bottomView.commentBlcok = ^{
+        PMSendCommentViewController * vc= [PMSendCommentViewController new];
+        [self.navigationController pushViewController:vc animated:YES];
     };
     self.tableView.tableFooterView = bottomView;
 }

@@ -14,7 +14,7 @@
 
 @property (nonatomic,strong) SAEventHandleLabel *label0;
 @property (nonatomic, strong) SAFloatLayoutView *tagViews;
-
+@property(nonatomic, copy) void (^tagBtnClick)(NSInteger tag);
 @property(nonatomic, copy) NSArray<NSAttributedString*> *tags;
 
 @end

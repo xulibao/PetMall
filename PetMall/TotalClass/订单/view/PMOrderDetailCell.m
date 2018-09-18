@@ -7,7 +7,7 @@
 //
 
 #import "PMOrderDetailCell.h"
-
+#import "SAAlertController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "SATruckInfoBaseBottomView.h"
 
@@ -51,7 +51,7 @@
     NSMutableAttributedString * bottomAttStr = [[NSMutableAttributedString alloc] initWithString:bottomStr];
     [bottomAttStr addAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexStr:@"#FF3945"]} range:[bottomStr rangeOfString:@"¥158"]];
                                   self.bottomLabel.attributedText = bottomAttStr;
-        _bottomView.label0.attributedText = nil;
+    _bottomView.label0.attributedText = nil;
     
     [self.cartImageView sd_setImageWithURL:[NSURL URLWithString:data.image_url] placeholderImage:nil];
     self.cartTitleLabel.text = data.goods_title;
@@ -63,6 +63,20 @@
     self.contentView.backgroundColor = [UIColor whiteColor];;
     
     _bottomView = [[SATruckInfoBaseBottomView alloc] init];
+    _bottomView.tagBtnClick = ^(NSInteger tag) {
+                SAAlertController *alertController = [SAAlertController alertControllerWithTitle:nil
+                                                                                         message:@"确定要申请退款吗？\n申请后系统将处理此订单"
+                                                                                  preferredStyle:SAAlertControllerStyleAlert];
+                SAAlertAction *action = [SAAlertAction actionWithTitle:@"申请" style:SAAlertActionStyleDefault handler:^(SAAlertAction *action) {
+                    
+                }];
+                [alertController addAction:action];
+                action = [SAAlertAction actionWithTitle:@"取消" style:SAAlertActionStyleCancel handler:^(SAAlertAction *action) {
+                }];
+        [alertController addAction:action];
+
+                [alertController showWithAnimated:YES];
+    };
     [self.contentView addSubview:_bottomView];
     
     UIView * bgView = [[UIView alloc] init];

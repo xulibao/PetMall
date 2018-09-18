@@ -19,6 +19,7 @@
         [self setupBackgroundView];
         [self setupTitleLabel];
         [self setupLeftBarButton];
+        [self setupRightBarButton];
     }
     return self;
 }
@@ -63,10 +64,21 @@
     _leftBarButton = [UIButton buttonWithType:UIButtonTypeSystem];
     // 项目都是ios7以上版本，故写死
     [_leftBarButton setImage:[UIImage imageNamed:@"nav_Back_normal"] forState:UIControlStateNormal];
-    [_leftBarButton setImage:[UIImage imageNamed:@"nav_Back_normal"] forState:UIControlStateHighlighted];
+//    [_leftBarButton setImage:[UIImage imageNamed:@"nav_Back_normal"] forState:UIControlStateHighlighted];
     [_leftBarButton setTintColor:[UIColor blackColor]];
 //    _leftBarButton.adjustsImageWhenHighlighted =NO;
     [self addSubview:_leftBarButton];
+}
+
+- (void)setupRightBarButton {
+    _rightBarButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    // 项目都是ios7以上版本，故写死
+    [_rightBarButton setImage:[UIImage imageNamed:@"nav_Back_normal"] forState:UIControlStateNormal];
+    [_rightBarButton setImage:[UIImage imageNamed:@"nav_Back_normal"] forState:UIControlStateHighlighted];
+    [_rightBarButton setTintColor:[UIColor blackColor]];
+    _rightBarButton.hidden = YES;
+    //    _leftBarButton.adjustsImageWhenHighlighted =NO;
+    [self addSubview:_rightBarButton];
 }
 - (void)setTitle:(NSString *)title {
     _title = title;

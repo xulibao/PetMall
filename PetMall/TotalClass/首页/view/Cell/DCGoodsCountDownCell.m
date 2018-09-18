@@ -11,7 +11,6 @@
 // Controllers
 
 // Models
-#import "DCRecommendItem.h"
 // Views
 #import "DCGoodsSurplusCell.h"
 // Vendors
@@ -121,8 +120,11 @@ static NSString *const DCGoodsSurplusCellID = @"DCGoodsSurplusCell";
 
 #pragma mark - <UICollectionViewDelegate>
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    
-    NSLog(@"点击了计时商品%zd",indexPath.row);
+    DCRecommendItem *recommendItem = _countDownItem[indexPath.row];
+
+    if (self.DCGoodsCountDownCellBlock) {
+        self.DCGoodsCountDownCellBlock(recommendItem);
+    }
     
 }
 

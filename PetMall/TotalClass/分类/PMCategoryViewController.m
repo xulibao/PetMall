@@ -7,6 +7,8 @@
 //
 #define tableViewH  95
 
+#import "DCRecommendItem.h"
+#import "DCGoodBaseViewController.h"
 
 #import "PMCategoryViewController.h"
 
@@ -37,6 +39,9 @@
 @property (strong , nonatomic)UIButton *searchButton;
 /* 语音按钮 */
 @property (strong , nonatomic)UIButton *voiceButton;
+
+/* 推荐商品属性 */
+@property (strong , nonatomic)NSMutableArray *youLikeItem;
 /* 左边数据 */
 @property (strong , nonatomic)NSMutableArray<DCClassGoodsItem *> *titleItem;
 /* 右边数据 */
@@ -93,7 +98,7 @@ static NSString *const DCBrandSortCellID = @"DCBrandSortCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+     _youLikeItem = [DCRecommendItem mj_objectArrayWithFilename:@"HomeHighGoods.plist"];
     [self setUpNav];
     
     [self setUpTab];
@@ -228,7 +233,15 @@ static NSString *const DCBrandSortCellID = @"DCBrandSortCell";
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-  
+    DCRecommendItem * item = _youLikeItem[0];
+    DCGoodBaseViewController * vc = [[DCGoodBaseViewController alloc] init];
+    vc.goodTitle = item.main_title;
+    vc.goodPrice = item.price;
+    vc.goodSubtitle = item.goods_title;
+    vc.shufflingArray = item.images;
+    vc.goodImageView = item.image_url;
+    
+    [self.navigationController pushViewController:vc  animated:YES];
 }
 
 

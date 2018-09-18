@@ -7,7 +7,8 @@
 //
 
 #import "DCGoodBaseViewController.h"
-
+#import "PMConfirmOrderViewController.h"
+#import "STTabBarController.h"
 // Controllers
 #import "DCShareToViewController.h"
 #import "DCToolsViewController.h"
@@ -42,6 +43,8 @@
 #import "XWDrawerAnimator.h"
 #import "UIViewController+XWTransition.h"
 // Others
+#import "STCoverView.h"
+#import "PMShareView.h"
 
 @interface DCGoodBaseViewController ()<UITableViewDataSource,UITableViewDelegate,WKNavigationDelegate>
 
@@ -56,7 +59,8 @@
 @property (weak ,nonatomic) id dcObj;
 
 @property(nonatomic, strong) NSArray *commentsItem;
-
+@property (nonatomic, strong) STCoverView *coverBtn;
+@property(nonatomic, strong) PMShareView *shareView;
 @end
 
 //header
@@ -83,6 +87,19 @@ static NSArray *lastSeleArray_;
 @implementation DCGoodBaseViewController
 
 #pragma mark - LazyLoad
+- (PMShareView *)shareView{
+    if (_shareView == nil) {
+        _shareView = [[PMShareView alloc] init];
+        NSArray * array = @[@"share_wechat",
+                            @"share_pengyouquan",
+                            @"share_qq",
+                            @"share_zone"
+                            
+                            ];
+        _shareView.btnArray = array;
+    }
+    return _shareView;
+}
 - (UIScrollView *)scrollerView
 {
     if (!_scrollerView) {
@@ -160,17 +177,51 @@ static NSArray *lastSeleArray_;
 
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+
+    self.navgationBar.leftBarButton.frame = (CGRect){15,(self.navgationBar.height - 44) / 2, 44,44};
+    
+    self.navgationBar.rightBarButton.frame = (CGRect){kMainBoundsWidth - 44 - 15,(self.navgationBar.height - 44) / 2, 44,44};
+}
+
 - (void)setupNavgationBar {
     [super setupNavgationBar];
     
     UIColor *tintColor = [UIColor whiteColor];
-    [self.navgationBar.leftBarButton setImage:IMAGE(@"detail_back") forState:UIControlStateNormal];
-    self.navgationBar.leftBarButton.frame = (CGRect){12,(self.navgationBar.height - 44) / 2, 44,44};
+//    [self.navgationBar.leftBarButton setImage:IMAGE(@"detail_back") forState:UIControlStateNormal];
+      [self.navgationBar.leftBarButton setImage:[[UIImage imageNamed:@"nav_Back_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
+    self.navgationBar.rightBarButton.hidden = NO;
+    [self.navgationBar.rightBarButton addTarget:self action:@selector(shareClick) forControlEvents:UIControlEventTouchUpInside];
+      [self.navgationBar.rightBarButton setImage:[[UIImage imageNamed:@"detail_share"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
+//    [self.navgationBar.rightBarButton setImage:IMAGE(@"detail_share") forState:UIControlStateNormal];
+//    self.navgationBar.leftBarButton.frame = (CGRect){15,(self.navgationBar.height - 44) / 2, 44,44};
+//    self.navgationBar.rightBarButton.frame = (CGRect){15,(self.navgationBar.height - 44) / 2, 44,44};
     self.navgationBar.navigationBarBg.alpha = 0;
     self.navgationBar.titleLabel.alpha = 0;
     self.statusBarView.alpha = 0;
 }
 
+- (void)shareClick{
+    self.coverBtn = [[STCoverView alloc] initWithSuperView:kWindow complete:^(UIView *cover) {
+        [cover removeFromSuperview];
+        [self.shareView removeFromSuperview];
+        self.shareView.transform = CGAffineTransformMakeTranslation(0, 0);
+    }];
+    
+    [self.coverBtn addSubview:self.shareView];
+    self.shareView.frame = CGRectMake(0, kMainBoundsHeight, kMainBoundsWidth,115);
+    @weakify(self)
+    self.shareView.cancel = ^{
+        @strongify(self)
+        [self.coverBtn removeFromSuperview];
+        [self.shareView removeFromSuperview];
+        self.shareView.transform = CGAffineTransformMakeTranslation(0, 0);
+    };
+    [UIView animateWithDuration:0.3 animations:^{
+        self.shareView.transform = CGAffineTransformMakeTranslation(0, -115);
+    }];
+}
 - (void)initSubviews {
     [super initSubviews];
 }
@@ -537,34 +588,51 @@ static NSArray *lastSeleArray_;
     if (button.tag == 0) {
         NSLog(@"收藏");
         button.selected = !button.selected;
-    }else if(button.tag == 1){
+    }else if(button.tag == 2){
         NSLog(@"购物车");
-        //        DCMyTrolleyViewController *shopCarVc = [[DCMyTrolleyViewController alloc] init];
-        //        shopCarVc.isTabBar = YES;
-        //        shopCarVc.title = @"购物车";
-        //        [self.navigationController pushViewController:shopCarVc animated:YES];
-    }else  if (button.tag == 2 || button.tag == 3) { //父控制器的加入购物车和立即购买
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        [[SAApplication sharedApplication].mainTabBarController setSelectedIndex:0];
+        
+    }else  if ( button.tag == 3) { //父控制器的加入购物车和立即购买
         //异步发通知
-        dispatch_sync(dispatch_get_global_queue(0, 0), ^{
-            NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%zd",button.tag],@"buttonTag", nil];
-            [[NSNotificationCenter defaultCenter]postNotificationName:SELECTCARTORBUY object:nil userInfo:dict];
-        });
+        PMConfirmOrderViewController * vc = [[PMConfirmOrderViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
     }
 }
 
 #pragma mark - 转场动画弹出控制器
 - (void)setUpAlterViewControllerWith:(UIViewController *)vc WithDistance:(CGFloat)distance WithDirection:(XWDrawerAnimatorDirection)vcDirection WithParallaxEnable:(BOOL)parallaxEnable WithFlipEnable:(BOOL)flipEnable
 {
-    [self dismissViewControllerAnimated:YES completion:nil]; //以防有控制未退出
-    XWDrawerAnimatorDirection direction = vcDirection;
-    XWDrawerAnimator *animator = [XWDrawerAnimator xw_animatorWithDirection:direction moveDistance:distance];
-    animator.parallaxEnable = parallaxEnable;
-    animator.flipEnable = flipEnable;
-    [self xw_presentViewController:vc withAnimator:animator];
-    WEAKSELF
-    [animator xw_enableEdgeGestureAndBackTapWithConfig:^{
-        [weakSelf selfAlterViewback];
+    
+    self.coverBtn = [[STCoverView alloc] initWithSuperView:kWindow complete:^(UIView *cover) {
+        [cover removeFromSuperview];
+        [vc.view removeFromSuperview];
+        vc.view.transform = CGAffineTransformMakeTranslation(0, 0);
     }];
+    
+    [self.coverBtn addSubview:vc.view];
+    vc.view.frame = CGRectMake(0, kMainBoundsHeight, kMainBoundsWidth,kMainBoundsHeight * 0.8);
+    @weakify(self)
+    self.shareView.cancel = ^{
+        @strongify(self)
+        [self.coverBtn removeFromSuperview];
+        [vc.view removeFromSuperview];
+        vc.view.transform = CGAffineTransformMakeTranslation(0, 0);
+    };
+    [UIView animateWithDuration:0.3 animations:^{
+        vc.view.transform = CGAffineTransformMakeTranslation(0, -kMainBoundsHeight * 0.8);
+    }];
+    
+//    [self dismissViewControllerAnimated:YES completion:nil]; //以防有控制未退出
+//    XWDrawerAnimatorDirection direction = vcDirection;
+//    XWDrawerAnimator *animator = [XWDrawerAnimator xw_animatorWithDirection:direction moveDistance:distance];
+//    animator.parallaxEnable = parallaxEnable;
+//    animator.flipEnable = flipEnable;
+//    [self xw_presentViewController:vc withAnimator:animator];
+//    WEAKSELF
+//    [animator xw_enableEdgeGestureAndBackTapWithConfig:^{
+//        [weakSelf selfAlterViewback];
+//    }];
 }
 
 #pragma mark - 加入购物车成功

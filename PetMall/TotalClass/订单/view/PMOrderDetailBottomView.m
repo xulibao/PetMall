@@ -121,6 +121,7 @@
     UIButton * tagBtn1 = [[UIButton alloc] init];
     [tagBtn1 setTitle:@"评价" forState:UIControlStateNormal];
     [tagBtn1 setTitleColor:kColor999999 forState:UIControlStateNormal];
+    [tagBtn1 addTarget:self action:@selector(comment) forControlEvents:UIControlEventTouchUpInside];
     tagBtn1.titleLabel.font = [UIFont systemFontOfSize:14];
     tagBtn1.layer.cornerRadius = 15;
     tagBtn1.layer.borderColor = kColor999999.CGColor;
@@ -153,6 +154,11 @@
     if (self.copyBlcok) {
         self.copyBlcok();
     }
-    
+}
+
+- (void)comment{
+    if (self.commentBlcok) {
+        self.commentBlcok();
+    }
 }
 @end

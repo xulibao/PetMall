@@ -26,6 +26,7 @@
 #import "PMMyAddressViewController.h"
 #import "PMMyCommentViewController.h"
 #import "PMSetViewController.h"
+#import "PMNewUserViewController.h"
 #import "PMMessageViewController.h"
 @interface PMMineViewController ()<UITableViewDelegate,UITableViewDataSource,SAMineHeadViewDelegate,SAMineOrderDelegate>
 @property (nonatomic,strong) SAMineHeadView * headerView;
@@ -280,10 +281,7 @@
     
 }
 
-//消息
-- (void)messageButtonClick{
-   
-}
+
 //设置
 - (void)settingButtonClick{
     PMSetViewController * vc = [PMSetViewController new];
@@ -371,6 +369,10 @@
 
 - (void)mineHeadViewClickJifeng{
     PMMyIntegralViewController * vc = [PMMyIntegralViewController new];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+- (void)mineHeadViewClickXinren{
+    PMNewUserViewController * vc= [PMNewUserViewController new];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

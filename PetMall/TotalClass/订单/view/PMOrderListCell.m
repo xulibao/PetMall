@@ -47,6 +47,11 @@
     self.topView.attStr_label0 = [text0 attributedStingWithAttributes:nil];
     self.topView.attStr_label1 = [data.statusText attributedStingWithAttributes:nil];
     _bottomView.tags = data.tagsText;
+    _bottomView.tagBtnClick = ^(NSInteger tag) {
+        if ([self.cellDelegate respondsToSelector:@selector(PMOrderListCellClick)]) {
+            [self.cellDelegate PMOrderListCellClick];
+        }
+    };
     _bottomView.label0.text = @"共一件商品 合计：¥158";
 //    [_bottomView setNeedsLayout];
     

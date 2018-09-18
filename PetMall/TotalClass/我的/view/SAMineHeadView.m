@@ -107,6 +107,7 @@
     [self addSubview:jifengBtn];
     
     UIButton *voucherBtn = [[UIButton alloc] init];
+    [voucherBtn addTarget:self action:@selector(newUserClick) forControlEvents:UIControlEventTouchUpInside];
     [voucherBtn setImage:IMAGE(@"home_newUser") forState:UIControlStateNormal];
     [self addSubview:voucherBtn];
     [voucherBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -114,6 +115,11 @@
         make.centerX.mas_equalTo(self);
     }];
     
+}
+- (void)newUserClick{
+    if ([self.delegate respondsToSelector:@selector(mineHeadViewClickXinren)]) {
+        [self.delegate mineHeadViewClickXinren];
+    }
 }
 - (void)youhuiBtnClick{
     if ([self.delegate respondsToSelector:@selector(mineHeadViewClickYouhui)]) {

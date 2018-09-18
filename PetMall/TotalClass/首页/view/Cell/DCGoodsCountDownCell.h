@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DCRecommendItem.h"
 
 @interface DCGoodsCountDownCell : UICollectionViewCell
-
+@property(nonatomic, copy) void (^DCGoodsCountDownCellBlock)(DCRecommendItem *item);
 @end

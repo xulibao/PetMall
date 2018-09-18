@@ -8,6 +8,7 @@
 
 #import "SAIndicatorSegmentViewController.h"
 #import "SAInfoListViewController.h"
+#import "PMOrderListCell.h"
 typedef NS_ENUM(NSUInteger, PMOrderOrderType) {
     PMOrderOrderTypeAll = -1,           // 全部订单
     PMOrderOrderTypePayment = 7,           // 待付款
@@ -19,7 +20,7 @@ typedef NS_ENUM(NSUInteger, PMOrderOrderType) {
 
 @end
 
-@interface PMOrderListViewController : SAInfoListViewController
+@interface PMOrderListViewController : SAInfoListViewController <PMOrderListCellDelegate>
 
 @property(nonatomic, assign) PMOrderOrderType type;
 

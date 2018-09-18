@@ -10,6 +10,7 @@
 #import "PMSetItem.h"
 #import "SPForgotPasswordViewController.h"
 #import "PMContactUsViewController.h"
+#import "PMSendCommentViewController.h"
 @interface PMSetViewController ()
 
 
@@ -69,7 +70,8 @@
     recommendItem = [PMSetItem new];
     recommendItem.title = @"评价我们";
     recommendItem.itemSelect = ^{
-        
+        PMSendCommentViewController * vc = [PMSendCommentViewController new];
+        [self.navigationController pushViewController:vc animated:YES];
     };
     [_dataArray addObject:recommendItem];
     

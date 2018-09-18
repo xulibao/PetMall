@@ -9,6 +9,7 @@
 #import "PMOrderViewController.h"
 #import "PMOrderListItem.h"
 #import "PMOrderDetailViewController.h"
+#import "PMSendCommentViewController.h"
 @interface PMOrderViewController ()
 
 @end
@@ -89,6 +90,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.viewModel.cellDelegate =self;
     [self fetchData];
 }
 
@@ -96,6 +98,10 @@
     [self fetchData];
 }
 
+- (void)PMOrderListCellClick{
+    PMSendCommentViewController * vc =[PMSendCommentViewController new];
+    [self pushViewController:vc];
+}
 
 
 #pragma mark - Request

@@ -10,6 +10,9 @@
 #import "STHomeVCTopView.h"
 #import "DCGridItem.h"
 #import "DCRecommendItem.h"
+#import "STTabBarController.h"
+#import "PMIntegralMallViewController.h"
+#import "PMSpeacilePriceViewController.h"
 /* cell */
 #import "DCGoodsCountDownCell.h" //倒计时商品
 #import "DCNewWelfareCell.h"     //新人福利
@@ -36,6 +39,7 @@
 #import "STCoverView.h"
 #import "PMHomeSubViewController.h"
 #import "PMMessageViewController.h"
+#import "PMGoodSaleViewController.h"
 /* cell */
 static NSString *const DCGoodsCountDownCellID = @"DCGoodsCountDownCell";
 static NSString *const DCNewWelfareCellID = @"DCNewWelfareCell";
@@ -247,6 +251,9 @@ static NSString *const DCScrollAdFootViewID = @"DCScrollAdFootView";
         
     }else if (indexPath.section == 1) {//倒计时
         DCGoodsCountDownCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DCGoodsCountDownCellID forIndexPath:indexPath];
+        cell.DCGoodsCountDownCellBlock = ^(DCRecommendItem *item) {
+            [self pushDeat:item];
+        };
         gridcell = cell;
         
     }
@@ -257,7 +264,8 @@ static NSString *const DCScrollAdFootViewID = @"DCScrollAdFootView";
     else if (indexPath.section == 3) {//团购活动
         DCGoodsYouLikeCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DCGoodsYouLikeCellID forIndexPath:indexPath];
         cell.lookSameBlock = ^{
-            NSLog(@"点击了第%zd商品的找相似",indexPath.row);
+            [self pushDeat:cell.youLikeItem];
+
         };
         cell.youLikeItem = _youLikeItem[indexPath.row];
         gridcell = cell;
@@ -399,25 +407,41 @@ static NSString *const DCScrollAdFootViewID = @"DCScrollAdFootView";
     
  
     if (indexPath.section == 0) {//10
-
-        PMTimeLimitViewController * vc = [[PMTimeLimitViewController alloc] init];
-        [self pushViewController:vc];
-        NSLog(@"点击了10个属性第%zd",indexPath.row);
-    }else if (indexPath.section == 5){
+        if (indexPath.row == 0) {
+            PMTimeLimitViewController * vc = [[PMTimeLimitViewController alloc] init];
+            [self pushViewController:vc];
+        }else if (1 == indexPath.row){
+            PMGoodSaleViewController * vc = [[PMGoodSaleViewController alloc] init];
+            [self pushViewController:vc];
+        }else if (2 == indexPath.row){
+            [[SAApplication sharedApplication].mainTabBarController setSelectedIndex:2];
+        }else if (3 == indexPath.row){
+            PMIntegralMallViewController * vc = [[PMIntegralMallViewController alloc] init];
+            [self pushViewController:vc];
+        }else if (4 == indexPath.row){
+            
+            PMSpeacilePriceViewController * vc = [[PMSpeacilePriceViewController alloc] init];
+            [self pushViewController:vc];
+        }
+      
+    }else{
         NSLog(@"点击了推荐的第%zd个商品",indexPath.row);
-        
-        DCGoodBaseViewController * vc = [[DCGoodBaseViewController alloc] init];
         DCRecommendItem * item = _youLikeItem[indexPath.row];
-        vc.goodTitle = item.main_title;
-        vc.goodPrice = item.price;
-        vc.goodSubtitle = item.goods_title;
-        vc.shufflingArray = item.images;
-        vc.goodImageView = item.image_url;
-        
-        [self.navigationController pushViewController:vc  animated:YES];
+        [self pushDeat:item];
     }
 }
 
+- (void)pushDeat:(DCRecommendItem *)item12{
+    DCRecommendItem * item = _youLikeItem[0];
+    DCGoodBaseViewController * vc = [[DCGoodBaseViewController alloc] init];
+    vc.goodTitle = item.main_title;
+    vc.goodPrice = item.price;
+    vc.goodSubtitle = item.goods_title;
+    vc.shufflingArray = item.images;
+    vc.goodImageView = item.image_url;
+    
+    [self.navigationController pushViewController:vc  animated:YES];
+}
 
 
 #pragma mark - collectionView滚回顶部

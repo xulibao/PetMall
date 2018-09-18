@@ -19,7 +19,7 @@
 - (void)mineHeadViewClickUserInfo;
 - (void)mineHeadViewClickYouhui;
 - (void)mineHeadViewClickJifeng;
-
+- (void)mineHeadViewClickXinren;
 
 
 @end

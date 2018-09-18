@@ -10,4 +10,5 @@
 
 @interface PMOrderDetailBottomView : UIView
 @property(nonatomic, copy) void (^copyBlcok)();
+@property(nonatomic, copy) void (^commentBlcok)();
 @end

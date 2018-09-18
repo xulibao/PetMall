@@ -20,7 +20,8 @@ target 'PetMall' do
   pod 'SDCycleScrollView'
   pod 'BaiduMapKit'
 
-
+pod 'SDAutoLayout','~> 2.1.8'
+pod 'ZYQAssetPickerController', '~> 1.2.0'
 
   # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
   # use_frameworks!

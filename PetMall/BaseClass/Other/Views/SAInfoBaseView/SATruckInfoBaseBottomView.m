@@ -48,6 +48,7 @@
         [self.tagViews removeAllSubviews];
         [tags enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(NSAttributedString * _Nonnull tag, NSUInteger idx, BOOL * _Nonnull stop) {
             SAGhostButton *tagButton;
+            tagButton.tag = idx;
             tagButton = [[SAGhostButton alloc] init];
             tagButton.cornerRadius = 4;
             tagButton.size = CGSizeMake(tag.length *15+8, 25);
@@ -56,6 +57,7 @@
                                           atIndex:(tag.length-1)
                                    effectiveRange:nil];
             //            [tagButton setTitleColor:tagButton.ghostColor forState:UIControlStateNormal];
+            [tagButton addTarget:self action:@selector(tagButtonClick:) forControlEvents:UIControlEventTouchUpInside];
             [tagButton setAttributedTitle:tag forState:UIControlStateNormal];
             //            [tags addObject:tag];
             [self.tagViews addSubview:tagButton];
@@ -64,6 +66,12 @@
         [self setNeedsLayout];
     }
     _tags = tags;
+}
+
+- (void)tagButtonClick:(SAGhostButton *)btn{
+    if (self.tagBtnClick) {
+        self.tagBtnClick(btn.tag);
+    }
 }
 
 - (void)layoutSubviews{

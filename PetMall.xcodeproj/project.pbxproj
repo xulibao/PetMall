@@ -335,9 +335,10 @@
 		5AA570FE214FD27F009015D9 /* PMMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA570FB214FD27E009015D9 /* PMMessageCell.m */; };
 		5AA57101214FD9EC009015D9 /* PMMessageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA57100214FD9EC009015D9 /* PMMessageDetailViewController.m */; };
 		5AA5710421500339009015D9 /* PMSendCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA5710321500339009015D9 /* PMSendCommentViewController.m */; };
-		5AA5716621501877009015D9 /* SDPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA5716021501877009015D9 /* SDPhotoBrowser.m */; };
-		5AA5716721501877009015D9 /* SDWaitingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA5716121501877009015D9 /* SDWaitingView.m */; };
-		5AA5716821501877009015D9 /* SDBrowserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA5716221501877009015D9 /* SDBrowserImageView.m */; };
+		5AA5716B21502147009015D9 /* WWStarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA5716A21502147009015D9 /* WWStarView.m */; };
+		5AA5716F21509864009015D9 /* PMNewUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA5716E21509864009015D9 /* PMNewUserViewController.m */; };
+		5AA5717321509B3F009015D9 /* PMGoodSaleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA5717221509B3F009015D9 /* PMGoodSaleViewController.m */; };
+		5AA5717721509CEA009015D9 /* PMSpeacilePriceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA5717621509CEA009015D9 /* PMSpeacilePriceViewController.m */; };
 		5AC465A6213FEC56006F0AC5 /* PMSpecialClearanceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC465A5213FEC56006F0AC5 /* PMSpecialClearanceCell.m */; };
 		5AC465A9213FEE64006F0AC5 /* PMSpecialClearanceSubCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC465A8213FEE64006F0AC5 /* PMSpecialClearanceSubCell.m */; };
 		5AC95CA92135206C00BDA95D /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC95CA82135206C00BDA95D /* HMSegmentedControl.m */; };
@@ -1143,13 +1144,14 @@
 		5AA57100214FD9EC009015D9 /* PMMessageDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMMessageDetailViewController.m; sourceTree = "<group>"; };
 		5AA5710221500339009015D9 /* PMSendCommentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMSendCommentViewController.h; sourceTree = "<group>"; };
 		5AA5710321500339009015D9 /* PMSendCommentViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMSendCommentViewController.m; sourceTree = "<group>"; };
-		5AA5715F21501877009015D9 /* SDPhotoBrowserConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDPhotoBrowserConfig.h; sourceTree = "<group>"; };
-		5AA5716021501877009015D9 /* SDPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDPhotoBrowser.m; sourceTree = "<group>"; };
-		5AA5716121501877009015D9 /* SDWaitingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWaitingView.m; sourceTree = "<group>"; };
-		5AA5716221501877009015D9 /* SDBrowserImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDBrowserImageView.m; sourceTree = "<group>"; };
-		5AA5716321501877009015D9 /* SDWaitingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWaitingView.h; sourceTree = "<group>"; };
-		5AA5716421501877009015D9 /* SDPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDPhotoBrowser.h; sourceTree = "<group>"; };
-		5AA5716521501877009015D9 /* SDBrowserImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDBrowserImageView.h; sourceTree = "<group>"; };
+		5AA5716921502146009015D9 /* WWStarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWStarView.h; sourceTree = "<group>"; };
+		5AA5716A21502147009015D9 /* WWStarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWStarView.m; sourceTree = "<group>"; };
+		5AA5716D21509864009015D9 /* PMNewUserViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMNewUserViewController.h; sourceTree = "<group>"; };
+		5AA5716E21509864009015D9 /* PMNewUserViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMNewUserViewController.m; sourceTree = "<group>"; };
+		5AA5717121509B3F009015D9 /* PMGoodSaleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMGoodSaleViewController.h; sourceTree = "<group>"; };
+		5AA5717221509B3F009015D9 /* PMGoodSaleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMGoodSaleViewController.m; sourceTree = "<group>"; };
+		5AA5717521509CE9009015D9 /* PMSpeacilePriceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMSpeacilePriceViewController.h; sourceTree = "<group>"; };
+		5AA5717621509CEA009015D9 /* PMSpeacilePriceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMSpeacilePriceViewController.m; sourceTree = "<group>"; };
 		5AC465A4213FEC56006F0AC5 /* PMSpecialClearanceCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMSpecialClearanceCell.h; sourceTree = "<group>"; };
 		5AC465A5213FEC56006F0AC5 /* PMSpecialClearanceCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMSpecialClearanceCell.m; sourceTree = "<group>"; };
 		5AC465A7213FEE64006F0AC5 /* PMSpecialClearanceSubCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMSpecialClearanceSubCell.h; sourceTree = "<group>"; };
@@ -2947,6 +2949,8 @@
 		5AA570DD214FA4E3009015D9 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				5AA5716921502146009015D9 /* WWStarView.h */,
+				5AA5716A21502147009015D9 /* WWStarView.m */,
 				5AA570E2214FA545009015D9 /* PMMyCommentCell.h */,
 				5AA570E3214FA545009015D9 /* PMMyCommentCell.m */,
 			);
@@ -3011,24 +3015,36 @@
 			path = view;
 			sourceTree = "<group>";
 		};
-		5AA5715E21501877009015D9 /* SDPhotoBrowser */ = {
+		5AA5716C21509843009015D9 /* 新人专享 */ = {
 			isa = PBXGroup;
 			children = (
-				5AA5715F21501877009015D9 /* SDPhotoBrowserConfig.h */,
-				5AA5716021501877009015D9 /* SDPhotoBrowser.m */,
-				5AA5716121501877009015D9 /* SDWaitingView.m */,
-				5AA5716221501877009015D9 /* SDBrowserImageView.m */,
-				5AA5716321501877009015D9 /* SDWaitingView.h */,
-				5AA5716421501877009015D9 /* SDPhotoBrowser.h */,
-				5AA5716521501877009015D9 /* SDBrowserImageView.h */,
+				5AA5716D21509864009015D9 /* PMNewUserViewController.h */,
+				5AA5716E21509864009015D9 /* PMNewUserViewController.m */,
 			);
-			path = SDPhotoBrowser;
+			path = "新人专享";
+			sourceTree = "<group>";
+		};
+		5AA5717021509AD5009015D9 /* 商品预售 */ = {
+			isa = PBXGroup;
+			children = (
+				5AA5717121509B3F009015D9 /* PMGoodSaleViewController.h */,
+				5AA5717221509B3F009015D9 /* PMGoodSaleViewController.m */,
+			);
+			path = "商品预售";
+			sourceTree = "<group>";
+		};
+		5AA5717421509C98009015D9 /* 特价清仓 */ = {
+			isa = PBXGroup;
+			children = (
+				5AA5717521509CE9009015D9 /* PMSpeacilePriceViewController.h */,
+				5AA5717621509CEA009015D9 /* PMSpeacilePriceViewController.m */,
+			);
+			path = "特价清仓";
 			sourceTree = "<group>";
 		};
 		5AC95CA52135204B00BDA95D /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				5AA5715E21501877009015D9 /* SDPhotoBrowser */,
 				5AF24CB2214E589300EDDD27 /* NSStringSplicingTool */,
 				5AEA6C7F214D13AA00A2E6E8 /* YWChooseAddress */,
 				5AEA6BE2214A4A5200A2E6E8 /* Resources */,
@@ -3075,6 +3091,7 @@
 		5AC95CB821352C0300BDA95D /* 我的 */ = {
 			isa = PBXGroup;
 			children = (
+				5AA5716C21509843009015D9 /* 新人专享 */,
 				5AA570F3214FD21E009015D9 /* 消息 */,
 				5AF24CBC214E789800EDDD27 /* 设置 */,
 				5AF24C86214DDCF600EDDD27 /* 分享 */,
@@ -3096,6 +3113,8 @@
 		5AC95CB921352C0300BDA95D /* 首页 */ = {
 			isa = PBXGroup;
 			children = (
+				5AA5717421509C98009015D9 /* 特价清仓 */,
+				5AA5717021509AD5009015D9 /* 商品预售 */,
 				5AA570D6214F8DE8009015D9 /* 狗粮 */,
 				5AA570D2214F78DE009015D9 /* 商品列表 */,
 				5AF24C8E214DF8DC00EDDD27 /* 限时秒杀 */,
@@ -3924,6 +3943,7 @@
 				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
 				"${PODS_ROOT}/SSKeychain/Support/SSKeychain.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/TUSafariActivity/TUSafariActivity.bundle",
+				"${PODS_ROOT}/ZYQAssetPickerController/ZYQAssetPickerController/ZYQAssetPicker.Bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
@@ -3944,6 +3964,7 @@
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MJRefresh.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SSKeychain.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TUSafariActivity.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ZYQAssetPicker.Bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -4201,6 +4222,7 @@
 				5AC95CC221352C0300BDA95D /* PMLoginViewController.m in Sources */,
 				5A4AF5802134F9FA00F8190B /* STInsetsTextField.m in Sources */,
 				5AF24CBF214EC2A900EDDD27 /* PMSearchResultViewController.m in Sources */,
+				5AA5716B21502147009015D9 /* WWStarView.m in Sources */,
 				5AEA6B722145678300A2E6E8 /* SAPersonCenterModel.m in Sources */,
 				5A4AF6B82134FDD400F8190B /* UIView+SPLine.m in Sources */,
 				5A4AF56A2134F9FA00F8190B /* NSObject+swizzleSEL.m in Sources */,
@@ -4215,7 +4237,6 @@
 				5A54CAE42143C5F500971D83 /* DCShareItem.m in Sources */,
 				5AEA6C49214C9F4300A2E6E8 /* PMCommonGoodsItem.m in Sources */,
 				5A4AF5942134F9FA00F8190B /* STEmptyView.m in Sources */,
-				5AA5716621501877009015D9 /* SDPhotoBrowser.m in Sources */,
 				5AEA6B732145678300A2E6E8 /* SAAccount.m in Sources */,
 				5A4AF5902134F9FA00F8190B /* STGroupSectionView.m in Sources */,
 				5A4AF6662134FA0F00F8190B /* ABCrashReport.m in Sources */,
@@ -4238,10 +4259,12 @@
 				5AA570EC214FC55F009015D9 /* PMSetItem.m in Sources */,
 				5A4AF5B62134F9FA00F8190B /* STRequest.m in Sources */,
 				5A4AF5C42134F9FB00F8190B /* SAIndicatorSegmentViewController.m in Sources */,
+				5AA5717321509B3F009015D9 /* PMGoodSaleViewController.m in Sources */,
 				5A4AF6482134FA0F00F8190B /* GADebugObject.m in Sources */,
 				5A54CB622143C73800971D83 /* XWFilterAnimator+XWMask.m in Sources */,
 				5A54CB7C2143C7B000971D83 /* DCNotificationCenterName.m in Sources */,
 				5A4AF5742134F9FA00F8190B /* SAUserInfoEntity.m in Sources */,
+				5AA5717721509CEA009015D9 /* PMSpeacilePriceViewController.m in Sources */,
 				5A4AF4602134ECF000F8190B /* main.m in Sources */,
 				5A4AF6612134FA0F00F8190B /* GAURLSessionConfiguration.m in Sources */,
 				5A4AF5702134F9FA00F8190B /* UITableView+SATableView.m in Sources */,
@@ -4277,7 +4300,6 @@
 				5AEA6C36214C7D0300A2E6E8 /* PMOrderDetailCell.m in Sources */,
 				5A54CAEE2143C5F500971D83 /* DCComImagesView.m in Sources */,
 				5A6ACF7E213D1C81001FB644 /* DCGoodsSurplusCell.m in Sources */,
-				5AA5716721501877009015D9 /* SDWaitingView.m in Sources */,
 				5A4AF5AA2134F9FA00F8190B /* SACustomBottomView.m in Sources */,
 				5A4AF48A2134F94300F8190B /* AppDelegate.mm in Sources */,
 				5A54CB6B2143C73800971D83 /* XWCoolAnimator+XWFold.m in Sources */,
@@ -4305,8 +4327,8 @@
 				5A6ACF74213D1C81001FB644 /* DCOverFootView.m in Sources */,
 				5A4AF5A42134F9FA00F8190B /* SADropDownCollectionModel.m in Sources */,
 				5AEA6C6D214D121100A2E6E8 /* PMAddNewAddressViewController.m in Sources */,
-				5AA5716821501877009015D9 /* SDBrowserImageView.m in Sources */,
 				5AEA6BA12148BB7D00A2E6E8 /* PMConfirmPayViewController.m in Sources */,
+				5AA5716F21509864009015D9 /* PMNewUserViewController.m in Sources */,
 				5A54CB6D2143C73800971D83 /* XWCoolAnimator+XWMiddlePageFlip.m in Sources */,
 				5A4AF5752134F9FA00F8190B /* STTabBtnModel.m in Sources */,
 				5A54CAF32143C5F500971D83 /* DCComHeadView.m in Sources */,
@@ -4538,7 +4560,9 @@
 			baseConfigurationReference = 2AB288C1C83F291F8A9D0676 /* Pods-PetMall.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/PetMall/BaseClass/GA_Base_NetworkAndDebug/GADebugSuperManger/GACrash/Airbrake",
@@ -4606,8 +4630,9 @@
 					"-weak_framework",
 					"\"WebKit\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "ios-xulibao.PetMall";
+				PRODUCT_BUNDLE_IDENTIFIER = com.chongwu.Mall.qiye;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -4617,7 +4642,10 @@
 			baseConfigurationReference = 0E979792571ED119576C1EDB /* Pods-PetMall.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = R6Y8Z77244;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/PetMall/BaseClass/GA_Base_NetworkAndDebug/GADebugSuperManger/GACrash/Airbrake",
@@ -4685,8 +4713,10 @@
 					"-weak_framework",
 					"\"WebKit\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "ios-xulibao.PetMall";
+				PRODUCT_BUNDLE_IDENTIFIER = com.chongwu.Mall.qiye;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "04506076-48f7-4dab-a9a0-f72679ce7858";
+				PROVISIONING_PROFILE_SPECIFIER = mall;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

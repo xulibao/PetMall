@@ -8,9 +8,13 @@
 
 #import "STCommonTableViewCell.h"
 #import "PMOrderListItem.h"
+@protocol PMOrderListCellDelegate <STCommonTableViewCellDelegate>
 
+@optional
+- (void)PMOrderListCellClick;
+@end
 @interface PMOrderListCell : STCommonTableViewCell
 
 @property(nonatomic, strong) PMOrderListItem *item;
-
+@property(nonatomic, weak) <PMOrderListCellDelegate> cellDelegate;
 @end

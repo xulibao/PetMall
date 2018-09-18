@@ -7,7 +7,25 @@
 		<key>PetMall.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>20</integer>
+			<integer>22</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>5A4AF44C2134ECEF00F8190B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5A4AF4642134ECF100F8190B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5A4AF46F2134ECF100F8190B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>
