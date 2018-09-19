@@ -8,7 +8,7 @@
 
 #import "PMGroupPurchaseViewController.h"
 #import "PMCommonGoodsItem.h"
-
+#import "PMGroupPurchaserDetailViewController.h"
 @interface PMGroupPurchaseViewController ()
 @property(nonatomic, strong) NSMutableArray *dataArray;
 
@@ -39,4 +39,16 @@
     [self setItems:self.dataArray];
 }
 
+- (void)didSelectCellWithItem:(id<STCommonTableRowItem>)item1{
+    
+    PMGroupPurchaserDetailViewController * vc = [PMGroupPurchaserDetailViewController new];
+    PMCommonGoodsItem * item = self.dataArray[0];
+    vc.goodTitle = @"包退通用牛肉泰迪贵宾金毛比熊幼犬成犬双拼狗粮 5斤10斤";
+    vc.goodPrice = item.price;
+    vc.goodTip= @"26人参团  还差4人";
+    vc.goodSubtitle = @"参团立省7.2元";
+    vc.shufflingArray = item.images;
+    vc.goodImageView = item.image_url;
+    [self.navigationController pushViewController:vc animated:YES];
+}
 @end

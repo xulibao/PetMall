@@ -51,7 +51,7 @@
 - (void)setUpUI{
     self.backgroundColor = [UIColor whiteColor];
     _goodsImageView = [[UIImageView alloc] init];
-    _goodsImageView.contentMode = UIViewContentModeScaleAspectFill;
+    _goodsImageView.contentMode = UIViewContentModeScaleAspectFit;
     [self addSubview:_goodsImageView];
     
     _priceLabel = [[UILabel alloc] init];
@@ -95,6 +95,8 @@
         make.centerX.mas_equalTo(self).mas_offset(15);
     }];
     
+    [self sp_addTopLineWithLeftMargin:0 rightMargin:0];
+    [self sp_addVerticalTailLineWithTopMargin:0 bottomMargin:0];
 }
 
 #pragma mark - Setter Getter Methods

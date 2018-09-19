@@ -129,4 +129,8 @@
     
     
 }
+
+- (void)lookSameGoods{
+    
+}
 @end

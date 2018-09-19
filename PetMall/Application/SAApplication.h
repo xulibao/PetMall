@@ -34,7 +34,7 @@
 + (SAApplication *)sharedApplication;
 
 @property(nonatomic, strong) UIWindow *window;
-@property(nonatomic, strong) UINavigationController *navigationController;
+//@property(nonatomic, strong) UINavigationController *navigationController;
 @property(nonatomic, strong) STTabBarController *mainTabBarController;
 @property(nonatomic, strong) PMLoginViewController *signInController;
 

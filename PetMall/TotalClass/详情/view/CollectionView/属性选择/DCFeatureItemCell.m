@@ -47,6 +47,9 @@
     _attLabel = [[UILabel alloc] init];
     _attLabel.textAlignment = NSTextAlignmentCenter;
     _attLabel.font = PFR13Font;
+    _attLabel.layer.cornerRadius = 15;
+    _attLabel.layer.borderWidth = 0.5;
+    _attLabel.clipsToBounds = YES;
     [self addSubview:_attLabel];
     
 }
@@ -69,11 +72,12 @@
     _attLabel.text = content.infoname;
     
     if (content.isSelect) {
-        _attLabel.textColor = [UIColor redColor];
+        _attLabel.textColor = kColorFF3945;
+        _attLabel.layer.borderColor = kColorFF3945.CGColor;
      
     }else{
         _attLabel.textColor = [UIColor blackColor];
-       
+        _attLabel.layer.borderColor = kColor999999.CGColor;
     }
 }
 

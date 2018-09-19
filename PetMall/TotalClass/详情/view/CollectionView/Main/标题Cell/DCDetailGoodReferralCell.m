@@ -159,7 +159,7 @@
         lastPoint = CGPointMake(10 + (int)sz.width % (int)linesSz.width,linesSz.height - sz.height + 48);
     }
 
-    _goodSubtitleLabel.frame = CGRectMake(lastPoint.x + 10, lastPoint.y + 3, 60, 16);
+    _goodSubtitleLabel.frame = CGRectMake(lastPoint.x + 10, lastPoint.y + 3, 70, 16);
 }
 
 

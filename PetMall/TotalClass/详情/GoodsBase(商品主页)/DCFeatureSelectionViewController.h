@@ -6,10 +6,10 @@
 //  Copyright © 2017年 RocketsChen. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "STBaseViewController.h"
 
 
-@interface DCFeatureSelectionViewController : UIViewController
+@interface DCFeatureSelectionViewController : STBaseViewController
 
 /* 商品图片 */
 @property (strong , nonatomic)NSString *goodImageView;
@@ -19,6 +19,7 @@
 @property (assign , nonatomic)NSString *lastNum;
 
 ///** 选择的属性和数量 */
-//@property (nonatomic , copy) void(^userChooseBlock)(NSMutableArray *seleArray,NSInteger num,NSInteger tag);
+@property (nonatomic , copy) void(^userChooseBlock)(NSInteger tag);
+//@property(nonatomic, copy) void (^)()
 
 @end

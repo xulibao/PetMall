@@ -80,11 +80,11 @@
 }
 
 - (UINavigationItem *)navigationItem {
-    if (self.tabBarController) {
-        return self.tabBarController.navigationItem;
-    } else {
+//    if (self.tabBarController) {
+//        return self.tabBarController.navigationItem;
+//    } else {
         return [super navigationItem];
-    }
+//    }
 }
 
 - (UIBarButtonItem *)setupNavBackBarButtonWithAction:(SEL)action {

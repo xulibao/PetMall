@@ -39,8 +39,8 @@ static NSString *const DCGoodsSurplusCellID = @"DCGoodsSurplusCell";
 {
     if (!_collectionView) {
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
-        layout.minimumLineSpacing = 0;
-        layout.minimumInteritemSpacing = 0.1;
+//        layout.minimumLineSpacing = 0;
+        layout.minimumInteritemSpacing = 0;
 //        layout.itemSize = CGSizeMake(self.width * 0.5, self.height * 0.9);
 //        layout.scrollDirection = UICollectionViewScrollDirectionHorizontal; //滚动方向
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
@@ -103,15 +103,15 @@ static NSString *const DCGoodsSurplusCellID = @"DCGoodsSurplusCell";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     DCGoodsSurplusCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DCGoodsSurplusCellID forIndexPath:indexPath];
-    cell.recommendItem = _countDownItem[indexPath.row];
+    cell.recommendItem = _countDownItem[indexPath.section * 2+ indexPath.row];
     return cell;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     if (0 == indexPath.section) {
-        return CGSizeMake(kMainBoundsWidth * 0.5 - 0.1 , 179.5);
+        return CGSizeMake(kMainBoundsWidth * 0.5  , 180);
     }else{
-        return CGSizeMake(kMainBoundsWidth / 3 - 0.2 , 180);
+        return CGSizeMake(kMainBoundsWidth / 3  , 180);
     }
 }
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{

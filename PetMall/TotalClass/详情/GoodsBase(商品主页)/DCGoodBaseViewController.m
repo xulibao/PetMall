@@ -7,7 +7,6 @@
 //
 
 #import "DCGoodBaseViewController.h"
-#import "PMConfirmOrderViewController.h"
 #import "STTabBarController.h"
 // Controllers
 #import "DCShareToViewController.h"
@@ -61,6 +60,7 @@
 @property(nonatomic, strong) NSArray *commentsItem;
 @property (nonatomic, strong) STCoverView *coverBtn;
 @property(nonatomic, strong) PMShareView *shareView;
+@property(nonatomic, strong) DCFeatureSelectionViewController *dcFeaVc;
 @end
 
 //header
@@ -194,6 +194,7 @@ static NSArray *lastSeleArray_;
     self.navgationBar.rightBarButton.hidden = NO;
     [self.navgationBar.rightBarButton addTarget:self action:@selector(shareClick) forControlEvents:UIControlEventTouchUpInside];
       [self.navgationBar.rightBarButton setImage:[[UIImage imageNamed:@"detail_share"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
+       [self.navgationBar.rightBarButton setImage:[[UIImage imageNamed:@"detail_share"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateHighlighted];
 //    [self.navgationBar.rightBarButton setImage:IMAGE(@"detail_share") forState:UIControlStateNormal];
 //    self.navgationBar.leftBarButton.frame = (CGRect){15,(self.navgationBar.height - 44) / 2, 44,44};
 //    self.navgationBar.rightBarButton.frame = (CGRect){15,(self.navgationBar.height - 44) / 2, 44,44};
@@ -271,8 +272,9 @@ static NSArray *lastSeleArray_;
         }else {
             
             DCFeatureSelectionViewController *dcNewFeaVc = [DCFeatureSelectionViewController new];
+            self.dcFeaVc = dcNewFeaVc;
             dcNewFeaVc.goodImageView = weakSelf.goodImageView;
-            [weakSelf setUpAlterViewControllerWith:dcNewFeaVc WithDistance:ScreenH * 0.8 WithDirection:XWDrawerAnimatorDirectionBottom WithParallaxEnable:YES WithFlipEnable:YES];
+            [weakSelf setUpAlterViewControllerWith:dcNewFeaVc WithDistance:ScreenH * 0.66 WithDirection:XWDrawerAnimatorDirectionBottom WithParallaxEnable:YES WithFlipEnable:YES];
         }
     }];
 
@@ -353,10 +355,15 @@ static NSArray *lastSeleArray_;
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             DCDetailGoodReferralCell *cell = [tableView dequeueReusableCellWithIdentifier:DCDetailGoodReferralCellID forIndexPath:indexPath];
+            
             cell.goodTitleLabel.text = _goodTitle;
             cell.goodPriceLabel.text = [NSString stringWithFormat:@"¥ %@",_goodPrice];
-//            cell.goodSubtitleLabel.text = _goodSubtitle;
-         
+            if (self.goodTip) {
+                cell.shouHuoCount.text = _goodTip;
+            }
+            if (self.goodSubtitle) {
+                cell.goodSubtitleLabel.text = _goodSubtitle ;
+            }
             WEAKSELF
             cell.shareButtonClickBlock = ^{
 //                [weakSelf setUpAlterViewControllerWith:[DCShareToViewController new] WithDistance:300 WithDirection:XWDrawerAnimatorDirectionBottom WithParallaxEnable:NO WithFlipEnable:NO];
@@ -438,11 +445,22 @@ static NSArray *lastSeleArray_;
     }else if (indexPath.section == 2 && indexPath.row == 0) {
         [self chageUserAdress]; //跟换地址
     }else if (indexPath.section == 1){ //属性选择
-        DCFeatureSelectionViewController *dcFeaVc = [DCFeatureSelectionViewController new];
+        DCFeatureSelectionViewController *dcFeaVc =
+        [DCFeatureSelectionViewController new];
+        self.dcFeaVc = dcFeaVc;
+        dcFeaVc.userChooseBlock = ^(NSInteger tag) {
+            if (0 == tag) {
+                [self dismissCover];
+                [self showSuccess:@"加入购物车成功"];
+            }else{
+                [self dismissCover];
+            }
+            
+        };
         dcFeaVc.lastNum = lastNum_;
         dcFeaVc.lastSeleArray = [NSMutableArray arrayWithArray:lastSeleArray_];
         dcFeaVc.goodImageView = _goodImageView;
-        [self setUpAlterViewControllerWith:dcFeaVc WithDistance:ScreenH * 0.8 WithDirection:XWDrawerAnimatorDirectionBottom WithParallaxEnable:YES WithFlipEnable:YES];
+        [self setUpAlterViewControllerWith:dcFeaVc WithDistance:ScreenH * 0.66 WithDirection:XWDrawerAnimatorDirectionBottom WithParallaxEnable:YES WithFlipEnable:YES];
     }
 }
 
@@ -567,7 +585,7 @@ static NSArray *lastSeleArray_;
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         button.tag = i + 2;
         [button setTitle:titles[i] forState:UIControlStateNormal];
-        button.backgroundColor = (i == 0) ? [UIColor redColor] : RGB(249, 125, 10);
+        button.backgroundColor = (i == 0) ? [UIColor colorWithHexStr:@"#FFC3C7"] : kColorFF3945;
         [button addTarget:self action:@selector(bottomButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         CGFloat buttonX = ScreenW * 0.2 + (buttonW * i);
         button.frame = CGRectMake(buttonX, buttonY, buttonW, buttonH);
@@ -583,16 +601,31 @@ static NSArray *lastSeleArray_;
     [self setUpAlterViewControllerWith:[DCToolsViewController new] WithDistance:150 WithDirection:XWDrawerAnimatorDirectionTop WithParallaxEnable:NO WithFlipEnable:NO];
 }
 
+- (void)showFeatureView{
+    DCFeatureSelectionViewController *dcFeaVc =
+    [DCFeatureSelectionViewController new];
+    self.dcFeaVc = dcFeaVc;
+    dcFeaVc.userChooseBlock = ^(NSInteger tag) {
+        if (0 == tag) {
+            [self dismissCover];
+            [self showSuccess:@"加入购物车成功"];
+        }else{
+            [self dismissCover];
+        }
+        
+    };
+    dcFeaVc.lastNum = lastNum_;
+    dcFeaVc.lastSeleArray = [NSMutableArray arrayWithArray:lastSeleArray_];
+    dcFeaVc.goodImageView = _goodImageView;
+    [self setUpAlterViewControllerWith:dcFeaVc WithDistance:ScreenH * 0.66 WithDirection:XWDrawerAnimatorDirectionBottom WithParallaxEnable:YES WithFlipEnable:YES];
+}
 - (void)bottomButtonClick:(UIButton *)button
 {
     if (button.tag == 0) {
         NSLog(@"收藏");
         button.selected = !button.selected;
     }else if(button.tag == 2){
-        NSLog(@"购物车");
-        [self.navigationController popToRootViewControllerAnimated:YES];
-        [[SAApplication sharedApplication].mainTabBarController setSelectedIndex:0];
-        
+        [self showFeatureView];
     }else  if ( button.tag == 3) { //父控制器的加入购物车和立即购买
         //异步发通知
         PMConfirmOrderViewController * vc = [[PMConfirmOrderViewController alloc] init];
@@ -606,21 +639,14 @@ static NSArray *lastSeleArray_;
     
     self.coverBtn = [[STCoverView alloc] initWithSuperView:kWindow complete:^(UIView *cover) {
         [cover removeFromSuperview];
-        [vc.view removeFromSuperview];
-        vc.view.transform = CGAffineTransformMakeTranslation(0, 0);
+        [self.dcFeaVc.view removeFromSuperview];
+        self.dcFeaVc.view.transform = CGAffineTransformMakeTranslation(0, 0);
     }];
     
     [self.coverBtn addSubview:vc.view];
-    vc.view.frame = CGRectMake(0, kMainBoundsHeight, kMainBoundsWidth,kMainBoundsHeight * 0.8);
-    @weakify(self)
-    self.shareView.cancel = ^{
-        @strongify(self)
-        [self.coverBtn removeFromSuperview];
-        [vc.view removeFromSuperview];
-        vc.view.transform = CGAffineTransformMakeTranslation(0, 0);
-    };
+    self.dcFeaVc.view.frame = CGRectMake(0, kMainBoundsHeight, kMainBoundsWidth,kMainBoundsHeight * 0.66);
     [UIView animateWithDuration:0.3 animations:^{
-        vc.view.transform = CGAffineTransformMakeTranslation(0, -kMainBoundsHeight * 0.8);
+        self.dcFeaVc.view.transform = CGAffineTransformMakeTranslation(0, -kMainBoundsHeight * 0.66);
     }];
     
 //    [self dismissViewControllerAnimated:YES completion:nil]; //以防有控制未退出
@@ -633,6 +659,12 @@ static NSArray *lastSeleArray_;
 //    [animator xw_enableEdgeGestureAndBackTapWithConfig:^{
 //        [weakSelf selfAlterViewback];
 //    }];
+}
+
+- (void)dismissCover{
+    [self.coverBtn removeFromSuperview];
+    [self.dcFeaVc.view removeFromSuperview];
+    self.dcFeaVc.view.transform = CGAffineTransformMakeTranslation(0, 0);
 }
 
 #pragma mark - 加入购物车成功

@@ -7,6 +7,8 @@
 //
 
 #import "STBaseNonSystemNavViewController.h"
+#import "PMConfirmOrderViewController.h"
+
 @interface DCGoodBaseViewController : STBaseNonSystemNavViewController
 
 /** 更改标题 */
@@ -21,7 +23,12 @@
 /* 商品图片 */
 @property (strong , nonatomic)NSString *goodImageView;
 
+@property (strong , nonatomic)NSString *goodTip;
 /* 商品轮播图 */
 @property (copy , nonatomic)NSArray *shufflingArray;
 
+
+- (void)setUpRightTwoButton;
+
+- (void)bottomButtonClick:(UIButton *)button;
 @end

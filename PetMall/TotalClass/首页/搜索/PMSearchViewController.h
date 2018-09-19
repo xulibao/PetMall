@@ -13,4 +13,6 @@
 @property (nonatomic, weak) UISearchBar *searchBar;
 
 @property (nonatomic, strong) NSArray *tagsArray;
+
+@property(nonatomic, copy) void (^dismissCall)();
 @end

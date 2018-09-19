@@ -29,7 +29,7 @@
 
 // Others
 
-#define NowScreenH ScreenH * 0.8
+#define NowScreenH ScreenH * 0.66
 
 @interface DCFeatureSelectionViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,HorizontalCollectionLayoutDelegate,PPNumberButtonDelegate,UITableViewDelegate,UITableViewDataSource>
 
@@ -138,10 +138,12 @@ static NSString *const DCFeatureChoseTopCellID = @"DCFeatureChoseTopCell";
     CGFloat buttonH = 50;
     CGFloat buttonW = ScreenW / titles.count;
     CGFloat buttonY = NowScreenH - buttonH;
+    UIButton *buttton1;
     for (NSInteger i = 0; i < titles.count; i++) {
         UIButton *buttton = [UIButton buttonWithType:UIButtonTypeCustom];
+        buttton1 = buttton;
         [buttton setTitle:titles[i] forState:0];
-        buttton.backgroundColor = (i == 0) ? [UIColor redColor] : [UIColor orangeColor];
+        buttton.backgroundColor = (i == 0) ? [UIColor colorWithHexStr:@"#FFC3C7"] : kColorFF3945;
         CGFloat buttonX = buttonW * i;
         buttton.tag = i;
         buttton.frame = CGRectMake(buttonX, buttonY, buttonW, buttonH);
@@ -153,12 +155,18 @@ static NSString *const DCFeatureChoseTopCellID = @"DCFeatureChoseTopCell";
     numLabel.text = @"数量";
     numLabel.font = PFR14Font;
     [self.view addSubview:numLabel];
-    numLabel.frame = CGRectMake(DCMargin, NowScreenH - 90, 50, 35);
+    numLabel.frame = CGRectMake(DCMargin, NowScreenH - 190, 50, 22);
     
-    PPNumberButton *numberButton = [PPNumberButton numberButtonWithFrame:CGRectMake(CGRectGetMaxX(numLabel.frame), numLabel.dc_y, 110, numLabel.dc_height)];
+    [numLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(DCMargin);
+        make.bottom.mas_equalTo(buttton1.mas_top).mas_offset(-50);
+        make.height.mas_equalTo(22);
+    }];
+    
+    PPNumberButton *numberButton = [PPNumberButton numberButtonWithFrame:CGRectMake((kMainBoundsWidth - 75 -15), NowScreenH - 100 -22, 75, 22)];
     numberButton.shakeAnimation = YES;
     numberButton.minValue = 1;
-    numberButton.inputFieldFont = 23;
+    numberButton.inputFieldFont = 14;
     numberButton.increaseTitle = @"＋";
     numberButton.decreaseTitle = @"－";
     num_ = (_lastNum == 0) ?  1 : [_lastNum integerValue];
@@ -169,15 +177,14 @@ static NSString *const DCFeatureChoseTopCellID = @"DCFeatureChoseTopCell";
         num_ = num;
     };
     [self.view addSubview:numberButton];
+
 }
 
 #pragma mark - 底部按钮点击
 - (void)buttomButtonClick:(UIButton *)button
 {
     if (_seleArray.count != _featureAttr.count && _lastSeleArray.count != _featureAttr.count) {//未选择全属性警告
-//        [SVProgressHUD showInfoWithStatus:@"请选择全属性"];
-//        [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
-//        [SVProgressHUD dismissWithDelay:1.0];
+        [self showWaring:@"请选择全属性"];
         return;
     }
     
@@ -216,7 +223,7 @@ static NSString *const DCFeatureChoseTopCellID = @"DCFeatureChoseTopCell";
         cell.chooseAttLabel.text = [NSString stringWithFormat:@"已选属性：%@",attString];
     }
 
-    cell.goodPriceLabel.text = [NSString stringWithFormat:@"¥ %@",@"12"];
+    cell.goodPriceLabel.text = [NSString stringWithFormat:@"¥ %@",@"20.8"];
     [cell.goodImageView sd_setImageWithURL:[NSURL URLWithString:_goodImageView]];
     WEAKSELF
     cell.crossButtonClickBlock = ^{
@@ -226,16 +233,12 @@ static NSString *const DCFeatureChoseTopCellID = @"DCFeatureChoseTopCell";
 }
 
 #pragma mark - 退出当前界面
-- (void)dismissFeatureViewControllerWithTag:(NSInteger)tag
-{
-
-    WEAKSELF
-    [weakSelf dismissViewControllerAnimated:YES completion:^{
-        if (![weakSelf.cell.chooseAttLabel.text isEqualToString:@"有货"]) {//当选择全属性才传递出去
+- (void)dismissFeatureViewControllerWithTag:(NSInteger)tag{
+        if (![self.cell.chooseAttLabel.text isEqualToString:@"有货"]) {//当选择全属性才传递出去
             
             dispatch_sync(dispatch_get_global_queue(0, 0), ^{
-                if (weakSelf.seleArray.count == 0) {
-                    NSMutableArray *numArray = [NSMutableArray arrayWithArray:weakSelf.lastSeleArray];
+                if (self.seleArray.count == 0) {
+                    NSMutableArray *numArray = [NSMutableArray arrayWithArray:self.lastSeleArray];
                     NSDictionary *paDict = @{
                                              @"Tag" : [NSString stringWithFormat:@"%zd",tag],
                                              @"Num" : [NSString stringWithFormat:@"%zd",num_],
@@ -247,14 +250,17 @@ static NSString *const DCFeatureChoseTopCellID = @"DCFeatureChoseTopCell";
                     NSDictionary *paDict = @{
                                              @"Tag" : [NSString stringWithFormat:@"%zd",tag],
                                              @"Num" : [NSString stringWithFormat:@"%zd",num_],
-                                             @"Array" : weakSelf.seleArray
+                                             @"Array" : self.seleArray
                                              };
                     NSDictionary *dict = [[NSDictionary alloc] initWithDictionary:paDict];
                     [[NSNotificationCenter defaultCenter]postNotificationName:SHOPITEMSELECTBACK object:nil userInfo:dict];
                 }
             });
         }
-    }];
+    
+    if (self.userChooseBlock) {
+        self.userChooseBlock(tag);
+    }
 }
 
 

@@ -13,7 +13,6 @@
 #import "PMCartViewController.h"
 #import "PMGroupPurchaseViewController.h"
 #import "PMMineViewController.h"
-
 @interface STTabBarController () <UITabBarControllerDelegate>
 
 @end
@@ -46,22 +45,17 @@
 
 - (void)setUpChildControllers
 {
-//    STNavigationController *nav0 = [[STNavigationController alloc] initWithRootViewController:[SAHomeViewController new]];
-//    STNavigationController *nav1 = [[STNavigationController alloc] initWithRootViewController:[SAHallViewController new]];
-//    STNavigationController *nav2 = [[STNavigationController alloc] initWithRootViewController:[SAMyCarViewController new]];
-//    STNavigationController *nav3 = [[STNavigationController alloc] initWithRootViewController:[SAMineViewController new]];
-//    self.viewControllers = @[nav0,nav1,nav2,nav3];
-    UIViewController *vc0 = [PMHomeViewController new];
-    UIViewController *vc1 = [PMCategoryViewController new];
-    UIViewController *vc2 = [PMGroupPurchaseViewController new];
-    UIViewController *vc3 = [PMCartViewController new];
-    UIViewController *vc4 = [PMMineViewController new];
+    STNavigationController *nav0 = [[STNavigationController alloc] initWithRootViewController:[PMHomeViewController new]];
+    STNavigationController *nav1 = [[STNavigationController alloc] initWithRootViewController:[PMCategoryViewController new]];
+    STNavigationController *nav2 = [[STNavigationController alloc] initWithRootViewController:[PMGroupPurchaseViewController new]];
+    STNavigationController *nav3 = [[STNavigationController alloc] initWithRootViewController:[PMCartViewController new]];
+    STNavigationController *nav4 = [[STNavigationController alloc] initWithRootViewController:[PMMineViewController new]];
 
-    _vc0 = vc0;
-    _vc1 = vc1;
-    _vc2 = vc2;
-    _vc3 = vc3;
-    _vc4 = vc4;
+    _vc0 = nav0;
+    _vc1 = nav1;
+    _vc2 = nav2;
+    _vc3 = nav3;
+    _vc4 = nav4;
     
 //    vc0.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"首页"
 //                                                   image:[UIImage imageNamed:@"home_btn_normal"]
@@ -76,7 +70,7 @@
 //                                                   image:[UIImage imageNamed:@"mine_btn_normal"]
 //                                           selectedImage:[UIImage imageNamed:@"mine_btn_select"]];
     
-    self.viewControllers = @[vc0,vc1,vc2,vc3,vc4];
+    self.viewControllers = @[_vc0,_vc1,_vc2,_vc3,_vc4];
 }
 
 //设置底部tabBar
@@ -103,9 +97,9 @@
 }
 
 - (void)updateViewStatusWithViewController:(UIViewController *)viewController {
-    UIViewController *selectedViewController = viewController;
-    BOOL hiddenNav = selectedViewController.ga_prefersNavigationBarHidden;
-    [self.navigationController setNavigationBarHidden:hiddenNav animated:NO];
+//    UIViewController *selectedViewController = viewController;
+//    BOOL hiddenNav = selectedViewController.ga_prefersNavigationBarHidden;
+//    [self.navigationController setNavigationBarHidden:hiddenNav animated:NO];
 }
 
 - (void)setSelectedIndex:(NSUInteger)selectedIndex {
@@ -128,7 +122,7 @@
                 UIViewController *vc = [self viewControllers][index];
                 [weak_self setSelectedViewController:vc];
             }];
-            [self.navigationController pushViewController:sign animated:YES];
+//            [self.navigationController pushViewController:sign animated:YES];
             return NO;
         }
     }

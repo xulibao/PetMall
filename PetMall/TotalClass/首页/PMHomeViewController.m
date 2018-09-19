@@ -13,6 +13,7 @@
 #import "STTabBarController.h"
 #import "PMIntegralMallViewController.h"
 #import "PMSpeacilePriceViewController.h"
+#import "PMGroupPurchaseViewController.h"
 /* cell */
 #import "DCGoodsCountDownCell.h" //倒计时商品
 #import "DCNewWelfareCell.h"     //新人福利
@@ -34,12 +35,14 @@
 #import "PMLogisticsInformationViewController.h"
 #import "PMTimeLimitViewController.h"
 #import "PMSearchViewController.h"
+#import "PMSearchResultViewController.h"
 #import "PMGoodsListViewController.h"
 #import "YWAddressDataTool.h"
 #import "STCoverView.h"
 #import "PMHomeSubViewController.h"
 #import "PMMessageViewController.h"
 #import "PMGoodSaleViewController.h"
+#import "PMGroupPurchaserDetailViewController.h"
 /* cell */
 static NSString *const DCGoodsCountDownCellID = @"DCGoodsCountDownCell";
 static NSString *const DCNewWelfareCellID = @"DCNewWelfareCell";
@@ -57,6 +60,8 @@ static NSString *const DCYouLikeHeadViewID = @"DCYouLikeHeadView";
 static NSString *const DCTopLineFootViewID = @"DCTopLineFootView";
 static NSString *const DCOverFootViewID = @"DCOverFootView";
 static NSString *const DCScrollAdFootViewID = @"DCScrollAdFootView";
+static NSString *const DCLineFootViewID = @"DCLineFootView";
+
 @interface PMHomeViewController ()
 @property(nonatomic, strong) STHomeVCTopView *topView;
 
@@ -101,8 +106,10 @@ static NSString *const DCScrollAdFootViewID = @"DCScrollAdFootView";
     @weakify(self)
     self.topView.searchClick = ^{
         @strongify(self)
+       
         PMSearchViewController * vc = [[PMSearchViewController alloc ] init];
-        [self presentViewController:vc animated:YES completion:^{
+         STNavigationController * nav = [[STNavigationController alloc] initWithRootViewController:vc];
+        [self presentViewController:nav animated:YES completion:^{
         }];
     };
     self.topView.messageClick = ^{
@@ -212,6 +219,7 @@ static NSString *const DCScrollAdFootViewID = @"DCScrollAdFootView";
         [_collectionView registerClass:[DCTopLineFootView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:DCTopLineFootViewID];
         [_collectionView registerClass:[DCOverFootView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:DCOverFootViewID];
         [_collectionView registerClass:[DCScrollAdFootView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:DCScrollAdFootViewID];
+         [_collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:DCLineFootViewID];
         
         [_collectionView registerClass:[DCYouLikeHeadView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:DCYouLikeHeadViewID];
         [_collectionView registerClass:[DCSlideshowHeadView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:DCSlideshowHeadViewID];
@@ -309,10 +317,16 @@ static NSString *const DCScrollAdFootViewID = @"DCScrollAdFootView";
         }else if (indexPath.section == 3){
             DCYouLikeHeadView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:DCYouLikeHeadViewID forIndexPath:indexPath];
             headerView.titleLabel.text = @"团购活动";
+            headerView.more = ^{
+                [self tugouGoods];
+            };
             reusableview = headerView;
         }else if (indexPath.section == 4){
             DCYouLikeHeadView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:DCYouLikeHeadViewID forIndexPath:indexPath];
             headerView.titleLabel.text = @"特价清仓";
+            headerView.more = ^{
+                [self tejiaQingcang];
+            };
             reusableview = headerView;
         }else if (indexPath.section == 5){
             DCYouLikeHeadView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:DCYouLikeHeadViewID forIndexPath:indexPath];
@@ -327,11 +341,12 @@ static NSString *const DCScrollAdFootViewID = @"DCScrollAdFootView";
                 [self showYouHui];
             };
             reusableview = footview;
+        }else{
+             UICollectionReusableView *footview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:DCLineFootViewID forIndexPath:indexPath];
+            footview.backgroundColor = kColorFAFAFA;
+            reusableview = footview;
+
         }
-//        else if (indexPath.section == 5) {
-//            DCOverFootView *footview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:DCOverFootViewID forIndexPath:indexPath];
-//            reusableview = footview;
-//        }
     }
     
     return reusableview;
@@ -389,6 +404,8 @@ static NSString *const DCScrollAdFootViewID = @"DCScrollAdFootView";
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
     if (section == 0) {
         return CGSizeMake(kMainBoundsWidth, 85);  //Top头条的宽高
+    }else{
+        return CGSizeMake(kMainBoundsWidth, 10);  //Top头条的宽高
     }
     return CGSizeZero;
 }
@@ -424,6 +441,17 @@ static NSString *const DCScrollAdFootViewID = @"DCScrollAdFootView";
             [self pushViewController:vc];
         }
       
+    }else if (3 ==indexPath.section){
+        PMGroupPurchaserDetailViewController * vc = [PMGroupPurchaserDetailViewController new];
+        DCRecommendItem * item = _youLikeItem[indexPath.row];
+        vc.goodTitle = @"包退通用牛肉泰迪贵宾金毛比熊幼犬成犬双拼狗粮 5斤10斤";
+        vc.goodPrice = item.price;
+        vc.goodTip= @"26人参团  还差4人";
+        vc.goodSubtitle = @"参团立省7.2元";
+        vc.shufflingArray = item.images;
+        vc.goodImageView = item.image_url;
+        [self.navigationController pushViewController:vc animated:YES];
+        
     }else{
         NSLog(@"点击了推荐的第%zd个商品",indexPath.row);
         DCRecommendItem * item = _youLikeItem[indexPath.row];
@@ -535,6 +563,16 @@ static NSString *const DCScrollAdFootViewID = @"DCScrollAdFootView";
 
 - (void)moreGoods{
     PMGoodsListViewController * vc = [PMGoodsListViewController new];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+- (void)tugouGoods{
+    PMGroupPurchaseViewController * vc = [PMGroupPurchaseViewController new];
+    [self.navigationController pushViewController:vc animated:YES];
+    
+}
+
+- (void)tejiaQingcang{
+    PMSpeacilePriceViewController * vc = [PMSpeacilePriceViewController new];
     [self.navigationController pushViewController:vc animated:YES];
 }
 @end

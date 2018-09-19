@@ -44,13 +44,13 @@
 - (void)setUpUI
 {
     _headerLabel = [[UILabel alloc] init];
-    _headerLabel.font  = PFR15Font;
+    _headerLabel.font  = [UIFont boldSystemFontOfSize:14];
     [self addSubview:_headerLabel];
     
-    
-    _bottomView = [UIView new];
-    _bottomView.backgroundColor = [[UIColor lightGrayColor]colorWithAlphaComponent:0.3];
-    [self addSubview:_bottomView];
+//
+//    _bottomView = [UIView new];
+//    _bottomView.backgroundColor = [[UIColor lightGrayColor]colorWithAlphaComponent:0.3];
+//    [self addSubview:_bottomView];
 }
 
 - (void)layoutSubviews
@@ -62,12 +62,12 @@
         make.centerY.mas_equalTo(self);
     }];
     
-    [_bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(DCMargin);
-        make.right.mas_equalTo(-DCMargin);
-        make.top.mas_equalTo(self);
-        make.height.mas_equalTo(1);
-    }];
+//    [_bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.mas_equalTo(DCMargin);
+//        make.right.mas_equalTo(-DCMargin);
+//        make.top.mas_equalTo(self);
+//        make.height.mas_equalTo(1);
+//    }];
 }
 
 #pragma mark - Setter Getter Methods

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A3B26EB21524AFA0024A52D /* PMGroupPurchaserDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A3B26EA21524AFA0024A52D /* PMGroupPurchaserDetailViewController.m */; };
+		5A3B26EE2152543A0024A52D /* PMGoodSaleDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A3B26EC215254390024A52D /* PMGoodSaleDetailViewController.m */; };
+		5A3B26F1215256020024A52D /* PMIntegralMallDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A3B26F0215256010024A52D /* PMIntegralMallDetailViewController.m */; };
+		5A3B26F4215259180024A52D /* PMIntegralResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A3B26F3215259180024A52D /* PMIntegralResultViewController.m */; };
 		5A4AF4582134ECEF00F8190B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A4AF4562134ECEF00F8190B /* Main.storyboard */; };
 		5A4AF45A2134ECF000F8190B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A4AF4592134ECF000F8190B /* Assets.xcassets */; };
 		5A4AF45D2134ECF000F8190B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A4AF45B2134ECF000F8190B /* LaunchScreen.storyboard */; };
@@ -494,6 +498,14 @@
 		2152ED3BF8DBA0E2D69B0DB6 /* libPods-PetMallUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PetMallUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AB288C1C83F291F8A9D0676 /* Pods-PetMall.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PetMall.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PetMall/Pods-PetMall.debug.xcconfig"; sourceTree = "<group>"; };
 		530ABD7CB8455FCD53A6840E /* Pods-PetMallUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PetMallUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PetMallUITests/Pods-PetMallUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		5A3B26E921524AFA0024A52D /* PMGroupPurchaserDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMGroupPurchaserDetailViewController.h; sourceTree = "<group>"; };
+		5A3B26EA21524AFA0024A52D /* PMGroupPurchaserDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMGroupPurchaserDetailViewController.m; sourceTree = "<group>"; };
+		5A3B26EC215254390024A52D /* PMGoodSaleDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMGoodSaleDetailViewController.m; sourceTree = "<group>"; };
+		5A3B26ED2152543A0024A52D /* PMGoodSaleDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMGoodSaleDetailViewController.h; sourceTree = "<group>"; };
+		5A3B26EF215256010024A52D /* PMIntegralMallDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMIntegralMallDetailViewController.h; sourceTree = "<group>"; };
+		5A3B26F0215256010024A52D /* PMIntegralMallDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMIntegralMallDetailViewController.m; sourceTree = "<group>"; };
+		5A3B26F2215259180024A52D /* PMIntegralResultViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMIntegralResultViewController.h; sourceTree = "<group>"; };
+		5A3B26F3215259180024A52D /* PMIntegralResultViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMIntegralResultViewController.m; sourceTree = "<group>"; };
 		5A4AF44D2134ECEF00F8190B /* PetMall.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PetMall.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A4AF4572134ECEF00F8190B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5A4AF4592134ECF000F8190B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -1422,6 +1434,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5A3B26E821524AD50024A52D /* 团购详情 */ = {
+			isa = PBXGroup;
+			children = (
+				5A3B26E921524AFA0024A52D /* PMGroupPurchaserDetailViewController.h */,
+				5A3B26EA21524AFA0024A52D /* PMGroupPurchaserDetailViewController.m */,
+			);
+			path = "团购详情";
+			sourceTree = "<group>";
+		};
 		5A4AF4442134ECEF00F8190B = {
 			isa = PBXGroup;
 			children = (
@@ -3027,6 +3048,8 @@
 		5AA5717021509AD5009015D9 /* 商品预售 */ = {
 			isa = PBXGroup;
 			children = (
+				5A3B26ED2152543A0024A52D /* PMGoodSaleDetailViewController.h */,
+				5A3B26EC215254390024A52D /* PMGoodSaleDetailViewController.m */,
 				5AA5717121509B3F009015D9 /* PMGoodSaleViewController.h */,
 				5AA5717221509B3F009015D9 /* PMGoodSaleViewController.m */,
 			);
@@ -3171,6 +3194,7 @@
 		5AC95CC121352C0300BDA95D /* 团购活动 */ = {
 			isa = PBXGroup;
 			children = (
+				5A3B26E821524AD50024A52D /* 团购详情 */,
 				5AC95CCD21352E8D00BDA95D /* PMGroupPurchaseViewController.h */,
 				5AC95CCE21352E8D00BDA95D /* PMGroupPurchaseViewController.m */,
 			);
@@ -3460,12 +3484,16 @@
 		5AEA6C54214CDB9C00A2E6E8 /* 我的积分 */ = {
 			isa = PBXGroup;
 			children = (
+				5A3B26EF215256010024A52D /* PMIntegralMallDetailViewController.h */,
+				5A3B26F0215256010024A52D /* PMIntegralMallDetailViewController.m */,
 				5AEA6C59214CDCF900A2E6E8 /* view */,
 				5AEA6C58214CDCF400A2E6E8 /* model */,
 				5AEA6C55214CDC2C00A2E6E8 /* PMMyIntegralViewController.h */,
 				5AEA6C56214CDC2C00A2E6E8 /* PMMyIntegralViewController.m */,
 				5AEA6C5D214CEB3300A2E6E8 /* PMIntegralMallViewController.h */,
 				5AEA6C5E214CEB3300A2E6E8 /* PMIntegralMallViewController.m */,
+				5A3B26F2215259180024A52D /* PMIntegralResultViewController.h */,
+				5A3B26F3215259180024A52D /* PMIntegralResultViewController.m */,
 			);
 			path = "我的积分";
 			sourceTree = "<group>";
@@ -4157,6 +4185,7 @@
 				5A4AF5862134F9FA00F8190B /* SATruckInfoBaseBottomView.m in Sources */,
 				5A4AF59A2134F9FA00F8190B /* STRightImageButton.m in Sources */,
 				5A54CB072143C5F500971D83 /* DCFeatureHeaderView.m in Sources */,
+				5A3B26F4215259180024A52D /* PMIntegralResultViewController.m in Sources */,
 				5A4AF5AB2134F9FA00F8190B /* STMenuSelectRecordBtn.m in Sources */,
 				5A4AF5852134F9FA00F8190B /* SATruckInfoBaseView.m in Sources */,
 				5A54CAF82143C5F500971D83 /* DCDetailShowTypeCell.m in Sources */,
@@ -4264,6 +4293,7 @@
 				5A54CB622143C73800971D83 /* XWFilterAnimator+XWMask.m in Sources */,
 				5A54CB7C2143C7B000971D83 /* DCNotificationCenterName.m in Sources */,
 				5A4AF5742134F9FA00F8190B /* SAUserInfoEntity.m in Sources */,
+				5A3B26F1215256020024A52D /* PMIntegralMallDetailViewController.m in Sources */,
 				5AA5717721509CEA009015D9 /* PMSpeacilePriceViewController.m in Sources */,
 				5A4AF4602134ECF000F8190B /* main.m in Sources */,
 				5A4AF6612134FA0F00F8190B /* GAURLSessionConfiguration.m in Sources */,
@@ -4286,6 +4316,7 @@
 				5A4AF56E2134F9FA00F8190B /* UIView+HitTest.m in Sources */,
 				5A4AF5772134F9FA00F8190B /* STCommonTableViewModel.m in Sources */,
 				5A4AF58F2134F9FA00F8190B /* STRefreshTableView.m in Sources */,
+				5A3B26EE2152543A0024A52D /* PMGoodSaleDetailViewController.m in Sources */,
 				5A4AF5BE2134F9FA00F8190B /* SAPageViewController.m in Sources */,
 				5A54CAE92143C5F500971D83 /* DCShareToViewController.m in Sources */,
 				5AEA6C57214CDC2C00A2E6E8 /* PMMyIntegralViewController.m in Sources */,
@@ -4378,6 +4409,7 @@
 				5A4AF5822134F9FA00F8190B /* STInsetsLabel.m in Sources */,
 				5A54CB9E2143CC0100971D83 /* UIImage+DCCircle.m in Sources */,
 				5AEA6BFA214A655F00A2E6E8 /* NCLookLogisticsVC.m in Sources */,
+				5A3B26EB21524AFA0024A52D /* PMGroupPurchaserDetailViewController.m in Sources */,
 				5AEA6C7E214D12FA00A2E6E8 /* YWAddressTableViewCell2.m in Sources */,
 				5A54CA2D21418AA900971D83 /* DCBrandsSortHeadView.m in Sources */,
 				5A4AF6552134FA0F00F8190B /* GADebug.xcdatamodeld in Sources */,

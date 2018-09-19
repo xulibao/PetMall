@@ -8,14 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "STTabBarView.h"
+#import "STNavigationController.h"
 
 @interface STTabBarController : UITabBarController
 
-@property(nonatomic, strong) UIViewController *vc0;
-@property(nonatomic, strong) UIViewController *vc1;
-@property(nonatomic, strong) UIViewController *vc2;
-@property(nonatomic, strong) UIViewController *vc3;
-@property(nonatomic, strong) UIViewController *vc4;
+@property(nonatomic, strong) STNavigationController *vc0;
+@property(nonatomic, strong) STNavigationController *vc1;
+@property(nonatomic, strong) STNavigationController *vc2;
+@property(nonatomic, strong) STNavigationController *vc3;
+@property(nonatomic, strong) STNavigationController *vc4;
 
 @property (nonatomic, strong) STTabBarView *tabBarView;
 

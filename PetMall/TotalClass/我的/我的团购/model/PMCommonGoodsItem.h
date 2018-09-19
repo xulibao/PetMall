@@ -25,4 +25,7 @@
 @property(nonatomic, strong) NSString *people_count;
 /** 折扣 */
 @property(nonatomic, strong) NSString *discount;
+
+@property (copy , nonatomic , readonly)NSArray *images;
+
 @end

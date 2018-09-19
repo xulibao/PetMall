@@ -103,7 +103,7 @@ static dispatch_queue_t conversationsJoinSerialQueue = NULL;
     UIViewController *vc = [[NSClassFromString(DEVELOPER_TEST_VIEWCONTROLLER) alloc] init];
     _window.rootViewController = [[UINavigationController alloc] initWithRootViewController:vc];
 #else
-    _window.rootViewController = self.navigationController;
+    _window.rootViewController = self.mainTabBarController;
 #endif
 }
 //
@@ -161,8 +161,7 @@ static dispatch_queue_t conversationsJoinSerialQueue = NULL;
     if (self.userInfo) {
         [self signIn];
     } else {
-        [self.navigationController setViewControllers:@[self.signInController]
-                                            animated:NO];
+        _window.rootViewController = self.signInController;
     }
 }
 
@@ -208,13 +207,15 @@ static dispatch_queue_t conversationsJoinSerialQueue = NULL;
 }
 
 
+
+
 #pragma mark - Getter
 
-- (UINavigationController *)navigationController {
-    if (_navigationController) return _navigationController;
-    _navigationController = [[STNavigationController alloc] init];
-    return _navigationController;
-}
+//- (UINavigationController *)navigationController {
+//    if (_navigationController) return _navigationController;
+//    _navigationController = [[STNavigationController alloc] init];
+//    return _navigationController;
+//}
 
 - (UITabBarController *)mainTabBarController {
     if (_mainTabBarController) return _mainTabBarController;
@@ -258,14 +259,16 @@ static dispatch_queue_t conversationsJoinSerialQueue = NULL;
 - (void)signInWithCallBack:(void (^)(BOOL succeeded, NSError *error))callBack {
     [STNetworkingBusiness sharedSTNetworkingBusiness].defaultRequestHeaderCacheDictM = nil;
     _mainTabBarController = nil;
-    [self.navigationController setViewControllers:@[self.mainTabBarController]
-                                         animated:NO];
+    _window.rootViewController = self.mainTabBarController;
+//    [self.navigationController setViewControllers:@[self.mainTabBarController]
+//                                         animated:NO];
     !callBack ?: callBack(YES,nil);
 }
 
 - (void)signOut {
-        [self.navigationController setViewControllers:@[self.signInController]
-                                            animated:NO];
+    _window.rootViewController = self.signInController;
+//        [self.navigationController setViewControllers:@[self.signInController]
+//                                            animated:NO];
 
     self.userInfo = nil;
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];

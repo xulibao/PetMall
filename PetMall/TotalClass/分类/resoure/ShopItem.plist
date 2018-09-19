@@ -6,37 +6,19 @@
 		<key>attr</key>
 		<dict>
 			<key>attrname</key>
-			<string>机身颜色</string>
+			<string>口味</string>
 		</dict>
 		<key>list</key>
 		<array>
 			<dict>
 				<key>infoname</key>
-				<string>高亮黑</string>
+				<string>牛肉味｜成犬</string>
 				<key>plusprice</key>
 				<integer>0</integer>
 			</dict>
 			<dict>
 				<key>infoname</key>
-				<string>金色</string>
-				<key>plusprice</key>
-				<integer>0</integer>
-			</dict>
-			<dict>
-				<key>infoname</key>
-				<string>银色</string>
-				<key>plusprice</key>
-				<integer>0</integer>
-			</dict>
-			<dict>
-				<key>infoname</key>
-				<string>磨砂黑</string>
-				<key>plusprice</key>
-				<integer>0</integer>
-			</dict>
-			<dict>
-				<key>infoname</key>
-				<string>玫瑰金</string>
+				<string>牛肉味｜成犬</string>
 				<key>plusprice</key>
 				<integer>0</integer>
 			</dict>
@@ -46,119 +28,21 @@
 		<key>attr</key>
 		<dict>
 			<key>attrname</key>
-			<string>网络类型</string>
+			<string>规格</string>
 		</dict>
 		<key>list</key>
 		<array>
 			<dict>
 				<key>infoname</key>
-				<string>全网通</string>
+				<string>5斤</string>
 				<key>plusprice</key>
 				<integer>9</integer>
 			</dict>
 			<dict>
 				<key>infoname</key>
-				<string>移动、联通双网</string>
+				<string>10斤</string>
 				<key>plusprice</key>
 				<integer>7</integer>
-			</dict>
-			<dict>
-				<key>infoname</key>
-				<string>电信4G</string>
-				<key>plusprice</key>
-				<integer>0</integer>
-			</dict>
-			<dict>
-				<key>infoname</key>
-				<string>合约机</string>
-				<key>plusprice</key>
-				<integer>5</integer>
-			</dict>
-		</array>
-	</dict>
-	<dict>
-		<key>attr</key>
-		<dict>
-			<key>attrname</key>
-			<string>容量大小</string>
-		</dict>
-		<key>list</key>
-		<array>
-			<dict>
-				<key>infoname</key>
-				<string>16G</string>
-				<key>plusprice</key>
-				<integer>800</integer>
-			</dict>
-			<dict>
-				<key>infoname</key>
-				<string>32G</string>
-				<key>plusprice</key>
-				<integer>0</integer>
-			</dict>
-			<dict>
-				<key>infoname</key>
-				<string>64G</string>
-				<key>plusprice</key>
-				<integer>0</integer>
-			</dict>
-			<dict>
-				<key>infoname</key>
-				<string>128G</string>
-				<key>plusprice</key>
-				<integer>150</integer>
-			</dict>
-			<dict>
-				<key>infoname</key>
-				<string>256G</string>
-				<key>plusprice</key>
-				<integer>800</integer>
-			</dict>
-		</array>
-	</dict>
-	<dict>
-		<key>attr</key>
-		<dict>
-			<key>attrname</key>
-			<string>套餐类型</string>
-		</dict>
-		<key>list</key>
-		<array>
-			<dict>
-				<key>infoname</key>
-				<string>官方标配</string>
-				<key>plusprice</key>
-				<integer>0</integer>
-			</dict>
-			<dict>
-				<key>infoname</key>
-				<string>套餐一</string>
-				<key>plusprice</key>
-				<integer>150</integer>
-			</dict>
-			<dict>
-				<key>infoname</key>
-				<string>套餐二</string>
-				<key>plusprice</key>
-				<integer>800</integer>
-			</dict>
-			<dict>
-				<key>infoname</key>
-				<string>套餐三</string>
-				<key>plusprice</key>
-				<integer>800</integer>
-			</dict>
-			<dict>
-				<key>infoname</key>
-				<string>套餐四</string>
-				<key>plusprice</key>
-				<integer>800</integer>
-			</dict>
-			<dict>
-				<key>infoname</key>
-				<string>套餐五</string>
-				<key>plusprice</key>
-				<integer>800</integer>
 			</dict>
 		</array>
 	</dict>

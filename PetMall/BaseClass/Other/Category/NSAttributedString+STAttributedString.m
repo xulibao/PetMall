@@ -115,13 +115,18 @@ NSDictionary<NSAttributedStringKey,id> * const SADefaultNormalAttributes (CGFloa
     NSAttributedString *text = nil;
     
     NSAttributedString *unit2Text = [@"分" attributedStingWithAttributes:normalAttributes];
-    if (hours == 0 && days == 0) {
+    if (days == 0) {
+        NSString * hoursStr = [NSString stringWithFormat:@"%02lld",hours];
         NSString * secsStr = [NSString stringWithFormat:@"%02lld",secs];
         NSString * minsStr = [NSString stringWithFormat:@"%02lld",mins];
-        text = [NSAttributedString stringWithStrings:@[[minsStr attributedStingWithAttributes:highlightedAttributes],
-                                                       unit2Text,
+        NSAttributedString *unitText = [@" ：" attributedStingWithAttributes:normalAttributes];
+
+        text = [NSAttributedString stringWithStrings:@[
+                                                       [hoursStr attributedStingWithAttributes:highlightedAttributes],
+                                                       unitText,
+                                                       [minsStr attributedStingWithAttributes:highlightedAttributes],
+                                                       unitText,
                                                        [secsStr attributedStingWithAttributes:highlightedAttributes],
-                                                       [@"秒" attributedStingWithAttributes:normalAttributes]
                                                        ]];
     } else {
         NSString * minsStr = [NSString stringWithFormat:@"%02lld",mins];

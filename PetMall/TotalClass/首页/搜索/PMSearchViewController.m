@@ -8,6 +8,7 @@
 
 #import "PMSearchViewController.h"
 #import "PMSearchResultViewController.h"
+#import "STNavigationController.h"
 #import <MJRefresh/MJRefresh.h>
 #define PYSEARCH_SEARCH_HISTORY_CACHE_PATH [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"MLSearchhistories.plist"] // 搜索历史存储路径
 @interface PMSearchViewController ()<UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource>
@@ -381,6 +382,15 @@
 }
 
 - (void)resultResult{
+    
+//    [self dismissViewControllerAnimated:NO completion:^{
+//        if (self.dismissCall) {
+//            self.dismissCall();
+//        }
+//    };
+
+//    STNavigationController * nav = [[STNavigationController alloc] ini]
+    
     PMSearchResultViewController * vc = [PMSearchResultViewController new];
     [self.navigationController pushViewController:vc animated:YES];
 }

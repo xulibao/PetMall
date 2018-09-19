@@ -7,31 +7,38 @@
 //
 
 #import "PMSearchResultViewController.h"
-
+#import "PMCommonGoodsItem.h"
+#import "DCGoodBaseViewController.h"
 @interface PMSearchResultViewController ()
-
+@property(nonatomic, strong) NSMutableArray *dataArray;
 @end
 
 @implementation PMSearchResultViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    [self fetchData];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)refreshingAction {
+    [self fetchData];
 }
 
-/*
-#pragma mark - Navigation
+#pragma mark - Request
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)fetchData {
+    self.dataArray = [PMCommonGoodsItem mj_objectArrayWithFilename:@"HomeHighGoods.plist"];
+    [self setItems:self.dataArray];
 }
-*/
-
+- (void)didSelectCellWithItem:(id<STCommonTableRowItem>)item1{
+    PMCommonGoodsItem * item = self.dataArray[0];
+    DCGoodBaseViewController * vc = [[DCGoodBaseViewController alloc] init];
+    vc.goodTitle = item.main_title;
+    vc.goodPrice = item.price;
+    vc.goodSubtitle = item.goods_title;
+    vc.shufflingArray = item.images;
+    vc.goodImageView = item.image_url;
+    
+    [self.navigationController pushViewController:vc  animated:YES];
+}
 @end
