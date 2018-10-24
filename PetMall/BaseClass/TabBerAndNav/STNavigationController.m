@@ -89,19 +89,19 @@
         viewController.hidesBottomBarWhenPushed = YES;
     }
     
-    if ([viewController respondsToSelector:@selector(isNeedSign)] && (![SAApplication isSign])) {
-        BOOL needSign = [(id)viewController isNeedSign];
-        if (needSign) {
-            @weakify(self);
-            NSArray<UIViewController*> *viewControllers = self.viewControllers;
-            PMLoginViewController *sign = [[PMLoginViewController alloc] init];
-            [sign setCallBack:^(PMLoginViewController *viewController) {
-                [weak_self setViewControllers:[viewControllers arrayByAddingObject:viewController]
-                                animated:YES];
-            }];
-            viewController = sign;
-        }
-    }
+//    if ([viewController respondsToSelector:@selector(isNeedSign)] && (![SAApplication isSign])) {
+//        BOOL needSign = [(id)viewController isNeedSign];
+//        if (needSign) {
+//            @weakify(self);
+//            NSArray<UIViewController*> *viewControllers = self.viewControllers;
+//            PMLoginViewController *sign = [[PMLoginViewController alloc] init];
+//            [sign setCallBack:^(PMLoginViewController *viewController) {
+//                [weak_self setViewControllers:[viewControllers arrayByAddingObject:viewController]
+//                                animated:YES];
+//            }];
+//            viewController = sign;
+//        }
+//    }
     
     [super pushViewController:viewController animated:animated];
 }

@@ -42,6 +42,10 @@
 
 @implementation PMMineViewController
 
+- (BOOL)isNeedSign{
+    return YES;
+}
+
 - (NSMutableArray *)dataArray{
     if (_dataArray == nil) {
         _dataArray = [NSMutableArray arrayWithCapacity:2];
@@ -74,7 +78,6 @@
 - (void)didInitialized {
     [super didInitialized];
 //    [self fecthNetData];
-    [self fecthSubViews];
 
 }
 
@@ -85,10 +88,10 @@
 
 - (void)fecthNetData{
     SARequest * request = ({
-        [self requestMethod:GARequestMethodGET
-                  URLString:API_user_personalCenter
-                 parameters:@{@"userId":[SAApplication userID]}
-                 resKeyPath:@"data"
+        [self requestMethod:GARequestMethodPOST
+                  URLString:API_user_groupbuy
+                 parameters:@{@"user_id":[SAApplication userID]}
+                 resKeyPath:@"result"
                    resClass:[SAPersonCenterModel class]
               resArrayClass:NULL
                       retry:NO
@@ -97,7 +100,7 @@
                         SAPersonCenterModel * personCenterModel = (SAPersonCenterModel *)responseObject;
                         self.personCenterModel = personCenterModel;
                         self.headerView.model = personCenterModel;
-                        self.moneyModel.descTitle = personCenterModel.availableBond;
+                        [self.headerView setIsLogin:[SAApplication isSign]];
                         if (self.dataArray.count == 0) {
                             [self fecthSubViews];
                         }else{
@@ -119,9 +122,9 @@
     self.moneyModel = model;
     model.iconImage = @"mine_tuangou";
     model.titleName = @"我的团购";
-    model.descTitle = [NSString stringWithFormat:@"%@元",self.personCenterModel.availableBond];
     [self.dataArray addObject:model];
     model.cellAction = ^(SAMineModel *model) {
+        IS_LOGIN
         PMMyGroupPurchaseViewController * vc = [[PMMyGroupPurchaseViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     };
@@ -235,13 +238,13 @@
     headerView.delegate = self;
     headerView.width = kMainBoundsWidth;
     headerView.height = 255;
-    [headerView setIsLogin:YES];
     self.tableView.tableHeaderView = headerView;
     
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.top.bottom.mas_equalTo(self.view);
     }];
-    
+    [self fecthNetData];
+
 }
 
 - (void)setupNavgationBar{

@@ -10,8 +10,10 @@
 #import "SABaseInputValidTextField.h"
 #import "SPForgotPasswordViewController.h"
 #import "SPRegisterViewController.h"
+#import "SAUserInfoEntity.h"
 @interface PMLoginViewController ()
-
+@property(nonatomic, strong) SABaseInputValidTextField * loginField;
+@property(nonatomic, strong) SABaseInputValidTextField * passwordField;
 @end
 
 @implementation PMLoginViewController
@@ -23,12 +25,29 @@
 }
 - (void)setupNavgationBar {
     [super setupNavgationBar];
-//    UIColor *tintColor = [UIColor whiteColor];
-//    [self.navgationBar.leftBarButton setTintColor:tintColor];
+    UIColor *tintColor = [UIColor whiteColor];
     self.navgationBar.navigationBarBg.alpha = 0;
     self.navgationBar.titleLabel.alpha = 0;
     self.statusBarView.alpha = 0;
+    self.navgationBar.navigationBarBg.hidden = NO;
+    self.navgationBar.navigationBarBg.userInteractionEnabled = YES;
+    self.navgationBar.navigationBarBg.backgroundColor = [[UIColor whiteColor]colorWithAlphaComponent:0.0f];
+    self.navgationBar.leftBarButton.hidden = YES;
+    UIButton *closedBtn = [[UIButton alloc] init];
+    [closedBtn setTintColor:tintColor];
+    [closedBtn addTarget:self action:@selector(closedBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.navgationBar addSubview:closedBtn];
+    [closedBtn setImage:IMAGE(@"icon_cha") forState:UIControlStateNormal];
+    [closedBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.mas_equalTo(self.navgationBar.navigationBarBg);
+        make.left.mas_equalTo(self.navgationBar.navigationBarBg).mas_offset(15);
+    }];
 }
+
+- (void)closedBtnClick{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 - (void)initSubviews {
     [super initSubviews];
@@ -53,6 +72,7 @@
     }
     
     SABaseInputValidTextField * loginField = [[SABaseInputValidTextField alloc] init];
+    self.loginField = loginField;
     [loginField addTarget:self action:@selector(baseFieldDidEditWithText:) forControlEvents:UIControlEventEditingChanged];
     loginField.backgroundColor = [UIColor whiteColor];
     loginField.textAlignment = NSTextAlignmentLeft;
@@ -65,6 +85,7 @@
     [bgView addSubview:loginField];
     
     SABaseInputValidTextField * passwordField = [[SABaseInputValidTextField alloc] init];
+    self.passwordField = passwordField;
     [passwordField addTarget:self action:@selector(baseFieldDidEditWithText:) forControlEvents:UIControlEventEditingChanged];
     passwordField.backgroundColor = [UIColor whiteColor];
     passwordField.textAlignment = NSTextAlignmentLeft;
@@ -171,10 +192,26 @@
     }];
     
 }
+
+- (void)baseFieldDidEditWithText:(SABaseInputValidTextField *)baseField{
+
+    
+}
 //登录
 - (void)loginBtnClick{
-
-    self.callBack ? self.callBack(self) : nil;
+    [self.view endEditing:YES];
+    [self requestPOST:API_user_login parameters:@{@"user_phone":self.loginField.text,@"user_password":self.passwordField.text} success:^(__kindof SARequest *request, id responseObject) {
+        if ([responseObject[@"status"] integerValue] == 200) {
+            NSDictionary *data = responseObject[@"result"];
+            if (data) {
+                SAApplication *app = [SAApplication sharedApplication];
+                SAUserInfoEntity * userInfo = [SAUserInfoEntity mj_objectWithKeyValues:data];
+                [app storeUserInfo:userInfo];
+                [self showSuccess:@"登录成功"];
+                !self.callBack ?: self.callBack(self);
+            }
+        }
+    } failure:NULL];
 }
 //注册
 - (void)registBtnClick{

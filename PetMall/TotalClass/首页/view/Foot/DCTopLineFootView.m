@@ -29,6 +29,9 @@
 /* 顶部广告宣传图片 */
 @property (strong , nonatomic)UIImageView *topAdImageView;
 
+@property(nonatomic, strong) UILabel *addLabel;
+@property(nonatomic, strong) UILabel *addLabel1;
+
 @end
 
 @implementation DCTopLineFootView
@@ -59,13 +62,13 @@
     [self addSubview:_topAdImageView];
     
     UILabel * addLabel = [[UILabel alloc] init];
-    addLabel.text = @"100元优惠券";
+    self.addLabel = addLabel;
     addLabel.textColor = [UIColor whiteColor];
     addLabel.font = [UIFont boldSystemFontOfSize:15];
     [_topAdImageView addSubview:addLabel];
     
     UILabel * addLabel1 = [[UILabel alloc] init];
-    addLabel1.text = @"全场宠物用品满299元可用";
+    self.addLabel1 = addLabel1;
     addLabel1.textColor = [UIColor whiteColor];
     addLabel1.font = [UIFont systemFontOfSize:10];
     [_topAdImageView addSubview:addLabel1];
@@ -86,32 +89,12 @@
         make.centerX.mas_equalTo(addLabel);
         make.top.mas_equalTo(addLabel.mas_bottom).mas_offset(8);
     }];
-    
-//    //初始化
-//    _numericalScrollView = [[DCTitleRolling alloc] initWithFrame:CGRectMake(0, self.height - 50, self.width, 50) WithTitleData:^(CDDRollingGroupStyle *rollingGroupStyle, NSString *__autoreleasing *leftImage, NSArray *__autoreleasing *rolTitles, NSArray *__autoreleasing *rolTags, NSArray *__autoreleasing *rightImages, NSString *__autoreleasing *rightbuttonTitle, NSInteger *interval, float *rollingTime, NSInteger *titleFont, UIColor *__autoreleasing *titleColor, BOOL *isShowTagBorder) {
-//        
-//        *rollingTime = 0.25;
-//        *rolTags = @[@"冬季健康日",@"新手上路",@"年终内购会",@"GitHub星星走一波"];
-//        *rolTitles = @[@"先领券在购物，一元抢？",@"2000元热门手机推荐",@"好奇么？点进去哈",@"这套家具比房子还贵"];
-//        *leftImage = @"shouye_img_toutiao";
-//        *interval = 6.0;
-//        *titleFont = 14;
-//        *isShowTagBorder = YES;
-//        *titleColor = [UIColor darkGrayColor];
-//    }];
-    
-//    _numericalScrollView.moreClickBlock = ^{
-//        NSLog(@"mall----more");
-//    };
-    
-//    [_numericalScrollView dc_beginRolling];
-//    _numericalScrollView.backgroundColor = [UIColor whiteColor];
-//    [self addSubview:_numericalScrollView];
-//
-//    _bottomLineView = [[UIView alloc] init];
-////    _bottomLineView.backgroundColor = DCBGColor;
-//    [self addSubview:_bottomLineView];
-//    _bottomLineView.frame = CGRectMake(0, self.height - 8, kMainBoundsWidth, 8);
+}
+
+- (void)setCouponModel:(PMHomeCouponModel *)couponModel{
+    _couponModel = couponModel;
+    self.addLabel.text = [NSString stringWithFormat:@"%@元优惠券",couponModel.face];
+    self.addLabel1.text = [NSString stringWithFormat:@"全场宠物用品满%@元可用",couponModel.subtraction];
 }
 
 - (void)layoutSubviews

@@ -76,6 +76,8 @@
     [gouBtn addTarget:self action:@selector(adorSelect) forControlEvents:UIControlEventTouchUpInside];
 }
 - (void)adorSelect{
+//    [self requestGET:<#(NSString *)#> parameters:<#(id)#> success:<#^(__kindof SARequest *request, id responseObject)success#> failure:<#^(__kindof SARequest *request, id responseObject, NSError *error)failure#>]
+    
     PMBindingPhoneViewController * vc = [PMBindingPhoneViewController new];
     [self pushViewController:vc];
 }

@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@class DCClassGoodsItem;
+@class DCClassMianItem;
 
 @interface DCClassCategoryCell : UITableViewCell
 
 /* 标题数据 */
-@property (strong , nonatomic)DCClassGoodsItem *titleItem;
+@property (strong , nonatomic)DCClassMianItem *titleItem;
 
 @end

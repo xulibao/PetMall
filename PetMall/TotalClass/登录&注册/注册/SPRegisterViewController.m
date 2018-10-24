@@ -39,7 +39,7 @@
     model.cellIdentifier = @"loginTelCellIdentifier";
     model.feildPlace = @"手机号";
     model.errorStr = @"请输入手机号";
-    model.severKey = @"mobile";
+    model.severKey = @"user_phone";
     model.maxNumber = 11;
     model.showType = kVerificationShowForHidden;
     model.keyBoardType = UIKeyboardTypeNumberPad;
@@ -50,12 +50,12 @@
     model = [[SPVerificationBaseModel alloc] init];
     model.cellIdentifier = @"loginCodeCellIdentifier";
     model.imageName = @"me_password";
-    model.severKey = @"code";
+    model.severKey = @"ver_yz";
     model.errorStr = @"请输入验证码";
     model.feildPlace = @"验证码";
     model.showType = kVerificationShowForShow;
     handle= [[SATextFieldInputValidHandle alloc] init];
-    handle.maxLength = 4;
+    handle.maxLength = 6;
     model.handle = handle;
     model.keyBoardType = UIKeyboardTypeNumberPad;
     [self.viewModel addRow:model];
@@ -64,7 +64,7 @@
     model = [[SPVerificationBaseModel alloc] init];
     model.cellIdentifier = @"registerCodeCellIdentifier";
     model.imageName = @"me_password";
-    model.severKey = @"newPassword";
+    model.severKey = @"user_password";
     model.feildPlace = @"新密码";
     model.errorStr = @"请输入新密码";
     model.isAddTimer = YES;
@@ -113,25 +113,25 @@
 }
 // 注册
 - (void)registerClick{
-//    NSMutableDictionary * parametersDict = [NSMutableDictionary dictionary];
-//    self.parametersDict = parametersDict;
-//    for (id object in [self.viewModel rowsAtSection:0]) {
-//        if ([object isKindOfClass:[SPVerificationBaseModel class]]){
-//            SPVerificationBaseModel *model = (SPVerificationBaseModel *)object;
-//            if (model.severValue.length == 0) {
-//                [self showWaring:model.errorStr];
-//                return;
-//            }
-//        }
-//    }
-    [self registRequest];
-}
-
-- (void)registRequest{
- 
-    [self showSuccess:@"注册成功"];
-    PMAdorViewController * vc = [PMAdorViewController new];
-    [self pushViewController:vc];
+    NSMutableDictionary * parametersDict = [NSMutableDictionary dictionary];
+    self.parametersDict = parametersDict;
+    for (id object in [self.viewModel rowsAtSection:0]) {
+        if ([object isKindOfClass:[SPVerificationBaseModel class]]){
+            SPVerificationBaseModel *model = (SPVerificationBaseModel *)object;
+            if (model.severValue.length == 0) {
+                [self showWaring:model.errorStr];
+                return;
+            }
+            [parametersDict setObject:model.severValue forKey:model.severKey];
+        }
+    }
+    [self requestPOST:API_user_regist parameters:parametersDict success:^(__kindof SARequest *request, id responseObject) {
+        PMAdorViewController * vc = [PMAdorViewController new];
+        [self pushViewController:vc];
+        [vc showSuccess:@"注册成功"];
+    } failure:NULL];
+    
+    
 }
 
 
@@ -158,9 +158,13 @@
         [self showWaring:@"请输入手机号"];
         return;
     }
+    
+    [self requestPOST:API_user_sendRegistCode parameters:@{@"user_phone":telModel.severValue} success:^(__kindof SARequest *request, id responseObject) {
+        [self showSuccess:@"发送成功"];
+        [codeModel startCountDown];
+    } failure:NULL];
    
-    [self showSuccess:@"发送成功"];
-    [codeModel startCountDown];
+    
 
 }
 

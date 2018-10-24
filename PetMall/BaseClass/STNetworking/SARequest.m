@@ -246,11 +246,11 @@ NSString *const STResponseValidationErrorDomain = @"com.woniuhuoche.request.resp
 
 - (BOOL)validateWithRequest:(SARequest *)request error:(NSError * __autoreleasing *)error {
     STAPIResponse *response = [STAPIResponse mj_objectWithKeyValues:request.responseJSONObject];
-    if (response.resCode == 1) {
+    if (response.status == 200) {
         return YES;
     }
     if (error) {
-        *error = [NSError errorWithDomain:STResponseValidationErrorDomain code:response.resCode userInfo:response.resMsg ? @{NSLocalizedDescriptionKey:response.resMsg} : nil];
+        *error = [NSError errorWithDomain:STResponseValidationErrorDomain code:response.status userInfo:response.msg ? @{NSLocalizedDescriptionKey:response.msg} : nil];
         return NO;
     }
     return YES;

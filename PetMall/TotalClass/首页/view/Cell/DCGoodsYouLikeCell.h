@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "PMHomeModel.h"
 @class DCRecommendItem;
 
 @interface DCGoodsYouLikeCell : UICollectionViewCell
 
 /* 推荐数据 */
-@property (strong , nonatomic)DCRecommendItem *youLikeItem;
+@property (strong , nonatomic)PMGroupModel *groupModel;
 /* 相同 */
 @property (strong , nonatomic)UIButton *sameButton;
 

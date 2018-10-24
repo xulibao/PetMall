@@ -51,7 +51,7 @@
 - (void)signInWithCallBack:(void (^)(BOOL succeeded, NSError *error))callBack;
 - (void)signOut;
 
-- (void)storeUserInfoMapper:(NSDictionary *)userInfo;
+- (void)storeUserInfo:(SAUserInfoEntity *)userInfo;
 
 @end
 

@@ -10,12 +10,16 @@
 
 @implementation SAUserInfoEntity
 
++ (NSDictionary *)mj_replacedKeyFromPropertyName {
+    return @{@"userId":@"id"};
+}
+
 - (void)setContactMobile:(NSString *)contactMobile{
-    _contactMobile = contactMobile;
+//    _contactMobile = contactMobile;
 //    [self store];
 }
 
-- (void)store{
-    [[SAApplication sharedApplication] storeUserInfoMapper:[self mj_keyValues]];
-}
+//- (void)store{
+//    [[SAApplication sharedApplication] storeUserInfoMapper:[self mj_keyValues]];
+//}
 @end

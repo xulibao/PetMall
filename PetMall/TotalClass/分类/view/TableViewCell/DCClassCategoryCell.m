@@ -11,7 +11,7 @@
 // Controllers
 
 // Models
-#import "DCClassGoodsItem.h"
+#import "DCClassMianItem.h"
 // Views
 
 // Vendors
@@ -73,10 +73,10 @@
 }
 
 #pragma mark - Setter Getter Methods
-- (void)setTitleItem:(DCClassGoodsItem *)titleItem
+- (void)setTitleItem:(DCClassMianItem *)titleItem
 {
     _titleItem = titleItem;
-    self.titleLabel.text = titleItem.title;
+    self.titleLabel.text = titleItem.cate_title;
 }
 
 @end

@@ -137,16 +137,16 @@
 
 
 #pragma mark - Setter Getter Methods
-- (void)setYouLikeItem:(DCRecommendItem *)youLikeItem
+- (void)setGroupModel:(PMGroupModel *)groupModel
 {
-    [_goodsImageView sd_setImageWithURL:[NSURL URLWithString:youLikeItem.image_url]];
-    _priceLabel.text = [NSString stringWithFormat:@"¥%@",youLikeItem.price];
+    [_goodsImageView sd_setImageWithURL:[NSURL URLWithString:groupModel.goods_logo]];
+    _priceLabel.text = [NSString stringWithFormat:@"¥%@",groupModel.selling_price];
     //中划线
     NSDictionary *attribtDic = @{NSStrikethroughStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle]};
-    NSMutableAttributedString *attribtStr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"¥%@",youLikeItem.stock] attributes:attribtDic];
+    NSMutableAttributedString *attribtStr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"¥%@",groupModel.market_price] attributes:attribtDic];
     _originLabel.attributedText = attribtStr;
-    _peopleCountLabel.text = [NSString stringWithFormat:@"已%@人参团",youLikeItem.people_count];
-    _goodsLabel.text = youLikeItem.main_title;
+    _peopleCountLabel.text = [NSString stringWithFormat:@"已%@人参团",groupModel.sum];
+    _goodsLabel.text = groupModel.goods_title;
 }
 
 #pragma mark - 点击事件

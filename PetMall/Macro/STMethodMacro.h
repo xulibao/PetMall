@@ -8,6 +8,9 @@
 
 #ifndef STMethodMacro_h
 #define STMethodMacro_h
+#import "SAAccount.h"
+#import "STNavigationController.h"
+#import "STTabBarController.h"
 //   (1)
 /**
  Synthsize a weak or strong reference.
@@ -130,10 +133,9 @@ if (isHidden){\
 #define MakePhoneTelprompt(phoneNumber) [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"telprompt:%@",[phoneNumber stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]]]];
 
 #define IS_LOGIN  if (![SAAccount isLog]) {\
-STNavigationController *nav = [[STNavigationController alloc] init];\
-STLoginController *loginVc = [[STLoginController alloc] init];\
-UIViewController *vc = [STTabBarController sharedSTTabBarController].currtentController;\
-[nav addChildViewController:loginVc];\
+PMLoginViewController *loginVc = [[PMLoginViewController alloc] init];\
+UIViewController *vc = [[SAApplication sharedApplication].mainTabBarController selectedViewController];\
+STNavigationController * nav = [[STNavigationController alloc] initWithRootViewController:loginVc];\
 [vc presentViewController:nav animated:YES completion:nil];\
 return;\
 }

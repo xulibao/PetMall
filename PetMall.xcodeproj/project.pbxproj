@@ -299,6 +299,7 @@
 		5A54CBA02143CC0100971D83 /* UIColor+DCColorChange.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A54CB962143CC0100971D83 /* UIColor+DCColorChange.m */; };
 		5A54CBA32143CCC700971D83 /* DCSpeedy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A54CBA22143CCC600971D83 /* DCSpeedy.m */; };
 		5A54CBA72143CE4E00971D83 /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A54CBA62143CE4D00971D83 /* UIView+Toast.m */; };
+		5A690BE221801B4F00775B00 /* PMHomeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A690BE121801B4F00775B00 /* PMHomeModel.m */; };
 		5A6ACF54213D10DA001FB644 /* STHomeVCTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A6ACF53213D10DA001FB644 /* STHomeVCTopView.m */; };
 		5A6ACF72213D1C81001FB644 /* DCScrollAdFootView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A6ACF56213D1C7F001FB644 /* DCScrollAdFootView.m */; };
 		5A6ACF73213D1C81001FB644 /* DCTopLineFootView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A6ACF57213D1C7F001FB644 /* DCTopLineFootView.m */; };
@@ -1079,6 +1080,8 @@
 		5A54CBA22143CCC600971D83 /* DCSpeedy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCSpeedy.m; sourceTree = "<group>"; };
 		5A54CBA52143CE4D00971D83 /* UIView+Toast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Toast.h"; sourceTree = "<group>"; };
 		5A54CBA62143CE4D00971D83 /* UIView+Toast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Toast.m"; sourceTree = "<group>"; };
+		5A690BE021801B4F00775B00 /* PMHomeModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMHomeModel.h; sourceTree = "<group>"; };
+		5A690BE121801B4F00775B00 /* PMHomeModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMHomeModel.m; sourceTree = "<group>"; };
 		5A6ACF52213D10DA001FB644 /* STHomeVCTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STHomeVCTopView.h; sourceTree = "<group>"; };
 		5A6ACF53213D10DA001FB644 /* STHomeVCTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STHomeVCTopView.m; sourceTree = "<group>"; };
 		5A6ACF56213D1C7F001FB644 /* DCScrollAdFootView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCScrollAdFootView.m; sourceTree = "<group>"; };
@@ -2186,11 +2189,11 @@
 		5A54CA0121418AA800971D83 /* model */ = {
 			isa = PBXGroup;
 			children = (
-				5A54CA0221418AA800971D83 /* DCCalssSubItem.m */,
-				5A54CA0321418AA800971D83 /* DCClassMianItem.h */,
-				5A54CA0421418AA800971D83 /* DCClassGoodsItem.h */,
 				5A54CA0521418AA800971D83 /* DCCalssSubItem.h */,
+				5A54CA0221418AA800971D83 /* DCCalssSubItem.m */,
+				5A54CA0421418AA800971D83 /* DCClassGoodsItem.h */,
 				5A54CA0621418AA800971D83 /* DCClassGoodsItem.m */,
+				5A54CA0321418AA800971D83 /* DCClassMianItem.h */,
 				5A54CA0721418AA800971D83 /* DCClassMianItem.m */,
 			);
 			path = model;
@@ -2857,6 +2860,8 @@
 				5A6ACF7F213D1E4B001FB644 /* CountDownShop.plist */,
 				5A6ACF81213D1E4C001FB644 /* GoodsGrid.plist */,
 				5A6ACF80213D1E4B001FB644 /* HomeHighGoods.plist */,
+				5A690BE021801B4F00775B00 /* PMHomeModel.h */,
+				5A690BE121801B4F00775B00 /* PMHomeModel.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -4263,6 +4268,7 @@
 				5AEA6C6A214D00DD00A2E6E8 /* PMMyAddressCell.m in Sources */,
 				5A4AF65B2134FA0F00F8190B /* GALostFramesView.m in Sources */,
 				5A54CB662143C73800971D83 /* XWFilterAnimator+XWBoxBlur.m in Sources */,
+				5A690BE221801B4F00775B00 /* PMHomeModel.m in Sources */,
 				5A54CAE42143C5F500971D83 /* DCShareItem.m in Sources */,
 				5AEA6C49214C9F4300A2E6E8 /* PMCommonGoodsItem.m in Sources */,
 				5A4AF5942134F9FA00F8190B /* STEmptyView.m in Sources */,

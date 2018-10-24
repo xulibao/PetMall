@@ -10,10 +10,10 @@
 
 @interface DCCalssSubItem : NSObject
 
+@property (nonatomic, copy ,readonly) NSString *cate_id;
 /** 商品类题  */
-@property (nonatomic, copy ,readonly) NSString *goods_title;
-
+@property (nonatomic, copy ,readonly) NSString *cate_title;
 /** 商品图片  */
-@property (nonatomic, copy ,readonly) NSString *image_url;
+@property (nonatomic, copy) NSString *img;
 
 @end

@@ -38,9 +38,9 @@
     return [SALotListResponseEntity class];
 }
 
-- (NSString *)requestUrl {
-    return API_auction_lotList;
-}
+//- (NSString *)requestUrl {
+//    return API_auction_lotList;
+//}
 
 @end
 

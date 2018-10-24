@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "PMHomeModel.h"
 @interface DCTopLineFootView : UICollectionReusableView
+@property(nonatomic, strong) PMHomeCouponModel *couponModel;
+
 @property(nonatomic, copy) void (^DCTopLineFootViewCallBack)();
 @end

@@ -10,11 +10,8 @@
 
 @implementation DCClassMianItem
 
-+(NSDictionary *)mj_objectClassInArray
-{
-    return @{
-             @"goods" : @"DCCalssSubItem"
-             };
++ (NSDictionary *)mj_replacedKeyFromPropertyName{
+    return @{@"cate_id":@"id"};
 }
 
 

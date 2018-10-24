@@ -14,7 +14,6 @@
 @property(nonatomic, copy) NSString *title;
 @property(nonatomic, copy) NSString *imageNomalStr;
 @property(nonatomic, copy) NSString *imageSelectStr;
-
 @property(nonatomic, strong) NSMutableArray *dataList;
 @property(nonatomic, assign) BOOL isShuaiXuan;
 @property(nonatomic, copy) void (^tapClick)();

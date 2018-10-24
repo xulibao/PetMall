@@ -43,9 +43,9 @@
 /* 推荐商品属性 */
 @property (strong , nonatomic)NSMutableArray *youLikeItem;
 /* 左边数据 */
-@property (strong , nonatomic)NSMutableArray<DCClassGoodsItem *> *titleItem;
+@property (strong , nonatomic)NSMutableArray<DCClassMianItem *> *titleItem;
 /* 右边数据 */
-@property (strong , nonatomic)NSMutableArray<DCClassMianItem *> *mainItem;
+@property (strong , nonatomic)NSMutableArray<DCCalssSubItem *> *mainItem;
 
 @end
 
@@ -118,12 +118,15 @@ static NSString *const DCBrandSortCellID = @"DCBrandSortCell";
 }
 
 #pragma mark - 加载数据
-- (void)setUpData
-{
-    _titleItem = [DCClassGoodsItem mj_objectArrayWithFilename:@"ClassifyTitles.plist"];
-    _mainItem = [DCClassMianItem mj_objectArrayWithFilename:@"ClassiftyGoods01.plist"];
-    //默认选择第一行（注意一定要在加载完数据之后）
-    [_tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionTop];
+- (void)setUpData{
+    
+    [self requestPOST:API_Classification_fication parameters:nil success:^(__kindof SARequest *request, id responseObject) {
+        self.titleItem = [DCClassMianItem mj_objectArrayWithKeyValuesArray:responseObject[@"result"]];
+        [self.tableView reloadData];
+        //默认选择第一行（注意一定要在加载完数据之后）
+        [_tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionTop];
+    } failure:NULL];
+   
 }
 
 
@@ -186,23 +189,26 @@ static NSString *const DCBrandSortCellID = @"DCBrandSortCell";
     return 44;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    _mainItem = [DCClassMianItem mj_objectArrayWithFilename:_titleItem[indexPath.row].fileName];
-    [self.collectionView reloadData];
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    DCClassMianItem *item = self.titleItem[indexPath.row];
+    [self requestPOST:API_Classification_ficationa parameters:@{@"pid":item.cate_id} success:^(__kindof SARequest *request, id responseObject) {
+        self.mainItem = [DCCalssSubItem mj_objectArrayWithKeyValuesArray:responseObject[@"result"]];
+        [self.collectionView reloadData];
+
+    } failure:NULL];
 }
 
 #pragma mark - <UITableViewDataSource>
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return _mainItem[section].goods.count;
+    return _mainItem.count;
 }
 
 #pragma mark - <UICollectionViewDelegate>
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *gridcell = nil;
     DCGoodsSortCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DCGoodsSortCellID forIndexPath:indexPath];
-    cell.subItem = _mainItem[indexPath.section].goods[indexPath.row];
+    cell.subItem = _mainItem[indexPath.row];
     gridcell = cell;
     return gridcell;
 }
@@ -212,7 +218,7 @@ static NSString *const DCBrandSortCellID = @"DCBrandSortCell";
     if (kind == UICollectionElementKindSectionHeader){
         
         DCBrandsSortHeadView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:DCBrandsSortHeadViewID forIndexPath:indexPath];
-        headerView.headTitle = _mainItem[indexPath.section];
+//        headerView.headTitle = _mainItem[indexPath.section];
         reusableview = headerView;
     }
     return reusableview;

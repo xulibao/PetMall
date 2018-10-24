@@ -39,16 +39,16 @@
 
 #pragma mark - STCommonTableViewItemConfigProtocol
 
-- (void)tableView:(UITableView *)tableView configViewWithData:(PMCommonGoodsItem *)data AtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView configViewWithData:(PMGroupModel *)data AtIndexPath:(NSIndexPath *)indexPath {
     [super tableView:tableView configViewWithData:data AtIndexPath:indexPath];
-    [_goodsImageView sd_setImageWithURL:[NSURL URLWithString:data.image_url]];
-    _priceLabel.text = [NSString stringWithFormat:@"¥%@",data.price];
+    [_goodsImageView sd_setImageWithURL:[NSURL URLWithString:data.goods_logo]];
+    _priceLabel.text = [NSString stringWithFormat:@"¥%@",data.selling_price];
     //中划线
     NSDictionary *attribtDic = @{NSStrikethroughStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle]};
-    NSMutableAttributedString *attribtStr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"¥%@",data.stock] attributes:attribtDic];
+    NSMutableAttributedString *attribtStr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"¥%@",data.market_price] attributes:attribtDic];
     _originLabel.attributedText = attribtStr;
-    _peopleCountLabel.text = [NSString stringWithFormat:@"已%@人参团",data.people_count];
-    _goodsLabel.text = data.main_title;
+//    _peopleCountLabel.text = [NSString stringWithFormat:@"已%@人参团",data.people_count];
+    _goodsLabel.text = data.goods_title;
     
   
 }

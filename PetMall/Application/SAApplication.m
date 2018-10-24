@@ -158,11 +158,11 @@ static dispatch_queue_t conversationsJoinSerialQueue = NULL;
 - (void)initRootViewController {
 //    [self.navigationController setViewControllers:@[self.mainTabBarController]
 //                                         animated:NO];
-    if (self.userInfo) {
-        [self signIn];
-    } else {
-        _window.rootViewController = self.signInController;
-    }
+//    if (self.userInfo) {
+//        [self signIn];
+//    } else {
+        _window.rootViewController = self.mainTabBarController;
+//    }
 }
 
 - (void)initUser {
@@ -280,17 +280,19 @@ static dispatch_queue_t conversationsJoinSerialQueue = NULL;
     return kUserID;
 }
 
-- (void)storeUserInfoMapper:(NSDictionary *)userInfo {
+- (void)storeUserInfo:(SAUserInfoEntity *)userInfo {
     /**
     contactMobile    联系电话（商户）    string
     convId    房间号    string
     userId    用户id    number
      **/
-    if (userInfo) {
+    self.userInfo = userInfo;
+    NSDictionary * userInfoDic = [userInfo mj_keyValues];
+    if (userInfoDic) {
         NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
-        [userDefault setObject:userInfo forKey:kUserInfoUserDefaultsKEY];
+        [userDefault setObject:userInfoDic forKey:kUserInfoUserDefaultsKEY];
         [userDefault synchronize];
-        [self initUser];
+//        [self initUser];
     }
 }
 

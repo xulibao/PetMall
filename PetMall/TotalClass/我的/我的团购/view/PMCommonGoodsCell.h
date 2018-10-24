@@ -7,9 +7,9 @@
 //
 
 #import "STCommonTableViewCell.h"
-#import "PMCommonGoodsItem.h"
+#import "PMHomeModel.h"
 @interface PMCommonGoodsCell : STCommonTableViewCell
 
-@property(nonatomic, strong) PMCommonGoodsItem *item;
+@property(nonatomic, strong) PMGroupModel *item;
 
 @end

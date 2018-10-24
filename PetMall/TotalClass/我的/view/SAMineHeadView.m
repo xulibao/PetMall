@@ -94,7 +94,6 @@
     self.youhuiBtn = youhuiBtn;
     [self addSubview:youhuiBtn];
     [youhuiBtn addTarget:self action:@selector(youhuiBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [youhuiBtn setTitle:@"3\n优惠券" forState:UIControlStateNormal];
     
     UIButton *jifengBtn = [[UIButton alloc] init];
     jifengBtn.titleLabel.numberOfLines = 0;
@@ -103,7 +102,7 @@
     self.jifengBtn = jifengBtn;
     [self addSubview:jifengBtn];
     [jifengBtn addTarget:self action:@selector(jifengBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [jifengBtn setTitle:@"417\n积分" forState:UIControlStateNormal];    self.jifengBtn = jifengBtn;
+    
     [self addSubview:jifengBtn];
     
     UIButton *voucherBtn = [[UIButton alloc] init];
@@ -153,16 +152,14 @@
 - (void)setIsLogin:(BOOL)isLogin{
     _isLogin = isLogin;
     if (isLogin) {
-//        self.userName.text = [SAAccount shareAccount].nickName;
-        self.avatar.image = IMAGE(@"me_photo");
-//        [self.avatar :[NSURL URLWithString:[SAAccount  shareAccount].photo] placeholderImage:IMAGE(@"mine_user_login")];
+        self.userName.text = self.model.user_name;
+        [self.avatar sd_setImageWithURL:[NSURL URLWithString:self.model.img] placeholderImage:[UIImage imageNamed:@"mine_morenzhaopian"]];
+        [self.jifengBtn setTitle:[NSString stringWithFormat:@"%@\n积分",self.model.user_jf] forState:UIControlStateNormal];
+        [self.youhuiBtn setTitle:[NSString stringWithFormat:@"%@\n优惠券",self.model.coupon] forState:UIControlStateNormal];
     }else{
         self.userName.text = @"点击登录";
         self.avatar.image = [UIImage imageNamed:@"mine_morenzhaopian"];
     }
-    
-    self.userName.text = @"括弧犬";
-    [self.avatar sd_setImageWithURL:[NSURL URLWithString:@"https://pic1.zhimg.com/50/fc86c5f7e8ac973d90f991eb4c8dc9c5_xs.jpg"] placeholderImage:[UIImage imageNamed:@"mine_morenzhaopian"]];
     
     [self.avatar mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self).mas_offset(20);
@@ -200,8 +197,11 @@
 
 - (void)setModel:(SAPersonCenterModel *)model{
     _model = model;
-    self.userName.text = model.carDealer;
-   
+  
+//    self.userName.text = self.model.user_name;
+//    [self.avatar sd_setImageWithURL:[NSURL URLWithString:self.model.img] placeholderImage:[UIImage imageNamed:@"mine_morenzhaopian"]];
+//    [self.jifengBtn setTitle:[NSString stringWithFormat:@"%@\n积分",self.model.user_jf] forState:UIControlStateNormal];
+//    [self.youhuiBtn setTitle:[NSString stringWithFormat:@"%@\n优惠券",self.model.coupon] forState:UIControlStateNormal];   
 }
 
 

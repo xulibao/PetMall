@@ -30,6 +30,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.page = 1;
     [self.tableView reloadData];
 }
 

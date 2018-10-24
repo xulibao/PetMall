@@ -109,23 +109,24 @@
 }
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
-    if ([viewController respondsToSelector:@selector(isNeedSign)] && (![SAApplication isSign])) {
-        BOOL needSign = [(id)viewController isNeedSign];
-        if (needSign) {
-            @weakify(self);
-            NSArray<UIViewController*> *viewControllers = self.navigationController.viewControllers;
-            NSUInteger index = [self.viewControllers indexOfObject:viewController];
-            PMLoginViewController *sign = [[PMLoginViewController alloc] init];
-            [sign setCallBack:^(PMLoginViewController *viewController) {
-                [weak_self.navigationController setViewControllers:viewControllers animated:YES];
-//                [weak_self setSelectedIndex:index];
-                UIViewController *vc = [self viewControllers][index];
-                [weak_self setSelectedViewController:vc];
-            }];
-//            [self.navigationController pushViewController:sign animated:YES];
-            return NO;
-        }
+    if ([viewController isKindOfClass:[STNavigationController class]]) {
+        STNavigationController * nav = (id)viewController;
+        viewController = nav.topViewController;
     }
+//    if ([viewController respondsToSelector:@selector(isNeedSign)] && (![SAApplication isSign])) {
+//        BOOL needSign = [(id)viewController isNeedSign];
+//        if (needSign) {
+//            @weakify(self);
+//            PMLoginViewController *sign = [[PMLoginViewController alloc] init];
+//            STNavigationController * navLog = [[STNavigationController alloc] initWithRootViewController:sign];
+//            [sign setCallBack:^(PMLoginViewController *viewController) {
+//            }];
+//            [self presentViewController:navLog animated:YES completion:^{
+//
+//            } ];
+//            return NO;
+//        }
+//    }
     return YES;
 }
 

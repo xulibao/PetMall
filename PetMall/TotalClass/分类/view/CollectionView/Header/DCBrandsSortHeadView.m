@@ -73,7 +73,7 @@
 - (void)setHeadTitle:(DCClassMianItem *)headTitle
 {
     _headTitle = headTitle;
-    _titleLabel.text = headTitle.title;
+    _titleLabel.text = headTitle.cate_title;
 }
 
 @end

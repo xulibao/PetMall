@@ -46,7 +46,7 @@ static NSDictionary<NSString *,NSDictionary<NSString*,NSString*>*> * const Stati
 //                                     STSecurityPolicyCerKey:@"faBuHttps" //证书文件名
 //                                     GAURLHOSTENABLEDKEY:@(YES),
                                      },
-                               @"http://222.175.171.242:86/truck-auction-app":
+                               @"http://47.93.19.163":
                                    @{GAURLHOSTNAMEKEY:@"蜗拍车测试",
                                      GAIMAGEURLHOSTKEY:STImageUrlPrefixCeShi,
                                      STURLHostKey:@"http://222.175.171.242:86/truck",
@@ -82,10 +82,10 @@ static NSDictionary<NSString *,NSDictionary<NSString*,NSString*>*> * const Stati
     
     [GARequestConfiguration addServiceHosts:StaticServiceHostsGet()];
     
-    NSString *cerFileName = StaticServiceHostsGet()[self.host][STSecurityPolicyCerKey];
-    if (cerFileName && cerFileName.length > 0) {
-        [GARequestConfiguration setSecurityPolicy:[self securityPolicyWithCerFileName:cerFileName]];
-    }
+//    NSString *cerFileName = StaticServiceHostsGet()[self.host][STSecurityPolicyCerKey];
+//    if (cerFileName && cerFileName.length > 0) {
+//        [GARequestConfiguration setSecurityPolicy:[self securityPolicyWithCerFileName:cerFileName]];
+//    }
 #if DEBUG
     [GARequestConfiguration setDebugLogEnabled:YES];
 #endif

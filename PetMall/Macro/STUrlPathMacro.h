@@ -8,169 +8,158 @@
 
 #ifndef STUrlPathMacro_h
 #define STUrlPathMacro_h
+#import "STNetworking.h"
 
-//竞拍规则
-static NSString * const API_jingpaiguize =  @"http://pc3rpca5i.bkt.clouddn.com/html/auction_rule_1531993476.html";
-//商户必读
-static NSString * const API_shanghubidu =  @"http://pc3rpca5i.bkt.clouddn.com/html/user_instruction_1531993476.html";
-//商户协议
-static NSString * const API_shanghuxieyi =  @"http://pc3rpca5i.bkt.clouddn.com/html/user_protocol_1531993476.html";
-
-//保证金规则
-static NSString * const URL_baozhengjinguize =  @"http://www.woniuhuoche.com/activity/auctionActivity/auctionRule/auctionRule.html";
-
-
-//更新
-static NSString * const API_version_lastVersion = @"api/version/v1/lastVersion";
-
-/**************蜗牛货车接口**************/
-// 我的详情
-static NSString * const STAPI_myDetails_Page = @"api/v2/truck/myDetails";
-//已售接口
-static NSString * const STAPI_truck_sale = @"api/v1/truck/sale";
-/**************竞拍相关**************/
-
-/**************竞拍相关**************/
-//拍品列表
-static NSString * const API_auction_lotList = @"api/auction/v1/lotList";
-//竞拍场次列表
-static NSString * const API_auction_list =  @"api/auction/v1/list";
-//打包拍品详情
-static NSString * const API_auction_lotDetail = @"api/auction/v1/lotDetail";
-//出价
-static NSString * const API_auction_bid = @"api/auction/v1/bid";
-//车辆详情或拍品详情
-static NSString * const API_auction_detail = @"api/auction/v1/truckDetail";
-//添加关注拍品
-static NSString * const API_auction_addAttention = @"api/auction/v1/addAttention";
-/**************我的**************/
-//我的钱包
-static NSString * const API_bond_getBond = @"api/bond/getBond";
-
-//我的订单
-static NSString * const API_receiptOrder_orderList = @"api/receiptOrder/orderList";
-//申请视频列表
-static NSString * const API_mine_myApply =  @"api/video/v1/myApply";
-//最后付款时间已过，修改状态
-static NSString * const API_mine_payLate =  @"api/video/v1/payLate";
-//我的出价
-static NSString * const API_mine_bidList = @"api/bid/bidList";
-//我的出价详情
-static NSString * const API_mine_bidDetail = @"api/bid/biddetail";
-//我的订单
-static NSString * const API_mine_orderList = @"api/receiptOrder/orderList";
-//订单详情
-static NSString * const API_mine_orderDetail = @"api/receiptOrder/receiptDetail";
-//我的关注
-static NSString * const API_mine_myAttention = @"api/auction/v1/myAttention";
-//我的车辆-同步蜗牛的车辆
-static NSString * const API_userOwnTruck_userSysTrucks = @"api/userOwnTruck/userSysTrucks";
-//我的出价
-static NSString * const API_userOwnTruck_userAuctionTruck = @"api/userOwnTruck/userAuctionTruck";
-//我的交易记录
-static NSString * const API_bond_getBondLog = @"api/bond/getBondLog";
-//我的充值记录
-static NSString * const API_recharge_getRechargeRecord = @"api/recharge/getRechargeRecord";
-//我的提现记录
-static NSString * const API_withdrawCash_getWithdrawCash = @"api/withdrawCash/getWithdrawCash";
-
-//我的优惠券
-static NSString * const API_activity_myCouponList = @"api/activity/myCouponList";
-
-//我的优惠券详情
-static NSString * const API_activity_couponDetail = @"api/activity/couponDetail";
-
-/**************用户消息**************/
-//用户消息列表
-static NSString * const API_message_list =  @"api/message/v1/list";
-//删除消息
-static NSString * const API_message_deleteMsg =  @"api/message/v1/deleteMsg";
-//用户消息详情
-static NSString * const API_message_details =  @"api/message/v1/details";
-
-/**************用户信息**************/
-//设置接口
-static NSString * const API_set_setInfo =  @"api/set/setInfo";
-//个人中心-待确认订单数量
-static NSString * const API_user_personalCenter =  @"api/user/personalCenter";
-//城市--查询所有省市区
-static NSString * const API_city_getAll =  @"api/city/getAll";
-//修改经营地址
-static NSString * const API_user_updateBusinessArress =  @"api/user/updateBusinessArress";
-//修改联系人
-static NSString * const API_user_updateContactName =  @"api/user/updateContactName";
-
-//修改车商名称
-static NSString * const API_user_updateCarDealer =  @"api/user/updateCarDealer";
-//首页
-static NSString * const API_user_homePage = @"api/user/v1/homePage";
-
-//获取竞拍时间
-static NSString * const API_auction_getEndTime = @"api/auction/v1/getEndTime";
-//删除银行卡
-static NSString * const API_bankCard_deleteBankCard =  @"api/bankCard/deleteBankCard";
-//新增银行卡
-static NSString * const API_bankCard_addBankCard =  @"api/bankCard/addBankCard";
-//银行卡列表
-static NSString * const API_bankCard_bankCardList =  @"api/bankCard/bankCardList";
-//银行列表
-static NSString * const API_bankCard_bankList =  @"api/bankCard/bankList";
-//意见反馈
-static NSString * const API_feedback_addFeedback =  @"api/feedback/addFeedback";
-//更换手机号--新号发短信
-static NSString * const API_set_sendNewCode=  @"api/set/sendNewCode";
-//更换手机号--新号码验证
-static NSString * const API_set_checkNewCode=  @"api/set/checkNewCode";
-//更换手机号--旧号发短息
-static NSString * const API_set_sendOldCode =  @"api/set/sendOldCode";
-//更换手机号--旧号码验证
-static NSString * const API_set_checkOldCode =  @"api/set/checkOldCode";
+/**************************用户信息****************************/
 //注册
-static NSString * const API_user_regist =  @"api/user/regist";
+static NSString * const API_user_regist = @"pet/index.php/index/user/register";
 //注册时发送验证码
-static NSString * const API_user_sendRegistCode =  @"api/user/sendRegistCode";
+static NSString * const API_user_sendRegistCode =  @"pet/index.php/index/user/verification";
 //登录
-static NSString * const API_user_login =  @"api/user/login";
-//蜗牛账号登录
-static NSString * const API_user_loginByWoniu =  @"api/user/loginByWoniu";
+static NSString * const API_user_login =  @"pet/index.php/index/user/login";
 //登录时发送验证码
 static NSString * const API_user_sendLoginCode =  @"api/user/sendLoginCode";
-//申请--个人申请提交接口
-static NSString * const API_user_personApply =  @"api/user/personApply";
-//申请--商家申请提交接口
-static NSString * const API_user_businessApply =  @"api/user/BusinessApply";
-//申请--审核不通过
-static NSString * const API_user_auditRefused =  @"api/user/auditRefused";
-//申请--修改资质信息（回显）
-static NSString * const API_user_updateApply =  @"api/user/updateApply";
+//绑定宠物种类
+static NSString * const API_user_choice =  @"pet/index.php/index/user/choice";
+//注册
+static NSString * const API_user_register =  @"pet/index.php/index/user/register";
+//修改密码
+static NSString * const API_user_changepassword =  @"pet/index.php/index/user/changepassword";
 
-//看车申请
-static NSString * const API_video_apply =  @"api/video/v1/apply";
+/**************************分类****************************/
+//左侧分类列表
+static NSString * const API_Classification_fication =  @"pet/index.php/index/Classification/fication";
+//右侧分类列表
+static NSString * const API_Classification_ficationa =  @"pet/index.php/index/Classification/ficationa";
+//关键词搜索
+static NSString * const API_Classification_search =  @"pet/index.php/index/Classification/search";
+//条件排序
+static NSString * const API_Classification_sort =  @"pet/index.php/index/Classification/sort";
+//立即购买
+//立即参团
+//立即兑换
+static NSString * const API_Classification_purchase =  @"pet/index.php/index/Classification/purchase";
 
-//支付看车申请
-static NSString * const API_video_payOrder =  @"api/video/v1/payOrder";
+/**************************分类****************************/
 
-//七牛获取token
-static NSString * const API_auction_token =  @"api/auction/token";
-#endif /* STUrlPathMacro_h */
+//首页信息
+static NSString * const API_Goods_broadcast =  @"pet/index.php/index/Goods/broadcast";
+//首页优惠券立即领取
+static NSString * const API_Classification_receive =  @"pet/index.php/index/Goods/ receive";
+//首页狗粮零食玩具出行医疗保健
+static NSString * const API_Dogfood_specifications =  @"pet/index.php/index/Dogfood/specifications";
+//条件查询后商品
+static NSString * const API_Dogfood_condition =  @"pet/index.php/index/Dogfood/condition";
+//限时秒杀
+//潮品预售
+//团购活动
+//特价清仓
+static NSString * const API_Dogfood_presale =  @"pet/index.php/index/Dogfood/presale";
+//限时秒杀时段商品查询
+static NSString * const API_Dogfood_interval =  @"pet/index.php/index/Dogfood/interval";
+//加入购物车
+static NSString * const API_Dogfood_cart =  @"pet/index.php/index/Dogfood/cart";
+//商品详情
+static NSString * const API_Dogfood_details =  @"pet/index.php/index/Dogfood/details";
+//商品收藏
+static NSString * const API_Dogfood_collection =  @"pet/index.php/index/Dogfood/collection";
+//商品评价
+static NSString * const API_Dogfood_evaluation =  @"pet/index.php/index/Dogfood/evaluation";
+//商品删除
+static NSString * const API_Dogfood_deletion =  @"pet/index.php/index/Dogfood/deletion";
+//购物车列表
+static NSString * const API_Dogfood_cartlist =  @"pet/index.php/index/Dogfood/cartlist";
+//确认订单
+static NSString * const API_Dogfood_confirmation =  @"pet/index.php/index/Dogfood/confirmation";
+//提交订单
+static NSString * const API_Dogfood_placeorder =  @"pet/index.php/index/Dogfood/placeorder";
+//团购活动
+static NSString * const API_Dogfood_grouppurchase =  @"pet/index.php/index/Dogfood/grouppurchase";
+//我的团购
+static NSString * const API_Dogfood_goupbuy =  @"pet/index.php/index/Dogfood/goupbuy";
 
-/**************支付**************/
-//充值-获得回调地址、订单编号（通联、支付宝）
-static NSString * const API_recharge_getRechargeAndCallback =  @"api/recharge/getRechargeAndCallback";
+/**************************我的/个人中心****************************/
 
-//充值-微信下单（回调地址、订单编号)
-static NSString * const API_recharge_wxPayUnifiedOrder =  @"api/recharge/wxPayUnifiedOrder";
+//添加收货地址
+static NSString * const API_user_address =  @"pet/index.php/index/user/address";
 
-//提现接口
-static NSString * const API_withdrawCash_toWithdrawCash =  @"api/withdrawCash/toWithdrawCash";
+//我的地址
+static NSString * const API_user_useraddress =  @"pet/index.php/index/user/useraddress";
 
-//上架
-static NSString * const API_userOwnTruck_putAway =  @"api/userOwnTruck/putAway";
+//修改地址
+static NSString * const API_user_addressdel =  @"pet/index.php/index/user/addressdel";
 
+//优惠券信息
+static NSString * const API_user_coupon =  @"pet/index.php/index/user/coupon";
 
-/**************字典数据**************/
-//获取品牌
-static NSString * const API_dictionaries_getAllBrand =  @"api/dictionaries/v1/getAllBrand";
-//获取车型
-static NSString * const API_dictionaries_getAllModel =  @"api/dictionaries/v1/getAllModel";
+//帮助/问题
+static NSString * const API_user_help =  @"pet/index.php/index/user/help";
 
+//帮助/问题详情
+static NSString * const API_user_helpxq =  @"pet/index.php/index/user/helpxq";
+
+//联系我们
+static NSString * const API_user_contactus =  @"pet/index.php/index/user/contactus";
+
+//联系我们提交
+static NSString * const API_user_submission =  @"pet/index.php/index/user/submission";
+
+//我的收藏
+static NSString * const API_user_collection =  @"pet/index.php/index/user/collection";
+
+//我的收藏删除
+static NSString * const API_user_collectiondel =  @"pet/index.php/index/user/collectiondel";
+
+//新人专享
+static NSString * const API_user_newlyweds =  @"pet/index.php/index/user/newlyweds";
+
+//我的
+static NSString * const API_user_groupbuy =  @"pet/index.php/index/user/groupbuy";
+
+//发表评论
+static NSString * const API_Goods_comment =  @"pet/index.php/index/Goods/comment";
+
+//发表评论图片获取
+static NSString * const API_Goods_commenta =  @"pet/index.php/index/Goods/commenta";
+
+//我的订单
+static NSString * const API_Goods_myorde =  @"pet/index.php/index/Goods/myorde";
+
+//申请退款信息
+static NSString * const API_Goods_application =  @"pet/index.php/index/Goods/application";
+
+//申请退款信息
+static NSString * const API_Goods_refund =  @"pet/index.php/index/Goods/refund";
+//退款/售后
+static NSString * const API_Goods_aftersale =  @"pet/index.php/index/Goods/aftersale";
+//取消订单
+static NSString * const API_Goods_cancellation =  @"pet/index.php/index/Goods/cancellation";
+//订单详情
+static NSString * const API_user_details =  @"pet/index.php/index/user/details";
+//确认收货
+static NSString * const API_user_receip =  @"pet/index.php/index/user/receip";
+
+/**************************积分商城****************************/
+
+//我的积分
+static NSString * const API_user_mypoints =  @"pet/index.php/index/user/mypoints";
+//积分商城
+static NSString * const API_user_integralmal =  @"pet/index.php/index/user/integralmal";
+//我的兑换
+static NSString * const API_user_myexchange =  @"pet/index.php/index/user/myexchange";
+//我的评价
+static NSString * const API_user_myevaluation =  @"pet/index.php/index/user/myevaluation";
+
+/**************************消息及反馈****************************/
+
+//客服消息
+static NSString * const API_user_customer =  @"pet/index.php/index/user/customer";
+//客服消息详情
+static NSString * const API_user_customerl =  @"pet/index.php/index/user/customerl";
+//系统通知
+static NSString * const API_user_service =  @"pet/index.php/index/user/service";
+//系统通知详情
+static NSString * const API_user_servicel =  @"pet/index.php/index/user/servicel";
+//消息通知
+static NSString * const API_user_notification =  @"pet/index.php/index/user/notification";
+#endif

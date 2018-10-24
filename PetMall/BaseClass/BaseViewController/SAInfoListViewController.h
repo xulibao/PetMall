@@ -28,7 +28,7 @@ STCommonTableViewItemUpdateDelegate
 @property(nonatomic, strong) STCommonTableViewModel *viewModel;
 @property(nonatomic, weak) id<SAInfoListDelegate> delegate;
 @property(nonatomic, assign) BOOL shouldAutoReloadTable;//Default is Yes, Override shouldAutoReloadTable
-
+@property(nonatomic, assign) NSInteger page;
 - (void)addItems:(NSArray<id<STCommonTableRowItem>> *)items;
 - (void)removeAllObjects;
 
