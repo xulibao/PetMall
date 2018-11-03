@@ -39,23 +39,26 @@
     recommendItem.people_count = @"2";
     [_dataArray addObject:recommendItem];
     
-    recommendItem = [PMMessageItem new];
-    recommendItem.image_url = @"common_photo";
-    recommendItem.goods_title = @"达芙内江";
-    recommendItem.nature = @"快来给爱宠挑选礼物吧，有更多优惠...";
-    recommendItem.price = @"158";
-    recommendItem.people_count = @"2";
-    [_dataArray addObject:recommendItem];
+//    recommendItem = [PMMessageItem new];
+//    recommendItem.image_url = @"common_photo";
+//    recommendItem.goods_title = @"达芙内江";
+//    recommendItem.nature = @"快来给爱宠挑选礼物吧，有更多优惠...";
+//    recommendItem.price = @"158";
+//    recommendItem.people_count = @"2";
+//    [_dataArray addObject:recommendItem];
     
  
     
     [self setItems:self.dataArray];
 }
-
-- (void)didSelectCellWithItem:(id<STCommonTableRowItem>)item{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     PMMessageDetailViewController * vc = [PMMessageDetailViewController new];
+    vc.type = [@(indexPath.row + 1)  stringValue];
     [self pushViewController:vc];
 }
+//- (void)didSelectCellWithItem:(id<STCommonTableRowItem>)item{
+//
+//}
 
 
 

@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-@class DCRecommendItem;
+#import "PMHomeModel.h"
 
 @interface PMSpecialClearanceSubCell : UICollectionViewCell
-/* 推荐商品数据 */
-@property (strong , nonatomic)DCRecommendItem *recommendItem;
+/* 特价清仓 */
+@property (strong , nonatomic)PMClearingModel *clearingModel;
 @end

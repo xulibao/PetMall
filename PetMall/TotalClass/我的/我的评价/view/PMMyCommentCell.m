@@ -41,12 +41,25 @@
 
 - (void)tableView:(UITableView *)tableView configViewWithData:(PMMyCommentItem *)data AtIndexPath:(NSIndexPath *)indexPath {
     [super tableView:tableView configViewWithData:data AtIndexPath:indexPath];
-    
-    [self.cartImageView sd_setImageWithURL:[NSURL URLWithString:data.image_url] placeholderImage:nil];
+    [self.userImageView sd_setImageWithURL:[NSURL URLWithString:data.img]];
+    self.userTitleLabel.text = data.user_name;
+    self.commentTimeLabel.text = data.user_time;
+    self.commentLabel.text = data.user_comment;
+    [self.cartImageView sd_setImageWithURL:[NSURL URLWithString:data.goods_logo] placeholderImage:nil];
     self.cartTitleLabel.text = data.goods_title;
-    self.cartNatureLabel.text = data.nature;
-    self.cartPriceLabel.text = [NSString stringWithFormat:@"¥%@",data.price];
-    self.cartCountLabel.text = [NSString stringWithFormat:@"x%@",data.people_count];;
+    self.cartNatureLabel.text = data.goods_spec;
+    self.cartPriceLabel.text = [NSString stringWithFormat:@"¥%@",data.selling_price];
+    self.cartCountLabel.text = [NSString stringWithFormat:@"x%@",data.goods_shul];
+    
+    NSArray *picArray = [data.user_images componentsSeparatedBySthString:@"|"];
+    NSMutableArray * picUrlArray = [@[] mutableCopy];
+    for (NSString * imageStr in picArray) {
+        if (![imageStr hasPrefix:[STNetworking host]]) {
+            [picUrlArray addObject:[NSString stringWithFormat:@"%@/%@",[STNetworking host],imageStr]];
+        }
+    }
+    self.comImagesView.picUrlArray = picUrlArray;
+
     
     
 }
@@ -57,12 +70,11 @@
     userImageView.layer.cornerRadius = 15;
     userImageView.clipsToBounds = YES;
     userImageView.contentMode = UIViewContentModeScaleAspectFit;
-    [userImageView sd_setImageWithURL:[NSURL URLWithString:@"https://pic4.zhimg.com/383179a483ae1074efaf091c89c8a103_l.jpg"]];
+//    [userImageView sd_setImageWithURL:[NSURL URLWithString:@"https://pic4.zhimg.com/383179a483ae1074efaf091c89c8a103_l.jpg"]];
     self.userImageView = userImageView;
     [self.contentView addSubview:userImageView];
     
     UILabel *userTitleLabel = [[UILabel alloc] init];
-    userTitleLabel.text = @"括***犬";
     userTitleLabel.numberOfLines = 0;
     self.userTitleLabel = userTitleLabel;
     userTitleLabel.font = [UIFont systemFontOfSize:14];
@@ -71,15 +83,13 @@
     
     
     UILabel *commentLabel = [[UILabel alloc] init];
-    commentLabel.text = @"狗狗还没吃，包装很好，之前一直吃皇家，换个口味看看 能不能美毛";
     commentLabel.numberOfLines = 0;
-    self.cartTitleLabel = commentLabel;
+    self.commentLabel = commentLabel;
     commentLabel.font = [UIFont systemFontOfSize:14];
     commentLabel.textColor = [UIColor colorWithHexStr:@"#333333"];
     [self.contentView addSubview:commentLabel];
     
     UILabel *commentTimeLabel = [[UILabel alloc] init];
-    commentTimeLabel.text = @"2018-06-28";
     self.commentTimeLabel = commentTimeLabel;
     commentTimeLabel.font = [UIFont systemFontOfSize:12];
     commentTimeLabel.textColor = [UIColor colorWithHexStr:@"#999999"];
@@ -90,14 +100,16 @@
     _comImagesView = [DCComImagesView new];
     _comImagesView.backgroundColor = [UIColor whiteColor];
     [self.contentView addSubview:_comImagesView];
-    NSArray *picArray = @[@"http://gfs9.gomein.net.cn/T19BWgBvCT1RCvBVdK.jpg",
-                          @"http://gfs6.gomein.net.cn/T1yvJgBvET1RCvBVdK.jpg",
-                          @"http://gfs1.gomein.net.cn/T1Ro_vBmbv1RCvBVdK.jpg",
-                          @"http://gfs1.gomein.net.cn/T1Ro_vBmbv1RCvBVdK.jpg",
-                          @"http://gfs8.gomein.net.cn/T1g.b_BvKT1RCvBVdK.jpg"
-                          ];
     
-    _comImagesView.picUrlArray = picArray;
+    
+    
+//  @[@"http://gfs9.gomein.net.cn/T19BWgBvCT1RCvBVdK.jpg",
+//                          @"http://gfs6.gomein.net.cn/T1yvJgBvET1RCvBVdK.jpg",
+//                          @"http://gfs1.gomein.net.cn/T1Ro_vBmbv1RCvBVdK.jpg",
+//                          @"http://gfs1.gomein.net.cn/T1Ro_vBmbv1RCvBVdK.jpg",
+//                          @"http://gfs8.gomein.net.cn/T1g.b_BvKT1RCvBVdK.jpg"
+//                          ];
+    
 //    _comImagesView.comSpecifications = commentsItem.comSpecifications; //规格
     
     
@@ -196,13 +208,14 @@
     }];
     
     [cartPriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(-10);
-        make.top.mas_equalTo(10);
+        make.left.mas_equalTo(cartNatureLabel);
+        make.top.mas_equalTo(cartNatureLabel.mas_bottom).mas_offset(6);
+        
     }];
     
     
     [cartCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(cartPriceLabel);
+        make.right.mas_equalTo(-15);
         make.centerY.mas_equalTo(cartNatureLabel);
     }];
     

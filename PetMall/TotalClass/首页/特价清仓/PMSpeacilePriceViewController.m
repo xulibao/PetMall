@@ -8,7 +8,8 @@
 
 #import "PMSpeacilePriceViewController.h"
 #import "PMCommonGoodsItem.h"
-
+#import "PMHomeModel.h"
+#import "DCSlideshowHeadView.h"
 @interface PMSpeacilePriceViewController ()
 @property(nonatomic, strong) NSMutableArray *dataArray;
 
@@ -35,8 +36,19 @@
 #pragma mark - Request
 
 - (void)fetchData {
-    self.dataArray = [PMCommonGoodsItem mj_objectArrayWithFilename:@"HomeHighGoods.plist"];
-    [self setItems:self.dataArray];
+    [self requestPOST:API_Dogfood_presale parameters:@{@"pagenum":@(self.page),@"pagesize":@(10),@"fenl":@"4"} success:^(__kindof SARequest *request, id responseObject) {
+        self.dataArray = [PMGroupModel mj_objectArrayWithKeyValuesArray:responseObject[@"result"][@"data"]];
+        [self setItems:self.dataArray];
+        DCSlideshowHeadView * header = [[DCSlideshowHeadView alloc] initWithFrame:CGRectMake(0, 0, kMainBoundsWidth, 190)];
+        NSMutableArray * imageArray = [@[] mutableCopy];
+        for (NSDictionary *imgDic in responseObject[@"result"][@"img"]) {
+            [imageArray addObject:[NSString stringWithFormat:@"%@%@",[STNetworking host], imgDic[@"img"]]];
+        }
+        header.imageGroupArray = imageArray;
+        //        [imageView setImageWithURL:[NSURL URLWithString:imageStr] placeholder:IMAGE(@"tuangou_header")];
+        self.tableView.tableHeaderView = header;
+        self.tableView.mj_header.hidden = YES;
+    } failure:NULL];    
 }
 
 @end

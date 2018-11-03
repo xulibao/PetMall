@@ -7,12 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@class DCCommentsItem;
+#import "PMMyCommentItem.h"
 
 @interface DCCommentsCntCell : UITableViewCell
 
 /* 评论数据 */
-@property (strong , nonatomic)DCCommentsItem *commentsItem;
+@property (strong , nonatomic)PMMyCommentItem *commentsItem;
 
 @end

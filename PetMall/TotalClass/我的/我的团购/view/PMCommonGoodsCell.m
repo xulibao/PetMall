@@ -126,8 +126,6 @@
         make.top.mas_equalTo(_priceLabel).mas_offset(4);
         make.size.mas_equalTo(CGSizeMake(80, 30));
     }];
-    
-    
 }
 
 - (void)lookSameGoods{

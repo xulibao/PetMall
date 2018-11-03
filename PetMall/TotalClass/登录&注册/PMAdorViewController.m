@@ -54,10 +54,12 @@
     
     
     UIButton * maoBtn = [[UIButton alloc] init];
+    maoBtn.tag = 1;
     [maoBtn setImage:IMAGE(@"login_logo_mao") forState:UIControlStateNormal];
     [bgView addSubview:maoBtn];
     
     UIButton * gouBtn = [[UIButton alloc] init];
+    maoBtn.tag = 2;
     [gouBtn setImage:IMAGE(@"login_logo_gou") forState:UIControlStateNormal];
     [bgView addSubview:gouBtn];
     
@@ -72,14 +74,23 @@
         make.centerY.mas_equalTo(70);
     }];
     
-    [maoBtn addTarget:self action:@selector(adorSelect) forControlEvents:UIControlEventTouchUpInside];
-    [gouBtn addTarget:self action:@selector(adorSelect) forControlEvents:UIControlEventTouchUpInside];
+    [maoBtn addTarget:self action:@selector(adorSelect:) forControlEvents:UIControlEventTouchUpInside];
+    [gouBtn addTarget:self action:@selector(adorSelect:) forControlEvents:UIControlEventTouchUpInside];
 }
-- (void)adorSelect{
-//    [self requestGET:<#(NSString *)#> parameters:<#(id)#> success:<#^(__kindof SARequest *request, id responseObject)success#> failure:<#^(__kindof SARequest *request, id responseObject, NSError *error)failure#>]
+- (void)adorSelect:(UIButton *)btn{
+    NSString * zt;
+    if (btn.tag == 1) { //mao
+        zt = @"1";
+    }else{
+        zt = @"0";
+    }
+    [self requestPOST:API_user_choice parameters:@{@"user_phone":self.user_phone,@"zt":zt} success:^(__kindof SARequest *request, id responseObject) {
+        [self showSuccess:responseObject[@"result"]];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    } failure:NULL];
     
-    PMBindingPhoneViewController * vc = [PMBindingPhoneViewController new];
-    [self pushViewController:vc];
+//    PMBindingPhoneViewController * vc = [PMBindingPhoneViewController new];
+//    [self pushViewController:vc];
 }
 
 @end

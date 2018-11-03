@@ -7,6 +7,7 @@
 //
 
 #import "STBaseViewController.h"
-@interface DCGoodCommentViewController : STBaseViewController
 
+@interface DCGoodCommentViewController : STBaseViewController
+@property(nonatomic, copy) NSString *user_goods;
 @end

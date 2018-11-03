@@ -8,8 +8,13 @@
 
 #import "STBaseNonSystemNavViewController.h"
 #import "PMConfirmOrderViewController.h"
+#import "PMGoodDetailModel.h"
 
 @interface DCGoodBaseViewController : STBaseNonSystemNavViewController
+
+@property(nonatomic, copy) NSString *goods_id;
+
+@property(nonatomic, copy) NSString *list_id;
 
 /** 更改标题 */
 @property (nonatomic , copy) void(^changeTitleBlock)(BOOL isChange);
@@ -25,8 +30,9 @@
 
 @property (strong , nonatomic)NSString *goodTip;
 /* 商品轮播图 */
-@property (copy , nonatomic)NSArray *shufflingArray;
+@property (strong , nonatomic)NSArray *goodsImageArray;
 
+@property(nonatomic, strong) PMGoodDetailModel *detailModel;
 
 - (void)setUpRightTwoButton;
 

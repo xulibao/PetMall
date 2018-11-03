@@ -15,9 +15,7 @@
 #import "DCGoodsSurplusCell.h"
 // Vendors
 #import <MJExtension.h>
-// Categories
-
-// Others
+#import "PMHomeModel.h"
 
 @interface DCGoodsCountDownCell ()<UICollectionViewDelegate , UICollectionViewDataSource , UICollectionViewDelegateFlowLayout>
 
@@ -39,10 +37,7 @@ static NSString *const DCGoodsSurplusCellID = @"DCGoodsSurplusCell";
 {
     if (!_collectionView) {
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
-//        layout.minimumLineSpacing = 0;
         layout.minimumInteritemSpacing = 0;
-//        layout.itemSize = CGSizeMake(self.width * 0.5, self.height * 0.9);
-//        layout.scrollDirection = UICollectionViewScrollDirectionHorizontal; //滚动方向
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
         [self addSubview:_collectionView];
         _collectionView.frame = self.bounds;
@@ -90,7 +85,7 @@ static NSString *const DCGoodsSurplusCellID = @"DCGoodsSurplusCell";
 #pragma mark - Setter Getter Methods
 #pragma mark - <UICollectionViewDataSource>
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
-    return 2;
+    return self.dataArray.count > 2 ? 2 : 0;
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     if (0 == section) {
@@ -103,7 +98,8 @@ static NSString *const DCGoodsSurplusCellID = @"DCGoodsSurplusCell";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     DCGoodsSurplusCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DCGoodsSurplusCellID forIndexPath:indexPath];
-    cell.recommendItem = _countDownItem[indexPath.section * 2+ indexPath.row];
+    cell.secondkillModel = self.dataArray[indexPath.section * 2+ indexPath.row];
+    
     return cell;
 }
 
@@ -126,6 +122,10 @@ static NSString *const DCGoodsSurplusCellID = @"DCGoodsSurplusCell";
         self.DCGoodsCountDownCellBlock(recommendItem);
     }
     
+}
+- (void)setDataArray:(NSArray *)dataArray{
+    _dataArray = dataArray;
+    [self.collectionView reloadData];
 }
 
 @end

@@ -125,7 +125,7 @@
     [self.navgationBar.rightBarButton setTitleColor:kColorTextBlack forState:UIControlStateNormal];
     
     if ([rightButtoniconURL length] > 0) {
-        [self.navgationBar.rightBarButton  yy_setImageWithURL:[NSURL URLWithString:rightButtoniconURL] forState:UIControlStateNormal placeholder:nil];
+//        [self.navgationBar.rightBarButton  yy_setImageWithURL:[NSURL URLWithString:rightButtoniconURL] forState:UIControlStateNormal placeholder:nil];
     } else {
         [self.navgationBar.rightBarButton setImage:nil forState:UIControlStateNormal];
     }
@@ -216,29 +216,30 @@
 }
 
 - (NSURL *)webViewParametersUrl {
-    NSString *uid = [SAApplication userID];
-    if ([uid isKindOfClass:[NSNumber class]]) {
-        uid = [(NSNumber *)uid stringValue];
-    }
-    NSString *modifyURL = _jumpUrl.absoluteString;
-    if (!self.isNotContainUserId) {
-        NSRange range = [modifyURL rangeOfString:@"userId"];
-        NSRange range2 = [modifyURL rangeOfString:@"platform"];
-        if (range.length > 1 && range.length < 10) {
-            if (range2.length < 1) {
-                modifyURL = [modifyURL stringByAppendingString:@"&platform=1"];
-            }
-            return [NSURL URLWithString:modifyURL];
-        }
-        
-        modifyURL = [modifyURL stringByAppendingString:@"?platform=1"]; //platform=1 来源 1 iOS 2 android
-        if (uid && uid.length > 0) {
-            modifyURL = [modifyURL stringByAppendingString:[NSString stringWithFormat:@"&userId=%@&mobile=%@",uid, [SAApplication sharedApplication].userInfo.contactMobile]];
-        } else {
-            modifyURL = [modifyURL stringByAppendingString:[NSString stringWithFormat:@"&userId="]];
-        }
-    }
-    return [NSURL URLWithString:modifyURL];
+//    NSString *uid = [SAApplication userID];
+//    if ([uid isKindOfClass:[NSNumber class]]) {
+//        uid = [(NSNumber *)uid stringValue];
+//    }
+//    NSString *modifyURL = _jumpUrl.absoluteString;
+//    if (!self.isNotContainUserId) {
+//        NSRange range = [modifyURL rangeOfString:@"userId"];
+//        NSRange range2 = [modifyURL rangeOfString:@"platform"];
+//        if (range.length > 1 && range.length < 10) {
+//            if (range2.length < 1) {
+//                modifyURL = [modifyURL stringByAppendingString:@"&platform=1"];
+//            }
+//            return [NSURL URLWithString:modifyURL];
+//        }
+//
+//        modifyURL = [modifyURL stringByAppendingString:@"?platform=1"]; //platform=1 来源 1 iOS 2 android
+//        if (uid && uid.length > 0) {
+//            modifyURL = [modifyURL stringByAppendingString:[NSString stringWithFormat:@"&userId=%@&mobile=%@",uid, [SAApplication sharedApplication].userInfo.contactMobile]];
+//        } else {
+//            modifyURL = [modifyURL stringByAppendingString:[NSString stringWithFormat:@"&userId="]];
+//        }
+//    }
+//    return [NSURL URLWithString:modifyURL];
+    return nil;
 }
 
 - (void)evaluateScriptMethod:(NSString *)method {

@@ -8,8 +8,7 @@
 
 #import "UIViewController+STWebViewController.h"
 #import "STWebViewEntity.h"
-#import "SAMyWalletViewController.h"
-#import "ShareMainView.h"//分享
+//#import "ShareMainView.h"//分享
 //#import "STUnifiedAcceptMoneyViewController.h"//支付
 #import "STShareProtocol.h"
 
@@ -41,31 +40,31 @@ static NSString *const kDidPayFromApp = @"didPayFromApp";
 
 //分享
 - (void)shareFromH5:(NSString *)data {
-    @weakify(self);
-    dispatch_async(dispatch_get_main_queue(), ^{
-        NSDictionary *parameter = [data mj_JSONObject];
-        STH5ShareEntity *share = [STH5ShareEntity mj_objectWithKeyValues:parameter];
+//    @weakify(self);
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        NSDictionary *parameter = [data mj_JSONObject];
+//        STH5ShareEntity *share = [STH5ShareEntity mj_objectWithKeyValues:parameter];
 //        ShareMainView *shareView = [ShareMainView shareMainViewWithPlatform:@[@(SharePlatformTypeForWeChat),@(SharePlatformTypeForWechatTimeline),@(SharePlatformTypeForQQ),@(SharePlatformTypeForQQZone)]];
-        ShareMainView *shareView = [ShareMainView shareMainViewWithPlatform:@[@(SharePlatformTypeForWeChat),@(SharePlatformTypeForWechatTimeline)]];
-        
-        [shareView showWithShareObject:share presenteController:weak_self success:^(id result, NSError *error) {
-            if (error) {
-                
-                UMSocialLogInfo(@"************Share fail with error %@*********",error);
-            }else{
-                if ([result isKindOfClass:[UMSocialShareResponse class]]) {
-                    UMSocialShareResponse *resp = result;
+//        ShareMainView *shareView = [ShareMainView shareMainViewWithPlatform:@[@(SharePlatformTypeForWeChat),@(SharePlatformTypeForWechatTimeline)]];
+//
+//        [shareView showWithShareObject:share presenteController:weak_self success:^(id result, NSError *error) {
+//            if (error) {
+//
+//                UMSocialLogInfo(@"************Share fail with error %@*********",error);
+//            }else{
+//                if ([result isKindOfClass:[UMSocialShareResponse class]]) {
+//                    UMSocialShareResponse *resp = result;
 //                    SharePlatformType type = SharePlatformTypeWithUMSocialPlatformType(resp.platformType);
 //                    
 //                    if ([weak_self respondsToSelector:@selector(evaluateScriptMethod:parameter:)]) {
 //                        id<STWebViewControllerJSCall>jscall = (id)weak_self;
 //                    }
-                    id<STWebViewControllerJSCall>jscall = (id)weak_self;
-                    [jscall evaluateScriptMethod:kDidShareFromApp parameter:nil];
-                }
-            }
-        } cancle:nil];
-    });
+//                    id<STWebViewControllerJSCall>jscall = (id)weak_self;
+//                    [jscall evaluateScriptMethod:kDidShareFromApp parameter:nil];
+//                }
+//            }
+//        } cancle:nil];
+//    });
 }
 
 //支付
@@ -100,18 +99,18 @@ static NSString *const kDidPayFromApp = @"didPayFromApp";
 }
 //打开URL
 - (void)openURLFromH5:(NSString *)data {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if ([data isKindOfClass:[NSString class]]) {
-            if ([data containsString:@"tel:"]) {
-                MakePhoneTelprompt([data substringFromIndex:3]);
-            }else if ([data containsString:@"MyWallet"]){
-                SAMyWalletViewController *vc = [[SAMyWalletViewController alloc] init];
-                [self.navigationController pushViewController:vc animated:YES];
-            }else {
-                [self openGarouterURLFromH5:data];
-            }
-        }
-    });
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        if ([data isKindOfClass:[NSString class]]) {
+//            if ([data containsString:@"tel:"]) {
+//                MakePhoneTelprompt([data substringFromIndex:3]);
+//            }else if ([data containsString:@"MyWallet"]){
+//                SAMyWalletViewController *vc = [[SAMyWalletViewController alloc] init];
+//                [self.navigationController pushViewController:vc animated:YES];
+//            }else {
+//                [self openGarouterURLFromH5:data];
+//            }
+//        }
+//    });
 }
 
 - (void)openGarouterURLFromH5:(NSString *)data {

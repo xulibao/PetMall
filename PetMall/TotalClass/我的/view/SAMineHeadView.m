@@ -23,6 +23,7 @@
 @property (nonatomic, strong) UIButton * jifengBtn; //折扣
 
 @property(nonatomic, strong) UIButton * voucherBtn;
+@property(nonatomic, strong) UITapGestureRecognizer* singleRecognizer;
 
 @end
 
@@ -58,6 +59,7 @@
     self.avatar = [[UIImageView alloc] init];
     self.avatar.image = [UIImage imageNamed:@"mine_morenzhaopian"];
     UITapGestureRecognizer* singleRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didClickSignButton)];
+    self.singleRecognizer = singleRecognizer;
     //点击的次数
     singleRecognizer.numberOfTapsRequired = 1; // 单击
     self.avatar.userInteractionEnabled = YES;
@@ -135,9 +137,9 @@
 - (void)didClickSignButton
 {
 //    if (![SAAccount isLog]) {
-//        if ([self.delegate respondsToSelector:@selector(mineHeadViewClickSignButton)]) {
-//            [self.delegate mineHeadViewClickSignButton];
-//        }
+        if ([self.delegate respondsToSelector:@selector(mineHeadViewClickSignButton)]) {
+            [self.delegate mineHeadViewClickSignButton];
+        }
 //    }
 //    else
 //    {
@@ -152,12 +154,16 @@
 - (void)setIsLogin:(BOOL)isLogin{
     _isLogin = isLogin;
     if (isLogin) {
+        [self.userName removeGestureRecognizer:self.singleRecognizer];
         self.userName.text = self.model.user_name;
         [self.avatar sd_setImageWithURL:[NSURL URLWithString:self.model.img] placeholderImage:[UIImage imageNamed:@"mine_morenzhaopian"]];
         [self.jifengBtn setTitle:[NSString stringWithFormat:@"%@\n积分",self.model.user_jf] forState:UIControlStateNormal];
         [self.youhuiBtn setTitle:[NSString stringWithFormat:@"%@\n优惠券",self.model.coupon] forState:UIControlStateNormal];
     }else{
         self.userName.text = @"点击登录";
+        self.userName.userInteractionEnabled = YES;
+
+        [self.userName addGestureRecognizer:self.singleRecognizer];
         self.avatar.image = [UIImage imageNamed:@"mine_morenzhaopian"];
     }
     

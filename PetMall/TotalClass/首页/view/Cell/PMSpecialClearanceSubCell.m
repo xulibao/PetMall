@@ -96,16 +96,15 @@
 }
 
 #pragma mark - Setter Getter Methods
-- (void)setRecommendItem:(DCRecommendItem *)recommendItem
-{
-    _recommendItem = recommendItem;
+- (void)setClearingModel:(PMClearingModel *)clearingModel{
+    _clearingModel = clearingModel;
     
-    [_goodsImageView sd_setImageWithURL:[NSURL URLWithString:recommendItem.image_url]];
+    [_goodsImageView sd_setImageWithURL:[NSURL URLWithString:clearingModel.goods_logo]];
     
-    _priceLabel.text = [NSString stringWithFormat:@"¥%@",recommendItem.price];
+    _priceLabel.text = [NSString stringWithFormat:@"¥%@",clearingModel.selling_price];
     
-    _stockLabel.text = [NSString stringWithFormat:@"%@折",recommendItem.discount];
-    _natureLabel.text = recommendItem.nature;
+    _stockLabel.text = [NSString stringWithFormat:@"%@折",clearingModel.goods_pir];
+    _natureLabel.text = clearingModel.goods_title;
 }
 
 @end

@@ -29,41 +29,48 @@ static NSString *const PMCartCellID = @"PMCartCell";
 - (NSMutableArray *)dataArray{
     if (_dataArray == nil) {
         _dataArray = [NSMutableArray array];
-        PMCartItem * item = [[PMCartItem alloc] init];
-        DCRecommendItem *recommendItem = [[DCRecommendItem alloc] init];
-        recommendItem.isSelect = YES;
-        recommendItem.cellLocationType = PMCellLocationTypeSingle;
-        recommendItem.image_url = @"https://img.alicdn.com/imgextra/i2/108613394/TB2mlYjm5MnBKNjSZFoXXbOSFXa_!!0-saturn_solar.jpg_210x210.jpg";
-        recommendItem.goods_title = @"GO狗粮 抗敏美毛系列全 犬配方25磅";
-        recommendItem.nature = @"3.06kg  牛肉味";
-        recommendItem.price = @"158";
-        recommendItem.people_count = @"2";
-        item.recommendList = [@[recommendItem] mutableCopy];
-        [_dataArray addObject:item];
-        item = [[PMCartItem alloc] init];
-        item.recommendList = [@[] mutableCopy];
-        recommendItem = [[DCRecommendItem alloc] init];
-        recommendItem.image_url = @"https://img.alicdn.com/imgextra/i2/108613394/TB2mlYjm5MnBKNjSZFoXXbOSFXa_!!0-saturn_solar.jpg_210x210.jpg";
-        recommendItem.goods_title = @"NOW大型成犬粮火鸡+鸭 肉+三文鱼";
-        recommendItem.nature = @"3.06kg  鸭肉";
-        recommendItem.price = @"128";
-        recommendItem.people_count = @"2";
-        recommendItem.isSelect = NO;
-        recommendItem.cellLocationType = PMCellLocationTypeTop;
-        [item.recommendList addObject:recommendItem];
-        recommendItem = [[DCRecommendItem alloc] init];
-        recommendItem.image_url = @"https://img.alicdn.com/imgextra/i2/108613394/TB2mlYjm5MnBKNjSZFoXXbOSFXa_!!0-saturn_solar.jpg_210x210.jpg";
-        recommendItem.goods_title = @"NOW大型成犬粮火鸡+鸭 肉+三文鱼";
-        recommendItem.nature = @"3.06kg  三文鱼";
-        recommendItem.price = @"128";
-        recommendItem.people_count = @"2";
-        recommendItem.cellLocationType = PMCellLocationTypeBottom;
-        [item.recommendList addObject:recommendItem];
-        [_dataArray addObject:item];
-        
     }
     return _dataArray;
 }
+
+//- (NSMutableArray *)dataArray{
+//    if (_dataArray == nil) {
+//        _dataArray = [NSMutableArray array];
+//        PMCartItem * item = [[PMCartItem alloc] init];
+//        DCRecommendItem *recommendItem = [[DCRecommendItem alloc] init];
+//        recommendItem.isSelect = YES;
+//        recommendItem.cellLocationType = PMCellLocationTypeSingle;
+//        recommendItem.image_url = @"https://img.alicdn.com/imgextra/i2/108613394/TB2mlYjm5MnBKNjSZFoXXbOSFXa_!!0-saturn_solar.jpg_210x210.jpg";
+//        recommendItem.goods_title = @"GO狗粮 抗敏美毛系列全 犬配方25磅";
+//        recommendItem.nature = @"3.06kg  牛肉味";
+//        recommendItem.price = @"158";
+//        recommendItem.people_count = @"2";
+//        item.order_list = [@[recommendItem] mutableCopy];
+//        [_dataArray addObject:item];
+//        item = [[PMCartItem alloc] init];
+//        item.order_list = [@[] mutableCopy];
+//        recommendItem = [[DCRecommendItem alloc] init];
+//        recommendItem.image_url = @"https://img.alicdn.com/imgextra/i2/108613394/TB2mlYjm5MnBKNjSZFoXXbOSFXa_!!0-saturn_solar.jpg_210x210.jpg";
+//        recommendItem.goods_title = @"NOW大型成犬粮火鸡+鸭 肉+三文鱼";
+//        recommendItem.nature = @"3.06kg  鸭肉";
+//        recommendItem.price = @"128";
+//        recommendItem.people_count = @"2";
+//        recommendItem.isSelect = NO;
+//        recommendItem.cellLocationType = PMCellLocationTypeTop;
+//        [item.order_list addObject:recommendItem];
+//        recommendItem = [[DCRecommendItem alloc] init];
+//        recommendItem.image_url = @"https://img.alicdn.com/imgextra/i2/108613394/TB2mlYjm5MnBKNjSZFoXXbOSFXa_!!0-saturn_solar.jpg_210x210.jpg";
+//        recommendItem.goods_title = @"NOW大型成犬粮火鸡+鸭 肉+三文鱼";
+//        recommendItem.nature = @"3.06kg  三文鱼";
+//        recommendItem.price = @"128";
+//        recommendItem.people_count = @"2";
+//        recommendItem.cellLocationType = PMCellLocationTypeBottom;
+//        [item.order_list addObject:recommendItem];
+//        [_dataArray addObject:item];
+//
+//    }
+//    return _dataArray;
+//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -73,8 +80,19 @@ static NSString *const PMCartCellID = @"PMCartCell";
     [self fecthTableView];
     [self fecthBottomView];
     self.isCartEdit = YES;
-    [self.tableView reloadData];
 
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self fecthData];
+}
+
+-  (void)fecthData{
+    [self requestMethod:GARequestMethodPOST URLString:API_Dogfood_cartlist parameters:@{@"pagenum":@"1",@"user_id":[SAApplication userID],@"pagesize":@"10"} resKeyPath:@"result" resArrayClass:[PMCartItem class] retry:YES success:^(__kindof SARequest *request, id responseObject) {
+        self.dataArray = responseObject;
+        [self.tableView reloadData];
+    } failure:NULL];
 }
 
 - (void)fecthNavView{
@@ -208,14 +226,14 @@ static NSString *const PMCartCellID = @"PMCartCell";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     PMCartItem  * item = self.dataArray[section];
-    return item.recommendList.count;
+    return item.order_list.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     PMCartCell *cell = [tableView dequeueReusableCellWithIdentifier:PMCartCellID forIndexPath:indexPath];
     
     PMCartItem  * item = self.dataArray[indexPath.section];
-    DCRecommendItem * subItem = item.recommendList[indexPath.row];
+    DCRecommendItem * subItem = item.order_list[indexPath.row];
     cell.calculateCallBack = ^(NSString *goodsCount) {
         [self calculateTotal];
     };
@@ -242,10 +260,10 @@ static NSString *const PMCartCellID = @"PMCartCell";
     float totalPrice = 0;
     int totalGoodsCount = 0;
     for (PMCartItem  *cartItem in self.dataArray) {
-        for (DCRecommendItem *recommendItem in cartItem.recommendList) {
+        for (DCRecommendItem *recommendItem in cartItem.order_list) {
             if (recommendItem.isSelect) {
-                totalPrice += [recommendItem.people_count intValue] * [recommendItem.price floatValue];
-                totalGoodsCount += [recommendItem.people_count intValue];
+                totalPrice += [recommendItem.goods_shul intValue] * [recommendItem.market_price floatValue];
+                totalGoodsCount += [recommendItem.goods_shul intValue];
             }
         }
     }
@@ -280,11 +298,11 @@ static NSString *const PMCartCellID = @"PMCartCell";
     float totalPrice = 0;
     int totalGoodsCount = 0;
     for (PMCartItem  *cartItem in self.dataArray) {
-        for (DCRecommendItem *recommendItem in cartItem.recommendList) {
+        for (DCRecommendItem *recommendItem in cartItem.order_list) {
             if (self.allSelectBtn.selected) {
                 recommendItem.isSelect = YES;
-                totalPrice += [recommendItem.people_count intValue] * [recommendItem.price floatValue];
-                totalGoodsCount += [recommendItem.people_count intValue];
+                totalPrice += [recommendItem.goods_shul intValue] * [recommendItem.market_price floatValue];
+                totalGoodsCount += [recommendItem.goods_shul intValue];
             }else{
                 recommendItem.isSelect = NO;
             }
@@ -301,19 +319,75 @@ static NSString *const PMCartCellID = @"PMCartCell";
 
 //收藏
 - (void)collectBtnClick{
+    BOOL isGoodsSelect = NO;
+    NSMutableArray *goodsIds = [NSMutableArray array];
+    for (PMCartItem  *cartItem in self.dataArray) {
+        for (DCRecommendItem *recommendItem in cartItem.order_list) {
+            if (recommendItem.isSelect) {
+                isGoodsSelect = YES;
+                [goodsIds addObject:recommendItem.goodId];
+            }
+        }
+    }
     
+    if (!isGoodsSelect) {
+        [self showErrow:@"您还没有选择商品"];
+        return;
+    }
+    
+    NSString * goodsIdStr = [goodsIds componentsJoinedByString:@","];
+    [self requestPOST:API_Dogfood_collection parameters:@{@"goods_id":goodsIdStr,@"user_id":[SAApplication userID]} success:^(__kindof SARequest *request, id responseObject) {
+        [self showSuccess:responseObject[@"msg"]];
+    } failure:NULL];
+
 }
 
 //删除
 - (void)deleteBtnClick{
+    BOOL isGoodsSelect = NO;
+    NSMutableArray *goodsIds = [NSMutableArray array];
+    for (PMCartItem  *cartItem in self.dataArray) {
+        for (DCRecommendItem *recommendItem in cartItem.order_list) {
+            if (recommendItem.isSelect) {
+                isGoodsSelect = YES;
+                [goodsIds addObject:recommendItem.goodId];
+            }
+        }
+    }
     
+    if (!isGoodsSelect) {
+        [self showErrow:@"您还没有选择商品"];
+        return;
+    }
+    NSString * goodsIdStr = [goodsIds componentsJoinedByString:@","];
+    [self requestPOST:API_Dogfood_deletion parameters:@{@"cart_id":goodsIdStr,@"user_id":[SAApplication userID]} success:^(__kindof SARequest *request, id responseObject) {
+        [self showSuccess:responseObject[@"msg"]];
+        [self fecthData];
+    } failure:NULL];
+
 }
 //结算
 - (void)balanceBtnClick{
+    BOOL isGoodsSelect = NO;
+    NSMutableArray *goodsIds = [NSMutableArray array];
+    for (PMCartItem  *cartItem in self.dataArray) {
+        for (DCRecommendItem *recommendItem in cartItem.order_list) {
+            [goodsIds addObject:recommendItem.cart_id];
+
+            if (recommendItem.isSelect) {
+                isGoodsSelect = YES;
+            }
+        }
+    }
+    if (!isGoodsSelect) {
+        [self showErrow:@"您还没有选择商品"];
+        return;
+    }
+    NSString * goodsIdStr = [goodsIds componentsJoinedByString:@","];
     PMConfirmOrderViewController * vc = [[PMConfirmOrderViewController alloc] init];
+    vc.cart_id =  goodsIdStr;
     [self.navigationController pushViewController:vc animated:YES];
 }
-
 
 
 @end

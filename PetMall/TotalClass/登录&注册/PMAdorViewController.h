@@ -10,4 +10,5 @@
 
 @interface PMAdorViewController : STBaseNonSystemNavViewController
 @property(nonatomic, copy) void (^callBack)(PMAdorViewController *viewController);
+@property(nonatomic, copy) NSString *user_phone;
 @end

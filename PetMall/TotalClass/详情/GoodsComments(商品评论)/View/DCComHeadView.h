@@ -10,6 +10,12 @@
 
 @interface DCComHeadView : UIView
 
+/* 提示label */
+@property (strong , nonatomic)UILabel *tipLabel;
+
+/* 百分比label */
+@property (strong , nonatomic)UILabel *percentageLabel;
+
 /** 点击回调 */
 @property (nonatomic, copy) void(^comTypeBlock)(NSInteger index);
 

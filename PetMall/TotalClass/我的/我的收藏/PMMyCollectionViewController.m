@@ -7,9 +7,9 @@
 //
 
 #import "PMMyCollectionViewController.h"
-#import "PMCommonGoodsItem.h"
-
-@interface PMMyCollectionViewController ()
+#import "PMMyCollectionItem.h"
+#import "PMMyCollectionCell.h"
+@interface PMMyCollectionViewController ()<PMMyCollectionCellDelegate>
 @property(nonatomic, strong) NSMutableArray *dataArray;
 @end
 
@@ -18,6 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"我的收藏";
+    self.viewModel.cellDelegate = self;
     [self fetchData];
 }
 
@@ -30,8 +31,18 @@
 #pragma mark - Request
 
 - (void)fetchData {
-    self.dataArray = [PMCommonGoodsItem mj_objectArrayWithFilename:@"HomeHighGoods.plist"];
-    [self setItems:self.dataArray];
+    
+    [self requestMethod:GARequestMethodPOST URLString:API_user_collection parameters:@{@"user_id":@"1",@"pagesize":@"10",@"pagenum":@(self.page)} resKeyPath:@"result" resArrayClass:[PMMyCollectionItem class] retry:YES success:^(__kindof SARequest *request, id responseObject) {
+        self.dataArray = responseObject;
+        [self setItems:self.dataArray];
+    } failure:NULL];
 }
 
+
+- (void)cellDidClickDeleteCollection:(PMMyCollectionItem *)item{
+    [self requestPOST:API_user_collectiondel parameters:@{@"user_id":@"1",@"goods_id":item.collectionId} success:^(__kindof SARequest *request, id responseObject) {
+        [self showSuccess:responseObject[@"msg"]];
+        [self fetchData];
+    } failure:NULL];
+}
 @end

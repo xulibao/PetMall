@@ -7,9 +7,12 @@
 //
 
 #import "PMIntegralMallViewController.h"
-#import "PMCommonGoodsItem.h"
+#import "PMIntegralMallItem.h"
+#import "PMIntegralMallCell.h"
 #import "PMIntegralMallDetailViewController.h"
-@interface PMIntegralMallViewController ()
+#import "SAAlertController.h"
+#import "PMIntegralResultViewController.h"
+@interface PMIntegralMallViewController ()<PMIntegralMallCellDelegate>
 @property(nonatomic, strong) NSMutableArray *dataArray;
 
 @end
@@ -17,8 +20,10 @@
 @implementation PMIntegralMallViewController
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.viewModel.cellDelegate = self;
     self.title = @"积分商城";
     [self fetchData];
+    
 }
 
 - (void)refreshingAction {
@@ -35,20 +40,39 @@
 #pragma mark - Request
 
 - (void)fetchData {
-    self.dataArray = [PMCommonGoodsItem mj_objectArrayWithFilename:@"HomeHighGoods.plist"];
-    [self setItems:self.dataArray];
+    
+    [self requestMethod:GARequestMethodPOST URLString:API_user_integralmall parameters:@{@"pagesize":@"10",@"pagenum":@(self.page)} resKeyPath:@"result" resArrayClass:[PMIntegralMallItem class] retry:YES success:^(__kindof SARequest *request, id responseObject) {
+        self.dataArray = responseObject;
+        [self setItems:self.dataArray];
+    } failure:NULL];
 }
 
-- (void)didSelectCellWithItem:(id<STCommonTableRowItem>)item1{
-    
+- (void)didSelectCellWithItem:(id<STCommonTableRowItem>)item{
+    PMIntegralMallItem * mallItem = (PMIntegralMallItem *)item;
     PMIntegralMallDetailViewController * vc = [PMIntegralMallDetailViewController new];
-    PMCommonGoodsItem * item = self.dataArray[0];
-    vc.goodTitle = @"包退通用牛肉泰迪贵宾金毛比熊幼犬成犬双拼狗粮 5斤10斤";
-    vc.goodPrice = @"69积分";
-    vc.goodTip= @"26人参团  还差4人";
-    vc.goodSubtitle = @"参团立省7.2元";
-    vc.shufflingArray = item.images;
-    vc.goodImageView = item.image_url;
+    vc.goods_id = mallItem.integralMallId;
+    vc.list_id = mallItem.list_id;
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)PMIntegralMallCellDidClick:(PMIntegralMallCell *)cell{
+    SAAlertController *alertController = [SAAlertController alertControllerWithTitle:nil
+                                                                             message:@"确定用积分兑换此商品吗\n兑换将自动扣除相应积分"
+                                                                      preferredStyle:SAAlertControllerStyleAlert];
+    SAAlertAction *action = [SAAlertAction actionWithTitle:@"兑换" style:SAAlertActionStyleDefault handler:^(SAAlertAction *action) {
+        [self requestPOST:API_Classification_purchase parameters:@{@"goods_id":cell.item.integralMallId,@"user_id":[SAApplication userID],@"list_id":cell.item.list_id,@"shul":@"1",@"type":@"2",@"flag":@"1"} success:^(__kindof SARequest *request, id responseObject) {
+            [self showSuccess:responseObject[@"msg"]];
+            PMIntegralResultViewController * vc = [PMIntegralResultViewController new];
+            [self pushViewController:vc];
+        } failure:NULL];
+        
+    }];
+    [alertController addAction:action];
+    action = [SAAlertAction actionWithTitle:@"取消" style:SAAlertActionStyleCancel handler:^(SAAlertAction *action) {
+    }];
+    [alertController addAction:action];
+    
+    [alertController showWithAnimated:YES];
+    
 }
 @end

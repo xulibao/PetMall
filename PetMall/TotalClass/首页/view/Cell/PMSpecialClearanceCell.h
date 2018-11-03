@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class PMClearingModel;
 @interface PMSpecialClearanceCell : UICollectionViewCell
 
+@property(nonatomic, strong) NSArray *dataArray;
+@property(nonatomic, copy) void (^cellDidSelectItem)(PMClearingModel *model);
 @end

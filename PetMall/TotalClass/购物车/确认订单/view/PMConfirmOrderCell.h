@@ -7,9 +7,9 @@
 //
 
 #import "SABaseCell.h"
-#import "DCRecommendItem.h"
+#import "PMOrderListItem.h"
 @interface PMConfirmOrderCell : SABaseCell
 
-@property(nonatomic, strong) DCRecommendItem *item;
+@property(nonatomic, strong) NSArray *items;
 
 @end

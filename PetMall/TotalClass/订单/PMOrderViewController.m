@@ -52,32 +52,32 @@
 - (NSMutableArray *)dataArray{
     if (_dataArray == nil) {
         _dataArray = [NSMutableArray array];
-        PMOrderListItem *recommendItem = [[PMOrderListItem alloc] init];
-        recommendItem.image_url = @"https://img.alicdn.com/imgextra/i2/108613394/TB2mlYjm5MnBKNjSZFoXXbOSFXa_!!0-saturn_solar.jpg_210x210.jpg";
-        recommendItem.goods_title = @"GO狗粮 抗敏美毛系列全 牧羊犬全新配方 25磅";
-        recommendItem.nature = @"3.06kg  牛肉味";
-        recommendItem.price = @"158";
-        recommendItem.people_count = @"2";
-        [_dataArray addObject:recommendItem];
-        
-        
-        recommendItem.image_url = @"https://img.alicdn.com/imgextra/i2/108613394/TB2mlYjm5MnBKNjSZFoXXbOSFXa_!!0-saturn_solar.jpg_210x210.jpg";
-                recommendItem.goods_title = @"GO猫粮 抗敏美毛系列全 全新包装营养配方 25磅";
-                recommendItem.nature = @"3.06kg  牛肉味";
-                recommendItem.price = @"158";
-                recommendItem.people_count = @"2";
-            recommendItem.orderNo = @"1234818510";
-            recommendItem.statusText = @"买家已付款";
-                [_dataArray addObject:recommendItem];
-        
-        recommendItem.image_url = @"https://img.alicdn.com/imgextra/i2/108613394/TB2mlYjm5MnBKNjSZFoXXbOSFXa_!!0-saturn_solar.jpg_210x210.jpg";
-        recommendItem.goods_title = @"GO猫粮 抗敏美毛系列全 全新包装营养配方 25磅";
-        recommendItem.nature = @"3.06kg  牛肉味";
-        recommendItem.price = @"158";
-        recommendItem.people_count = @"2";
-        recommendItem.orderNo = @"1234851310";
-        recommendItem.statusText = @"买家已付款";
-        [_dataArray addObject:recommendItem];
+//        PMOrderListItem *recommendItem = [[PMOrderListItem alloc] init];
+//        recommendItem.image_url = @"https://img.alicdn.com/imgextra/i2/108613394/TB2mlYjm5MnBKNjSZFoXXbOSFXa_!!0-saturn_solar.jpg_210x210.jpg";
+//        recommendItem.goods_title = @"GO狗粮 抗敏美毛系列全 牧羊犬全新配方 25磅";
+//        recommendItem.nature = @"3.06kg  牛肉味";
+//        recommendItem.price = @"158";
+//        recommendItem.people_count = @"2";
+//        [_dataArray addObject:recommendItem];
+//
+//
+//        recommendItem.image_url = @"https://img.alicdn.com/imgextra/i2/108613394/TB2mlYjm5MnBKNjSZFoXXbOSFXa_!!0-saturn_solar.jpg_210x210.jpg";
+//                recommendItem.goods_title = @"GO猫粮 抗敏美毛系列全 全新包装营养配方 25磅";
+//                recommendItem.nature = @"3.06kg  牛肉味";
+//                recommendItem.price = @"158";
+//                recommendItem.people_count = @"2";
+//            recommendItem.orderNo = @"1234818510";
+//            recommendItem.statusText = @"买家已付款";
+//                [_dataArray addObject:recommendItem];
+//
+//        recommendItem.image_url = @"https://img.alicdn.com/imgextra/i2/108613394/TB2mlYjm5MnBKNjSZFoXXbOSFXa_!!0-saturn_solar.jpg_210x210.jpg";
+//        recommendItem.goods_title = @"GO猫粮 抗敏美毛系列全 全新包装营养配方 25磅";
+//        recommendItem.nature = @"3.06kg  牛肉味";
+//        recommendItem.price = @"158";
+//        recommendItem.people_count = @"2";
+//        recommendItem.orderNo = @"1234851310";
+//        recommendItem.statusText = @"买家已付款";
+//        [_dataArray addObject:recommendItem];
     }
     return _dataArray;
 }
@@ -103,24 +103,27 @@
     [self pushViewController:vc];
 }
 
-
+- (CGFloat )tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    PMOrderItem * item = [self.viewModel objectAtIndexPath:indexPath];
+    
+    return 90 + item.order_list.count * 100;
+}
 #pragma mark - Request
 
 - (void)fetchData {
-        [self setItems:self.dataArray];
 
-//    [self requestMethod:GARequestMethodGET
-//              URLString:API_mine_orderList
-//             parameters:@{@"userId":[SAApplication userID],
-//                          @"auctionState":type
-//                          }
-//             resKeyPath:@"data"
-//          resArrayClass:[SAOrderListItem class]
-//                  retry:YES
-//                success:^(__kindof SARequest *request, NSArray<SAOrderListItem*> *responseObject) {
-//                    [self setItems:responseObject];
-//                }
-//                failure:NULL];
+    [self requestMethod:GARequestMethodPOST
+              URLString:API_Goods_myorder
+             parameters:@{@"user_id":@"1",
+                          @"status": self.type > 0 ? @(self.type) : @""
+                          }
+             resKeyPath:@"result"
+          resArrayClass:[PMOrderItem class]
+                  retry:YES
+                success:^(__kindof SARequest *request, NSArray<PMOrderItem*> *responseObject) {
+                    [self setItems:responseObject];
+                }
+                failure:NULL];
 }
 
 #pragma mark - Override SAInfoListViewController

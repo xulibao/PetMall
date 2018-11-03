@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "PMHomeModel.h"
 
 @interface DCGoodsHandheldCell : UICollectionViewCell
 
 /* 图片数组 */
-@property (strong , nonatomic)NSString *handheldImage;
+@property (strong , nonatomic)PMPresaleModel *presaleModel;
 
 @end

@@ -10,6 +10,8 @@
 
 @interface PMGroupPurchaserDetailViewController ()
 
+@property(nonatomic, strong) UIButton *collectionBtn;
+
 @end
 
 @implementation PMGroupPurchaserDetailViewController
@@ -29,20 +31,15 @@
         button.titleLabel.textAlignment = NSTextAlignmentCenter;
         [button setTitle:titles[i] forState:UIControlStateNormal];
         button.backgroundColor = (i == 0) ? [UIColor colorWithHexStr:@"#FFC3C7"] : kColorFF3945;
-        [button addTarget:self action:@selector(bottomButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        [button addTarget:self action:@selector(bottomRightButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         CGFloat buttonX = ScreenW * 0.2 + (buttonW * i);
         button.frame = CGRectMake(buttonX, buttonY, buttonW, buttonH);
-        
         [self.view addSubview:button];
     }
 }
 
-- (void)bottomButtonClick:(UIButton *)button
-{
-    if (button.tag == 0) {
-        NSLog(@"收藏");
-        button.selected = !button.selected;
-    }else if(button.tag == 2){
+- (void)bottomRightButtonClick:(UIButton *)button{
+    if(button.tag == 2){
 //        [self showFeatureView];
     }else  if ( button.tag == 3) { //父控制器的加入购物车和立即购买
         //异步发通知

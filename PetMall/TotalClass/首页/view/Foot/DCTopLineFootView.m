@@ -57,7 +57,7 @@
             self.DCTopLineFootViewCallBack();
         }
     }];
-    _topAdImageView.image = IMAGE(@"home_ad_conpou");
+//    _topAdImageView.image = IMAGE(@"home_ad_conpou");
     _topAdImageView.contentMode = UIViewContentModeScaleAspectFit;
     [self addSubview:_topAdImageView];
     
@@ -93,8 +93,9 @@
 
 - (void)setCouponModel:(PMHomeCouponModel *)couponModel{
     _couponModel = couponModel;
-    self.addLabel.text = [NSString stringWithFormat:@"%@元优惠券",couponModel.face];
-    self.addLabel1.text = [NSString stringWithFormat:@"全场宠物用品满%@元可用",couponModel.subtraction];
+    [_topAdImageView sd_setImageWithURL:[NSURL URLWithString:couponModel.img]];
+//    self.addLabel.text = [NSString stringWithFormat:@"%@元优惠券",couponModel.face];
+//    self.addLabel1.text = [NSString stringWithFormat:@"全场宠物用品满%@元可用",couponModel.subtraction];
 }
 
 - (void)layoutSubviews

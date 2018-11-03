@@ -164,17 +164,24 @@ static NSArray *lastSeleArray_;
     [self setUpViewScroller];
     
     [self setUpGoodsWKWebView];
-    
     [self setUpSuspendView];
-
-    
     [self acceptanceNote];
     
-    _commentsItem = [DCCommentsItem mj_objectArrayWithFilename:@"CommentData.plist"];
+    [self fecthData];
+}
 
-    [self setUpBottomButton];
+- (void)fecthData{
+    [self requestPOST:API_Dogfood_details parameters:@{@"goods_id":self.goods_id,@"user_id":[SAApplication userID]} success:^(__kindof SARequest *request, id responseObject) {
+        PMGoodDetailModel * model = [PMGoodDetailModel mj_objectWithKeyValues:responseObject[@"result"]];
+        self.detailModel = model;
+        self.goodTitle = model.goods_title;
+        self.goodPrice = model.selling_price;
+        self.goodsImageArray = model.goodsImageArray;
+        self.commentsItem = model.comment;
+        [self.tableView reloadData];
+        [self setUpBottomButton];
 
-
+    } failure:NULL];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -389,17 +396,18 @@ static NSArray *lastSeleArray_;
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     if (section == 0) {
         DCDetailShufflingHeadView *headerView = [[DCDetailShufflingHeadView alloc] initWithFrame:CGRectMake(0, 0, kMainBoundsWidth, ScreenH * 0.55)];
-        headerView.shufflingArray = _shufflingArray;
+        headerView.shufflingArray = self.goodsImageArray;
         return headerView;
 
     }else if (2 == section){
         DCCommentHeaderView *headerView = [[DCCommentHeaderView alloc] initWithFrame:CGRectMake(0, 0, kMainBoundsWidth, 50)];
         headerView.callBack = ^{
             DCGoodCommentViewController * vc = [[DCGoodCommentViewController alloc] init];
+            vc.user_goods = @"1";
             [self.navigationController pushViewController:vc animated:YES];
         };
-        headerView.comNum = @"1130";
-        headerView.wellPer = @"98.5";
+        headerView.comNum =  self.detailModel.package_pl;
+        headerView.wellPer = self.detailModel.package_ok;
         return headerView;
 
     }
@@ -551,8 +559,7 @@ static NSArray *lastSeleArray_;
     [self setUpRightTwoButton];//加入购物车 立即购买
 }
 #pragma mark - 收藏 购物车
-- (void)setUpLeftTwoButton
-{
+- (void)setUpLeftTwoButton{
     NSArray *imagesNor = @[@"detail_shoucang"];
     NSArray *imagesSel = @[@"detail_shoucang_selected"];
     CGFloat buttonW = ScreenW * 0.2;
@@ -565,7 +572,11 @@ static NSArray *lastSeleArray_;
         button.backgroundColor = [UIColor whiteColor];
         [button setImage:[UIImage imageNamed:imagesSel[i]] forState:UIControlStateSelected];
         button.tag = i;
-        [button addTarget:self action:@selector(bottomButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        if (button.tag == 0) {
+//            self.collectionBtn = button;
+            button.selected = self.detailModel.collection;
+        }
+        [button addTarget:self action:@selector(bottomLeftButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         CGFloat buttonX = (buttonW * i);
         button.frame = CGRectMake(buttonX, buttonY, buttonW, buttonH);
         
@@ -586,15 +597,42 @@ static NSArray *lastSeleArray_;
         button.tag = i + 2;
         [button setTitle:titles[i] forState:UIControlStateNormal];
         button.backgroundColor = (i == 0) ? [UIColor colorWithHexStr:@"#FFC3C7"] : kColorFF3945;
-        [button addTarget:self action:@selector(bottomButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        [button addTarget:self action:@selector(bottomRightButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         CGFloat buttonX = ScreenW * 0.2 + (buttonW * i);
         button.frame = CGRectMake(buttonX, buttonY, buttonW, buttonH);
         
         [self.view addSubview:button];
     }
 }
+- (void)bottomLeftButtonClick:(UIButton *)button{
+    if (button.tag == 0) {//收藏
+        if (button.selected) {
+            [self requestPOST:API_user_collectiondel parameters:@{@"user_id":@"1",@"goods_id":self.goods_id} success:^(__kindof SARequest *request, id responseObject) {
+                [self showSuccess:responseObject[@"msg"]];
+                button.selected = !button.selected;
+            } failure:NULL];
+        }else{
+            [self requestPOST:API_Dogfood_collection parameters:@{@"goods_id":self.goods_id,@"user_id":[SAApplication userID]} success:^(__kindof SARequest *request, id responseObject) {
+                [self showSuccess:responseObject[@"msg"]];
+                button.selected = !button.selected;
+            } failure:NULL];
+            
+        }
+    }
+}
 
-
+- (void)bottomRightButtonClick:(UIButton *)button{
+    if (2 == button.tag) { // 加入购物车
+        [self requestPOST:API_Dogfood_cart parameters:@{@"goods_id":self.detailModel.goodId,@"user_id":[SAApplication userID],@"type":@"1",@"list_id":self.list_id,@"shul":@"1"} success:^(__kindof SARequest *request, id responseObject) {
+            [self showSuccess:@"加入购物车成功！"];
+            
+        } failure:NULL];
+    }else if ( button.tag == 3) { //父控制器的加入购物车和立即购买
+        //异步发通知
+        PMConfirmOrderViewController * vc = [[PMConfirmOrderViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+}
 #pragma mark - 点击工具条
 - (void)toolItemClick
 {
@@ -619,19 +657,7 @@ static NSArray *lastSeleArray_;
     dcFeaVc.goodImageView = _goodImageView;
     [self setUpAlterViewControllerWith:dcFeaVc WithDistance:ScreenH * 0.66 WithDirection:XWDrawerAnimatorDirectionBottom WithParallaxEnable:YES WithFlipEnable:YES];
 }
-- (void)bottomButtonClick:(UIButton *)button
-{
-    if (button.tag == 0) {
-        NSLog(@"收藏");
-        button.selected = !button.selected;
-    }else if(button.tag == 2){
-        [self showFeatureView];
-    }else  if ( button.tag == 3) { //父控制器的加入购物车和立即购买
-        //异步发通知
-        PMConfirmOrderViewController * vc = [[PMConfirmOrderViewController alloc] init];
-        [self.navigationController pushViewController:vc animated:YES];
-    }
-}
+
 
 #pragma mark - 转场动画弹出控制器
 - (void)setUpAlterViewControllerWith:(UIViewController *)vc WithDistance:(CGFloat)distance WithDirection:(XWDrawerAnimatorDirection)vcDirection WithParallaxEnable:(BOOL)parallaxEnable WithFlipEnable:(BOOL)flipEnable

@@ -10,7 +10,7 @@
 
 #import "DCNewWelfareLayout.h"
 #import "DCGoodsHandheldCell.h"
-
+#import "PMHomeModel.h"
 @interface DCNewWelfareCell ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,DCNewWelfareLayoutDelegate>
 
 /* collectionView */
@@ -54,7 +54,6 @@ static NSString *const DCGoodsHandheldCellID = @"DCGoodsHandheldCell";
     return self;
 }
 
-
 #pragma mark - initialize
 - (void)setUpBase
 {
@@ -64,7 +63,7 @@ static NSString *const DCGoodsHandheldCellID = @"DCGoodsHandheldCell";
 
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 2;
+    return self.dataArray.count;
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -73,8 +72,7 @@ static NSString *const DCGoodsHandheldCellID = @"DCGoodsHandheldCell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     DCGoodsHandheldCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DCGoodsHandheldCellID forIndexPath:indexPath];
-    NSArray *images = @[@"http://gfs5.gomein.net.cn/T10_LvBjLv1RCvBVdK.jpg",@"http://gfs9.gomein.net.cn/T1ALVvBXZg1RCvBVdK.jpg"];
-    cell.handheldImage = images[indexPath.row];
+    cell.presaleModel = self.dataArray[indexPath.row];
     return cell;
     
 }
@@ -116,4 +114,9 @@ static NSString *const DCGoodsHandheldCellID = @"DCGoodsHandheldCell";
     return 0;
 }
 
+
+- (void)setDataArray:(NSArray *)dataArray{
+    _dataArray = dataArray;
+    [self.collectionView reloadData];
+}
 @end

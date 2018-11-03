@@ -7,7 +7,7 @@
 //
 
 #import "PMMyExchangeViewController.h"
-#import "PMCommonGoodsItem.h"
+#import "PMMyExchangeItem.h"
 
 @interface PMMyExchangeViewController()
 @property(nonatomic, strong) NSMutableArray *dataArray;
@@ -28,7 +28,9 @@
 #pragma mark - Request
 
 - (void)fetchData {
-    self.dataArray = [PMCommonGoodsItem mj_objectArrayWithFilename:@"HomeHighGoods.plist"];
-    [self setItems:self.dataArray];
+    [self requestMethod:GARequestMethodPOST URLString:API_user_myexchange parameters:@{@"pagesize":@"10",@"pagenum":@(self.page)} resKeyPath:@"result" resArrayClass:[PMMyExchangeItem class] retry:YES success:^(__kindof SARequest *request, id responseObject) {
+        self.dataArray = responseObject;
+        [self setItems:self.dataArray];
+    } failure:NULL];
 }
 @end

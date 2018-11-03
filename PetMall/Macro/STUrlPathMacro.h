@@ -45,7 +45,7 @@ static NSString * const API_Classification_purchase =  @"pet/index.php/index/Cla
 //首页信息
 static NSString * const API_Goods_broadcast =  @"pet/index.php/index/Goods/broadcast";
 //首页优惠券立即领取
-static NSString * const API_Classification_receive =  @"pet/index.php/index/Goods/ receive";
+static NSString * const API_Goods_receive =  @"pet/index.php/index/Goods/receive";
 //首页狗粮零食玩具出行医疗保健
 static NSString * const API_Dogfood_specifications =  @"pet/index.php/index/Dogfood/specifications";
 //条件查询后商品
@@ -92,9 +92,6 @@ static NSString * const API_user_addressdel =  @"pet/index.php/index/user/addres
 //优惠券信息
 static NSString * const API_user_coupon =  @"pet/index.php/index/user/coupon";
 
-//帮助/问题
-static NSString * const API_user_help =  @"pet/index.php/index/user/help";
-
 //帮助/问题详情
 static NSString * const API_user_helpxq =  @"pet/index.php/index/user/helpxq";
 
@@ -115,7 +112,10 @@ static NSString * const API_user_newlyweds =  @"pet/index.php/index/user/newlywe
 
 //我的
 static NSString * const API_user_groupbuy =  @"pet/index.php/index/user/groupbuy";
-
+//帮助
+static NSString * const API_user_help =  @"Pet/index.php/index/help";
+//关于我们
+static NSString * const API_user_aboutus =  @"pet/index.php/index/user/aboutus";
 //发表评论
 static NSString * const API_Goods_comment =  @"pet/index.php/index/Goods/comment";
 
@@ -123,7 +123,7 @@ static NSString * const API_Goods_comment =  @"pet/index.php/index/Goods/comment
 static NSString * const API_Goods_commenta =  @"pet/index.php/index/Goods/commenta";
 
 //我的订单
-static NSString * const API_Goods_myorde =  @"pet/index.php/index/Goods/myorde";
+static NSString * const API_Goods_myorder =  @"pet/index.php/index/Goods/myorder";
 
 //申请退款信息
 static NSString * const API_Goods_application =  @"pet/index.php/index/Goods/application";
@@ -144,7 +144,7 @@ static NSString * const API_user_receip =  @"pet/index.php/index/user/receip";
 //我的积分
 static NSString * const API_user_mypoints =  @"pet/index.php/index/user/mypoints";
 //积分商城
-static NSString * const API_user_integralmal =  @"pet/index.php/index/user/integralmal";
+static NSString * const API_user_integralmall =  @"pet/index.php/index/user/integralmall";
 //我的兑换
 static NSString * const API_user_myexchange =  @"pet/index.php/index/user/myexchange";
 //我的评价

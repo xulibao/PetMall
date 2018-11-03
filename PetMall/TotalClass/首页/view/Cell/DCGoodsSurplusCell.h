@@ -7,11 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@class DCRecommendItem;
+#import "PMHomeModel.h"
 @interface DCGoodsSurplusCell : UICollectionViewCell
 
 /* 推荐商品数据 */
-@property (strong , nonatomic)DCRecommendItem *recommendItem;
+@property (strong , nonatomic)PMSecondkillModel *secondkillModel;
 
 @end

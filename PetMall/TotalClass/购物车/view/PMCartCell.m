@@ -148,7 +148,7 @@
     num += 1;
     self.cartCountLabel.text = [NSString stringWithFormat:@"%d", num];
     if (self.calculateCallBack) {
-        self.item.people_count = self.cartCountLabel.text;
+        self.item.goods_shul = self.cartCountLabel.text;
         self.calculateCallBack(self.cartCountLabel.text);
     }
 }
@@ -162,18 +162,18 @@
         self.cartCountLabel.text = [NSString stringWithFormat:@"%d", num];
     }
     if (self.calculateCallBack) {
-        self.item.people_count = self.cartCountLabel.text;
+        self.item.goods_shul = self.cartCountLabel.text;
         self.calculateCallBack(self.cartCountLabel.text);
     }
 }
 
 - (void)setItem:(DCRecommendItem *)item{
     _item = item;
-    [self.cartImageView sd_setImageWithURL:[NSURL URLWithString:item.image_url] placeholderImage:nil];
+    [self.cartImageView sd_setImageWithURL:[NSURL URLWithString:item.goods_logo] placeholderImage:nil];
     self.cartTitleLabel.text = item.goods_title;
-    self.cartNatureLabel.text = item.nature;
-    self.cartPriceLabel.text = [NSString stringWithFormat:@"¥%@",item.price];
-    self.cartCountLabel.text = item.people_count;
+    self.cartNatureLabel.text = item.goods_spec;
+    self.cartPriceLabel.text = [NSString stringWithFormat:@"¥%@",item.market_price];
+    self.cartCountLabel.text = item.goods_shul;
     self.selectBtn.selected = item.isSelect;
     
     [self.contentView sp_removeBottomLine];

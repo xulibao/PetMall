@@ -11,6 +11,7 @@
 #import "SPForgotPasswordViewController.h"
 #import "PMContactUsViewController.h"
 #import "PMSendCommentViewController.h"
+#import "PMBaseWebViewController.h"
 @interface PMSetViewController ()
 
 
@@ -46,7 +47,7 @@
     footView.titleLabel.font = [UIFont systemFontOfSize:18];
     [footView setTitle:@"退出" forState:UIControlStateNormal];
     [footView setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [footView addTarget:[SAApplication sharedApplication]
+    [footView addTarget:self
                 action:@selector(signOut)
       forControlEvents:UIControlEventTouchUpInside];
     [footView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -56,6 +57,12 @@
     }];
     
 }
+
+-(void)signOut{
+    [[SAApplication sharedApplication] signOut];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)fetchData {
     self.dataArray = [NSMutableArray array];
     PMSetItem * recommendItem = [PMSetItem new];
@@ -86,7 +93,13 @@
     recommendItem = [PMSetItem new];
     recommendItem.title = @"关于我们";
     recommendItem.itemSelect = ^{
-        
+        [self requestPOST:API_user_aboutus parameters:nil success:^(__kindof SARequest *request, id responseObject) {
+            PMBaseWebViewController * vc = [[PMBaseWebViewController alloc] init];
+            vc.webTitle = @"关于我们";
+            vc.jumpUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",[STNetworking host],responseObject[@"result"]]];
+            [self.navigationController pushViewController:vc animated:YES];
+        } failure:NULL];
+       
     };
     [_dataArray addObject:recommendItem];
     

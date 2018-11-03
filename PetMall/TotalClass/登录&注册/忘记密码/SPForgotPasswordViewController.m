@@ -29,7 +29,7 @@
         SPVerificationBaseModel *model = [[SPVerificationBaseModel alloc] init];
         model.cellIdentifier = @"loginTelCellIdentifier";
         model.feildPlace = @"手机号";
-        model.severKey = @"mobile";
+        model.severKey = @"user_phone";
         model.maxNumber = 11;
         model.showType = kVerificationShowForHidden;
         model.keyBoardType = UIKeyboardTypeNumberPad;
@@ -41,11 +41,11 @@
         model = [[SPVerificationBaseModel alloc] init];
         model.cellIdentifier = @"loginCodeCellIdentifier";
         model.imageName = @"me_password";
-        model.severKey = @"code";
+        model.severKey = @"ver_yz";
         model.feildPlace = @"验证码";
         model.showType = kVerificationShowForShow;
         SATextFieldInputValidHandle * handle1= [[SATextFieldInputValidHandle alloc] init];
-        handle1.maxLength = 4;
+        handle1.maxLength = 6;
         model.handle = handle1;
         model.keyBoardType = UIKeyboardTypeNumberPad;
         [_viewModel addRow:model];
@@ -53,7 +53,7 @@
         model = [[SPVerificationBaseModel alloc] init];
         model.cellIdentifier = @"registerCodeCellIdentifier";
         model.imageName = @"me_password";
-        model.severKey = @"newPassword";
+        model.severKey = @"password";
         model.feildPlace = @"新密码";
         model.isAddTimer = YES;
         model.isCiphertext = YES;
@@ -68,7 +68,7 @@
         model = [[SPVerificationBaseModel alloc] init];
         model.cellIdentifier = @"registerCodeCellIdentifier";
         model.imageName = @"me_password";
-        model.severKey = @"confirmPassword";
+        model.severKey = @"user_password";
         model.feildPlace = @"再次输入新密码";
         model.isShowCiphertext = YES;
         model.isAddTimer = YES;
@@ -130,7 +130,7 @@
     self.footView.titleLabel.font = [UIFont systemFontOfSize:18];
     [self.footView setTitle:@"更改密码" forState:UIControlStateNormal];
     [self.footView setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.footView addTarget:self action:@selector(loginClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.footView addTarget:self action:@selector(changePasswordClick) forControlEvents:UIControlEventTouchUpInside];
    
     [self.footView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(bgView); make.top.mas_equalTo(bgView).mas_offset(20);
@@ -139,31 +139,24 @@
     }];
 }
 
--(void)loginClick{
+-(void)changePasswordClick{
     [self.view endEditing:YES];
-    
-    [self showSuccess:@"更改密码成功"];
-    [self.navigationController popViewControllerAnimated:YES];
-//    NSMutableDictionary * dict = [NSMutableDictionary dictionary];
-//    NSArray * array = [self.viewModel rowsAtSection:0];
-//    for (id model in array) {
-//        if ([model isKindOfClass:[SPVerificationBaseModel class]]) {
-//            SPVerificationBaseModel *baseModel =  (SPVerificationBaseModel *)model;
-//            if (0 == [baseModel.severValue length]) {
-//                [self showWaring:[NSString stringWithFormat:@"请输入%@！",baseModel.feildPlace]];
-//                return;
-//            }
-//            [dict setObject:baseModel.severValue forKey:baseModel.severKey];
-//        }else if([model isKindOfClass:[SPCodeForgotModel class]]){
-//            SPCodeForgotModel *forgotModel =  (SPCodeForgotModel *)model;
-//            if (forgotModel.companyId.length == 0) {
-//                [self showWaring:@"请选择所属公司"];
-//                return;
-//            }
-//            [dict setObject:forgotModel.companyId forKey:@"companyId"];
-//            [dict setObject:forgotModel.managerPhone forKey:@"mobile"];
-//        }
-//    }
+    NSMutableDictionary * parametersDict = [NSMutableDictionary dictionary];
+    for (id object in [self.viewModel rowsAtSection:0]) {
+        if ([object isKindOfClass:[SPVerificationBaseModel class]]){
+            SPVerificationBaseModel *model = (SPVerificationBaseModel *)object;
+            if (model.severValue.length == 0) {
+                [self showWaring:model.errorStr];
+                return;
+            }
+            [parametersDict setObject:model.severValue forKey:model.severKey];
+        }
+    }
+    [self requestPOST:API_user_changepassword parameters:parametersDict success:^(__kindof SARequest *request, id responseObject) {
+        [self showSuccess:@"更改密码成功"];
+        [self.navigationController popViewControllerAnimated:YES];
+
+    } failure:NULL];
 }
 
 
@@ -180,8 +173,10 @@
             return;
         }
     
+    [self requestPOST:API_user_sendRegistCode parameters:@{@"user_phone":telModel.severValue} success:^(__kindof SARequest *request, id responseObject) {
         [self showSuccess:@"发送成功"];
         [codeModel startCountDown];
+    } failure:NULL];
     
 }
 

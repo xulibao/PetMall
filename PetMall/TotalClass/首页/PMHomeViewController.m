@@ -18,7 +18,6 @@
 #import "DCGoodsCountDownCell.h" //倒计时商品
 #import "DCNewWelfareCell.h"     //新人福利
 #import "DCGoodsHandheldCell.h"  //掌上专享
-#import "DCExceedApplianceCell.h"//不止
 #import "DCGoodsYouLikeCell.h"   //猜你喜欢商品
 #import "DCGoodsGridCell.h"      //10个选项
 #import "PMSpecialClearanceCell.h"
@@ -50,7 +49,6 @@ static NSString *const DCNewWelfareCellID = @"DCNewWelfareCell";
 static NSString *const DCGoodsHandheldCellID = @"DCGoodsHandheldCell";
 static NSString *const DCGoodsYouLikeCellID = @"DCGoodsYouLikeCell";
 static NSString *const DCGoodsGridCellID = @"DCGoodsGridCell";
-static NSString *const DCExceedApplianceCellID = @"DCExceedApplianceCell";
 static NSString *const PMSpecialClearanceCellID = @"PMSpecialClearanceCell";
 
 /* head */
@@ -65,6 +63,7 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
 
 @interface PMHomeViewController ()
 @property(nonatomic, strong) STHomeVCTopView *topView;
+
 @end
 
 @implementation PMHomeViewController
@@ -144,7 +143,8 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
 
 @property(nonatomic, strong) UIView *youhuiView;
 @property(nonatomic, strong) UIView *coverBtn;
-
+@property(nonatomic, strong) UILabel *youhui_label;
+@property(nonatomic, strong) UILabel *youhui_label1;
 @property(nonatomic, strong) PMHomeModel * homeModel;
 
 @end
@@ -159,7 +159,7 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
 }
 - (NSMutableArray *)bannersArray{
     if (_bannersArray == nil) {
-        _bannersArray =  @[@"http://gfs5.gomein.net.cn/T1obZ_BmLT1RCvBVdK.jpg",@"http://gfs9.gomein.net.cn/T1C3J_B5LT1RCvBVdK.jpg",@"http://gfs5.gomein.net.cn/T1CwYjBCCT1RCvBVdK.jpg",@"http://gfs7.gomein.net.cn/T1u8V_B4ET1RCvBVdK.jpg",@"http://gfs7.gomein.net.cn/T1zODgB5CT1RCvBVdK.jpg"];
+        _bannersArray =  [@[] mutableCopy];
 
     }
     return _bannersArray;
@@ -180,7 +180,7 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
 }
 
 - (void)fecthData{
-    [self requestPOST:API_Goods_broadcast parameters:@{@"user_id":[SAApplication userID]} success:^(__kindof SARequest *request, id responseObject) {
+    [self requestPOST:API_Goods_broadcast parameters:nil success:^(__kindof SARequest *request, id responseObject) {
         self.homeModel = [PMHomeModel mj_objectWithKeyValues:responseObject[@"result"]];
         [self fecthSubViews];
         
@@ -189,7 +189,7 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
 #pragma mark - 设置头部header
 - (void)fecthSubViews{
     [self.collectionView reloadData];
-//    self.collectionView.mj_header = [DCHomeRefreshGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(setUpRecData)];
+   
 }
 
 #pragma mark - 刷新
@@ -223,7 +223,6 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
         [_collectionView registerClass:[DCGoodsHandheldCell class] forCellWithReuseIdentifier:DCGoodsHandheldCellID];
         [_collectionView registerClass:[DCGoodsYouLikeCell class] forCellWithReuseIdentifier:DCGoodsYouLikeCellID];
         [_collectionView registerClass:[DCGoodsGridCell class] forCellWithReuseIdentifier:DCGoodsGridCellID];
-        [_collectionView registerClass:[DCExceedApplianceCell class] forCellWithReuseIdentifier:DCExceedApplianceCellID];
         [_collectionView registerClass:[DCNewWelfareCell class] forCellWithReuseIdentifier:DCNewWelfareCellID];
         [_collectionView registerClass:[PMSpecialClearanceCell class] forCellWithReuseIdentifier:PMSpecialClearanceCellID];
         
@@ -238,6 +237,7 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
         [_collectionView registerClass:[DCCountDownHeadView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:DCCountDownHeadViewID];
         
         [self.view addSubview:_collectionView];
+         _collectionView.mj_header = [MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(fecthData)];
     }
     return _collectionView;
 }
@@ -249,7 +249,7 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     if (section == 0) { //10属性
         return _gridItem.count;
-    }else if (section == 1 || section == 2 ) { //广告福利  倒计时  掌上专享
+    }else if (section == 1 || section == 2 ) { //限时秒杀  潮品预售
         return 1;
     }else if (3 == section){ // 团购活动
         return [self.homeModel.group count];
@@ -269,16 +269,21 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
         cell.backgroundColor = [UIColor whiteColor];
         gridcell = cell;
         
-    }else if (indexPath.section == 1) {//倒计时
+    }else if (indexPath.section == 1) {//倒计时 限时秒杀
         DCGoodsCountDownCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DCGoodsCountDownCellID forIndexPath:indexPath];
+        cell.dataArray = self.homeModel.secondkill;
         cell.DCGoodsCountDownCellBlock = ^(DCRecommendItem *item) {
-            [self pushDeat:item];
+            DCGoodBaseViewController * vc = [[DCGoodBaseViewController alloc] init];
+            vc.goods_id = item.goodId;
+            vc.list_id = item.list_id;
+            [self.navigationController pushViewController:vc  animated:YES];
         };
         gridcell = cell;
         
     }
-    else if (indexPath.section == 2) {//广告福利
+    else if (indexPath.section == 2) {//商品预售
         DCNewWelfareCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DCNewWelfareCellID forIndexPath:indexPath];
+        cell.dataArray = self.homeModel.presale;
         gridcell = cell;
     }
     else if (indexPath.section == 3) {//团购活动
@@ -293,15 +298,17 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
     }
     else if (indexPath.section == 4) {//特价清仓
         PMSpecialClearanceCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:PMSpecialClearanceCellID forIndexPath:indexPath];
+        cell.dataArray = self.homeModel.clearing;
+        cell.cellDidSelectItem = ^(PMClearingModel *model) {
+            DCGoodBaseViewController * vc = [[DCGoodBaseViewController alloc] init];
+            vc.goods_id = model.clearingId;
+//            vc.list_id = model.list_id;
+            [self.navigationController pushViewController:vc  animated:YES];
+        };
         gridcell = cell;
     }
     else {//猜你喜欢
-        DCGoodsYouLikeCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DCGoodsYouLikeCellID forIndexPath:indexPath];
-        cell.lookSameBlock = ^{
-            NSLog(@"点击了第%zd商品的找相似",indexPath.row);
-        };
-//        cell.youLikeItem = _youLikeItem[indexPath.row];
-        gridcell = cell;
+        return nil;
     }
     return gridcell;
 }
@@ -314,6 +321,10 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
     if (kind == UICollectionElementKindSectionHeader){
         if (indexPath.section == 0) {
             DCSlideshowHeadView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:DCSlideshowHeadViewID forIndexPath:indexPath];
+            [self.bannersArray removeAllObjects];
+            for (PMBroadCastModel *model in self.homeModel.Broadcast) {
+                [self.bannersArray addObject:model.img];
+            }
             headerView.imageGroupArray = self.bannersArray;
             reusableview = headerView;
         }else if (indexPath.section == 1){
@@ -375,8 +386,8 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
     if (indexPath.section == 1) {//计时
         return CGSizeMake(kMainBoundsWidth, 360);
     }
-    if (indexPath.section == 2) {//广告
-        return CGSizeMake(kMainBoundsWidth, 360);
+    if (indexPath.section == 2) {//团购活动
+        return CGSizeMake(kMainBoundsWidth, 180 *self.homeModel.presale.count);
     }
     if (indexPath.section == 3) {//
             return CGSizeMake(kMainBoundsWidth, 155);
@@ -434,8 +445,6 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
- 
     if (indexPath.section == 0) {//10
         if (indexPath.row == 0) {
             PMTimeLimitViewController * vc = [[PMTimeLimitViewController alloc] init];
@@ -449,41 +458,19 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
             PMIntegralMallViewController * vc = [[PMIntegralMallViewController alloc] init];
             [self pushViewController:vc];
         }else if (4 == indexPath.row){
-            
             PMSpeacilePriceViewController * vc = [[PMSpeacilePriceViewController alloc] init];
             [self pushViewController:vc];
         }
       
     }else if (3 ==indexPath.section){
         PMGroupPurchaserDetailViewController * vc = [PMGroupPurchaserDetailViewController new];
-        DCRecommendItem * item = _youLikeItem[indexPath.row];
-        vc.goodTitle = @"包退通用牛肉泰迪贵宾金毛比熊幼犬成犬双拼狗粮 5斤10斤";
-        vc.goodPrice = item.price;
-        vc.goodTip= @"26人参团  还差4人";
-        vc.goodSubtitle = @"参团立省7.2元";
-        vc.shufflingArray = item.images;
-        vc.goodImageView = item.image_url;
+        PMGroupModel * item = self.homeModel.group[indexPath.row];
+        vc.goods_id = item.groupId;
+//        vc.list_id = item.list_id;
         [self.navigationController pushViewController:vc animated:YES];
         
-    }else{
-        NSLog(@"点击了推荐的第%zd个商品",indexPath.row);
-        DCRecommendItem * item = _youLikeItem[indexPath.row];
-        [self pushDeat:item];
     }
 }
-
-- (void)pushDeat:(DCRecommendItem *)item12{
-    DCRecommendItem * item = _youLikeItem[0];
-    DCGoodBaseViewController * vc = [[DCGoodBaseViewController alloc] init];
-    vc.goodTitle = item.main_title;
-    vc.goodPrice = item.price;
-    vc.goodSubtitle = item.goods_title;
-    vc.shufflingArray = item.images;
-    vc.goodImageView = item.image_url;
-    
-    [self.navigationController pushViewController:vc  animated:YES];
-}
-
 
 #pragma mark - collectionView滚回顶部
 - (void)ScrollToTop
@@ -499,7 +486,7 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
         [_youhuiView addSubview:imageView];
         
         [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.center.mas_equalTo(_youhuiView);
+            make.center.mas_equalTo(self.youhuiView);
         }];
         
         UIButton * cancelBtn = [UIButton new];
@@ -523,12 +510,15 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
         }];
         
         UILabel * label = [UILabel new];
-        label.text = @"满299元使用";
+        self.youhui_label = label;
+        label.text = [NSString stringWithFormat:@"满%@元可用",self.homeModel.coupon.face];
+//        label.text = @"满299元使用";
         label.textColor = [UIColor colorWithHexString:@"#D54931"];
         label.font = [UIFont systemFontOfSize:16];
         [imageView addSubview:label];
         UILabel * label1 = [UILabel new];
-        label1.text = @"100";
+        self.youhui_label1 = label1;
+        label1.text = self.homeModel.coupon.subtraction;
         label1.textColor = [UIColor colorWithHexString:@"#D54931"];
         label1.font = [UIFont boldSystemFontOfSize:50];
         [imageView addSubview:label1];
@@ -555,8 +545,8 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
     [self.coverBtn addSubview:self.youhuiView];
     [self.youhuiView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.mas_equalTo(self.coverBtn);
+        make.size.mas_equalTo(CGSizeMake(135, 165));
     }];
-    @weakify(self)
 //    self.youhuiView.cancel = ^{
 //        @strongify(self)
 //        [self.coverBtn removeFromSuperview];
@@ -566,6 +556,11 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
     
 }
 - (void)linquBtnClick{
+    [self requestPOST:API_Goods_receive parameters:@{@"user_id":[SAApplication userID]} success:^(__kindof SARequest *request, id responseObject) {
+        [self.coverBtn removeFromSuperview];
+        [self.youhuiView removeFromSuperview];
+        [self showSuccess:@"领取成功！"];
+    } failure:NULL];
     
 }
 

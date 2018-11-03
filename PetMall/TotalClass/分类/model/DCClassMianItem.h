@@ -11,7 +11,7 @@
 @interface DCClassMianItem : NSObject
 
 /** 文标题  */
-@property (nonatomic, copy ,readonly) NSString *cate_title;
+@property (nonatomic, copy) NSString *cate_title;
 
 @property (nonatomic, copy ,readonly) NSString *cate_id;
 

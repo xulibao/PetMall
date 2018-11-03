@@ -66,7 +66,7 @@
     }];
     
     [hengfuImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(_handheldImageView);
+        make.left.mas_equalTo(self.handheldImageView);
         make.top.mas_equalTo(15);
         make.size.mas_equalTo(CGSizeMake(122, 20));
     }];
@@ -78,10 +78,10 @@
 
 
 #pragma mark - Setter Getter Methods
-- (void)setHandheldImage:(NSString *)handheldImage
+- (void)setPresaleModel:(PMPresaleModel *)presaleModel
 {
-    _handheldImage = handheldImage;
-    [_handheldImageView sd_setImageWithURL:[NSURL URLWithString:handheldImage]];
+    _presaleModel = presaleModel;
+    [_handheldImageView sd_setImageWithURL:[NSURL URLWithString:presaleModel.active_img]];
 }
 
 @end

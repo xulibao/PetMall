@@ -7,7 +7,7 @@
 //
 
 #import "PMMyGroupPurchaseViewController.h"
-#import "PMCommonGoodsItem.h"
+#import "PMHomeModel.h"
 #import "PMGroupPurchaserDetailViewController.h"
 @interface PMMyGroupPurchaseViewController()
 @property(nonatomic, strong) NSMutableArray *dataArray;
@@ -28,20 +28,20 @@
 #pragma mark - Request
 
 - (void)fetchData {
-      self.dataArray = [PMCommonGoodsItem mj_objectArrayWithFilename:@"HomeHighGoods.plist"];
-    [self setItems:self.dataArray];
+    
+    [self requestMethod:GARequestMethodPOST URLString:API_Dogfood_goupbuy parameters:@{@"user_id":[SAApplication userID]} resKeyPath:@"result" resArrayClass:[PMGroupModel class] retry:YES success:^(__kindof SARequest *request, id responseObject) {
+        self.dataArray = responseObject;
+        [self setItems:self.dataArray];
+    } failure:NULL];
+    
 }
 
-- (void)didSelectCellWithItem:(id<STCommonTableRowItem>)item1{
+- (void)didSelectCellWithItem:(id<STCommonTableRowItem>)item{
     
     PMGroupPurchaserDetailViewController * vc = [PMGroupPurchaserDetailViewController new];
-    PMCommonGoodsItem * item = self.dataArray[0];
-    vc.goodTitle = @"包退通用牛肉泰迪贵宾金毛比熊幼犬成犬双拼狗粮 5斤10斤";
-    vc.goodPrice = item.price;
-    vc.goodTip= @"26人参团  还差4人";
-    vc.goodSubtitle = @"参团立省7.2元";
-    vc.shufflingArray = item.images;
-    vc.goodImageView = item.image_url;
+    PMGroupModel * goodsItem = (PMGroupModel *)item;
+    vc.goods_id = goodsItem.groupId;
+//    vc.list_id  = goodsItem.list_id;
     [self.navigationController pushViewController:vc animated:YES];
 }
 @end

@@ -15,6 +15,7 @@
 
 @property(nonatomic, copy) NSString *couponId;
 @property(nonatomic, copy) NSString *face;
+@property(nonatomic, copy) NSString *img;
 @property(nonatomic, copy) NSString *subtraction;
 
 @end

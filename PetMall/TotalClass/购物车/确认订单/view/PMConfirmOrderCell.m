@@ -8,6 +8,7 @@
 
 #import "PMConfirmOrderCell.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "PMOrderGoodView.h"
 
 @interface PMConfirmOrderCell()
 
@@ -98,12 +99,18 @@
 
 }
 
-- (void)setItem:(DCRecommendItem *)item{
-    _item = item;
-    [self.cartImageView sd_setImageWithURL:[NSURL URLWithString:item.image_url] placeholderImage:nil];
-    self.cartTitleLabel.text = item.goods_title;
-    self.cartNatureLabel.text = item.nature;
-    self.cartPriceLabel.text = [NSString stringWithFormat:@"¥%@",item.price];
-    self.cartCountLabel.text = [NSString stringWithFormat:@"x%@",item.people_count];
+- (void)setItems:(NSArray *)items{
+    _items = items;
+    for (int i = 0; i < items.count; i++) {
+        PMOrderListItem *item = items[i];
+        PMOrderGoodView * goodView = [[PMOrderGoodView alloc] init];
+        goodView.data = item;
+        [self.contentView addSubview:goodView];
+        [goodView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(self.contentView).mas_offset(100 * i);
+            make.left.right.mas_equalTo(self.contentView);
+            make.height.mas_equalTo(95);
+        }];
+    }
 }
 @end

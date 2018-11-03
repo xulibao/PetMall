@@ -32,9 +32,18 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self == [super initWithFrame:frame]) {
         [self setupUI];
-//        [self addGes];
+        [self addGesture];
     }
     return self;
+}
+
+- (void)addGesture{
+    [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tagDidClick:)]];
+}
+- (void)tagDidClick:(UITapGestureRecognizer *)gr{
+    if (self.clickHeader) {
+        self.clickHeader();
+    }
 }
 
 - (UILabel *)address {
@@ -171,6 +180,11 @@
 }
 
 
-
+- (void)setItem:(PMMyAddressItem *)item{
+    _item = item;
+    self.address.text = [NSString stringWithFormat:@"%@%@",item.user_address,item.user_add];
+    self.phoneNum.text = item.user_phone;
+    self.receiver.text = item.user_name;
+}
 
 @end

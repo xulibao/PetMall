@@ -132,7 +132,7 @@ if (isHidden){\
 //电话 - 提示拨打
 #define MakePhoneTelprompt(phoneNumber) [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"telprompt:%@",[phoneNumber stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]]]];
 
-#define IS_LOGIN  if (![SAAccount isLog]) {\
+#define IS_LOGIN  if (![SAApplication userID]) {\
 PMLoginViewController *loginVc = [[PMLoginViewController alloc] init];\
 UIViewController *vc = [[SAApplication sharedApplication].mainTabBarController selectedViewController];\
 STNavigationController * nav = [[STNavigationController alloc] initWithRootViewController:loginVc];\

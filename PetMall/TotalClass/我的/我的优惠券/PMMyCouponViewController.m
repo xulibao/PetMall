@@ -50,33 +50,41 @@
     [self fetchData];
 }
 
-
+- (NSMutableArray *)dataArray{
+    if (_dataArray == nil) {
+        _dataArray = [NSMutableArray array];
+    }
+    return _dataArray;
+}
 
 #pragma mark - Request
 
 - (void)fetchData {
-    self.dataArray = [NSMutableArray array];
-    PMMyCouponItem * model = [PMMyCouponItem new];
-    model.price = @"10";
-    model.type = self.type;
-    [self.dataArray addObject:model];
-    model = [PMMyCouponItem new];
-    model.price = @"20";
-    model.type = self.type;
-    [self.dataArray addObject:model];
-    model = [PMMyCouponItem new];
-    model.price = @"30";
-    model.type = self.type;
-    [self.dataArray addObject:model];
-    model = [PMMyCouponItem new];
-    model.price = @"40";
-    model.type = self.type;
-    [self.dataArray addObject:model];
-        model = [PMMyCouponItem new];
-    model.price = @"50";
-    model.type = self.type;
-            [self.dataArray addObject:model];
-    [self setItems:self.dataArray];
+    [self requestMethod:GARequestMethodPOST URLString:API_user_coupon parameters:@{@"user_id":@"1",@"zt":@(self.type)} resKeyPath:@"result" resArrayClass:[PMMyCouponItem class] retry:YES success:^(__kindof SARequest *request, id responseObject) {
+        self.dataArray = responseObject;
+        [self setItems:self.dataArray];
+    } failure:NULL];
+//    self.dataArray = [NSMutableArray array];
+//    PMMyCouponItem * model = [PMMyCouponItem new];
+//    model.price = @"10";
+//    model.type = self.type;
+//    [self.dataArray addObject:model];
+//    model = [PMMyCouponItem new];
+//    model.price = @"20";
+//    model.type = self.type;
+//    [self.dataArray addObject:model];
+//    model = [PMMyCouponItem new];
+//    model.price = @"30";
+//    model.type = self.type;
+//    [self.dataArray addObject:model];
+//    model = [PMMyCouponItem new];
+//    model.price = @"40";
+//    model.type = self.type;
+//    [self.dataArray addObject:model];
+//        model = [PMMyCouponItem new];
+//    model.price = @"50";
+//    model.type = self.type;
+//            [self.dataArray addObject:model];
 }
 
 @end

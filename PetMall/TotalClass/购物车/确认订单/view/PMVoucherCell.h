@@ -7,7 +7,7 @@
 //
 
 #import "SABaseCell.h"
-#import "PMVoucherModel.h"
+#import "PMMyCouponItem.h"
 @interface PMVoucherCell : SABaseCell
-@property(nonatomic, strong) PMVoucherModel *model;
+@property(nonatomic, strong) PMMyCouponItem *model;
 @end

@@ -266,7 +266,7 @@ static dispatch_queue_t conversationsJoinSerialQueue = NULL;
 }
 
 - (void)signOut {
-    _window.rootViewController = self.signInController;
+//    _window.rootViewController = self.signInController;
 //        [self.navigationController setViewControllers:@[self.signInController]
 //                                            animated:NO];
 
@@ -274,6 +274,8 @@ static dispatch_queue_t conversationsJoinSerialQueue = NULL;
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
     [userDefault removeObjectForKey:kUserInfoUserDefaultsKEY];
     [userDefault synchronize];
+    [self initUser];
+    
 }
 
 + (NSString *)userID {
@@ -292,7 +294,7 @@ static dispatch_queue_t conversationsJoinSerialQueue = NULL;
         NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
         [userDefault setObject:userInfoDic forKey:kUserInfoUserDefaultsKEY];
         [userDefault synchronize];
-//        [self initUser];
+        [self initUser];
     }
 }
 

@@ -15,5 +15,8 @@
     }
     return _cellClass;
 }
++ (NSDictionary *)mj_replacedKeyFromPropertyName{
+    return @{@"address_id":@"id"};
+}
 
 @end

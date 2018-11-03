@@ -7,14 +7,19 @@
 //
 
 #import "PMHomeSubViewController.h"
-#import "PMCommonGoodsItem.h"
+#import "PMGoodsItem.h"
+#import "PMGoodsCell.h"
+
 #import <SDCycleScrollView.h>
 #import "SAButton.h"
-@interface PMHomeSubViewController ()<SDCycleScrollViewDelegate>
+#import "PMHomeSubModel.h"
+#import <SDWebImage/UIButton+WebCache.h>
+@interface PMHomeSubViewController ()<SDCycleScrollViewDelegate,PMGoodsCellDelegate>
 @property(nonatomic, strong) NSMutableArray *dataArray;
 @property(nonatomic, strong) NSMutableArray *bannersArray;
 @property(nonatomic, strong) NSArray *titleArray1;
 @property(nonatomic, strong) NSArray *titleArray2;
+@property(nonatomic, strong) PMHomeSubModel *subModel;
 /* 轮播图 */
 @property (strong , nonatomic)SDCycleScrollView *cycleScrollView;
 @end
@@ -42,23 +47,31 @@
 }
 - (NSMutableArray *)bannersArray{
     if (_bannersArray == nil) {
-        _bannersArray =  @[@"http://gfs5.gomein.net.cn/T1obZ_BmLT1RCvBVdK.jpg",@"http://gfs9.gomein.net.cn/T1C3J_B5LT1RCvBVdK.jpg",@"http://gfs5.gomein.net.cn/T1CwYjBCCT1RCvBVdK.jpg",@"http://gfs7.gomein.net.cn/T1u8V_B4ET1RCvBVdK.jpg",@"http://gfs7.gomein.net.cn/T1zODgB5CT1RCvBVdK.jpg"];
+        _bannersArray =  [@[] mutableCopy];
         
     }
     return _bannersArray;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    [self fecthHeaderView];
+    self.viewModel.cellDelegate = self;
     [self fetchData];
 }
 - (void)layoutTableView {
     
 }
 - (void)layoutFilterView {
-
 }
 - (void)initFilterView {
+    
+    [self requestPOST:API_Dogfood_specifications parameters:@{@"user_id":[SAApplication userID],@"zl":@"2"} success:^(__kindof SARequest *request, id responseObject) {
+        self.subModel = [PMHomeSubModel mj_objectWithKeyValues:responseObject[@"result"]];
+        [self fectchSubViews];
+        
+    } failure:NULL];
+}
+
+- (void)fectchSubViews{
     UIView * headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainBoundsWidth, 370)];
     headerView.backgroundColor = [UIColor whiteColor];
     self.tableView.tableHeaderView = headerView;
@@ -66,32 +79,37 @@
     _cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, kMainBoundsWidth, 150) delegate:self placeholderImage:nil];
     _cycleScrollView.bannerImageViewContentMode = UIViewContentModeScaleAspectFill;
     _cycleScrollView.autoScrollTimeInterval = 5.0;
+    for (PMHomeSubNavigationModel * model in self.subModel.Broadcast) {
+        [self.bannersArray addObject:model.img];
+    }
     _cycleScrollView.imageURLStringsGroup = self.bannersArray;
     [headerView addSubview:_cycleScrollView];
     
     CGFloat titelW = 50;
     CGFloat titelMargin = (kMainBoundsWidth - self.titleArray1.count *titelW)/8 ;
     UIButton * titelBtn;
-    for (int i = 0; i < 4; i ++) {
+    for (int i = 0; i < self.subModel.navigation.count; i ++) {
+        PMHomeSubNavigationModel * model = self.subModel.navigation[i];
         UIButton * btn = [[UIButton alloc] init];
         titelBtn = btn;
         btn.titleLabel.font = [UIFont systemFontOfSize:12];
         btn.titleLabel.textAlignment = NSTextAlignmentCenter;
-        [btn setTitle:self.titleArray1[i] forState:UIControlStateNormal];
+        [btn setTitle:model.cate_title forState:UIControlStateNormal];
         [btn setTitleColor:kColor333333 forState:UIControlStateNormal];
         [headerView addSubview:btn];
         [btn mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.mas_equalTo(_cycleScrollView.mas_bottom).mas_offset(10);
-                make.left.mas_equalTo(titelMargin + i *(titelMargin * 2 + titelW));
-                make.width.mas_equalTo(titelW);
-                make.height.mas_equalTo(15);
-            }];
+            make.top.mas_equalTo(self.cycleScrollView.mas_bottom).mas_offset(10);
+            make.left.mas_equalTo(titelMargin + i *(titelMargin * 2 + titelW));
+            make.width.mas_equalTo(titelW);
+            make.height.mas_equalTo(15);
+        }];
     }
     
     CGFloat titel2W = 105;
     CGFloat titel2Margin = (kMainBoundsWidth - 3 *titel2W)/6 ;
-        UIButton * titel2Btn;
-    for (int i = 0; i < self.titleArray2.count; i ++) {
+    UIButton * titel2Btn;
+    for (int i = 0; i < self.subModel.classification.count; i ++) {
+        PMHomeSubNavigationModel * model = self.subModel.classification[i];
         NSInteger hangshu = i / 3;
         NSInteger lieshu = i % 3;
         CGFloat top = 10 + hangshu * (50 +titel2Margin);
@@ -99,13 +117,17 @@
         btn.layer.cornerRadius = 5;
         btn.clipsToBounds = YES;
         titel2Btn = btn;
-        btn.spacingBetweenImageAndTitle = 5;
         btn.backgroundColor = kColorEEEEEE;
         btn.titleLabel.font = [UIFont systemFontOfSize:12];
         btn.titleLabel.textAlignment = NSTextAlignmentCenter;
-        [btn setImage:IMAGE(@"home_121312") forState:UIControlStateNormal];
-        [btn setTitle:self.titleArray2[i] forState:UIControlStateNormal];
+        btn.spacingBetweenImageAndTitle = 5;
+        btn.imageView.contentMode = UIViewContentModeScaleAspectFit;
+        [btn setTitle:model.cate_title forState:UIControlStateNormal];
         [btn setTitleColor:kColor333333 forState:UIControlStateNormal];
+        [btn setImageWithURL:[NSURL URLWithString:model.img] forState:UIControlStateNormal placeholder:IMAGE(@"home_121312")];
+        btn.imageView.size = CGSizeMake(50, 50);
+//        [btn sd_setImageWithURL:[NSURL URLWithString:model.img] forState:UIControlStateNormal];
+ 
         [headerView addSubview:btn];
         [btn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(titelBtn.mas_bottom).mas_offset(top);
@@ -185,8 +207,8 @@
     
     self.filterView.delegate = self;
     self.filterView.dataSource = self;
-}
 
+}
 
 - (void)fecthHeaderView{
    
@@ -197,13 +219,21 @@
     [self fetchData];
 }
 
-
-
 #pragma mark - Request
-
 - (void)fetchData {
-    self.dataArray = [PMCommonGoodsItem mj_objectArrayWithFilename:@"HomeHighGoods.plist"];
-    [self setItems:self.dataArray];
+    [self requestMethod:GARequestMethodPOST URLString:API_Dogfood_condition parameters:@{@"pagenum":@(self.page),@"pagesize":@"10"} resKeyPath:@"result" resArrayClass:[PMGoodsItem class] retry:YES success:^(__kindof SARequest *request, id responseObject) {
+        self.dataArray = responseObject;
+        [self setItems:self.dataArray];
+    } failure:NULL];
+ 
+
+}
+
+- (void)cellDidAddCart:(PMGoodsItem *)item{
+    [self requestPOST:API_Dogfood_cart parameters:@{@"goods_id":item.goodId,@"user_id":[SAApplication userID],@"type":@"1",@"list_id":item.list_id,@"shul":@"1"} success:^(__kindof SARequest *request, id responseObject) {
+        [self showSuccess:@"加入购物车成功！"];
+        
+    } failure:NULL];
 }
 
 @end

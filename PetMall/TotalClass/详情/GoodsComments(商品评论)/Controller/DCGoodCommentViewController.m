@@ -39,8 +39,7 @@ static NSString *const DCCommentsCntCellID = @"DCCommentsCntCell";
 @implementation DCGoodCommentViewController
 
 #pragma mark - LazyLoad
-- (UITableView *)tableView
-{
+- (UITableView *)tableView{
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:CGRectZero];
         _tableView.delegate = self;
@@ -56,8 +55,7 @@ static NSString *const DCCommentsCntCellID = @"DCCommentsCntCell";
     return _tableView;
 }
 
-- (NSMutableArray<DCCommentsItem *> *)commentsItem
-{
+- (NSMutableArray<DCCommentsItem *> *)commentsItem{
     if (!_commentsItem) {
         _commentsItem = [NSMutableArray array];
     }
@@ -68,22 +66,26 @@ static NSString *const DCCommentsCntCellID = @"DCCommentsCntCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"商品评价";
-    [self setUpBase];
-    
-    [self setUpHeadView];
-}
-
-- (void)setUpBase
-{
     self.view.backgroundColor = [UIColor whiteColor];
     self.tableView.backgroundColor = DCBGColor;
-    _commentsItem = [DCCommentsItem mj_objectArrayWithFilename:@"CommentData.plist"];
+    [self setUpHeadView];
+
+    [self fecthData];
+    
+}
+
+- (void)fecthData{
+    [self requestPOST:API_Dogfood_evaluation parameters:@{@"pagenum":@"1",@"user_id":[SAApplication userID],@"pagesize":@"10",@"user_goods":self.user_goods} success:^(__kindof SARequest *request, id responseObject) {
+        self.headView.tipLabel.text =  [NSString stringWithFormat:@"%@%%好评",responseObject[@"result"][@"shul"][@"package_ok"]];
+        self.headView.percentageLabel.text = [NSString stringWithFormat:@"(%@)",responseObject[@"result"][@"shul"][@"package_pl"]];
+        self.commentsItem = [DCCommentsItem mj_objectArrayWithKeyValuesArray:responseObject[@"result"][@"comment"]];
+        [self.tableView reloadData];
+    } failure:NULL];
 }
 
 
 #pragma mark - 头部视图
-- (void)setUpHeadView
-{
+- (void)setUpHeadView{
     _headView = [DCComHeadView new];
     _headView.dc_height = 140;
     WEAKSELF
@@ -115,15 +117,13 @@ static NSString *const DCCommentsCntCellID = @"DCCommentsCntCell";
 
 
 #pragma mark - <UITableViewDelegate>
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
     
 }
 
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return _commentsItem[indexPath.row].cellHeight;
 }
 

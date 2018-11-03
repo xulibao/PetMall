@@ -70,8 +70,7 @@
 }
 
 #pragma mark - Setter Getter Methods
-- (void)setHeadTitle:(DCClassMianItem *)headTitle
-{
+- (void)setHeadTitle:(DCClassMianItem *)headTitle{
     _headTitle = headTitle;
     _titleLabel.text = headTitle.cate_title;
 }

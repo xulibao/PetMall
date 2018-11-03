@@ -12,7 +12,7 @@
 #import "PMSpecialClearanceSubCell.h"
 // Vendors
 #import <MJExtension.h>
-
+#import "PMHomeModel.h"
 @interface PMSpecialClearanceCell()<UICollectionViewDelegate , UICollectionViewDataSource , UICollectionViewDelegateFlowLayout>
 
 /* collection */
@@ -87,20 +87,27 @@ static NSString *const PMSpecialClearanceSubCellID = @"PMSpecialClearanceSubCell
 #pragma mark - <UICollectionViewDataSource>
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return _countDownItem.count;
+    return self.dataArray.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     PMSpecialClearanceSubCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:PMSpecialClearanceSubCellID forIndexPath:indexPath];
-    cell.recommendItem = _countDownItem[indexPath.row];
+    cell.clearingModel = self.dataArray[indexPath.row];
     return cell;
 }
 
 #pragma mark - <UICollectionViewDelegate>
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    
+    if (self.cellDidSelectItem) {
+        self.cellDidSelectItem(self.dataArray[indexPath.row]);
+    }
     NSLog(@"点击了计时商品%zd",indexPath.row);
     
 }
+
+- (void)setDataArray:(NSArray *)dataArray{
+    _dataArray = dataArray;
+}
+
 @end

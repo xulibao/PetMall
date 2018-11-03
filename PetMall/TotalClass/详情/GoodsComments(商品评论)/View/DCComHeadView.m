@@ -23,11 +23,7 @@
 
 @interface DCComHeadView ()<UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UICollectionViewDataSource,HorizontalCollectionLayoutDelegate>
 
-/* 提示label */
-@property (strong , nonatomic)UILabel *tipLabel;
 
-/* 百分比label */
-@property (strong , nonatomic)UILabel *percentageLabel;
 
 @property(nonatomic, strong) UIImageView *topImageView;
 

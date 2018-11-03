@@ -9,23 +9,16 @@
 #import "STCommonTableViewBaseItem.h"
 
 @interface PMCommonGoodsItem : STCommonBaseTableRowItem
-/** 图片URL */
-@property (nonatomic, copy ) NSString *image_url;
-/** 商品标题 */
-@property (nonatomic, copy ) NSString *main_title;
-/** 商品小标题 */
-@property (nonatomic, copy ) NSString *goods_title;
-/** 商品价格 */
-@property (nonatomic, copy ) NSString *price;
-/** 剩余 */
-@property (nonatomic, copy ,readonly) NSString *stock;
-/** 属性 */
-@property (nonatomic, copy ) NSString *nature;
-/** cantuanrenshy */
-@property(nonatomic, strong) NSString *people_count;
-/** 折扣 */
-@property(nonatomic, strong) NSString *discount;
 
-@property (copy , nonatomic , readonly)NSArray *images;
+@property(nonatomic, copy) NSString *goodId;
+@property(nonatomic, copy) NSString *goods_logo;
+@property(nonatomic, copy) NSString *goods_title;
+@property(nonatomic, copy) NSString *market_price;
+@property(nonatomic, copy) NSString *selling_price;
+@property(nonatomic, copy) NSString *package_stock;//库存
+@property(nonatomic, copy) NSString *package_sale;//收货数量
+@property(nonatomic, copy) NSString *package_pl;//评论数量
+@property(nonatomic, copy) NSString *package_ok; //好评率
+@property(nonatomic, copy) NSString *list_id; //价格id
 
 @end

@@ -70,7 +70,7 @@
         self.title = @"编辑地址";
     } else {
         _model = [[PMMyAddressItem alloc] init];
-        _model.areaAddress = @"请选择";
+        _model.user_address = @"请选择";
     }
     
     //监听所有的textView
@@ -96,25 +96,27 @@
     YWAddressTableViewCell1 *phoneCell = [_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
     YWAddressTableViewCell3 *defaultCell = [_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
     
-    _model.nameStr = nameCell.textField.text;
-    _model.phoneStr = phoneCell.textField.text;
-    _model.detailAddress = _detailTextViw.text;
-    _model.areaAddress = _chooseAddressView.address;
-    _model.isDefaultAddress = defaultCell.rightSwitch.isOn;
+    _model.user_name = nameCell.textField.text;
+    _model.user_phone = phoneCell.textField.text;
+    _model.user_add = _detailTextViw.text;
+    _model.user_address = _chooseAddressView.address;
+    if (defaultCell) {
+        _model.zt = defaultCell.rightSwitch.isOn;
+    }
     
-    if (_model.nameStr.length == 0) {
+    if (_model.user_name.length == 0) {
         [self showWaring:@"请填写收货人姓名！"];
         return;
-    } else if (_model.phoneStr.length == 0) {
+    } else if (_model.user_phone.length == 0) {
         [self showWaring:@"请填写收货人电话！"];
         return;
-    } else if (_model.phoneStr.length != 11) {
+    } else if (_model.user_phone.length != 11) {
         [self showWaring:@"手机号为11位，如果为座机请加上区号"];
         return;
-    } else if ([_model.areaAddress isEqualToString:@"请选择"]) {
+    } else if ([_model.user_address isEqualToString:@"请选择"]) {
          [self showWaring:@"请选择所在地区"];
         return;
-    } else if (_model.detailAddress.length == 0 || _model.detailAddress.length < 5) {
+    } else if (_model.user_add.length == 0 || _model.user_add.length < 5) {
         [self showWaring:@"请填写详细地址，不少与5字"];
 
         return;
@@ -206,9 +208,9 @@
     }
     
     NSLog(@"选择的姓名：%@， 电话号码：%@", fullName, phoneNumbers.firstObject);
-    _model.nameStr = fullName;
+    _model.user_name = fullName;
     // 这里直接取第一个电话号码，如果有多个请自行添加选择器
-    _model.phoneStr = phoneNumbers.firstObject;
+    _model.user_phone = phoneNumbers.firstObject;
     [_tableView reloadData];
     
     [picker dismissViewControllerAnimated:YES completion:nil];
@@ -218,7 +220,7 @@
 #pragma mark *** UITableViewDataSource & UITableViewDelegate ***
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    if (_model.isDefaultAddress) {
+    if (_model.zt) {
         // 如果该地址已经是默认地址，则无需再显示 "设为默认" 这个按钮，即隐藏
         return 1;
     }
@@ -241,15 +243,15 @@
             cell.placehodlerStr = @"填写收货人姓名";
             [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
             cell.leftStr = _dataSource[indexPath.section][indexPath.row];
-            if (_model.nameStr.length > 0) {
-                cell.textFieldStr = _model.nameStr;
+            if (_model.user_name.length > 0) {
+                cell.textFieldStr = _model.user_name;
             }
             if (indexPath.row == 1) {
                 cell.rightBtn.hidden = NO;
                 cell.placehodlerStr = @"填写收货人电话";
                 cell.textField.keyboardType = UIKeyboardTypePhonePad;
-                if (_model.phoneStr.length > 0) {
-                    cell.textFieldStr = _model.phoneStr;
+                if (_model.user_phone.length > 0) {
+                    cell.textFieldStr = _model.user_phone;
                 }
                 cell.contactBlock = ^{
                     @strongify(self);
@@ -262,8 +264,8 @@
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             [cell sp_addBottomLineWithLeftMargin:0 rightMargin:0];
             cell.leftStr = _dataSource[indexPath.section][indexPath.row];
-            cell.rightStr = _model.areaAddress;
-            if (![_model.areaAddress isEqualToString:@""] && ![_model.areaAddress isEqualToString:@"请选择"]) {
+            cell.rightStr = _model.user_address;
+            if (![_model.user_address isEqualToString:@""] && ![_model.user_address isEqualToString:@"请选择"]) {
                 cell.rightLabel.textColor = [UIColor blackColor];
             } else {
                 cell.rightLabel.textColor = [UIColor lightGrayColor];
@@ -348,8 +350,8 @@
         _detailTextViw.textContainerInset = UIEdgeInsetsMake(5, 0, 5, 15);
         _detailTextViw.font = [UIFont systemFontOfSize:14];
         [_detailTextViw addSubview:self.promptLable];
-        if (_model.detailAddress.length > 0) {
-            _detailTextViw.text = _model.detailAddress;
+        if (_model.user_add.length > 0) {
+            _detailTextViw.text = _model.user_add;
             self.promptLable.hidden = YES;
         }
     }
@@ -372,18 +374,18 @@
     if (!_chooseAddressView) {
         @weakify(self);
         _chooseAddressView = [[YWChooseAddressView alloc]initWithFrame:CGRectMake(0, kMainBoundsHeight - 350, kMainBoundsWidth, 350)];
-        if ([_model.areaAddress isKindOfClass:[NSNull class]] || [_model.areaAddress isEqualToString:@""]) {
-            _model.areaAddress = @"请选择";
+        if ([_model.user_address isKindOfClass:[NSNull class]] || [_model.user_address isEqualToString:@""]) {
+            _model.user_address = @"请选择";
         }
         
-        _chooseAddressView.address = _model.areaAddress;
+        _chooseAddressView.address = _model.user_address;
         _chooseAddressView.closed = ^{
             @strongify(self)
             self.coverView.backgroundColor = [UIColor clearColor];
             NSLog(@"选择的地区为：%@", self.chooseAddressView.address);
-            self.model.areaAddress = self.chooseAddressView.address;
-            if (self.model.areaAddress.length == 0) {
-                self.model.areaAddress = @"请选择";
+            self.model.user_address = self.chooseAddressView.address;
+            if (self.model.user_address.length == 0) {
+                self.model.user_address = @"请选择";
             }
             [self.tableView reloadData];
             // 隐藏视图 - 动画
@@ -396,9 +398,9 @@
             @strongify(self)
             self.coverView.backgroundColor = [UIColor clearColor];
             NSLog(@"选择的地区为：%@", self.chooseAddressView.address);
-            self.model.areaAddress = self.chooseAddressView.address;
-            if (self.model.areaAddress.length == 0) {
-                self.model.areaAddress = @"请选择";
+            self.model.user_address = self.chooseAddressView.address;
+            if (self.model.user_address.length == 0) {
+                self.model.user_address = @"请选择";
             }
             [self.tableView reloadData];
             // 隐藏视图 - 动画

@@ -7,90 +7,53 @@
 //
 
 #import "PMMessageDetailViewController.h"
-
+#import "PMMessageDetailItem.h"
 @interface PMMessageDetailViewController ()
-
+@property(nonatomic, strong) NSMutableArray *dataArray;
 @end
 
 @implementation PMMessageDetailViewController
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"系统消息";
+    self.tableView.mj_header.hidden = YES;
+    [self fetchData];
 }
 
-- (void)initSubviews {
-    [super initSubviews];
-    
-    UILabel * timeLabel = [UILabel new];
-    timeLabel.text = @"8月28日 09:26";
-    timeLabel.textColor = kColor999999;
-    timeLabel.font = [UIFont systemFontOfSize:10];
-
-    [self.view addSubview:timeLabel];
-    
-    
-    UIView * bgView =[UIView new];
-    bgView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:bgView];
-    
-    UILabel * statusLabel = [UILabel new];
-    statusLabel.font = [UIFont systemFontOfSize:15];
-    statusLabel.text = @"交易完成";
-    [bgView addSubview:statusLabel];
-    
-    UILabel * messageContentLabel = [UILabel new];
-    messageContentLabel.numberOfLines = 0;
-    messageContentLabel.textColor = kColor999999;
-    messageContentLabel.font = [UIFont systemFontOfSize:12];
-    messageContentLabel.text = @"您的订单【GO狗粮 抗敏美毛系列全 犬配方 25磅】已完成";
-    [bgView addSubview:messageContentLabel];
-    
-    UIButton * commentBtn = [UIButton new];
-    commentBtn.titleLabel.font = [UIFont systemFontOfSize:12];
-    [commentBtn setTitle:@"点击去评论>" forState:UIControlStateNormal];
-    [commentBtn setTitleColor:kColorFF3945 forState:UIControlStateNormal];
-    [bgView addSubview:commentBtn];
-    
-    
-    
-    [timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.mas_equalTo(self.view);
-        make.top.mas_equalTo(17);
-
-    }];
-    
-    [bgView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(timeLabel.mas_bottom).mas_offset(10);
-        make.left.mas_equalTo(12);
-        make.right.mas_equalTo(-12);
-        make.height.mas_equalTo(105);
-    }];
-    
-    [statusLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(18);
-        make.top.mas_equalTo(12);
-    }];
-    
-    [messageContentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(statusLabel);
-        make.right.mas_equalTo(-18);
-        make.top.mas_equalTo(statusLabel.mas_bottom).mas_offset(15);
-    }];
-    
-    [commentBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(-18);
-        make.bottom.mas_equalTo(-10);
-    }];
+- (void)refreshingAction {
+    [self fetchData];
 }
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (NSMutableArray *)dataArray{
+    if (_dataArray == nil) {
+        _dataArray = [NSMutableArray array];
+    }
+    return _dataArray;
 }
-*/
+
+#pragma mark - Request
+
+- (void)fetchData {
+    if ([self.type integerValue] == 1) {
+        self.title = @"系统通知";
+        [self requestMethod:GARequestMethodPOST URLString:API_user_service parameters:@{@"user_id":@"1"} resKeyPath:@"result" resArrayClass:[PMMessageDetailItem class] retry:YES success:^(__kindof SARequest *request, id responseObject) {
+            self.dataArray = responseObject;
+            [self setItems:self.dataArray];
+        } failure:NULL];
+    }else{
+        self.title = @"客服消息";
+        [self requestMethod:GARequestMethodPOST URLString:API_user_customer parameters:@{@"user_id":@"1"} resKeyPath:@"result" resArrayClass:[NSDictionary class] retry:YES success:^(__kindof SARequest *request, id responseObject) {
+            for (NSDictionary *dict in responseObject) {
+                PMMessageDetailItem * item = [PMMessageDetailItem new];
+                item.name = dict[@"content"];
+                item.content = dict[@"fankui"];
+                item.time = dict[@"time"];
+                item.message_id = dict[@"id"];
+                [self.dataArray addObject:item];
+            }
+            [self setItems:self.dataArray];
+        } failure:NULL];
+    }
+  
+}
 
 @end

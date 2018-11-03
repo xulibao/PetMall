@@ -7,8 +7,9 @@
 //
 
 #import "PMGoodSaleViewController.h"
-#import "PMCommonGoodsItem.h"
 #import "PMGoodSaleDetailViewController.h"
+#import "PMGoodsItem.h"
+#import "DCSlideshowHeadView.h"
 @interface PMGoodSaleViewController ()
 @property(nonatomic, strong) NSMutableArray *dataArray;
 
@@ -35,20 +36,27 @@
 #pragma mark - Request
 
 - (void)fetchData {
-    self.dataArray = [PMCommonGoodsItem mj_objectArrayWithFilename:@"HomeHighGoods.plist"];
-    [self setItems:self.dataArray];
+    [self requestPOST:API_Dogfood_presale parameters:@{@"pagenum":@(self.page),@"pagesize":@(10),@"fenl":@"2"} success:^(__kindof SARequest *request, id responseObject) {
+        self.dataArray = [PMGoodsItem mj_objectArrayWithKeyValuesArray:responseObject[@"result"][@"data"]];
+        [self setItems:self.dataArray];
+        DCSlideshowHeadView * header = [[DCSlideshowHeadView alloc] initWithFrame:CGRectMake(0, 0, kMainBoundsWidth, 190)];
+        NSMutableArray * imageArray = [@[] mutableCopy];
+        for (NSDictionary *imgDic in responseObject[@"result"][@"img"]) {
+            [imageArray addObject:[NSString stringWithFormat:@"%@%@",[STNetworking host], imgDic[@"img"]]];
+        }
+        header.imageGroupArray = imageArray;
+        //        [imageView setImageWithURL:[NSURL URLWithString:imageStr] placeholder:IMAGE(@"tuangou_header")];
+        self.tableView.tableHeaderView = header;
+        self.tableView.mj_header.hidden = YES;
+    } failure:NULL];
 }
 
-- (void)didSelectCellWithItem:(id<STCommonTableRowItem>)item1{
+- (void)didSelectCellWithItem:(id<STCommonTableRowItem>)item{
     
     PMGoodSaleDetailViewController * vc = [PMGoodSaleDetailViewController new];
-    PMCommonGoodsItem * item = self.dataArray[0];
-    vc.goodTitle = @"包退通用牛肉泰迪贵宾金毛比熊幼犬成犬双拼狗粮 5斤10斤";
-    vc.goodPrice = item.price;
-    vc.goodTip= @"26人参团  还差4人";
-    vc.goodSubtitle = @"参团立省7.2元";
-    vc.shufflingArray = item.images;
-    vc.goodImageView = item.image_url;
+    PMGoodsItem * goodItem = (PMGoodsItem *)item;
+    vc.list_id = goodItem.list_id;
+    vc.goods_id = goodItem.goodId;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

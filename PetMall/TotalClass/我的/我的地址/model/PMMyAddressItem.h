@@ -10,9 +10,14 @@
 #import "PMMyAddressCell.h"
 
 @interface PMMyAddressItem : STCommonBaseTableRowItem
-@property (nonatomic, copy) NSString * phoneStr;            // 电话
-@property (nonatomic, copy) NSString * nameStr;             // 姓名
-@property (nonatomic, copy) NSString * areaAddress;         // 地区（四川省成都市武侯区）
-@property (nonatomic, copy) NSString * detailAddress;       // 详细地址（如：红牌楼街道下一站都市B座406）
-@property (nonatomic, assign) BOOL     isDefaultAddress;    // 是否是默认地址
+
+@property (nonatomic, copy) NSString * address_id;            // 电话
+
+@property (nonatomic, copy) NSString * user_id;            // 电话
+
+@property (nonatomic, copy) NSString * user_phone;            // 电话
+@property (nonatomic, copy) NSString * user_name;             // 姓名
+@property (nonatomic, copy) NSString * user_address;         // 地区（四川省成都市武侯区）
+@property (nonatomic, copy) NSString * user_add;       // 详细地址（如：红牌楼街道下一站都市B座406）
+@property (nonatomic, assign) BOOL  zt;    // 是否是默认地址
 @end

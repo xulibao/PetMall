@@ -14,6 +14,15 @@ typedef enum : NSUInteger {
 } PMMyCouponType;
 @interface PMMyCouponItem : STCommonBaseTableRowItem
 @property(nonatomic, assign) BOOL isEnable;
-@property(nonatomic, copy) NSString *price;
-@property(nonatomic, assign) PMMyCouponType type;
+@property(nonatomic, copy) NSString *couponId;
+@property(nonatomic, copy) NSString *user_id;
+@property(nonatomic, copy) NSString *coupon_id;
+@property(nonatomic, copy) NSString *coupon_zt;
+
+@property(nonatomic, copy) NSString *coupon_jiazhi;
+@property(nonatomic, copy) NSString *coupon_mj;
+@property(nonatomic, copy) NSString *begin_time;
+@property(nonatomic, copy) NSString *last_time;
+@property(nonatomic, assign) PMMyCouponType leixing;
+@property(nonatomic, assign) BOOL isSelect;
 @end

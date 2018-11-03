@@ -7,7 +7,7 @@
 //
 
 #import "PMSearchResultViewController.h"
-#import "PMCommonGoodsItem.h"
+#import "PMGoodsItem.h"
 #import "DCGoodBaseViewController.h"
 @interface PMSearchResultViewController ()
 @property(nonatomic, strong) NSMutableArray *dataArray;
@@ -27,18 +27,17 @@
 #pragma mark - Request
 
 - (void)fetchData {
-    self.dataArray = [PMCommonGoodsItem mj_objectArrayWithFilename:@"HomeHighGoods.plist"];
-    [self setItems:self.dataArray];
+    [self requestMethod:GARequestMethodPOST URLString:API_Classification_sort parameters:@{@"pagenum":@(self.page),@"pagesize":@"10"} resKeyPath:@"result" resArrayClass:[PMGoodsItem class] retry:YES success:^(__kindof SARequest *request, id responseObject) {
+        self.dataArray = responseObject;
+        [self setItems:self.dataArray];
+
+    } failure:NULL];
 }
-- (void)didSelectCellWithItem:(id<STCommonTableRowItem>)item1{
-    PMCommonGoodsItem * item = self.dataArray[0];
+- (void)didSelectCellWithItem:(id<STCommonTableRowItem>)item{
+    PMGoodsItem * goodsItem = (PMGoodsItem *)item;
     DCGoodBaseViewController * vc = [[DCGoodBaseViewController alloc] init];
-    vc.goodTitle = item.main_title;
-    vc.goodPrice = item.price;
-    vc.goodSubtitle = item.goods_title;
-    vc.shufflingArray = item.images;
-    vc.goodImageView = item.image_url;
-    
+    vc.goods_id = goodsItem.goodId;
+    vc.list_id  = goodsItem.list_id;
     [self.navigationController pushViewController:vc  animated:YES];
 }
 @end

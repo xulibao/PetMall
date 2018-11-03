@@ -87,12 +87,12 @@
     
     [_priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.natureLabel.mas_bottom).mas_offset(5);
-        make.centerX.mas_equalTo(self).mas_offset(-15);
+        make.centerX.mas_equalTo(self).mas_offset(-25);
     }];
     
     [_stockLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.priceLabel);
-        make.centerX.mas_equalTo(self).mas_offset(15);
+        make.centerX.mas_equalTo(self).mas_offset(25);
     }];
     
     [self sp_addTopLineWithLeftMargin:0 rightMargin:0];
@@ -100,20 +100,19 @@
 }
 
 #pragma mark - Setter Getter Methods
-- (void)setRecommendItem:(DCRecommendItem *)recommendItem
-{
-    _recommendItem = recommendItem;
+- (void)setSecondkillModel:(PMSecondkillModel *)secondkillModel{
+    _secondkillModel = secondkillModel;
     
-    [_goodsImageView sd_setImageWithURL:[NSURL URLWithString:recommendItem.image_url]];
+    [_goodsImageView sd_setImageWithURL:[NSURL URLWithString:secondkillModel.goods_logo]];
     
-    _priceLabel.text = [NSString stringWithFormat:@"¥%@",recommendItem.price];
+    _priceLabel.text = [NSString stringWithFormat:@"¥%@",secondkillModel.selling_price];
     
-    NSString * stock = [NSString stringWithFormat:@"¥%@",recommendItem.stock];;
+    NSString * stock = [NSString stringWithFormat:@"¥%@",secondkillModel.market_price];;
     //中划线
     NSDictionary *attribtDic = @{NSStrikethroughStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle]};
     NSMutableAttributedString *attribtStr = [[NSMutableAttributedString alloc]initWithString:stock attributes:attribtDic];
     _stockLabel.attributedText = attribtStr;
-    _natureLabel.text = recommendItem.nature;
+    _natureLabel.text = secondkillModel.goods_title;
 }
 
 @end

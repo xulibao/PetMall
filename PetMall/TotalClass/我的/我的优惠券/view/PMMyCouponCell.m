@@ -13,7 +13,8 @@
 
 @property(nonatomic, strong) UIImageView *bgView;
 @property(nonatomic, strong) UILabel *priceLabel;
-
+@property(nonatomic, strong) UILabel *voucherTimeLabel;
+@property(nonatomic, strong) UILabel *conditionsLabel;
 @end
 
 @implementation PMMyCouponCell
@@ -39,6 +40,7 @@
     
     UILabel * conditionsLabel = [[UILabel alloc] init];
     conditionsLabel.text = @"满100元可用";
+    self.conditionsLabel = conditionsLabel;
     conditionsLabel.textColor = [UIColor whiteColor];
     conditionsLabel.font = [UIFont systemFontOfSize:13];
     [self.bgView addSubview:conditionsLabel];
@@ -50,6 +52,7 @@
     
     UILabel * voucherTimeLabel = [[UILabel alloc] init];
     voucherTimeLabel.text = @"2018-07-21至2018-07-30";
+    self.voucherTimeLabel = voucherTimeLabel;
     voucherTimeLabel.font = [UIFont systemFontOfSize:13];
     [self.bgView addSubview:voucherTimeLabel];
     
@@ -85,8 +88,10 @@
 }
 - (void)tableView:(UITableView *)tableView configViewWithData:(PMMyCouponItem *)data AtIndexPath:(NSIndexPath *)indexPath {
     [super tableView:tableView configViewWithData:data AtIndexPath:indexPath];
-    self.priceLabel.text = [NSString stringWithFormat:@"¥%@", data.price];
-    switch (data.type) {
+    self.priceLabel.text = [NSString stringWithFormat:@"¥%@", data.coupon_jiazhi];
+    self.conditionsLabel.text = [NSString stringWithFormat:@"满%@元可用", data.coupon_mj];
+    self.voucherTimeLabel.text = [NSString stringWithFormat:@"%@至%@", data.begin_time,data.last_time];
+    switch (data.leixing) {
         case PMMyCouponType_notUsed:{
             self.bgView.image = IMAGE(@"oder_voucherBg");
         }

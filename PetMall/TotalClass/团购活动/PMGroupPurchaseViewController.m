@@ -34,7 +34,7 @@
 #pragma mark - Request
 
 - (void)fetchData {
-    [self requestPOST:API_Dogfood_presale parameters:@{@"pagenum":@(self.page),@"pagesize":@(10),@"fenl":@"3"} success:^(__kindof SARequest *request, id responseObject) {
+    [self requestPOST:API_Dogfood_grouppurchase parameters:@{@"pagenum":@(self.page),@"pagesize":@(10),@"fenl":@"3"} success:^(__kindof SARequest *request, id responseObject) {
         self.dataArray = [PMGroupModel mj_objectArrayWithKeyValuesArray:responseObject[@"result"][@"data"]];
         [self setItems:self.dataArray];
         DCSlideshowHeadView * header = [[DCSlideshowHeadView alloc] initWithFrame:CGRectMake(0, 0, kMainBoundsWidth, 190)];

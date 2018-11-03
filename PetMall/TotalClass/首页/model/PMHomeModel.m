@@ -28,6 +28,12 @@
 + (NSDictionary *)mj_replacedKeyFromPropertyName{
     return @{@"couponId":@"id"};
 }
+- (NSString *)img{
+    if (![_img hasPrefix:[STNetworking host]]) {
+        _img = [NSString stringWithFormat:@"%@%@",[STNetworking host],_img];
+    }
+    return _img;
+}
 @end
 
 @implementation PMHomeTimelimitModel
@@ -40,11 +46,27 @@
 + (NSDictionary *)mj_replacedKeyFromPropertyName{
     return @{@"secondkillId":@"id"};
 }
+
+- (NSString *)goods_logo{
+    if (![_goods_logo hasPrefix:[STNetworking host]]) {
+        _goods_logo = [NSString stringWithFormat:@"%@%@",[STNetworking host],_goods_logo];
+    }
+    return _goods_logo;
+}
+
 @end
 
 @implementation PMPresaleModel
+
 + (NSDictionary *)mj_replacedKeyFromPropertyName{
     return @{@"presaleId":@"id"};
+}
+
+- (NSString *)active_img{
+    if (![_active_img hasPrefix:[STNetworking host]]) {
+        _active_img = [NSString stringWithFormat:@"%@%@",[STNetworking host],_active_img];
+    }
+    return _active_img;
 }
 @end
 
@@ -85,11 +107,25 @@
 + (NSDictionary *)mj_replacedKeyFromPropertyName{
     return @{@"clearingId":@"id"};
 }
+
+- (NSString *)goods_logo{
+    if (![_goods_logo hasPrefix:[STNetworking host]]) {
+        _goods_logo = [NSString stringWithFormat:@"%@%@",[STNetworking host],_goods_logo];
+    }
+    return _goods_logo;
+}
 @end
 
 @implementation PMBroadCastModel
 + (NSDictionary *)mj_replacedKeyFromPropertyName{
     return @{@"broadCastId":@"id"};
+}
+
+- (NSString *)img{
+    if (![_img hasPrefix:[STNetworking host]]) {
+        _img = [NSString stringWithFormat:@"%@%@",[STNetworking host],_img];
+    }
+    return _img;
 }
 @end
 

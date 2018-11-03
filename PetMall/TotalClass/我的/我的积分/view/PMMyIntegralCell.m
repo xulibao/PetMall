@@ -63,4 +63,11 @@
     }];
 }
 
+- (void)setModel:(PMMyIntegralModel *)model{
+    _model = model;
+    _label0.text = model.source;
+    _label1.text = model.time;
+    _priceLabel.text = [NSString stringWithFormat:@"+%@",model.number];
+}
+
 @end

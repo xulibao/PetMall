@@ -11,6 +11,8 @@
 #import "PMMyIntegralCell.h"
 @interface PMMyIntegralViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property(nonatomic, strong) UITableView *tableView;
+@property(nonatomic, strong) UILabel *jifengLabel;
+@property(nonatomic, strong) NSArray *dataArray;
 @end
 
 @implementation PMMyIntegralViewController
@@ -22,7 +24,15 @@
 - (void)didInitialized {
     [super didInitialized];
     [self fecthSubView];
+    [self fecthData];
+}
 
+- (void)fecthData{
+    [self requestMethod:GARequestMethodPOST URLString:API_user_mypoints parameters:@{@"user_id":@"1"} success:^(__kindof SARequest *request, id responseObject) {
+        self.jifengLabel.text = [responseObject[@"result"][@"user"] stringValue];
+        self.dataArray = [PMMyIntegralModel mj_objectArrayWithKeyValuesArray:responseObject[@"result"][@"integral"]];
+        [self.tableView reloadData];
+    } failure:NULL];
 }
 - (void)setupNavgationBar {
     [super setupNavgationBar];
@@ -79,6 +89,7 @@
     [topView.layer addSublayer:gradientLayer];
     
     UILabel * jifengLabel = [[UILabel alloc] init];
+    self.jifengLabel = jifengLabel;
     jifengLabel.font = [UIFont systemFontOfSize:30];
     jifengLabel.text = @"417";
     jifengLabel.textColor = [UIColor whiteColor];
@@ -144,12 +155,13 @@
 #pragma mark - tableviewDelegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 10;
+    return self.dataArray.count;
 
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PMMyIntegralCell * cell = [tableView dequeueReusableCellWithIdentifier:@"PMMyIntegralCellID" forIndexPath:indexPath];
+    cell.model = self.dataArray[indexPath.row];
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

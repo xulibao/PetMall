@@ -20,7 +20,7 @@
     if (_cellHeight) return _cellHeight;
     
     CGFloat top = 50;
-    CGFloat contentH = [DCSpeedy dc_calculateTextSizeWithText:_comContent WithTextFont:14 WithMaxW:ScreenW - 20].height;
+    CGFloat contentH = [DCSpeedy dc_calculateTextSizeWithText:_user_comment WithTextFont:14 WithMaxW:ScreenW - 20].height;
     
     CGFloat middle = contentH;
     
@@ -41,4 +41,18 @@
     return _cellHeight;
 }
 
+- (NSMutableArray *)imgsArray{
+    if (_imgsArray == nil) {
+        
+        NSArray *picArray;
+        picArray = [self.user_images componentsSeparatedBySthString:@"|"];
+        _imgsArray = [@[] mutableCopy];
+        for (NSString * imageStr in picArray) {
+            if (![imageStr hasPrefix:[STNetworking host]]) {
+                [_imgsArray addObject:[NSString stringWithFormat:@"%@/%@",[STNetworking host],imageStr]];
+            }
+        }
+    }
+    return _imgsArray;
+}
 @end

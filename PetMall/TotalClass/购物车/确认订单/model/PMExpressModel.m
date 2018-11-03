@@ -10,5 +10,7 @@
 
 @implementation PMExpressModel
 
-
++ (NSDictionary *)mj_replacedKeyFromPropertyName{
+    return @{@"express_id":@"id"};
+}
 @end

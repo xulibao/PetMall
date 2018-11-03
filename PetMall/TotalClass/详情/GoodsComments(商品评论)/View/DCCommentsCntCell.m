@@ -60,27 +60,27 @@
 
 
 #pragma mark - Setter Getter Methods
-- (void)setCommentsItem:(DCCommentsItem *)commentsItem
+- (void)setCommentsItem:(PMMyCommentItem *)commentsItem
 {
     _commentsItem = commentsItem;
     
-    [_comIconImageView sd_setImageWithURL:[NSURL URLWithString:@"https://pic4.zhimg.com/383179a483ae1074efaf091c89c8a103_l.jpg"]];
+    [_comIconImageView sd_setImageWithURL:[NSURL URLWithString:commentsItem.img]];
     
     _comBgImageView.hidden = YES;
     _bottomCons.constant = 4; //label有响应尺寸的默认高24；-29 = -24-5；
     _rebackLabel.hidden = _comBgImageView.hidden;
-    _comNameLabel.text = [DCSpeedy dc_encryptionDisplayMessageWith:commentsItem.comName WithFirstIndex:2];
-    _comTimeLabel.text = commentsItem.comTime;
-    _comContentLabel.text = commentsItem.comContent;
+    _comNameLabel.text = [DCSpeedy dc_encryptionDisplayMessageWith:commentsItem.user_name WithFirstIndex:2];
+    _comTimeLabel.text = commentsItem.user_time;
+    _comContentLabel.text = commentsItem.user_comment;
 //    _specificationsLabel.text = [NSString stringWithFormat:@"规格：%@",commentsItem.comSpecifications];
 //    _rebackLabel.text = [NSString stringWithFormat:@"店家回复：%@",commentsItem.comReBack];
     
-    if (commentsItem.imgsArray != nil){
+    if (commentsItem.goodsImageArray != nil){
         //传输图片
         _comImagesView.frame = commentsItem.imagesFrames;
-        _comImagesView.picUrlArray = commentsItem.imgsArray;
-        _comImagesView.comContent = commentsItem.comContent; //评论
-        _comImagesView.comSpecifications = commentsItem.comSpecifications; //规格
+        _comImagesView.picUrlArray = commentsItem.goodsImageArray;
+//        _comImagesView.comContent = commentsItem.user_comment; //评论
+//        _comImagesView.comSpecifications = commentsItem.comSpecifications; //规格
         _comImagesView.hidden = NO;
     }else{
         _comImagesView.hidden = YES;

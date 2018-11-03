@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "PMMyAddressItem.h"
 @interface PMConfirmOrderHeaderView : UIView
 
+@property(nonatomic, strong) PMMyAddressItem *item;
+@property(nonatomic, copy) void (^clickHeader)();
 @end

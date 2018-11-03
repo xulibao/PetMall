@@ -28,6 +28,7 @@
 #import "PMSetViewController.h"
 #import "PMNewUserViewController.h"
 #import "PMMessageViewController.h"
+#import "PMBaseWebViewController.h"
 @interface PMMineViewController ()<UITableViewDelegate,UITableViewDataSource,SAMineHeadViewDelegate,SAMineOrderDelegate>
 @property (nonatomic,strong) SAMineHeadView * headerView;
 @property (nonatomic,strong) NSMutableArray *dataArray;
@@ -41,6 +42,12 @@
 @end
 
 @implementation PMMineViewController
+
+
+- (void)viewDidLoad{
+    [super viewDidLoad];
+    [self fecthSubViews];
+}
 
 - (BOOL)isNeedSign{
     return YES;
@@ -83,33 +90,42 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-//    [self fecthNetData];
+    [self fecthNetData];
 }
 
 - (void)fecthNetData{
-    SARequest * request = ({
+    if ([SAApplication userID]) {
+        NSDictionary * dictData;
+        dictData = @{@"user_id":[SAApplication userID]};
+        SARequest * request = ({
         [self requestMethod:GARequestMethodPOST
-                  URLString:API_user_groupbuy
-                 parameters:@{@"user_id":[SAApplication userID]}
-                 resKeyPath:@"result"
-                   resClass:[SAPersonCenterModel class]
-              resArrayClass:NULL
-                      retry:NO
-                  accessory:nil
-                    success:^(__kindof SARequest *request, id responseObject) {
-                        SAPersonCenterModel * personCenterModel = (SAPersonCenterModel *)responseObject;
-                        self.personCenterModel = personCenterModel;
-                        self.headerView.model = personCenterModel;
-                        [self.headerView setIsLogin:[SAApplication isSign]];
-                        if (self.dataArray.count == 0) {
-                            [self fecthSubViews];
-                        }else{
-                            [self.tableView reloadData];
-                        }
-                    } failure:NULL];
-    });
+                      URLString:API_user_groupbuy
+                     parameters:dictData
+                     resKeyPath:@"result"
+                       resClass:[SAPersonCenterModel class]
+                  resArrayClass:NULL
+                          retry:NO
+                      accessory:nil
+                        success:^(__kindof SARequest *request, id responseObject) {
+                            SAPersonCenterModel * personCenterModel = (SAPersonCenterModel *)responseObject;
+                            self.personCenterModel = personCenterModel;
+                            self.headerView.model = personCenterModel;
+                            [self.headerView setIsLogin:[SAApplication isSign]];
+                            //                        if (self.dataArray.count == 0) {
+                            //                            [self fecthSubViews];
+                            //                        }else{
+                            //                            [self.tableView reloadData];
+                            //                        }
+                        } failure:NULL];
+        });
+        
+        [request start];
+        
+    }else{
+        [self.headerView setIsLogin:[SAApplication isSign]];
+
+    }
     
-    [request start];
     
     //    [self requestMethod:GARequestMethodGET URLString:API_user_personalCenter parameters: resKeyPath:@"data" resClass:[SAPersonCenterModel class] retry:NO success:^(__kindof SARequest *request, id responseObject) {
     //    } failure:^(__kindof SARequest *request, id responseObject, NSError *error) {
@@ -124,7 +140,7 @@
     model.titleName = @"我的团购";
     [self.dataArray addObject:model];
     model.cellAction = ^(SAMineModel *model) {
-        IS_LOGIN
+        [self needLogin];
         PMMyGroupPurchaseViewController * vc = [[PMMyGroupPurchaseViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     };
@@ -134,6 +150,7 @@
     model.titleName = @"我的兑换";
     [self.dataArray addObject:model];
     model.cellAction = ^(SAMineModel *model) {
+        [self needLogin];
         PMMyExchangeViewController *vc = [[PMMyExchangeViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     };
@@ -143,8 +160,9 @@
     model.titleName = @"我的收藏";
     [self.dataArray addObject:model];
     model.cellAction = ^(SAMineModel *model) {
-                PMMyCollectionViewController *vc = [[PMMyCollectionViewController alloc] init];
-                [self.navigationController pushViewController:vc animated:YES];
+        [self needLogin];
+        PMMyCollectionViewController *vc = [[PMMyCollectionViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
     };
     
     model = [[SAMineModel alloc] init];
@@ -152,6 +170,7 @@
     model.titleName = @"我的评价";
     [self.dataArray addObject:model];
     model.cellAction = ^(SAMineModel *model) {
+        [self needLogin];
         PMMyCommentViewController *vc = [[PMMyCommentViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     };
@@ -161,23 +180,32 @@
     model.titleName = @"我的地址";
     [self.dataArray addObject:model];
     model.cellAction = ^(SAMineModel *model) {
+        [self needLogin];
         PMMyAddressViewController * vc = [[PMMyAddressViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     };
     
-        model = [[SAMineModel alloc] init];
-        model.iconImage = @"mine_bangzhu";
-        model.titleName = @"帮助/问题";
-        [self.dataArray addObject:model];
-        //分享
-        model.cellAction = ^(SAMineModel *model) {
-                };
-        model = [[SAMineModel alloc] init];
-        [self.dataArray addObject:model];
-        model.iconImage = @"mine_fengxiang";
-        model.titleName = @"分享";
+    model = [[SAMineModel alloc] init];
+    model.iconImage = @"mine_bangzhu";
+    model.titleName = @"帮助/问题";
+    model.cellAction = ^(SAMineModel *model) {
+        [self needLogin];
+        PMBaseWebViewController * vc = [[PMBaseWebViewController alloc] init];
+        vc.webTitle = @"帮助/问题";
+        vc.jumpUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@?id=%@",[STNetworking host],API_user_help,@"1"]];
+        [self.navigationController pushViewController:vc animated:YES];
+    };
+    [self.dataArray addObject:model];
+    
+    //分享
+    model = [[SAMineModel alloc] init];
+    [self.dataArray addObject:model];
+    model.iconImage = @"mine_fengxiang";
+    model.titleName = @"分享";
         //
-        model.cellAction = ^(SAMineModel *model) {
+    model.cellAction = ^(SAMineModel *model) {
+            [self needLogin];
+
             [self share];
         };
     
@@ -186,10 +214,11 @@
     model.iconImage = @"mine_lianxikefu";
     model.titleName = @"联系客服";
     model.cellAction = ^(SAMineModel *model) {
-        
+        [self needLogin];
+
     };
 
-        [self.dataArray addObject:model];
+    [self.dataArray addObject:model];
     [self.tableView reloadData];
 }
 
@@ -243,7 +272,7 @@
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.top.bottom.mas_equalTo(self.view);
     }];
-    [self fecthNetData];
+//    [self fecthNetData];
 
 }
 
@@ -357,7 +386,26 @@
     }
 }
 
+- (void)needLogin{
+    if ([SAApplication userID]) {
+        return;
+    }
+    PMLoginViewController *loginVc = [[PMLoginViewController alloc] init];
+    loginVc.callBack = ^(PMLoginViewController *viewController) {
+        [viewController dismissViewControllerAnimated:YES completion:nil];
+        [self fecthNetData];
+    };
+    UIViewController *vc = [[SAApplication sharedApplication].mainTabBarController selectedViewController];
+    STNavigationController * nav = [[STNavigationController alloc] initWithRootViewController:loginVc];
+    [vc presentViewController:nav animated:YES completion:nil];
+}
+
 #pragma mark - mineHeadViewDelegate
+
+- (void)mineHeadViewClickSignButton{
+    [self needLogin];
+}
+
 - (void)mineOrderClickWithType:(SAMineOrderType)type{
     
     PMOrderViewController * vc = [PMOrderViewController new];

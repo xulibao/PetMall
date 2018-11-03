@@ -7,7 +7,6 @@
 //
 
 #import "PMMyAddressViewController.h"
-#import "PMMyAddressItem.h"
 #import "PMAddNewAddressViewController.h"
 #import "YWAddressDataTool.h"
 @interface PMMyAddressViewController ()<PMMyAddressCellDelegate>
@@ -15,6 +14,14 @@
 @end
 
 @implementation PMMyAddressViewController
+
+- (NSMutableArray *)dataArray{
+    if (_dataArray == nil) {
+        _dataArray = [NSMutableArray array];
+        
+    }
+    return _dataArray;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -63,33 +70,42 @@
 - (void)addAddressBtnClick{
     PMAddNewAddressViewController * vc = [[PMAddNewAddressViewController alloc] init];
     vc.addressBlock = ^(PMMyAddressItem *model) {
+        model.zt = YES;
+        NSMutableDictionary *dict = [model mj_keyValuesWithKeys:@[@"user_phone",@"user_name",@"user_address",@"user_add",@"zt"]];
+        [dict setObject:[SAApplication userID] forKey:@"user_id"];
+        [self requestPOST:API_user_address parameters:dict success:^(__kindof SARequest *request, id responseObject) {
         [self showSuccess:@"添加地址成功"];
-        if (model.isDefaultAddress) {
+        if (model.zt) {
             for (PMMyAddressItem *model in self.dataArray) {
-                model.isDefaultAddress = NO;
+                model.zt = NO;
             }
         }
         [self.dataArray addObject:model];
         [self setItems:self.dataArray];
+    } failure:NULL];
     };
     [self pushViewController:vc];
-}
 
+}
 - (void)PMMyAddressCellEdit:(id)item{
     PMMyAddressItem * addressItem = (PMMyAddressItem *)item;
     NSInteger  index = [self.dataArray indexOfObject:addressItem];
     PMAddNewAddressViewController * vc = [[PMAddNewAddressViewController alloc] init];
     vc.model = addressItem;
     vc.addressBlock = ^(PMMyAddressItem *model) {
-        [self showSuccess:@"编辑地址成功"];
-        if (model.isDefaultAddress) {
-            for (PMMyAddressItem *item in self.dataArray) {
-                item.isDefaultAddress = NO;
+        NSMutableDictionary *dict = [model mj_keyValuesWithKeys:@[@"user_id",@"user_phone",@"user_name",@"user_address",@"user_add",@"zt"]];
+        [dict setObject:model.address_id forKey:@"address_id"];
+        [self requestPOST:API_user_addressdel parameters:dict success:^(__kindof SARequest *request, id responseObject) {
+            [self showSuccess:@"编辑地址成功"];
+            if (model.zt) {
+                for (PMMyAddressItem *item in self.dataArray) {
+                    item.zt = NO;
+                }
+                model.zt = YES;
             }
-            model.isDefaultAddress = YES;
-        }
-        [self.dataArray replaceObjectAtIndex:index withObject:model];
-        [self setItems:self.dataArray];
+            [self.dataArray replaceObjectAtIndex:index withObject:model];
+            [self setItems:self.dataArray];
+        } failure:NULL];
     };
     [self pushViewController:vc];
 }
@@ -97,32 +113,42 @@
 #pragma mark - Request
 
 - (void)fetchData {
-    self.dataArray = [NSMutableArray array];
-    PMMyAddressItem * item = [PMMyAddressItem new];
-    item.nameStr = @"张三";
-    item.detailAddress = @"沂蒙路与涑河南街交汇处西净雅新天地1号楼C座3楼";
-    item.areaAddress = @"山东省临沂市兰山区";
-    item.phoneStr = @"18369720486";
-    item.isDefaultAddress = YES;
-    [self.dataArray addObject:item];
     
-    item = [PMMyAddressItem new];
-    item.nameStr = @"李四";
-    item.detailAddress = @"沂蒙路与涑河南街交汇处西净雅新天地1号楼C座3楼";
-    item.areaAddress = @"山东省临沂市兰山区";
-    item.phoneStr = @"18369720486";
-    item.isDefaultAddress = NO;
-    [self.dataArray addObject:item];
-    
-    item = [PMMyAddressItem new];
-    item.nameStr = @"王二";
-    item.detailAddress = @"沂蒙路与涑河南街交汇处西净雅新天地1号楼C座3楼";
-    item.areaAddress = @"山东省临沂市兰山区";
-    item.phoneStr = @"18369720486";
-    item.isDefaultAddress = NO;
-    [self.dataArray addObject:item];
+    [self requestMethod:GARequestMethodPOST URLString:API_user_useraddress parameters:@{@"user_id":[SAApplication userID]} resKeyPath:@"result" resArrayClass:[PMMyAddressItem class] retry:YES success:^(__kindof SARequest *request, id responseObject) {
+        self.dataArray = responseObject;
+        [self setItems:self.dataArray];
 
-    [self setItems:self.dataArray];
+    } failure:NULL];
+//    PMMyAddressItem * item = [PMMyAddressItem new];
+//    item.nameStr = @"张三";
+//    item.detailAddress = @"沂蒙路与涑河南街交汇处西净雅新天地1号楼C座3楼";
+//    item.areaAddress = @"山东省临沂市兰山区";
+//    item.phoneStr = @"18369720486";
+//    item.zt = YES;
+//    [self.dataArray addObject:item];
+//
+//    item = [PMMyAddressItem new];
+//    item.nameStr = @"李四";
+//    item.detailAddress = @"沂蒙路与涑河南街交汇处西净雅新天地1号楼C座3楼";
+//    item.areaAddress = @"山东省临沂市兰山区";
+//    item.phoneStr = @"18369720486";
+//    item.zt = NO;
+//    [self.dataArray addObject:item];
+//
+//    item = [PMMyAddressItem new];
+//    item.nameStr = @"王二";
+//    item.detailAddress = @"沂蒙路与涑河南街交汇处西净雅新天地1号楼C座3楼";
+//    item.areaAddress = @"山东省临沂市兰山区";
+//    item.phoneStr = @"18369720486";
+//    item.zt = NO;
+//    [self.dataArray addObject:item];
+
+}
+
+- (void)didSelectCellWithItem:(id<STCommonTableRowItem>)item{
+    if (self.callBack) {
+        self.callBack(item);
+    }
 }
 
 @end

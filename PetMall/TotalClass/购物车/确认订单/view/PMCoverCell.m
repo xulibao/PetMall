@@ -37,7 +37,7 @@
 
 - (void)setModel:(PMExpressModel *)model{
     _model = model;
-    self.coverTitleLabel.text = model.expressName;
+    self.coverTitleLabel.text = model.express_title;
     self.selectImage.hidden = !model.isSelect;
     
 }

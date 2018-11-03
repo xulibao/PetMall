@@ -7,7 +7,10 @@
 //
 
 #import "SAInfoListViewController.h"
+#import "PMMyAddressItem.h"
 
 @interface PMMyAddressViewController : SAInfoListViewController
+
+@property(nonatomic, copy) void (^callBack)(PMMyAddressItem *item);
 
 @end

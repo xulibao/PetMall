@@ -6,8 +6,10 @@
 //  Copyright © 2018年 ios@xulibao. All rights reserved.
 //
 
-#import "STBaseViewController.h"
+#import "SAInfoListViewController.h"
 
-@interface PMMessageDetailViewController : STBaseViewController
+@interface PMMessageDetailViewController : SAInfoListViewController
+
+@property(nonatomic, copy) NSString *type;
 
 @end

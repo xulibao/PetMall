@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface DCNewWelfareCell : UICollectionViewCell
-
+@property(nonatomic, strong) NSArray *dataArray;
 @end

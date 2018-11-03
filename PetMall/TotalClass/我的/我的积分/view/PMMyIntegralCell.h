@@ -7,7 +7,9 @@
 //
 
 #import "SABaseCell.h"
-
+#import "PMMyIntegralModel.h"
 @interface PMMyIntegralCell : SABaseCell
+
+@property(nonatomic, strong) PMMyIntegralModel *model;
 
 @end

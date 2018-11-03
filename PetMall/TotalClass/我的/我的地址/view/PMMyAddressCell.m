@@ -32,10 +32,10 @@
 - (void)tableView:(UITableView *)tableView configViewWithData:(PMMyAddressItem *)data AtIndexPath:(NSIndexPath *)indexPath {
     [super tableView:tableView configViewWithData:data AtIndexPath:indexPath];
     self.item = data;
-    self.nameLabel.text = data.nameStr;
-    self.phoneLabel.text = data.phoneStr;
-    self.addressLabel.text = [NSString stringWithFormat:@"收货地址：%@%@",data.areaAddress,data.detailAddress] ;
-    self.defaultLabel.hidden = !data.isDefaultAddress;
+    self.nameLabel.text = data.user_name;
+    self.phoneLabel.text = data.user_phone;
+    self.addressLabel.text = [NSString stringWithFormat:@"收货地址：%@%@",data.user_address,data.user_add] ;
+    self.defaultLabel.hidden = !data.zt;
     
 
 }

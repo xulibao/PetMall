@@ -10,5 +10,6 @@
 #import "DCRecommendItem.h"
 
 @interface DCGoodsCountDownCell : UICollectionViewCell
+@property(nonatomic, strong) NSArray *dataArray;
 @property(nonatomic, copy) void (^DCGoodsCountDownCellBlock)(DCRecommendItem *item);
 @end

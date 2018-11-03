@@ -47,6 +47,8 @@
 /* 右边数据 */
 @property (strong , nonatomic)NSMutableArray<DCCalssSubItem *> *mainItem;
 
+@property(nonatomic, assign) NSInteger tableSelect;
+
 @end
 
 static NSString *const DCClassCategoryCellID = @"DCClassCategoryCell";
@@ -57,8 +59,7 @@ static NSString *const DCBrandSortCellID = @"DCBrandSortCell";
 @implementation PMCategoryViewController
 
 #pragma mark - LazyLoad
-- (UITableView *)tableView
-{
+- (UITableView *)tableView{
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
         _tableView.frame = CGRectMake(0, 0 , tableViewH, kMainBoundsHeight - 64-44);
@@ -72,8 +73,7 @@ static NSString *const DCBrandSortCellID = @"DCBrandSortCell";
     return _tableView;
 }
 
-- (UICollectionView *)collectionView
-{
+- (UICollectionView *)collectionView{
     if (!_collectionView) {
         UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
         layout.minimumInteritemSpacing = 6; //X
@@ -95,20 +95,16 @@ static NSString *const DCBrandSortCellID = @"DCBrandSortCell";
     return _collectionView;
 }
 
-
 - (void)viewDidLoad {
     [super viewDidLoad];
      _youLikeItem = [DCRecommendItem mj_objectArrayWithFilename:@"HomeHighGoods.plist"];
     [self setUpNav];
-    
     [self setUpTab];
-    
     [self setUpData];
 }
 
 #pragma mark - initizlize
-- (void)setUpTab
-{
+- (void)setUpTab{
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
 //    self.tableView.backgroundColor = DCBGColor;
@@ -119,16 +115,15 @@ static NSString *const DCBrandSortCellID = @"DCBrandSortCell";
 
 #pragma mark - 加载数据
 - (void)setUpData{
-    
     [self requestPOST:API_Classification_fication parameters:nil success:^(__kindof SARequest *request, id responseObject) {
         self.titleItem = [DCClassMianItem mj_objectArrayWithKeyValuesArray:responseObject[@"result"]];
         [self.tableView reloadData];
         //默认选择第一行（注意一定要在加载完数据之后）
-        [_tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionTop];
+        [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionTop];
+        self.tableSelect = 1;
+        [self fecthItems:[self.titleItem firstObject]];
     } failure:NULL];
-   
 }
-
 
 #pragma mark - 设置导航条
 - (void)setUpNav{
@@ -136,7 +131,6 @@ static NSString *const DCBrandSortCellID = @"DCBrandSortCell";
     _topSearchView = [[UIView alloc] initWithFrame:CGRectMake(5, 7, kMainBoundsWidth-10, 30)];
     _topSearchView.backgroundColor = kColorFAFAFA;
     self.navigationItem.titleView = _topSearchView;
-
     _searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_searchButton setTitle:@"搜索关键词" forState:UIControlStateNormal];
     [_searchButton setTitleColor:[UIColor colorWithHexStr:@"#C2C2C2"] forState:UIControlStateNormal];
@@ -148,7 +142,6 @@ static NSString *const DCBrandSortCellID = @"DCBrandSortCell";
     _searchButton.imageEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
     [_searchButton addTarget:self action:@selector(searchButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [_topSearchView addSubview:_searchButton];
-    
     
 //    [_topSearchView mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.left.mas_equalTo(15);
@@ -163,39 +156,36 @@ static NSString *const DCBrandSortCellID = @"DCBrandSortCell";
         make.height.mas_equalTo(self.topSearchView);
         make.width.mas_equalTo(100);
     }];
-    
-    
- 
-    
 }
 
+- (void)fecthItems:(DCClassMianItem *)item{
+    [self requestPOST:API_Classification_ficationa parameters:@{@"pid":item.cate_id} success:^(__kindof SARequest *request, id responseObject) {
+        self.mainItem = [DCCalssSubItem mj_objectArrayWithKeyValuesArray:responseObject[@"result"]];
+        [self.collectionView reloadData];
+    } failure:NULL];
+}
 
 #pragma mark - <UITableViewDataSource>
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return _titleItem.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     DCClassCategoryCell *cell = [tableView dequeueReusableCellWithIdentifier:DCClassCategoryCellID forIndexPath:indexPath];
     cell.titleItem = _titleItem[indexPath.row];
     return cell;
 }
 
 #pragma mark - <UITableViewDelegate>
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 44;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     DCClassMianItem *item = self.titleItem[indexPath.row];
-    [self requestPOST:API_Classification_ficationa parameters:@{@"pid":item.cate_id} success:^(__kindof SARequest *request, id responseObject) {
-        self.mainItem = [DCCalssSubItem mj_objectArrayWithKeyValuesArray:responseObject[@"result"]];
-        [self.collectionView reloadData];
-
-    } failure:NULL];
+    self.tableSelect = indexPath.row;
+    [self fecthItems:item];
+ 
 }
 
 #pragma mark - <UITableViewDataSource>
@@ -213,12 +203,11 @@ static NSString *const DCBrandSortCellID = @"DCBrandSortCell";
     return gridcell;
 }
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    
     UICollectionReusableView *reusableview = nil;
     if (kind == UICollectionElementKindSectionHeader){
-        
         DCBrandsSortHeadView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:DCBrandsSortHeadViewID forIndexPath:indexPath];
-//        headerView.headTitle = _mainItem[indexPath.section];
+        DCClassMianItem * item = self.titleItem[self.tableSelect];
+        headerView.headTitle = item;
         reusableview = headerView;
     }
     return reusableview;
@@ -241,11 +230,11 @@ static NSString *const DCBrandSortCellID = @"DCBrandSortCell";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     DCRecommendItem * item = _youLikeItem[0];
     DCGoodBaseViewController * vc = [[DCGoodBaseViewController alloc] init];
-    vc.goodTitle = item.main_title;
-    vc.goodPrice = item.price;
-    vc.goodSubtitle = item.goods_title;
-    vc.shufflingArray = item.images;
-    vc.goodImageView = item.image_url;
+//    vc.goodTitle = item.main_title;
+//    vc.goodPrice = item.price;
+//    vc.goodSubtitle = item.goods_title;
+//    vc.shufflingArray = item.images;
+//    vc.goodImageView = item.image_url;
     
     [self.navigationController pushViewController:vc  animated:YES];
 }

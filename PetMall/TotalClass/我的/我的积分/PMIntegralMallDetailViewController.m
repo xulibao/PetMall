@@ -42,7 +42,7 @@
         button.tag = i + 2;
         button.titleLabel.textAlignment = NSTextAlignmentCenter;
         button.backgroundColor = (i == 1) ? [UIColor colorWithHexStr:@"#F93765"] : [UIColor whiteColor];
-        [button addTarget:self action:@selector(bottomButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        [button addTarget:self action:@selector(bottomRightButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         CGFloat buttonX = buttonW * i;
         button.frame = CGRectMake(buttonX, buttonY, buttonW, buttonH);
         
@@ -50,7 +50,7 @@
     }
 }
 
-- (void)bottomButtonClick:(UIButton *)button
+- (void)bottomRightButtonClick:(UIButton *)button
 {
     if (button.tag == 0) {
         NSLog(@"收藏");
@@ -58,13 +58,16 @@
     }else if(button.tag == 2){
 //        [self showFeatureView];
     }else  if ( button.tag == 3) { //父控制器的加入购物车和立即购买
-       
         SAAlertController *alertController = [SAAlertController alertControllerWithTitle:nil
                                                                                  message:@"确定用积分兑换此商品吗\n兑换将自动扣除相应积分"
                                                                           preferredStyle:SAAlertControllerStyleAlert];
         SAAlertAction *action = [SAAlertAction actionWithTitle:@"兑换" style:SAAlertActionStyleDefault handler:^(SAAlertAction *action) {
-            PMIntegralResultViewController * vc = [PMIntegralResultViewController new];
-            [self pushViewController:vc];
+            [self requestPOST:API_Classification_purchase parameters:@{@"goods_id":self.detailModel.goodId,@"user_id":[SAApplication userID],@"list_id":self.list_id,@"shul":@"1",@"type":@"2",@"flag":@"1"} success:^(__kindof SARequest *request, id responseObject) {
+                [self showSuccess:responseObject[@"msg"]];
+                PMIntegralResultViewController * vc = [PMIntegralResultViewController new];
+                [self pushViewController:vc];
+            } failure:NULL];
+       
         }];
         [alertController addAction:action];
         action = [SAAlertAction actionWithTitle:@"取消" style:SAAlertActionStyleCancel handler:^(SAAlertAction *action) {

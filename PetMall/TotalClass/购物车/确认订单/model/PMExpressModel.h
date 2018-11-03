@@ -10,7 +10,8 @@
 
 @interface PMExpressModel : NSObject
 
-@property(nonatomic, copy) NSString *expressName;
+@property(nonatomic, copy) NSString *express_title;
+@property(nonatomic, copy) NSString *express_id;
 
 @property(nonatomic, assign) BOOL isSelect;
 @end

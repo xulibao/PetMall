@@ -11,17 +11,18 @@
 @interface DCCommentsItem : NSObject
 
 /* 名字 */
-@property (nonatomic, copy) NSString *comName;
+@property (nonatomic, copy) NSString *user_name;
 /* 头像 */
-@property (nonatomic, copy) NSString *comIcon;
+@property (nonatomic, copy) NSString *img;
 /* 时间 */
-@property (nonatomic, copy) NSString *comTime;
+@property (nonatomic, copy) NSString *user_time;
 /* 内容 */
-@property (nonatomic, copy) NSString *comContent;
-/* 规格 */
-@property (nonatomic, copy) NSString *comSpecifications;
+@property (nonatomic, copy) NSString *user_comment;
 /* 店家回复 */
 @property (nonatomic, copy) NSString *comReBack;
+
+@property (nonatomic, copy) NSString *user_images;
+
 /*图片数组*/
 @property (strong , nonatomic)NSMutableArray *imgsArray;
 

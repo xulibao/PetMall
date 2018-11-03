@@ -13,17 +13,37 @@
 #import "STCoverView.h"
 #import "PMCoverCell.h"
 #import "PMVoucherCell.h"
+#import "PMMyAddressItem.h"
+#import "PMMyCouponItem.h"
 #import "PMConfirmPayViewController.h"
+#import "PMMyAddressViewController.h"
+#import "PMOrderListItem.h"
+#import "DCRecommendItem.h"
 @interface PMConfirmOrderViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property(nonatomic, strong) UITableView *tableView;
 @property(nonatomic, strong) PMConfirmOrderHeaderView *headerView;
+
 @property(nonatomic, strong) UIView *footerView;
+@property(nonatomic, strong) UILabel *infoLabel;
+@property(nonatomic, strong) UILabel *goodExpressLabel;
+@property(nonatomic, strong) UILabel *goodPriceLabel;
+
+
 @property(nonatomic, strong) NSMutableArray *dataArray;
 @property(nonatomic, strong) NSMutableArray *expressArray;
 @property(nonatomic, strong) NSMutableArray *voucherArray;
+@property(nonatomic, strong) NSMutableArray *addressArray;
+@property(nonatomic, strong) NSMutableArray *goodsArray;
+
 @property (nonatomic, strong) STCoverView *coverBtn;
 @property(nonatomic, strong) UITableView *subTableView;
 @property(nonatomic, strong) UILabel *subTableTitleLabel;
+
+
+@property(nonatomic, strong) PMMyAddressItem *selectAddressItem;
+@property(nonatomic, strong) PMMyCouponItem *selectVoucher;
+@property(nonatomic, strong) PMExpressModel *selectExpress;
+@property(nonatomic, strong) PMOrderListItem *goodInfo;
 
 @end
 
@@ -31,54 +51,12 @@
 - (NSMutableArray *)voucherArray{
     if (_voucherArray == nil) {
         _voucherArray = [@[] mutableCopy];
-        PMVoucherModel * model = [PMVoucherModel new];
-        model.price = @"10";
-        model.isEnable = YES;
-        [_voucherArray addObject:model];
-        model = [PMVoucherModel new];
-        model.price = @"20";
-        model.isEnable = YES;
-        [_voucherArray addObject:model];
-        model = [PMVoucherModel new];
-        model.price = @"30";
-        model.isEnable = YES;
-        [_voucherArray addObject:model];
-        model = [PMVoucherModel new];
-        model.price = @"40";
-        model.isEnable = YES;
-        [_voucherArray addObject:model];
-        model = [PMVoucherModel new];
-        model.price = @"50";
-        model.isEnable = NO;
-        [_voucherArray addObject:model];
-        
     }
     return _voucherArray;
 }
 - (NSMutableArray *)expressArray{
     if (_expressArray == nil) {
         _expressArray = [@[] mutableCopy];
-        PMExpressModel * model = [PMExpressModel new];
-        model.expressName = @"顺丰快递";
-        [_expressArray addObject:model];
-        model = [PMExpressModel new];
-        model.expressName = @"圆通快递";
-        [_expressArray addObject:model];
-        model = [PMExpressModel new];
-        model.expressName = @"中通快递";
-        [_expressArray addObject:model];
-        model = [PMExpressModel new];
-        model.expressName = @"申通快递";
-        [_expressArray addObject:model];
-        model = [PMExpressModel new];
-        model.expressName = @"中国邮政";
-        [_expressArray addObject:model];
-        model = [PMExpressModel new];
-        model.expressName = @"韵达快递";
-        [_expressArray addObject:model];
-        model.expressName = @"百世快递";
-        [_expressArray addObject:model];
-        
     }
     return _expressArray;
 }
@@ -87,11 +65,11 @@
     if (_dataArray == nil) {
         _dataArray = [NSMutableArray array];
         DCRecommendItem *recommendItem = [[DCRecommendItem alloc] init];
-        recommendItem.image_url = @"https://img.alicdn.com/imgextra/i2/108613394/TB2mlYjm5MnBKNjSZFoXXbOSFXa_!!0-saturn_solar.jpg_210x210.jpg";
-        recommendItem.goods_title = @"GO狗粮 抗敏美毛系列全 牧羊犬全新配方 25磅";
-        recommendItem.nature = @"3.06kg  牛肉味";
-        recommendItem.price = @"158";
-        recommendItem.people_count = @"2";
+//        recommendItem.image_url = @"https://img.alicdn.com/imgextra/i2/108613394/TB2mlYjm5MnBKNjSZFoXXbOSFXa_!!0-saturn_solar.jpg_210x210.jpg";
+//        recommendItem.goods_title = @"GO狗粮 抗敏美毛系列全 牧羊犬全新配方 25磅";
+//        recommendItem.nature = @"3.06kg  牛肉味";
+//        recommendItem.price = @"158";
+//        recommendItem.people_count = @"2";
         [_dataArray addObject:recommendItem];
         
         PMOrderSelectModel * model = [PMOrderSelectModel new];
@@ -174,6 +152,16 @@
 - (PMConfirmOrderHeaderView *)headerView{
     if (_headerView == nil) {
         _headerView = [[PMConfirmOrderHeaderView alloc] initWithFrame:CGRectMake(0, 0, kMainBoundsWidth, 103)];
+        @weakify(self)
+        _headerView.clickHeader = ^{
+            @strongify(self)
+            PMMyAddressViewController *vc = [PMMyAddressViewController new];
+            vc.callBack = ^(PMMyAddressItem *item) {
+                self.headerView.item = item;
+                [self.navigationController popViewControllerAnimated:YES];
+            };
+            [self.navigationController pushViewController:vc animated:YES];
+        };
     }
     return _headerView;
 }
@@ -191,9 +179,10 @@
         [bgView addSubview:titleLabel];
         
         UILabel * priceLabel = [[UILabel alloc] init];
+        self.goodPriceLabel = priceLabel;
         priceLabel.textAlignment = NSTextAlignmentRight;
         priceLabel.font = [UIFont boldSystemFontOfSize:16];
-        priceLabel.text = @"¥158";
+        priceLabel.text = @"¥0";
         [bgView addSubview:priceLabel];
         
         
@@ -205,7 +194,7 @@
         UILabel * priceLabel1 = [[UILabel alloc] init];
         priceLabel1.textAlignment = NSTextAlignmentRight;
         priceLabel1.font = [UIFont boldSystemFontOfSize:16];
-        priceLabel1.text = @"+¥5.00";
+        self.goodExpressLabel = priceLabel1;
         priceLabel1.textColor = [UIColor colorWithHexStr:@"#FF3945"];
         [bgView addSubview:priceLabel1];
         
@@ -217,12 +206,13 @@
         UILabel * priceLabel2 = [[UILabel alloc] init];
         priceLabel2.textAlignment = NSTextAlignmentRight;
         priceLabel2.font = [UIFont boldSystemFontOfSize:16];
-        priceLabel2.text = @"-¥10.00";
+        priceLabel2.text = @"-¥0.00";
         priceLabel2.textColor = [UIColor colorWithHexStr:@"#FF3945"];
         [bgView addSubview:priceLabel2];
-        
+        @weakify(self)
         [bgView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.mas_equalTo(_footerView);
+            @strongify(self)
+            make.left.right.mas_equalTo(self.footerView);
             make.top.mas_equalTo(10);
             make.height.mas_equalTo(100);
         }];
@@ -257,7 +247,7 @@
         UILabel * infoLabel = [UILabel new];
         infoLabel.font = [UIFont systemFontOfSize:13];
         infoLabel.textColor = [UIColor colorWithHexStr:@"#FF3945"];
-        infoLabel.text = @"交易成功可获得10积分";
+        self.infoLabel = infoLabel;
         [_footerView addSubview:infoLabel];
         [infoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(12);
@@ -275,8 +265,32 @@
     self.tableView.tableHeaderView = self.headerView;
     self.tableView.tableFooterView = self.footerView;
     [self fecthBottomView];
+    [self fecthData];
 }
 
+- (void)fecthData{
+    [self requestPOST:API_Dogfood_confirmation parameters:@{@"user_id":[SAApplication userID],@"order_id":self.cart_id,@"price":@"1"} success:^(__kindof SARequest *request, id responseObject) {
+        self.addressArray = [PMMyAddressItem mj_objectArrayWithKeyValuesArray:responseObject[@"result"][@"address"]];
+        
+        self.expressArray = [PMExpressModel mj_objectArrayWithKeyValuesArray:responseObject[@"result"][@"distribution"]];
+        self.goodsArray = [PMOrderListItem mj_objectArrayWithKeyValuesArray:responseObject[@"result"][@"goods"]];
+      
+        self.goodInfo = [self.goodsArray firstObject];
+          self.goodExpressLabel.text = [NSString stringWithFormat:@"+¥%@",self.goodInfo.postage];
+        self.infoLabel.text = [NSString stringWithFormat:@"交易成功可获得%@积分",self.goodInfo.jifen];
+        float goodsPrice = 0.f;
+        for (PMOrderListItem * item in self.goodsArray) {
+            goodsPrice += [item.market_price floatValue];
+        }
+        self.goodPriceLabel.text = [NSString stringWithFormat:@"¥%@",[@(goodsPrice) stringValue]];;
+        self.voucherArray = [PMMyCouponItem mj_objectArrayWithKeyValuesArray:responseObject[@"result"][@"coupona"]];
+        self.headerView.item = [self.addressArray firstObject];
+        [self.tableView reloadData];
+
+        
+        
+    } failure:NULL];
+}
 
 - (void)fecthBottomView{
     UIView * bottomView = [[UIView alloc] init];
@@ -345,8 +359,7 @@
     if (tableView.tag == 0) {
         if (indexPath.row == 0) {
             PMConfirmOrderCell *  cell = [tableView dequeueReusableCellWithIdentifier:@"PMConfirmOrderCellID" forIndexPath:indexPath];
-            DCRecommendItem * item = self.dataArray[indexPath.row];
-            cell.item = item;
+            cell.items = self.goodsArray;
             return cell;
         }else if (indexPath.row == 1){
             PMOrderSelectCell * cell = [tableView dequeueReusableCellWithIdentifier:@"PMOrderSelectCellID" forIndexPath:indexPath];
@@ -378,7 +391,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView.tag == 0) {
         if (0 == indexPath.row) {
-            return 94;
+            return 100 * self.goodsArray.count;
         }else{
             return 44;
         }
@@ -402,28 +415,31 @@
         }
     }else if (1 == tableView.tag){
         PMOrderSelectModel * model = self.dataArray[1];
-        PMVoucherModel *  voucherModel = self.voucherArray[indexPath.row];
+        PMMyCouponItem *  voucherModel = self.voucherArray[indexPath.row];
+        self.selectVoucher = voucherModel;
         voucherModel.isSelect = YES;
-        for (PMVoucherModel *  model1 in self.voucherArray) {
+        for (PMMyCouponItem *  model1 in self.voucherArray) {
             if (![model1 isEqual:voucherModel]) {
                 model1.isSelect = NO;
             }
         }
-        model.content = [NSString stringWithFormat:@"%@元优惠券",voucherModel.price];
+        model.content = [NSString stringWithFormat:@"%@元优惠券",voucherModel.coupon_jiazhi];
         [self.subTableView reloadData];
         [self.tableView reloadData];
+
         [self performSelector:@selector(closeCover) withObject:nil/*可传任意类型参数*/ afterDelay:1.0];
         
     }else if (2 == tableView.tag){
         PMOrderSelectModel * model = self.dataArray[2];
         PMExpressModel *  expressModel = self.expressArray[indexPath.row];
+        self.selectExpress = expressModel;
         expressModel.isSelect = YES;
         for (PMExpressModel *  model1 in self.expressArray) {
             if (![model1 isEqual:expressModel]) {
                 model1.isSelect = NO;
             }
         }
-        model.content = expressModel.expressName;
+        model.content = expressModel.express_title;
         [self.subTableView reloadData];
         [self.tableView reloadData];
         [self performSelector:@selector(closeCover) withObject:nil/*可传任意类型参数*/ afterDelay:1.0];
@@ -452,9 +468,20 @@
     [self.subTableView removeFromSuperview];
     self.subTableView.transform = CGAffineTransformMakeTranslation(0, 0);
 }
-
+//确认订单
 - (void)commitBtnClick{
-    PMConfirmPayViewController * vc = [[PMConfirmPayViewController alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
+    NSMutableDictionary * dictDataM = [NSMutableDictionary dictionary];
+    [dictDataM setObject:self.cart_id forKey:@"cart_id"];
+//    [dictDataM setObject:self.order_id forKey:@"order_id"];
+    [dictDataM setObject:self.selectAddressItem.address_id forKey:@"address"];
+    [dictDataM setObject:self.selectVoucher.coupon_id forKey:@"coupon"];
+    [dictDataM setObject:self.selectAddressItem.address_id forKey:@"distribution"];
+    [dictDataM setObject:[SAApplication userID] forKey:@"mid"];
+
+    [self requestPOST:API_Dogfood_placeorder parameters:dictDataM success:^(__kindof SARequest *request, id responseObject) {
+        [self showSuccess:@"提交订单成功！"];
+        PMConfirmPayViewController * vc = [[PMConfirmPayViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    } failure:NULL];
 }
 @end

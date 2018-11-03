@@ -11,6 +11,8 @@
 @property(nonatomic, strong) UIImageView *bgView;
 @property(nonatomic, strong) UIButton *selectBtn;
 @property(nonatomic, strong) UILabel *priceLabel;
+@property(nonatomic, strong) UILabel *voucherTimeLabel;
+@property(nonatomic, strong) UILabel *conditionsLabel;
 @end
 
 @implementation PMVoucherCell
@@ -27,6 +29,7 @@
     [self.bgView addSubview:priceLabel];
     
     UILabel * conditionsLabel = [[UILabel alloc] init];
+    self.conditionsLabel = conditionsLabel;
     conditionsLabel.text = @"满100元可用";
     conditionsLabel.textColor = [UIColor whiteColor];
     conditionsLabel.font = [UIFont systemFontOfSize:13];
@@ -38,6 +41,7 @@
     [self.bgView addSubview:voucherTitleLabel];
     
     UILabel * voucherTimeLabel = [[UILabel alloc] init];
+    self.voucherTimeLabel =voucherTimeLabel;
     voucherTimeLabel.text = @"2018-07-21至2018-07-30";
     voucherTimeLabel.font = [UIFont systemFontOfSize:13];
     [self.bgView addSubview:voucherTimeLabel];
@@ -84,16 +88,30 @@
     
 }
 
-- (void)setModel:(PMVoucherModel *)model{
+- (void)setModel:(PMMyCouponItem *)model{
     _model = model;
-    if (_model.isEnable) {
-        self.bgView.image = IMAGE(@"oder_voucherBg");
-        self.selectBtn.hidden = NO;
-        self.selectBtn.selected = model.isSelect;
-    }else{
-        self.selectBtn.hidden = YES;
-        self.bgView.image = IMAGE(@"oder_voucherBg_disable");
+    self.priceLabel.text = [NSString stringWithFormat:@"¥%@", model.coupon_jiazhi];
+    self.conditionsLabel.text = [NSString stringWithFormat:@"满%@元可用", model.coupon_mj];
+    self.voucherTimeLabel.text = [NSString stringWithFormat:@"%@至%@", model.begin_time,model.last_time];
+    switch (model.leixing) {
+        case PMMyCouponType_notUsed:{
+            self.bgView.image = IMAGE(@"oder_voucherBg");
+            self.selectBtn.hidden = NO;
+            self.selectBtn.selected = model.isSelect;
+        }
+            break;
+        case PMMyCouponType_Used:{
+            self.selectBtn.hidden = YES;
+            self.bgView.image = IMAGE(@"mine_coupon_used");
+        }
+            break;
+        case PMMyCouponType_Expired:{
+            self.selectBtn.hidden = YES;
+            self.bgView.image = IMAGE(@"mine_coupon_guoqi");
+        }
+            break;
+        default:
+            break;
     }
-    self.priceLabel.text = [NSString stringWithFormat:@"¥%@", model.price];
 }
 @end

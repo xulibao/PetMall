@@ -9,7 +9,9 @@
 #import "PMContactUsViewController.h"
 
 @interface PMContactUsViewController ()
-
+@property(nonatomic, strong) UILabel *contactusLabel;
+@property(nonatomic, strong) UITextField *textField;
+@property(nonatomic, strong) UITextField *textField1;
 @end
 
 @implementation PMContactUsViewController
@@ -17,7 +19,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"联系我们";
+    [self fecthData];
     
+}
+- (void)fecthData{
+    [self requestPOST:API_user_contactus parameters:nil success:^(__kindof SARequest *request, id responseObject) {
+        self.contactusLabel.text = responseObject[@"result"];
+    } failure:NULL];
 }
 
 - (void)initSubviews{
@@ -30,9 +38,10 @@
 
     
     UILabel * label = [UILabel new];
+    self.contactusLabel = label;
     label.numberOfLines = 0;
     label.textAlignment = NSTextAlignmentCenter;
-    label.text = @"致用户\n\n尊敬用户，欢迎您使用***APP，任何对***的建议都可以在这里直接告诉我们。我们会认真阅读每一份反馈并进行改进。你的反馈是我们最关注的事情。请相信我们，相信***团队。";
+//    label.text = @"致用户\n\n尊敬用户，欢迎您使用***APP，任何对***的建议都可以在这里直接告诉我们。我们会认真阅读每一份反馈并进行改进。你的反馈是我们最关注的事情。请相信我们，相信***团队。";
     label.font = [UIFont systemFontOfSize:14];
     label.textColor = kColor999999;
     [bgView addSubview:label];
@@ -52,11 +61,13 @@
         make.bottom.mas_equalTo(-10);
     }];
     UITextField * textField = [UITextField new];
+    self.textField = textField;
     textField.font = [UIFont systemFontOfSize:15];
     textField.placeholder = @"输入想对我们说的话";
     [self.view addSubview:textField];
     [textField sp_addBottomLineWithLeftMargin:0 rightMargin:0];
     UITextField * textField1= [UITextField new];
+    self.textField1 = textField1;
     textField1.font = [UIFont systemFontOfSize:15];
     textField1.placeholder = @"留下手机号码  方便与您联系";
     [self.view addSubview:textField1];
@@ -86,7 +97,7 @@
     gradientLayer.frame = CGRectMake(0, 0, 290, 44);
     gradientLayer.cornerRadius = 22;
     [footView.layer addSublayer:gradientLayer];
-    [bgView addSubview:footView];
+//    [bgView addSubview:footView];
     footView.titleLabel.font = [UIFont systemFontOfSize:18];
     [footView setTitle:@"提交" forState:UIControlStateNormal];
     [footView setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -103,8 +114,18 @@
 }
 
 -(void)commit{
-    [self showSuccess:@"提交成功"];
+    [self requestPOST:API_user_submission parameters:@{@"user_id":[SAApplication userID],@"content":self.textField.text,@"phone":self.textField1.text} success:^(__kindof SARequest *request, id responseObject) {
+        [self showSuccess:@"提交成功"];
+        [self performSelector:@selector(popView) withObject:nil/*可传任意类型参数*/ afterDelay:1.0];
+
+
+    } failure:NULL];
+
+}
+
+- (void)popView{
     [self.navigationController popViewControllerAnimated:YES];
+
 }
 
 
