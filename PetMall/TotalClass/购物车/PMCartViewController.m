@@ -20,7 +20,7 @@ static NSString *const PMCartCellID = @"PMCartCell";
 @property(nonatomic, strong) UILabel *totalPriceLabel;
 @property(nonatomic, strong) UITableView * tableView;
 @property(nonatomic, strong) NSMutableArray *dataArray;
-
+@property(nonatomic, assign) float totalPrice;
 @property(nonatomic, assign) BOOL isCartEdit;
 @end
 
@@ -267,6 +267,7 @@ static NSString *const PMCartCellID = @"PMCartCell";
             }
         }
     }
+    self.totalPrice = totalPrice;
     NSString *totalPriceStr = [NSString stringWithFormat:@"总计￥%.2f", totalPrice];
     NSMutableAttributedString * str = [[NSMutableAttributedString alloc] initWithString:totalPriceStr];
     [str addAttributes:@{NSForegroundColorAttributeName:kColorFF5554} range:[totalPriceStr rangeOfString:[NSString stringWithFormat:@"合计￥%.2f", totalPrice]]];
@@ -385,7 +386,9 @@ static NSString *const PMCartCellID = @"PMCartCell";
     }
     NSString * goodsIdStr = [goodsIds componentsJoinedByString:@","];
     PMConfirmOrderViewController * vc = [[PMConfirmOrderViewController alloc] init];
-    vc.cart_id =  goodsIdStr;
+    vc.price = [@(self.totalPrice) stringValue];
+    vc.order_id =  goodsIdStr;
+    vc.flag = @"2";
     [self.navigationController pushViewController:vc animated:YES];
 }
 

@@ -18,7 +18,7 @@
 @implementation PMSpeacilePriceViewController
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"潮品预售";
+    self.title = @"特价清仓";
     [self fetchData];
 }
 

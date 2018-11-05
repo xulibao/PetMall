@@ -213,6 +213,7 @@
         [self addSubview:btn];
         btn.tag = i;
         [btn setTitle:titleString forState:UIControlStateNormal];
+        [btn setTitle:titleString forState:UIControlStateHighlighted];
         [btn setTitleColor:kColor333333 forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(menuTapped:) forControlEvents:UIControlEventTouchUpInside];
         [btn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -224,17 +225,41 @@
 }
 #pragma mark - action
 - (void)menuTapped:(UIButton *)selectBtn {
-
-    if (selectBtn.tag != 0) {
+    
+    
+    if(selectBtn.tag == 0) {
+        if (!selectBtn.selected) {
+            selectBtn.selected = YES;
+        }
+        for (SAButton *btn in self.btnArray) {
+            if (btn.tag == 2) {
+                [btn setTitleColor:kColor333333 forState:UIControlStateNormal];
+                [btn setImage:IMAGE(@"home_shangxia_nomal") forState:UIControlStateNormal];
+            }
+            if (selectBtn.tag != btn.tag) {
+                btn.selected = NO;
+            }
+        }
+    }else if(selectBtn.tag == 1) {
+        selectBtn.selected = !selectBtn.selected;
+        for (SAButton *btn in self.btnArray) {
+            if (btn.tag == 2) {
+                 [btn setTitleColor:kColor333333 forState:UIControlStateNormal];
+                [btn setImage:IMAGE(@"home_shangxia_nomal") forState:UIControlStateNormal];
+            }
+            if (selectBtn.tag != btn.tag) {
+                btn.selected = NO;
+            }
+        }
+    }else if(selectBtn.tag == 2) {
+         [selectBtn setTitleColor:kColorFF3945 forState:UIControlStateNormal];
+        [selectBtn setImage:IMAGE(@"home_shangxia_select") forState:UIControlStateNormal];
+        [selectBtn setImage:IMAGE(@"home_shangxia_shang") forState:UIControlStateSelected];        [selectBtn setImage:IMAGE(@"home_shangxia_shang") forState:UIControlStateHighlighted];
         selectBtn.selected = !selectBtn.selected;
         for (SAButton * btn in self.btnArray) {
             if (selectBtn.tag != btn.tag) {
                 btn.selected = NO;
             }
-        }
-    }else{
-        if (!selectBtn.selected) {
-            selectBtn.selected = YES;
         }
     }
     NSInteger tapIndex = selectBtn.tag;
@@ -572,7 +597,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
      SAMenuRecordModel *model = [self.dataSource menu:self modelForRowAtIndexPath:[SADropDownIndexPath indexPathWithCol:self.currentSelectedMenudIndex leftOrRight:-1 leftRow:-1 row:indexPath.row]];
      SAButton * selectBtn = self.btnArray[self.currentSelectedMenudIndex];
+    [selectBtn setTitle:model.name forState:UIControlStateNormal];
     [selectBtn setTitle:model.name forState:UIControlStateSelected];
+    [selectBtn setTitle:model.name forState:UIControlStateHighlighted];
     if (self.delegate || [self.delegate respondsToSelector:@selector(menu:didSelectRowAtIndexPath:)]) {
         [self.delegate menu:self didSelectRowAtIndexPath:[SADropDownIndexPath indexPathWithCol:self.currentSelectedMenudIndex leftOrRight:-1 leftRow:-1 row:indexPath.row]];
     } else {

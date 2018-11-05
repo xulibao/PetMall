@@ -44,6 +44,7 @@
 @property(nonatomic, strong) PMMyCouponItem *selectVoucher;
 @property(nonatomic, strong) PMExpressModel *selectExpress;
 @property(nonatomic, strong) PMOrderListItem *goodInfo;
+@property(nonatomic, strong)  UILabel * totalPriceLabel;
 
 @end
 
@@ -74,13 +75,13 @@
         
         PMOrderSelectModel * model = [PMOrderSelectModel new];
         model.title = @"优惠券";
-        model.count = @"已选1张";
-        model.content = @"10元优惠券";
+//        model.count = @"已选1张";
+        model.content = @"无优惠券";
         [_dataArray addObject:model];
         
         model = [PMOrderSelectModel new];
         model.title = @"配送";
-        model.content = @"顺丰速递";
+//        model.content = @"顺丰速递";
         [_dataArray addObject:model];
 
 //        recommendItem.image_url = @"https://img.alicdn.com/imgextra/i2/108613394/TB2mlYjm5MnBKNjSZFoXXbOSFXa_!!0-saturn_solar.jpg_210x210.jpg";
@@ -119,9 +120,9 @@
         }];
         
         _subTableView.tableHeaderView =headerView;
-                _subTableView.delegate = self;
-                _subTableView.dataSource = self;
-         [_subTableView registerClass:[PMCoverCell class] forCellReuseIdentifier:@"PMCoverCellID"];
+        _subTableView.delegate = self;
+        _subTableView.dataSource = self;
+        [_subTableView registerClass:[PMCoverCell class] forCellReuseIdentifier:@"PMCoverCellID"];
         [_subTableView registerClass:[PMVoucherCell class] forCellReuseIdentifier:@"PMVoucherCellID"];
         _subTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _subTableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
@@ -139,7 +140,6 @@
         _tableView.dataSource = self;
         [_tableView registerClass:[PMConfirmOrderCell class] forCellReuseIdentifier:@"PMConfirmOrderCellID"];
         [_tableView registerClass:[PMOrderSelectCell class] forCellReuseIdentifier:@"PMOrderSelectCellID"];
-        
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
         _tableView.backgroundColor = kColorFAFAFA;
@@ -269,14 +269,12 @@
 }
 
 - (void)fecthData{
-    [self requestPOST:API_Dogfood_confirmation parameters:@{@"user_id":[SAApplication userID],@"order_id":self.cart_id,@"price":@"1"} success:^(__kindof SARequest *request, id responseObject) {
+    [self requestPOST:API_Dogfood_confirmation parameters:@{@"user_id":[SAApplication userID],@"order_id":self.order_id,@"price":self.price,@"flag":self.flag} success:^(__kindof SARequest *request, id responseObject) {
         self.addressArray = [PMMyAddressItem mj_objectArrayWithKeyValuesArray:responseObject[@"result"][@"address"]];
-        
         self.expressArray = [PMExpressModel mj_objectArrayWithKeyValuesArray:responseObject[@"result"][@"distribution"]];
         self.goodsArray = [PMOrderListItem mj_objectArrayWithKeyValuesArray:responseObject[@"result"][@"goods"]];
-      
         self.goodInfo = [self.goodsArray firstObject];
-          self.goodExpressLabel.text = [NSString stringWithFormat:@"+¥%@",self.goodInfo.postage];
+        self.goodExpressLabel.text = [NSString stringWithFormat:@"+¥%@",self.goodInfo.postage];
         self.infoLabel.text = [NSString stringWithFormat:@"交易成功可获得%@积分",self.goodInfo.jifen];
         float goodsPrice = 0.f;
         for (PMOrderListItem * item in self.goodsArray) {
@@ -285,10 +283,29 @@
         self.goodPriceLabel.text = [NSString stringWithFormat:@"¥%@",[@(goodsPrice) stringValue]];;
         self.voucherArray = [PMMyCouponItem mj_objectArrayWithKeyValuesArray:responseObject[@"result"][@"coupona"]];
         self.headerView.item = [self.addressArray firstObject];
-        [self.tableView reloadData];
+        self.selectExpress = [self.expressArray firstObject];
+        self.selectVoucher = [self.voucherArray firstObject];
+        self.selectAddressItem = [self.addressArray firstObject];
+        
+        PMOrderSelectModel *selectModel = self.dataArray[1];
+        if (self.selectVoucher) {
+            selectModel.content = [NSString stringWithFormat:@"%@元优惠券",self.selectVoucher.coupon_jiazhi];
+        }else{
+            selectModel.content = @"无优惠券";
+        }
+        
+        selectModel = self.dataArray[2];
+        if (self.selectExpress) {
+            selectModel.content = [NSString stringWithFormat:@"%@",self.selectExpress.express_title];
+        }else{
+//            selectModel.content = @"无优惠券";
+        }
 
-        
-        
+        NSString * countStr = [NSString stringWithFormat:@"合计：¥%.2f",[self.goodInfo.market_price floatValue] + [self.selectExpress.express_price floatValue] - [self.selectVoucher.coupon_jiazhi floatValue]];
+        NSMutableAttributedString * str = [[NSMutableAttributedString alloc] initWithString:countStr];
+        [str addAttributes:@{NSForegroundColorAttributeName:kColorFF5554,NSFontAttributeName:[UIFont boldSystemFontOfSize:16]} range:[countStr rangeOfString:[NSString stringWithFormat:@"¥%.2f",[self.goodInfo.market_price floatValue] + [self.selectExpress.express_price floatValue] - [self.selectVoucher.coupon_jiazhi floatValue]]]];
+        self.totalPriceLabel.attributedText = str;
+        [self.tableView reloadData];
     } failure:NULL];
 }
 
@@ -298,12 +315,9 @@
     [self.view addSubview:bottomView];
     
     UILabel * totalPriceLabel = [[UILabel alloc] init];
+    self.totalPriceLabel = totalPriceLabel;
     totalPriceLabel.textAlignment = NSTextAlignmentRight;
     totalPriceLabel.font =  [UIFont systemFontOfSize:12];
-    NSString * countStr = @"合计：¥153";
-    NSMutableAttributedString * str = [[NSMutableAttributedString alloc] initWithString:countStr];
-    [str addAttributes:@{NSForegroundColorAttributeName:kColorFF5554,NSFontAttributeName:[UIFont boldSystemFontOfSize:16]} range:[countStr rangeOfString:@"¥153"]];
-    totalPriceLabel.attributedText = str;
     [self.view addSubview:totalPriceLabel];
     
     UIButton * commitBtn = [[UIButton alloc] init];
@@ -471,11 +485,16 @@
 //确认订单
 - (void)commitBtnClick{
     NSMutableDictionary * dictDataM = [NSMutableDictionary dictionary];
-    [dictDataM setObject:self.cart_id forKey:@"cart_id"];
-//    [dictDataM setObject:self.order_id forKey:@"order_id"];
+    if ([self.flag integerValue] == 2) { //购物车
+        [dictDataM setObject:self.order_id forKey:@"cart_id"];
+    }else{
+        [dictDataM setObject:self.order_id forKey:@"order_id"];
+    }
     [dictDataM setObject:self.selectAddressItem.address_id forKey:@"address"];
-    [dictDataM setObject:self.selectVoucher.coupon_id forKey:@"coupon"];
-    [dictDataM setObject:self.selectAddressItem.address_id forKey:@"distribution"];
+    if (self.selectVoucher) {
+        [dictDataM setObject:self.selectVoucher.coupon_id forKey:@"coupon"];
+    }
+    [dictDataM setObject:self.selectExpress.express_id forKey:@"distribution"];
     [dictDataM setObject:[SAApplication userID] forKey:@"mid"];
 
     [self requestPOST:API_Dogfood_placeorder parameters:dictDataM success:^(__kindof SARequest *request, id responseObject) {

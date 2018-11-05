@@ -8,16 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "PMHomeModel.h"
-@class DCRecommendItem;
 
-@interface DCGoodsYouLikeCell : UICollectionViewCell
+@interface PMGoodsGroupCollectionCell : UICollectionViewCell
 
 /* 推荐数据 */
 @property (strong , nonatomic)PMGroupModel *groupModel;
 /* 相同 */
 @property (strong , nonatomic)UIButton *sameButton;
 
-/** 找相似点击回调 */
-@property (nonatomic, copy) dispatch_block_t lookSameBlock;
+/**  */
+@property (nonatomic, copy) void(^callBack)(PMGroupModel *groupModel);
 
 @end

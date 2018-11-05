@@ -12,6 +12,7 @@
 
 @property(nonatomic, copy) NSString *express_title;
 @property(nonatomic, copy) NSString *express_id;
+@property(nonatomic, copy) NSString *express_price;
 
 @property(nonatomic, assign) BOOL isSelect;
 @end

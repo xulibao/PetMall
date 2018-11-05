@@ -124,16 +124,24 @@
     filterModel.imageNomalStr = @"home_xia_nomal";
      NSMutableArray * array = [NSMutableArray array];
     SAMenuRecordModel * model = [SAMenuRecordModel new];
+    model.serveKey = @"compre";
+    model.serveID = @"1";
     model.name = @"综合";
     [array addObject:model];
     model = [SAMenuRecordModel new];
+    model.serveKey = @"compre";
+    model.serveID = @"2";
     model.name = @"最新上架";
     [array addObject:model];
     model = [SAMenuRecordModel new];
+    model.serveKey = @"compre";
     model.name = @"好评从高到低";
+    model.serveID = @"3";
     [array addObject:model];
     model = [SAMenuRecordModel new];
+    model.serveKey = @"compre";
     model.name = @"评论数从高到低";
+    model.serveID = @"4";
     [array addObject:model];
     filterModel.dataList= array;
     @weakify(filterModel)
@@ -155,8 +163,6 @@
         
         
     };
-    filterModel.cellDidSelect = ^(SADropDownIndexPath *indexPath){
-    };
     
     //价格
     filterModel = [[SPInfoListFilterModel alloc] init];
@@ -168,15 +174,8 @@
 
     filterModel.dataList = [NSMutableArray array];
     filterModel.tapClick = ^{
-//            @strongify(filterModel2)
-        
+          [self requestDirectRecordArray:[self directParameters]];
     };
-        
-//    filterModel2.cellDidSelect = ^(SADropDownIndexPath *indexPath){
-//            @strongify(filterModel2)
-//
-//
-//    };
   
     self.filterView.delegate = self;
     self.filterView.dataSource = self;

@@ -62,7 +62,17 @@
 //    }
 //    return _searchSuggestionVC;
 //}
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
+}
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    // 回收键盘
+    [self.searchBar resignFirstResponder];
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -78,8 +88,6 @@
     self.searchHistoriesCount = 20;
 
     // 创建搜索框
-    UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(10, 0, kScreenWidth-64-20, 44)];
-    titleView.backgroundColor = kColorFAFAFA;
     UISearchBar *searchBar = [[UISearchBar alloc] init];
     searchBar.placeholder = @"搜索关键词";
     searchBar.delegate = self;
@@ -117,7 +125,7 @@
     self.headerView.mj_x = 0;
     self.headerView.mj_y = 0;
     self.headerView.mj_w = kScreenWidth;
-        UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 20, kScreenWidth-20, 30)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 20, kScreenWidth-20, 30)];
     titleLabel.text = @"最近搜索";
     titleLabel.font = [UIFont systemFontOfSize:14];
     [titleLabel sizeToFit];
@@ -228,15 +236,6 @@
     
     // 弹出键盘
     [self.searchBar becomeFirstResponder];
-}
-
-/** 视图即将消失 */
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    
-    // 回收键盘
-    [self.searchBar resignFirstResponder];
 }
 
 #pragma mark - Table view data source

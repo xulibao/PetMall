@@ -8,8 +8,9 @@
 
 #import "PMSearchResultViewController.h"
 #import "PMGoodsItem.h"
+#import "PMGoodsCell.h"
 #import "DCGoodBaseViewController.h"
-@interface PMSearchResultViewController ()
+@interface PMSearchResultViewController ()<PMGoodsCellDelegate>
 @property(nonatomic, strong) NSMutableArray *dataArray;
 @end
 
@@ -39,5 +40,13 @@
     vc.goods_id = goodsItem.goodId;
     vc.list_id  = goodsItem.list_id;
     [self.navigationController pushViewController:vc  animated:YES];
+}
+- (void)cellDidAddCart:(PMGoodsItem *)item{
+    [self requestPOST:API_Dogfood_cart parameters:@{@"goods_id":item.goodId,@"user_id":[SAApplication userID],@"type":@"1",@"list_id":item.list_id,@"shul":@"1"} success:^(__kindof SARequest *request, id responseObject) {
+        [self showSuccess:@"加入购物车成功！"];
+    } failure:NULL];
+}
+- (void)updateFilterWithParameters:(NSDictionary *)parameters {
+    
 }
 @end

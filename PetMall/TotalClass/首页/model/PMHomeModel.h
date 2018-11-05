@@ -67,7 +67,15 @@
 @property(nonatomic, copy) NSString *goods_title;
 @property(nonatomic, copy) NSString *market_price;
 @property(nonatomic, copy) NSString *selling_price;
+@property(nonatomic, copy) NSString *list_id;
+@property(nonatomic, copy) NSString *goods_shul;
+@property(nonatomic, copy) NSString *goods_spec;
+@property(nonatomic, copy) NSString *jifen;
+@property(nonatomic, copy) NSString *groupa;
+@property(nonatomic, copy) NSString *postage;
 @property(nonatomic, copy) NSString *sum;
+
+
 
 @end
 @interface PMHomeBargainModel : NSObject

@@ -18,7 +18,7 @@
 #import "DCGoodsCountDownCell.h" //倒计时商品
 #import "DCNewWelfareCell.h"     //新人福利
 #import "DCGoodsHandheldCell.h"  //掌上专享
-#import "DCGoodsYouLikeCell.h"   //猜你喜欢商品
+#import "PMGoodsGroupCollectionCell.h"   //猜你喜欢商品
 #import "DCGoodsGridCell.h"      //10个选项
 #import "PMSpecialClearanceCell.h"
 /* head */
@@ -43,6 +43,7 @@
 #import "PMGoodSaleViewController.h"
 #import "PMGroupPurchaserDetailViewController.h"
 #import "PMHomeModel.h"
+#import "PMConfirmOrderViewController.h"
 /* cell */
 static NSString *const DCGoodsCountDownCellID = @"DCGoodsCountDownCell";
 static NSString *const DCNewWelfareCellID = @"DCNewWelfareCell";
@@ -221,7 +222,7 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
         _collectionView.showsVerticalScrollIndicator = NO;        //注册
         [_collectionView registerClass:[DCGoodsCountDownCell class] forCellWithReuseIdentifier:DCGoodsCountDownCellID];
         [_collectionView registerClass:[DCGoodsHandheldCell class] forCellWithReuseIdentifier:DCGoodsHandheldCellID];
-        [_collectionView registerClass:[DCGoodsYouLikeCell class] forCellWithReuseIdentifier:DCGoodsYouLikeCellID];
+        [_collectionView registerClass:[PMGoodsGroupCollectionCell class] forCellWithReuseIdentifier:DCGoodsYouLikeCellID];
         [_collectionView registerClass:[DCGoodsGridCell class] forCellWithReuseIdentifier:DCGoodsGridCellID];
         [_collectionView registerClass:[DCNewWelfareCell class] forCellWithReuseIdentifier:DCNewWelfareCellID];
         [_collectionView registerClass:[PMSpecialClearanceCell class] forCellWithReuseIdentifier:PMSpecialClearanceCellID];
@@ -287,10 +288,17 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
         gridcell = cell;
     }
     else if (indexPath.section == 3) {//团购活动
-        DCGoodsYouLikeCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DCGoodsYouLikeCellID forIndexPath:indexPath];
-        cell.lookSameBlock = ^{
-//            [self pushDeat:cell.youLikeItem];
-
+        PMGoodsGroupCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DCGoodsYouLikeCellID forIndexPath:indexPath];
+        cell.callBack = ^(PMGroupModel *groupModel) {
+            [self requestPOST:API_Classification_purchase parameters:@{@"goods_id":groupModel.groupId,@"user_id":[SAApplication userID],@"list_id":groupModel.list_id,@"shul":@"1",@"type":@"1",@"flag":@"1"} success:^(__kindof SARequest *request, id responseObject) {
+                [self showSuccess:responseObject[@"msg"]];
+                //        PMIntegralResultViewController * vc = [PMIntegralResultViewController new];
+                //        [self pushViewController:vc];
+            } failure:NULL];
+//            PMConfirmOrderViewController * vc = [[PMConfirmOrderViewController alloc] init];
+//            vc.cart_id = groupModel.groupId;
+//            vc.order_id =
+//            [self.navigationController pushViewController:vc animated:YES];
         };
         cell.groupModel = self.homeModel.group[indexPath.row];
         gridcell = cell;
@@ -446,18 +454,18 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {//10
-        if (indexPath.row == 0) {
+        if (indexPath.row == 0) {//限时秒杀
             PMTimeLimitViewController * vc = [[PMTimeLimitViewController alloc] init];
             [self pushViewController:vc];
-        }else if (1 == indexPath.row){
+        }else if (1 == indexPath.row){//潮品预
             PMGoodSaleViewController * vc = [[PMGoodSaleViewController alloc] init];
             [self pushViewController:vc];
-        }else if (2 == indexPath.row){
+        }else if (2 == indexPath.row){//团购
             [[SAApplication sharedApplication].mainTabBarController setSelectedIndex:2];
-        }else if (3 == indexPath.row){
+        }else if (3 == indexPath.row){//积分商城
             PMIntegralMallViewController * vc = [[PMIntegralMallViewController alloc] init];
             [self pushViewController:vc];
-        }else if (4 == indexPath.row){
+        }else if (4 == indexPath.row){//特价清仓
             PMSpeacilePriceViewController * vc = [[PMSpeacilePriceViewController alloc] init];
             [self pushViewController:vc];
         }

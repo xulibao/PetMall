@@ -13,4 +13,11 @@
 + (NSDictionary *)mj_replacedKeyFromPropertyName{
     return @{@"express_id":@"id"};
 }
+
+- (NSString *)express_price{
+    if (_express_price == nil) {
+        _express_price = @"5.00";
+    }
+    return _express_price;
+}
 @end

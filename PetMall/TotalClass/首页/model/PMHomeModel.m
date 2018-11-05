@@ -8,7 +8,7 @@
 
 #import "PMHomeModel.h"
 #import "PMCommonGoodsCell.h"
-
+#import "PMGoodsGroupCell.h"
 @implementation PMHomeModel
 
 +(NSDictionary *)mj_objectClassInArray
@@ -81,7 +81,7 @@
 
 - (Class)cellClass {
     if (!_cellClass) {
-        _cellClass = [PMCommonGoodsCell class];
+        _cellClass = [PMGoodsGroupCell class];
     }
     return _cellClass;
 }

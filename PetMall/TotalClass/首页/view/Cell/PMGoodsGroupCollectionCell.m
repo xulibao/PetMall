@@ -8,21 +8,10 @@
 
 #define cellWH kMainBoundsWidth * 0.5 - 50
 
-#import "DCGoodsYouLikeCell.h"
-
-// Controllers
-
-// Models
-#import "DCRecommendItem.h"
-// Views
-
-// Vendors
+#import "PMGoodsGroupCollectionCell.h"
 #import <UIImageView+WebCache.h>
-// Categories
 
-// Others
-
-@interface DCGoodsYouLikeCell ()
+@interface PMGoodsGroupCollectionCell ()
 
 /* 图片 */
 @property (strong , nonatomic)UIImageView *goodsImageView;
@@ -40,7 +29,7 @@
 
 @end
 
-@implementation DCGoodsYouLikeCell
+@implementation PMGoodsGroupCollectionCell
 
 #pragma mark - Intial
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -137,8 +126,8 @@
 
 
 #pragma mark - Setter Getter Methods
-- (void)setGroupModel:(PMGroupModel *)groupModel
-{
+- (void)setGroupModel:(PMGroupModel *)groupModel{
+    _groupModel = groupModel;
     [_goodsImageView sd_setImageWithURL:[NSURL URLWithString:groupModel.goods_logo]];
     _priceLabel.text = [NSString stringWithFormat:@"¥%@",groupModel.selling_price];
     //中划线
@@ -152,7 +141,7 @@
 #pragma mark - 点击事件
 - (void)lookSameGoods
 {
-    !_lookSameBlock ? : _lookSameBlock();
+    !_callBack ? : _callBack(self.groupModel);
 }
 
 @end
