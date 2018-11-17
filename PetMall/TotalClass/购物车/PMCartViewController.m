@@ -373,9 +373,8 @@ static NSString *const PMCartCellID = @"PMCartCell";
     NSMutableArray *goodsIds = [NSMutableArray array];
     for (PMCartItem  *cartItem in self.dataArray) {
         for (DCRecommendItem *recommendItem in cartItem.order_list) {
-            [goodsIds addObject:recommendItem.cart_id];
-
             if (recommendItem.isSelect) {
+                [goodsIds addObject:recommendItem.cart_id];
                 isGoodsSelect = YES;
             }
         }
@@ -388,7 +387,6 @@ static NSString *const PMCartCellID = @"PMCartCell";
     PMConfirmOrderViewController * vc = [[PMConfirmOrderViewController alloc] init];
     vc.price = [@(self.totalPrice) stringValue];
     vc.order_id =  goodsIdStr;
-    vc.flag = @"2";
     [self.navigationController pushViewController:vc animated:YES];
 }
 

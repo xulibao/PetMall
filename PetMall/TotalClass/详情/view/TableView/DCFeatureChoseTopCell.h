@@ -7,18 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "PMGoodDetailModel.h"
 @interface DCFeatureChoseTopCell : UITableViewCell
 
-/** 取消点击回调 */
-@property (nonatomic, copy) dispatch_block_t crossButtonClickBlock;
-
-/* 商品价格 */
-@property (strong , nonatomic)UILabel *goodPriceLabel;
+@property(nonatomic, strong) PMGoodDetailPriceModel *priceModel;
 /* 图片 */
 @property (strong , nonatomic)UIImageView *goodImageView;
-/* 选择属性 */
-@property (strong , nonatomic)UILabel *chooseAttLabel;
-
-
+/** 取消点击回调 */
+@property (nonatomic, copy) dispatch_block_t crossButtonClickBlock;
 @end

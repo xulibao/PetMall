@@ -11,7 +11,8 @@
 @interface PMConfirmOrderViewController : STBaseViewController
 
 @property(nonatomic, copy) NSString *order_id;
-@property(nonatomic, copy) NSString *price; //1非购物车购买2购物车购买
-@property(nonatomic, copy) NSString *flag; //1非购物车购买2购物车购买
+@property(nonatomic, copy) NSString *goods_id; //非购物车购买传商品id
+@property(nonatomic, copy) NSString *list_id; //非购物车购买传价格id
+@property(nonatomic, copy) NSString *price; //zongjia
 
 @end

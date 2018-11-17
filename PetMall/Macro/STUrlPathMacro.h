@@ -162,4 +162,11 @@ static NSString * const API_user_service =  @"pet/index.php/index/user/service";
 static NSString * const API_user_servicel =  @"pet/index.php/index/user/servicel";
 //消息通知
 static NSString * const API_user_notification =  @"pet/index.php/index/user/notification";
+
+//支付相关
+// 支付宝
+static NSString * const API_Alipay_pay = @"pet/index.php/index/Alipay/pay";
+// 微信
+static NSString * const API_wechat_pay = @"pet/index.php/index/wechat/pay";
+
 #endif

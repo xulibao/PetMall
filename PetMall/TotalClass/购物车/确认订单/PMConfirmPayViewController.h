@@ -9,5 +9,6 @@
 #import "STBaseTableViewController.h"
 
 @interface PMConfirmPayViewController : STBaseTableViewController
-
+@property(nonatomic, copy) NSString *order_no;
+@property(nonatomic, copy) NSString *price;
 @end

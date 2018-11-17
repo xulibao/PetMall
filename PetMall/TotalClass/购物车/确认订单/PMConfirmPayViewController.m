@@ -10,6 +10,10 @@
 #import "SAWithdrawalsCell.h"
 #import "STCommonTableViewModel.h"
 #import "PMPayResultViewController.h"
+#import "SAAlipayTool.h"
+#import "WXPayClient.h"
+#import "SAWXPayRequest.h"
+
 @interface PMConfirmPayViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property(nonatomic, strong) STCommonTableViewModel *viewModel;
 @property(nonatomic, copy) NSString *payType;
@@ -44,9 +48,9 @@
     bgView.backgroundColor = [UIColor whiteColor];
     self.tableView.tableHeaderView = bgView;
     UILabel * textField = [[UILabel alloc] init];
-    NSString * countStr = @"需支付 154.00";
+    NSString * countStr = [NSString stringWithFormat:@"需支付 %@",self.price];
     NSMutableAttributedString * str = [[NSMutableAttributedString alloc] initWithString:countStr];
-    [str addAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexStr:@"#FF3945"]} range:[countStr rangeOfString:@"154.00"]];
+    [str addAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexStr:@"#FF3945"]} range:[countStr rangeOfString:self.price]];
     textField.attributedText = str;
     self.moneyTextField = textField;
     textField.font = [UIFont systemFontOfSize:15];
@@ -132,59 +136,52 @@
 
 - (void)footBtnClick{
     [self.view endEditing:YES];
- 
-
- 
-        if (0 == [self.payType integerValue]) {
+    if (0 == [self.payType integerValue]) {
             [self showWaring:@"请选择一种支付方式"];
             return;
-        }
-        if (1 == [self.payType integerValue]) { //微信
+    }
+    if (1 == [self.payType integerValue]) { //微信
             [self rechargeOrPaySuccess];
-//            if ([WXApi isWXAppInstalled] == NO) {
-//                [self showErrow:@"您没有安装微信客户端，建议您使用支付宝支付"];
-//                return;
-//            }
-//            SAWXPayRequest *wxRequest = [[SAWXPayRequest alloc] init];
-//            wxRequest.userId = [SAApplication userID];
-//            wxRequest.payType = self.payType;
-//            wxRequest.money = self.moneyTextField.text;
-//            wxRequest.shouldDisplayRetryView = YES;
-//            wxRequest.shouldDisplayLoadingView = YES;
-//            [wxRequest addAccessory:self];
-//
-//            [wxRequest startWithCompletionBlockWithSuccess:^(__kindof SAWXPayRequest *request) {
-//                __weak typeof(self)weakSelf = self;
-//                [[WXPayClient shareInstance] payByWeiXinDict:request.responseObject];
-//                [WXPayClient shareInstance].wxPaySucessedCallBack = ^(){
-//                    __strong typeof(weakSelf)strongSelf = weakSelf;
-//                    [strongSelf rechargeOrPaySuccess];
-//                };
-//                [WXPayClient shareInstance].wxPayAilFieldBlock = ^(NSString *fieldStr){
-//                    __strong typeof(weakSelf)strongSelf = weakSelf;
-//                    [strongSelf showErrow:fieldStr];
-//                    [self showErrow:fieldStr];
-//                };
-//
-//            } failure:NULL];
+            if ([WXApi isWXAppInstalled] == NO) {
+                [self showErrow:@"您没有安装微信客户端，建议您使用支付宝支付"];
+                return;
+            }
+            SAWXPayRequest *wxRequest = [[SAWXPayRequest alloc] init];
+            wxRequest.userId = [SAApplication userID];
+            wxRequest.payType = self.payType;
+            wxRequest.money = self.moneyTextField.text;
+            wxRequest.shouldDisplayRetryView = YES;
+            wxRequest.shouldDisplayLoadingView = YES;
+            [wxRequest addAccessory:self];
+
+            [wxRequest startWithCompletionBlockWithSuccess:^(__kindof SAWXPayRequest *request) {
+                __weak typeof(self)weakSelf = self;
+                [[WXPayClient shareInstance] payByWeiXinDict:request.responseObject];
+                [WXPayClient shareInstance].wxPaySucessedCallBack = ^(){
+                    __strong typeof(weakSelf)strongSelf = weakSelf;
+                    [strongSelf rechargeOrPaySuccess];
+                };
+                [WXPayClient shareInstance].wxPayAilFieldBlock = ^(NSString *fieldStr){
+                    __strong typeof(weakSelf)strongSelf = weakSelf;
+                    [strongSelf showErrow:fieldStr];
+                    [self showErrow:fieldStr];
+                };
+
+            } failure:NULL];
             
         }else if (2 == [self.payType integerValue]) { //支付宝
-            [self rechargeOrPaySuccess];
-//            [self requestMethod:GARequestMethodGET URLString:API_recharge_getRechargeAndCallback parameters:@{@"userId":[SAApplication userID],@"payType":self.payType,@"money":self.moneyTextField.text} resKeyPath:@"data" resClass:[SAAlipayToolModel class] retry:YES success:^(__kindof SARequest *request, id responseObject) {
-//                __weak typeof(self)weakSelf = self;
-//                [[SAAlipayTool sharedSAAlipayTool] payByAilPay:responseObject];
-//                [SAAlipayTool sharedSAAlipayTool].ailPaySucessedCallBack = ^(){
-//                    __strong typeof(weakSelf)strongSelf = weakSelf;
-//                    [strongSelf rechargeOrPaySuccess];
-//
-//                };
-//                [SAAlipayTool sharedSAAlipayTool].ailPayAilFieldBlock = ^(NSString *fieldStr){
-//                    __strong typeof(weakSelf)strongSelf = weakSelf;
-//                    //            [self paySucess:NO failReason:@"取消支付"];
-//                    [strongSelf showErrow:fieldStr];
-//                };
-//
-//            } failure:NULL];
+            [self requestPOST:API_Alipay_pay parameters:@{@"body":@"商品",@"totalFee":self.price,@"orderId":self.order_no} success:^(__kindof SARequest *request, id responseObject) {
+                SAAlipayToolModel * model = [[SAAlipayToolModel alloc] init];
+                model.orderNo = responseObject[@"result"][@"order_id"];
+                model.price = self.price;
+                [[SAAlipayTool sharedSAAlipayTool] payByAilPay:responseObject];
+                [SAAlipayTool sharedSAAlipayTool].ailPaySucessedCallBack = ^(){
+                    [self rechargeOrPaySuccess];
+                };
+                [SAAlipayTool sharedSAAlipayTool].ailPayAilFieldBlock = ^(NSString *fieldStr){
+                    [self showErrow:fieldStr];
+                };
+            } failure:NULL];
         }
     }
 

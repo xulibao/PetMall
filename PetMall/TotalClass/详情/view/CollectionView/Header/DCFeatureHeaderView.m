@@ -71,10 +71,9 @@
 }
 
 #pragma mark - Setter Getter Methods
-- (void)setHeadTitle:(DCFeatureTitleItem *)headTitle
-{
-    _headTitle = headTitle;
-    _headerLabel.text = headTitle.attrname;
+- (void)setChoiceModel:(PMGoodDetailChoiceModel *)choiceModel{
+    _choiceModel = choiceModel;
+    _headerLabel.text = choiceModel.classification;
 }
 
 @end

@@ -73,14 +73,6 @@
         [self pushViewController:vc];
     };
     [_dataArray addObject:recommendItem];
-
-    recommendItem = [PMSetItem new];
-    recommendItem.title = @"评价我们";
-    recommendItem.itemSelect = ^{
-        PMSendCommentViewController * vc = [PMSendCommentViewController new];
-        [self.navigationController pushViewController:vc animated:YES];
-    };
-    [_dataArray addObject:recommendItem];
     
     recommendItem = [PMSetItem new];
     recommendItem.title = @"联系我们";

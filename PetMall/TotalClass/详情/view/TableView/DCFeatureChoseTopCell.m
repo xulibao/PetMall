@@ -8,24 +8,17 @@
 
 #import "DCFeatureChoseTopCell.h"
 
-// Controllers
-
-// Models
-
-// Views
-
-// Vendors
-
-// Categories
-
-// Others
-
 @interface DCFeatureChoseTopCell ()
 
 /* 取消 */
 @property (strong , nonatomic)UIButton *crossButton;
+/* 商品价格 */
+@property (strong , nonatomic)UILabel *goodPriceLabel;
 
-
+/* 选择属性 */
+@property (strong , nonatomic)UILabel *chooseAttLabel;
+/* 商品编号 */
+@property (strong , nonatomic)UILabel *goodNumberLabel;
 @end
 
 @implementation DCFeatureChoseTopCell
@@ -42,8 +35,7 @@
     return self;
 }
 
-- (void)setUpUI
-{
+- (void)setUpUI{
     _crossButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_crossButton setImage:[UIImage imageNamed:@"icon_cha"] forState:0];
     [_crossButton addTarget:self action:@selector(crossButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -54,9 +46,12 @@
     
     _goodPriceLabel = [UILabel new];
     _goodPriceLabel.font = PFR18Font;
-    _goodPriceLabel.textColor = [UIColor redColor];
-    
+    _goodPriceLabel.textColor = kColorFF3945;
     [self addSubview:_goodPriceLabel];
+    
+    _goodNumberLabel = [UILabel new];
+    _goodNumberLabel.font = PFR12Font;
+    [self addSubview:_goodNumberLabel];
     
     _chooseAttLabel = [UILabel new];
     _chooseAttLabel.numberOfLines = 2;
@@ -80,27 +75,35 @@
         [make.top.mas_equalTo(self)setOffset:DCMargin];
         make.size.mas_equalTo(CGSizeMake(80, 80));
     }];
-    
-    [_goodPriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        [make.left.mas_equalTo(_goodImageView.mas_right)setOffset:DCMargin];
-        [make.top.mas_equalTo(_goodImageView)setOffset:DCMargin];
+  
+    [self.chooseAttLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.goodPriceLabel);
+        make.right.mas_equalTo(self.crossButton.mas_left);
+        [make.top.mas_equalTo(self.goodImageView)setOffset:DCMargin];
     }];
-    
-    [_chooseAttLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(_goodPriceLabel);
-        make.right.mas_equalTo(_crossButton.mas_left);
-        [make.top.mas_equalTo(_goodPriceLabel.mas_bottom)setOffset:5];
+    [self.goodPriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        [make.left.mas_equalTo(self.goodImageView.mas_right)setOffset:DCMargin];
+        [make.top.mas_equalTo(self.chooseAttLabel.mas_bottom)setOffset:DCMargin];
     }];
+    [_goodNumberLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        [make.left.mas_equalTo(self.goodImageView.mas_right)setOffset:DCMargin];
+        [make.top.mas_equalTo(self.goodPriceLabel.mas_bottom)setOffset:DCMargin];
+    }];
+ 
     
 }
 
 
-- (void)crossButtonClick
-{
+- (void)crossButtonClick{
     !_crossButtonClickBlock ?: _crossButtonClickBlock();
 }
 
 #pragma mark - Setter Getter Methods
-
+- (void)setPriceModel:(PMGoodDetailPriceModel *)priceModel{
+    _priceModel = priceModel;
+    self.goodPriceLabel.text = [NSString stringWithFormat:@"¥ %@",priceModel.selling_price];
+    self.chooseAttLabel.text = [NSString stringWithFormat:@"已选属性：%@",priceModel.goods_spec] ;
+    self.goodNumberLabel.text = [NSString stringWithFormat:@"商品编号：%@",priceModel.number] ;
+}
 
 @end

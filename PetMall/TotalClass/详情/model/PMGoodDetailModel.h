@@ -8,9 +8,37 @@
 
 #import <Foundation/Foundation.h>
 
+@interface PMGoodDetailSpecificationModel : NSObject
+@property(nonatomic, copy) NSString *sign;
+@property(nonatomic, copy) NSString *last;
+@property(nonatomic, assign) BOOL isSelect;
+
+@end
+@interface PMGoodDetailChoiceModel : NSObject
+@property(nonatomic, copy) NSString *classification;
+@property(nonatomic, strong) NSArray *specifications;
+
+@end
+
+@interface PMGoodDetailPriceModel : NSObject
+
+@property(nonatomic, copy) NSString *number;
+@property(nonatomic, copy) NSString *goods_sale;
+@property(nonatomic, copy) NSString *list_id;
+@property(nonatomic, copy) NSString *martket_price;
+@property(nonatomic, copy) NSString *selling_price;
+@property(nonatomic, copy) NSString *list_fen;
+@property(nonatomic, copy) NSString *goods_spec;
+@property(nonatomic, copy) NSString *shul;
+@property(nonatomic, copy) NSString *Tag;
+
+
+@end
+
 @interface PMGoodDetailModel : NSObject
 
 @property(nonatomic, copy) NSString *goodId;
+@property(nonatomic, copy) NSString *list_id;
 @property(nonatomic, copy) NSString *goods_logo;
 @property(nonatomic, copy) NSString *goods_image;
 @property(nonatomic, strong) NSMutableArray *goodsImageArray;
@@ -29,6 +57,8 @@
 @property(nonatomic, copy) NSString *goods_deposit;
 @property(nonatomic, copy) NSString *active_time_b;
 @property(nonatomic, copy) NSString *active_time_d;
+@property(nonatomic, strong) NSArray *price;
+@property(nonatomic, strong) NSArray *choice;
 @property(nonatomic, assign) BOOL collection;
 
 @property(nonatomic, strong) NSArray *comment;

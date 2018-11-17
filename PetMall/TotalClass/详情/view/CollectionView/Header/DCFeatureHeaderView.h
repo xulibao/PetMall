@@ -7,11 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@class DCFeatureTitleItem;
+#import "PMGoodDetailModel.h"
 @interface DCFeatureHeaderView : UICollectionReusableView
 
 /** 标题数据 */
-@property (nonatomic, strong) DCFeatureTitleItem *headTitle;
+@property (nonatomic, strong) PMGoodDetailChoiceModel *choiceModel;
 
 @end

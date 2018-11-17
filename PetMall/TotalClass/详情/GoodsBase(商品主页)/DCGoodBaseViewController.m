@@ -47,6 +47,20 @@
 
 @interface DCGoodBaseViewController ()<UITableViewDataSource,UITableViewDelegate,WKNavigationDelegate>
 
+
+/* 商品标题 */
+@property (strong , nonatomic)NSString *goodTitle;
+/* 商品价格 */
+@property (strong , nonatomic)NSString *goodPrice;
+/* 商品小标题 */
+@property (strong , nonatomic)NSString *goodSubtitle;
+/* 商品图片 */
+@property (strong , nonatomic)NSString *goodImageView;
+
+/* 商品轮播图 */
+@property (strong , nonatomic)NSArray *goodsImageArray;
+
+
 @property (strong, nonatomic) UIScrollView *scrollerView;
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) WKWebView *webView;
@@ -174,16 +188,21 @@ static NSArray *lastSeleArray_;
     [self requestPOST:API_Dogfood_details parameters:@{@"goods_id":self.goods_id,@"user_id":[SAApplication userID]} success:^(__kindof SARequest *request, id responseObject) {
         PMGoodDetailModel * model = [PMGoodDetailModel mj_objectWithKeyValues:responseObject[@"result"]];
         self.detailModel = model;
-        self.goodTitle = model.goods_title;
-        self.goodPrice = model.selling_price;
-        self.goodsImageArray = model.goodsImageArray;
-        self.commentsItem = model.comment;
+        [self initViewData];
         [self.tableView reloadData];
         [self setUpBottomButton];
 
     } failure:NULL];
 }
-
+- (void)initViewData{
+    self.goodTitle = self.detailModel.goods_title;
+    self.goodPrice =  self.detailModel.selling_price;
+    self.goodsImageArray =  self.detailModel.goodsImageArray;
+    self.commentsItem =  self.detailModel.comment;
+    self.goodTip = self.detailModel.package_sale;
+    self.goodImageView = [self.detailModel.goodsImageArray firstObject];
+    [self.webView loadHTMLString:self.detailModel.goods_content baseURL:nil];
+}
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 
@@ -281,6 +300,8 @@ static NSArray *lastSeleArray_;
             DCFeatureSelectionViewController *dcNewFeaVc = [DCFeatureSelectionViewController new];
             self.dcFeaVc = dcNewFeaVc;
             dcNewFeaVc.goodImageView = weakSelf.goodImageView;
+            self.dcFeaVc.choice = self.detailModel.choice;
+             self.dcFeaVc.price = self.detailModel.price;
             [weakSelf setUpAlterViewControllerWith:dcNewFeaVc WithDistance:ScreenH * 0.66 WithDirection:XWDrawerAnimatorDirectionBottom WithParallaxEnable:YES WithFlipEnable:YES];
         }
     }];
@@ -288,13 +309,10 @@ static NSArray *lastSeleArray_;
     //选择Item通知
     _dcObj = [[NSNotificationCenter defaultCenter]addObserverForName:SHOPITEMSELECTBACK object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
         
-        NSArray *selectArray = note.userInfo[@"Array"];
-        NSString *num = note.userInfo[@"Num"];
-        NSString *buttonTag = note.userInfo[@"Tag"];
+        PMGoodDetailPriceModel * priceModel = note.userInfo[@"price"];
 
-        lastNum_ = num;
-        lastSeleArray_ = selectArray;
-        
+        NSString *buttonTag = priceModel.Tag;
+        lastNum_ = priceModel.shul;
         [weakSelf.tableView reloadData];
         
         if ([buttonTag isEqualToString:@"0"]) { //加入购物车
@@ -303,8 +321,11 @@ static NSArray *lastSeleArray_;
             
         }else if ([buttonTag isEqualToString:@"1"]) { //立即购买
             
-            DCFillinOrderViewController *dcFillVc = [DCFillinOrderViewController new];
-            [weakSelf.navigationController pushViewController:dcFillVc animated:YES];
+            PMConfirmOrderViewController * vc = [[PMConfirmOrderViewController alloc] init];
+            vc.list_id = priceModel.list_id;
+            vc.goods_id =  self.detailModel.goodId;
+            vc.price = self.detailModel.selling_price;
+            [self.navigationController pushViewController:vc animated:YES];
         }
         
     }];
@@ -322,10 +343,7 @@ static NSArray *lastSeleArray_;
 }
 
 #pragma mark - 记载图文详情
-- (void)setUpGoodsWKWebView
-{
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"https://royalcanin.tmall.com/?spm=a220o.1000855.w5003-17355747065.1.5257703eeUhds1&scene=taobao_shop"]];
-    [self.webView loadRequest:request];
+- (void)setUpGoodsWKWebView{
     
     //下拉返回商品详情View
     UIView *topHitView = [[UIView alloc] init];
@@ -456,6 +474,8 @@ static NSArray *lastSeleArray_;
         DCFeatureSelectionViewController *dcFeaVc =
         [DCFeatureSelectionViewController new];
         self.dcFeaVc = dcFeaVc;
+        dcFeaVc.choice = self.detailModel.choice;
+        self.dcFeaVc.price = self.detailModel.price;
         dcFeaVc.userChooseBlock = ^(NSInteger tag) {
             if (0 == tag) {
                 [self dismissCover];
@@ -630,6 +650,9 @@ static NSArray *lastSeleArray_;
     }else if ( button.tag == 3) { //父控制器的加入购物车和立即购买
         //异步发通知
         PMConfirmOrderViewController * vc = [[PMConfirmOrderViewController alloc] init];
+        vc.list_id = self.detailModel.list_id;
+        vc.goods_id =  self.detailModel.goodId;
+        vc.price = self.detailModel.selling_price;
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
@@ -643,6 +666,8 @@ static NSArray *lastSeleArray_;
     DCFeatureSelectionViewController *dcFeaVc =
     [DCFeatureSelectionViewController new];
     self.dcFeaVc = dcFeaVc;
+    dcFeaVc.choice = self.detailModel.choice;
+    self.dcFeaVc.price = self.detailModel.price;
     dcFeaVc.userChooseBlock = ^(NSInteger tag) {
         if (0 == tag) {
             [self dismissCover];
@@ -660,8 +685,7 @@ static NSArray *lastSeleArray_;
 
 
 #pragma mark - 转场动画弹出控制器
-- (void)setUpAlterViewControllerWith:(UIViewController *)vc WithDistance:(CGFloat)distance WithDirection:(XWDrawerAnimatorDirection)vcDirection WithParallaxEnable:(BOOL)parallaxEnable WithFlipEnable:(BOOL)flipEnable
-{
+- (void)setUpAlterViewControllerWith:(UIViewController *)vc WithDistance:(CGFloat)distance WithDirection:(XWDrawerAnimatorDirection)vcDirection WithParallaxEnable:(BOOL)parallaxEnable WithFlipEnable:(BOOL)flipEnable{
     
     self.coverBtn = [[STCoverView alloc] initWithSuperView:kWindow complete:^(UIView *cover) {
         [cover removeFromSuperview];
@@ -674,17 +698,6 @@ static NSArray *lastSeleArray_;
     [UIView animateWithDuration:0.3 animations:^{
         self.dcFeaVc.view.transform = CGAffineTransformMakeTranslation(0, -kMainBoundsHeight * 0.66);
     }];
-    
-//    [self dismissViewControllerAnimated:YES completion:nil]; //以防有控制未退出
-//    XWDrawerAnimatorDirection direction = vcDirection;
-//    XWDrawerAnimator *animator = [XWDrawerAnimator xw_animatorWithDirection:direction moveDistance:distance];
-//    animator.parallaxEnable = parallaxEnable;
-//    animator.flipEnable = flipEnable;
-//    [self xw_presentViewController:vc withAnimator:animator];
-//    WEAKSELF
-//    [animator xw_enableEdgeGestureAndBackTapWithConfig:^{
-//        [weakSelf selfAlterViewback];
-//    }];
 }
 
 - (void)dismissCover{

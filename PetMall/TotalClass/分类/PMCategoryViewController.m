@@ -228,14 +228,10 @@ static NSString *const DCBrandSortCellID = @"DCBrandSortCell";
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    DCRecommendItem * item = _youLikeItem[0];
+    DCCalssSubItem * item = _mainItem[indexPath.row];
     DCGoodBaseViewController * vc = [[DCGoodBaseViewController alloc] init];
-//    vc.goodTitle = item.main_title;
-//    vc.goodPrice = item.price;
-//    vc.goodSubtitle = item.goods_title;
-//    vc.shufflingArray = item.images;
-//    vc.goodImageView = item.image_url;
-    
+    vc.goods_id = item.cate_id;
+//    vc.list_id  = item.list_id;
     [self.navigationController pushViewController:vc  animated:YES];
 }
 

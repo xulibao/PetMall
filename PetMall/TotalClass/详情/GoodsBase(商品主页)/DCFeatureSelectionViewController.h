@@ -7,10 +7,12 @@
 //
 
 #import "STBaseViewController.h"
-
+#import "PMGoodDetailModel.h"
 
 @interface DCFeatureSelectionViewController : STBaseViewController
 
+@property(nonatomic, strong) NSArray *choice;
+@property(nonatomic, strong) NSArray *price;
 /* 商品图片 */
 @property (strong , nonatomic)NSString *goodImageView;
 /* 上一次选择的属性 */

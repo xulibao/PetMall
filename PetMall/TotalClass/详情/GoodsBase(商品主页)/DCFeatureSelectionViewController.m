@@ -11,7 +11,7 @@
 // Controllers
 #import "DCFillinOrderViewController.h"
 // Models
-#import "DCFeatureItem.h"
+//#import "DCFeatureItem.h"
 #import "DCFeatureTitleItem.h"
 #import "DCFeatureList.h"
 // Views
@@ -38,11 +38,10 @@
 /* tableView */
 @property (strong , nonatomic)UITableView *tableView;
 /* 数据 */
-@property (strong , nonatomic)NSMutableArray <DCFeatureItem *> *featureAttr;
-/* 选择属性 */
-@property (strong , nonatomic)NSMutableArray *seleArray;
+@property (strong , nonatomic)NSArray <PMGoodDetailChoiceModel *> *featureAttr;
 /* 商品选择结果Cell */
 @property (weak , nonatomic)DCFeatureChoseTopCell *cell;
+@property(nonatomic, strong) PMGoodDetailPriceModel *selectPriceModel;
 
 @end
 
@@ -106,31 +105,48 @@ static NSString *const DCFeatureChoseTopCellID = @"DCFeatureChoseTopCell";
 }
 
 #pragma mark - initialize
-- (void)setUpBase
-{
+- (void)setUpBase{
     self.view.backgroundColor = [UIColor whiteColor];
     self.collectionView.backgroundColor = self.view.backgroundColor;
     self.automaticallyAdjustsScrollViewInsets = NO;
-    _featureAttr = [DCFeatureItem mj_objectArrayWithFilename:@"ShopItem.plist"]; //数据
+    _featureAttr = self.choice;
     self.tableView.frame = CGRectMake(0, 0, ScreenW, 100);
     self.tableView.rowHeight = 100;
     self.collectionView.frame = CGRectMake(0, self.tableView.dc_bottom ,ScreenW , NowScreenH - 200);
 
-    
-    if (_lastSeleArray.count == 0) return;
-    for (NSString *str in _lastSeleArray) {//反向遍历（赋值）
-        for (NSInteger i = 0; i < _featureAttr.count; i++) {
-            for (NSInteger j = 0; j < _featureAttr[i].list.count; j++) {
-                if ([_featureAttr[i].list[j].infoname isEqualToString:str]) {
-                    _featureAttr[i].list[j].isSelect = YES;
-                    [self.collectionView reloadData];
-                }
+    //默认选择第一个属性
+    for (PMGoodDetailChoiceModel * choiceModel in self.featureAttr) {
+        for (int i = 0; i < choiceModel.specifications.count; i++) {
+            PMGoodDetailSpecificationModel * model = choiceModel.specifications[i];
+            if (0 == i) {
+                model.isSelect = YES;
             }
+        }
+    }
+    [self configSelectPrice];
+    [self.tableView reloadData];
+    [self.collectionView reloadData];
+}
+
+- (void)configSelectPrice{
+    NSMutableString * signStr = [NSMutableString new];
+    for (PMGoodDetailChoiceModel * choiceModel in self.featureAttr) {
+        for (int i = 0; i < choiceModel.specifications.count; i++) {
+            PMGoodDetailSpecificationModel * model = choiceModel.specifications[i];
+            if (model.isSelect) {
+                [signStr appendString:model.sign];
+            }
+        }
+    }
+    self.selectPriceModel = nil;
+    for (PMGoodDetailPriceModel*priceModel in self.price) {
+        if ([priceModel.list_fen isEqualToString:signStr]) {
+            self.selectPriceModel = priceModel;
+            return;
         }
     }
 
 }
-
 #pragma mark - 底部按钮
 - (void)setUpBottonView
 {
@@ -175,6 +191,9 @@ static NSString *const DCFeatureChoseTopCellID = @"DCFeatureChoseTopCell";
     
     numberButton.resultBlock = ^(NSInteger num ,BOOL increaseStatus){
         num_ = num;
+        if (self.selectPriceModel) {
+            self.selectPriceModel.shul = [@(num_) stringValue];
+        }
     };
     [self.view addSubview:numberButton];
 
@@ -183,7 +202,7 @@ static NSString *const DCFeatureChoseTopCellID = @"DCFeatureChoseTopCell";
 #pragma mark - 底部按钮点击
 - (void)buttomButtonClick:(UIButton *)button
 {
-    if (_seleArray.count != _featureAttr.count && _lastSeleArray.count != _featureAttr.count) {//未选择全属性警告
+    if (!self.selectPriceModel) {//未选择全属性警告
         [self showWaring:@"请选择全属性"];
         return;
     }
@@ -210,20 +229,10 @@ static NSString *const DCFeatureChoseTopCellID = @"DCFeatureChoseTopCell";
     return 1;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     DCFeatureChoseTopCell *cell = [tableView dequeueReusableCellWithIdentifier:DCFeatureChoseTopCellID forIndexPath:indexPath];
     _cell = cell;
-    if (_seleArray.count != _featureAttr.count && _lastSeleArray.count != _featureAttr.count) {
-        cell.chooseAttLabel.textColor = [UIColor redColor];
-        cell.chooseAttLabel.text = @"有货";
-    }else {
-        cell.chooseAttLabel.textColor = [UIColor darkGrayColor];
-        NSString *attString = (_seleArray.count == _featureAttr.count) ? [_seleArray componentsJoinedByString:@"，"] : [_lastSeleArray componentsJoinedByString:@"，"];
-        cell.chooseAttLabel.text = [NSString stringWithFormat:@"已选属性：%@",attString];
-    }
-
-    cell.goodPriceLabel.text = [NSString stringWithFormat:@"¥ %@",@"20.8"];
+    cell.priceModel = self.selectPriceModel;
     [cell.goodImageView sd_setImageWithURL:[NSURL URLWithString:_goodImageView]];
     WEAKSELF
     cell.crossButtonClickBlock = ^{
@@ -234,30 +243,13 @@ static NSString *const DCFeatureChoseTopCellID = @"DCFeatureChoseTopCell";
 
 #pragma mark - 退出当前界面
 - (void)dismissFeatureViewControllerWithTag:(NSInteger)tag{
-        if (![self.cell.chooseAttLabel.text isEqualToString:@"有货"]) {//当选择全属性才传递出去
-            
+        if (self.selectPriceModel) {//当选择全属性才传递出去
+            self.selectPriceModel.shul = @"1";
+            self.selectPriceModel.Tag = [@(tag) stringValue];
             dispatch_sync(dispatch_get_global_queue(0, 0), ^{
-                if (self.seleArray.count == 0) {
-                    NSMutableArray *numArray = [NSMutableArray arrayWithArray:self.lastSeleArray];
-                    NSDictionary *paDict = @{
-                                             @"Tag" : [NSString stringWithFormat:@"%zd",tag],
-                                             @"Num" : [NSString stringWithFormat:@"%zd",num_],
-                                             @"Array" : numArray
-                                             };
-                    NSDictionary *dict = [[NSDictionary alloc] initWithDictionary:paDict];
-                    [[NSNotificationCenter defaultCenter]postNotificationName:SHOPITEMSELECTBACK object:nil userInfo:dict];
-                }else{
-                    NSDictionary *paDict = @{
-                                             @"Tag" : [NSString stringWithFormat:@"%zd",tag],
-                                             @"Num" : [NSString stringWithFormat:@"%zd",num_],
-                                             @"Array" : self.seleArray
-                                             };
-                    NSDictionary *dict = [[NSDictionary alloc] initWithDictionary:paDict];
-                    [[NSNotificationCenter defaultCenter]postNotificationName:SHOPITEMSELECTBACK object:nil userInfo:dict];
-                }
+                  [[NSNotificationCenter defaultCenter] postNotificationName:SHOPITEMSELECTBACK object:nil userInfo:@{@"price":self.selectPriceModel}];
             });
-        }
-    
+    }
     if (self.userChooseBlock) {
         self.userChooseBlock(tag);
     }
@@ -271,21 +263,20 @@ static NSString *const DCFeatureChoseTopCellID = @"DCFeatureChoseTopCell";
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return _featureAttr[section].list.count;
+    return _featureAttr[section].specifications.count;
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     DCFeatureItemCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DCFeatureItemCellID forIndexPath:indexPath];
-    cell.content = _featureAttr[indexPath.section].list[indexPath.row];
+    cell.content = _featureAttr[indexPath.section].specifications[indexPath.row];
     return cell;
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    
     if ([kind  isEqualToString:UICollectionElementKindSectionHeader]) {
         DCFeatureHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:DCFeatureHeaderViewID forIndexPath:indexPath];
-        headerView.headTitle = _featureAttr[indexPath.section].attr;
+        headerView.choiceModel = _featureAttr[indexPath.section];
         return headerView;
     }else {
 
@@ -295,31 +286,11 @@ static NSString *const DCFeatureChoseTopCellID = @"DCFeatureChoseTopCell";
 }
 
 #pragma mark - <UICollectionViewDelegate>
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-
-    //限制每组内的Item只能选中一个(加入质数选择)
-    if (_featureAttr[indexPath.section].list[indexPath.row].isSelect == NO) {
-        for (NSInteger j = 0; j < _featureAttr[indexPath.section].list.count; j++) {
-            _featureAttr[indexPath.section].list[j].isSelect = NO;
-        }
-    }
-    _featureAttr[indexPath.section].list[indexPath.row].isSelect = !_featureAttr[indexPath.section].list[indexPath.row].isSelect;
-
-    
-    //section，item 循环讲选中的所有Item加入数组中 ，数组mutableCopy初始化
-    _seleArray = [@[] mutableCopy];
-    for (NSInteger i = 0; i < _featureAttr.count; i++) {
-        for (NSInteger j = 0; j < _featureAttr[i].list.count; j++) {
-            if (_featureAttr[i].list[j].isSelect == YES) {
-                [_seleArray addObject:_featureAttr[i].list[j].infoname];
-            }else{
-                [_seleArray removeObject:_featureAttr[i].list[j].infoname];
-                [_lastSeleArray removeAllObjects];
-            }
-        }
-    }
-    
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    PMGoodDetailChoiceModel * choiceModel = self.featureAttr[indexPath.section];
+    PMGoodDetailSpecificationModel * model = choiceModel.specifications[indexPath.row];
+    model.isSelect = !model.isSelect;
+    [self configSelectPrice];
     //刷新tableView和collectionView
     [self.collectionView reloadData];
     [self.tableView reloadData];
@@ -329,7 +300,9 @@ static NSString *const DCFeatureChoseTopCellID = @"DCFeatureChoseTopCell";
 #pragma mark - <HorizontalCollectionLayoutDelegate>
 #pragma mark - 自定义layout必须实现的方法
 - (NSString *)collectionViewItemSizeWithIndexPath:(NSIndexPath *)indexPath {
-    return _featureAttr[indexPath.section].list[indexPath.row].infoname;
+    PMGoodDetailChoiceModel * choiceModel = self.featureAttr[indexPath.section];
+    PMGoodDetailSpecificationModel * model = choiceModel.specifications[indexPath.row];
+    return model.last;
 }
 
 

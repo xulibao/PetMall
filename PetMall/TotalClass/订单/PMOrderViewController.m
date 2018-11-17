@@ -112,11 +112,15 @@
 
 - (void)fetchData {
 
+    NSMutableDictionary * dictM = [@{} mutableCopy];
+    [dictM setObject:[SAApplication userID] forKey:@"user_id"];
+    if (self.type != PMOrderOrderTypeAll) {
+        [dictM setObject:@(self.type) forKey:@"status"];
+
+    }
     [self requestMethod:GARequestMethodPOST
               URLString:API_Goods_myorder
-             parameters:@{@"user_id":@"1",
-                          @"status": self.type > 0 ? @(self.type) : @""
-                          }
+             parameters:dictM
              resKeyPath:@"result"
           resArrayClass:[PMOrderItem class]
                   retry:YES

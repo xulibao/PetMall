@@ -11,7 +11,9 @@
 // Controllers
 
 // Models
-#import "DCCommentsItem.h"
+//#import "DCCommentsItem.h"
+#import "PMMyCommentItem.h"
+
 // Views
 #import "DCComHeadView.h"
 #import "DCCommentsCntCell.h"
@@ -30,7 +32,7 @@
 @property (strong , nonatomic)DCComHeadView *headView;
 
 /* 评论数据 */
-@property (strong , nonatomic)NSMutableArray<DCCommentsItem *> *commentsItem;
+@property (strong , nonatomic)NSMutableArray<PMMyCommentItem *> *commentsItem;
 
 @end
 
@@ -55,7 +57,7 @@ static NSString *const DCCommentsCntCellID = @"DCCommentsCntCell";
     return _tableView;
 }
 
-- (NSMutableArray<DCCommentsItem *> *)commentsItem{
+- (NSMutableArray<PMMyCommentItem *> *)commentsItem{
     if (!_commentsItem) {
         _commentsItem = [NSMutableArray array];
     }
@@ -78,7 +80,7 @@ static NSString *const DCCommentsCntCellID = @"DCCommentsCntCell";
     [self requestPOST:API_Dogfood_evaluation parameters:@{@"pagenum":@"1",@"user_id":[SAApplication userID],@"pagesize":@"10",@"user_goods":self.user_goods} success:^(__kindof SARequest *request, id responseObject) {
         self.headView.tipLabel.text =  [NSString stringWithFormat:@"%@%%好评",responseObject[@"result"][@"shul"][@"package_ok"]];
         self.headView.percentageLabel.text = [NSString stringWithFormat:@"(%@)",responseObject[@"result"][@"shul"][@"package_pl"]];
-        self.commentsItem = [DCCommentsItem mj_objectArrayWithKeyValuesArray:responseObject[@"result"][@"comment"]];
+        self.commentsItem = [PMMyCommentItem mj_objectArrayWithKeyValuesArray:responseObject[@"result"][@"comment"]];
         [self.tableView reloadData];
     } failure:NULL];
 }
@@ -91,9 +93,9 @@ static NSString *const DCCommentsCntCellID = @"DCCommentsCntCell";
     WEAKSELF
     _headView.comTypeBlock = ^(NSInteger index) {
         if (index == 2) { //中评论
-            weakSelf.commentsItem = [DCCommentsItem mj_objectArrayWithFilename:@"CommentBadData.plist"];
+            weakSelf.commentsItem = [PMMyCommentItem mj_objectArrayWithFilename:@"CommentBadData.plist"];
         }else{
-            weakSelf.commentsItem = [DCCommentsItem mj_objectArrayWithFilename:@"CommentData.plist"];
+            weakSelf.commentsItem = [PMMyCommentItem mj_objectArrayWithFilename:@"CommentData.plist"];
         }
         [weakSelf.tableView reloadData];
         [[NSNotificationCenter defaultCenter]postNotificationName:@"UpDataImageView" object:nil];

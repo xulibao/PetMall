@@ -290,15 +290,11 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
     else if (indexPath.section == 3) {//团购活动
         PMGoodsGroupCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DCGoodsYouLikeCellID forIndexPath:indexPath];
         cell.callBack = ^(PMGroupModel *groupModel) {
-            [self requestPOST:API_Classification_purchase parameters:@{@"goods_id":groupModel.groupId,@"user_id":[SAApplication userID],@"list_id":groupModel.list_id,@"shul":@"1",@"type":@"1",@"flag":@"1"} success:^(__kindof SARequest *request, id responseObject) {
-                [self showSuccess:responseObject[@"msg"]];
-                //        PMIntegralResultViewController * vc = [PMIntegralResultViewController new];
-                //        [self pushViewController:vc];
-            } failure:NULL];
-//            PMConfirmOrderViewController * vc = [[PMConfirmOrderViewController alloc] init];
-//            vc.cart_id = groupModel.groupId;
-//            vc.order_id =
-//            [self.navigationController pushViewController:vc animated:YES];
+            PMConfirmOrderViewController * vc = [[PMConfirmOrderViewController alloc] init];
+            vc.goods_id = groupModel.groupId;
+            vc.price = groupModel.selling_price;
+            vc.list_id = groupModel.list_id;
+            [self.navigationController pushViewController:vc animated:YES];
         };
         cell.groupModel = self.homeModel.group[indexPath.row];
         gridcell = cell;

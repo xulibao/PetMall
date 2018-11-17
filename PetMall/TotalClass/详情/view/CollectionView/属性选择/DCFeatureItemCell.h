@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@class DCFeatureList;
+#import "PMGoodDetailModel.h"
 @interface DCFeatureItemCell : UICollectionViewCell
 
 /* 内容数据 */
-@property (nonatomic , copy) DCFeatureList *content;
+@property (nonatomic , strong) PMGoodDetailSpecificationModel *content;
 
 @end

@@ -15,6 +15,10 @@
 @end
 
 @implementation PMGroupPurchaserDetailViewController
+- (void)initViewData{
+    [super initViewData];
+    self.goodTip = [NSString stringWithFormat:@"参团数量%@ 还差%@",self.detailModel.goods_shul,self.detailModel.groupa];
+}
 #pragma mark - 加入购物车 立即购买
 - (void)setUpRightTwoButton
 {
@@ -44,6 +48,9 @@
     }else  if ( button.tag == 3) { //父控制器的加入购物车和立即购买
         //异步发通知
         PMConfirmOrderViewController * vc = [[PMConfirmOrderViewController alloc] init];
+        vc.list_id = self.detailModel.list_id;
+        vc.goods_id =  self.detailModel.goodId;
+        vc.price = self.detailModel.selling_price;
         [self.navigationController pushViewController:vc animated:YES];
     }
 }

@@ -269,7 +269,22 @@
 }
 
 - (void)fecthData{
-    [self requestPOST:API_Dogfood_confirmation parameters:@{@"user_id":[SAApplication userID],@"order_id":self.order_id,@"price":self.price,@"flag":self.flag} success:^(__kindof SARequest *request, id responseObject) {
+    NSMutableDictionary *dictData = [@{} mutableCopy];
+    [dictData setObject:[SAApplication userID] forKey:@"user_id"];
+    if (self.order_id) {
+        [dictData setObject:self.order_id forKey:@"order_id"];
+    }
+    if (self.price) {
+        [dictData setObject:self.price forKey:@"price"];
+    }
+    if (self.goods_id) {
+        [dictData setObject:self.goods_id forKey:@"goods_id"];
+    }
+    if (self.list_id) {
+        [dictData setObject:self.list_id forKey:@"list_id"];
+    }
+    
+    [self requestPOST:API_Dogfood_confirmation parameters:dictData success:^(__kindof SARequest *request, id responseObject) {
         self.addressArray = [PMMyAddressItem mj_objectArrayWithKeyValuesArray:responseObject[@"result"][@"address"]];
         self.expressArray = [PMExpressModel mj_objectArrayWithKeyValuesArray:responseObject[@"result"][@"distribution"]];
         self.goodsArray = [PMOrderListItem mj_objectArrayWithKeyValuesArray:responseObject[@"result"][@"goods"]];
@@ -485,21 +500,35 @@
 //确认订单
 - (void)commitBtnClick{
     NSMutableDictionary * dictDataM = [NSMutableDictionary dictionary];
-    if ([self.flag integerValue] == 2) { //购物车
+    
+    float totalPrice = [self.goodInfo.market_price floatValue] + [self.selectExpress.express_price floatValue] - [self.selectVoucher.coupon_jiazhi floatValue];
+    [dictDataM setObject:[NSString stringWithFormat:@"%.2f",totalPrice] forKey:@"price"];
+    
+    if (self.order_id) { //购物车
         [dictDataM setObject:self.order_id forKey:@"cart_id"];
-    }else{
-        [dictDataM setObject:self.order_id forKey:@"order_id"];
+    }
+    if (self.goodsArray.count > 0){ //购物车
+        [dictDataM setObject:@(self.goodsArray.count) forKey:@"shul"];
+    }
+    if (self.goods_id) { //购物车
+        [dictDataM setObject:self.goods_id forKey:@"goods_id"];
+    }
+    if (self.list_id) { //购物车
+        [dictDataM setObject:self.list_id forKey:@"list_id"];
     }
     [dictDataM setObject:self.selectAddressItem.address_id forKey:@"address"];
     if (self.selectVoucher) {
         [dictDataM setObject:self.selectVoucher.coupon_id forKey:@"coupon"];
+    }else{
+        [dictDataM setObject:@"0" forKey:@"coupon"];
     }
     [dictDataM setObject:self.selectExpress.express_id forKey:@"distribution"];
     [dictDataM setObject:[SAApplication userID] forKey:@"mid"];
-
     [self requestPOST:API_Dogfood_placeorder parameters:dictDataM success:^(__kindof SARequest *request, id responseObject) {
         [self showSuccess:@"提交订单成功！"];
         PMConfirmPayViewController * vc = [[PMConfirmPayViewController alloc] init];
+        vc.order_no = responseObject[@"result"][@"order_no"];
+        vc.price = [NSString stringWithFormat:@"%.2f",totalPrice];
         [self.navigationController pushViewController:vc animated:YES];
     } failure:NULL];
 }

@@ -36,6 +36,14 @@ PODS:
   - SSKeychain (1.4.1)
   - TUSafariActivity (1.0.4)
   - "UITableView+FDTemplateLayoutCell (1.6)"
+  - UMengUShare/Core (6.4.6):
+    - UMengUShare/Network
+  - UMengUShare/Network (6.4.6)
+  - UMengUShare/Social/ReducedWeChat (6.4.6):
+    - UMengUShare/Core
+  - UMengUShare/Social/WeChat (6.4.6):
+    - UMengUShare/Core
+    - UMengUShare/Social/ReducedWeChat
   - YTKNetwork (2.0.4):
     - AFNetworking (~> 3.0)
   - YYKit (1.0.9):
@@ -58,6 +66,7 @@ DEPENDENCIES:
   - SDWebImage
   - SSKeychain
   - "UITableView+FDTemplateLayoutCell"
+  - UMengUShare/Social/WeChat (= 6.4.6)
   - YTKNetwork
   - YYKit
   - ZYQAssetPickerController (~> 1.2.0)
@@ -80,6 +89,7 @@ SPEC REPOS:
     - SSKeychain
     - TUSafariActivity
     - "UITableView+FDTemplateLayoutCell"
+    - UMengUShare
     - YTKNetwork
     - YYKit
     - ZYQAssetPickerController
@@ -101,10 +111,11 @@ SPEC CHECKSUMS:
   SSKeychain: 55cc80f66f5c73da827e3077f02e43528897db41
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
   "UITableView+FDTemplateLayoutCell": 5c949b4a5059c404b442926c0e80f81d10a2d66f
+  UMengUShare: fdbbf86353976727af26a66e9a84314ecb59c816
   YTKNetwork: df8a7a5597bda1664a4efaa7ef871a818a887fe0
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
   ZYQAssetPickerController: dc692a6fb421c0dc0efcabd43eb260cfb073f7fd
 
-PODFILE CHECKSUM: d1bdf6b3934e97d91e53a7685a3d1bdcc383ea5f
+PODFILE CHECKSUM: 58e0b3e33a51b9d362ec45cd1ca6e6cf6954da64
 
 COCOAPODS: 1.5.0

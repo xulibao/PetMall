@@ -66,10 +66,9 @@
 
 #pragma mark - Setter Getter Methods
 
-- (void)setContent:(DCFeatureList *)content
-{
+- (void)setContent:(PMGoodDetailSpecificationModel *)content{
     _content = content;
-    _attLabel.text = content.infoname;
+    _attLabel.text = content.last;
     
     if (content.isSelect) {
         _attLabel.textColor = kColorFF3945;

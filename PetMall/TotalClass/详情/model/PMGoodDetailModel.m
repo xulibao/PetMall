@@ -8,11 +8,32 @@
 
 #import "PMGoodDetailModel.h"
 #import "PMMyCommentItem.h"
-@implementation PMGoodDetailModel
 
+@implementation PMGoodDetailSpecificationModel
+
+@end
+
+@implementation PMGoodDetailChoiceModel
 +(NSDictionary *)mj_objectClassInArray
 {
-    return @{ @"comment" : @"PMMyCommentItem",
+    return @{ @"specifications" : @"PMGoodDetailSpecificationModel",
+              };
+}
+@end
+
+@implementation PMGoodDetailPriceModel
+@end
+
+@implementation PMGoodDetailModel
++ (NSDictionary *)mj_replacedKeyFromPropertyName{
+    return @{@"goodId":@"id"};
+}
++(NSDictionary *)mj_objectClassInArray
+{
+    return @{
+             @"comment" : @"PMMyCommentItem",
+             @"choice" : @"PMGoodDetailChoiceModel",
+             @"price" : @"PMGoodDetailPriceModel",
               };
 }
 
