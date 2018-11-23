@@ -25,11 +25,35 @@
               };
 }
 
+- (NSString *)statusText{
+    switch ([self.status integerValue]) {
+        case 1:{
+            _statusText = @"等待付款";
+        }
+            break;
+        case 2:{
+            _statusText = @"买家已付款";
+        }
+            break;
+        case 4:{
+            
+        }
+            break;
+        case 8:{
+            _statusText = @"已申请退款";
+        }
+            break;
+            
+        default:
+            break;
+    }
+    return _statusText;
+}
+
 //标签
 - (NSArray<NSAttributedString*> *)tagsText {
-    PMOrderListItem * firstItem = [self.order_list firstObject];
     NSMutableArray *aTags = [NSMutableArray array];
-    switch ([firstItem.status integerValue]) {
+    switch ([self.status integerValue]) {
         case 1:{
             NSString *string = [NSString stringWithFormat:@"取消订单"];
             [aTags addObject:[string attributedStingWithAttributes:SADefaultHighlightedAttributes(13)]];
@@ -37,6 +61,8 @@
         }
             break;
         case 2:{
+            NSString *string = [NSString stringWithFormat:@"取消订单"];
+            [aTags addObject:[string attributedStingWithAttributes:SADefaultHighlightedAttributes(13)]];
         }
             break;
         case 4:{

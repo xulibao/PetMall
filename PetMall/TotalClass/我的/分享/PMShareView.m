@@ -7,6 +7,7 @@
 //
 
 #import "PMShareView.h"
+#import "ShareManager.h"
 @interface PMShareView()
 @property(nonatomic, strong) UIView * topView;
 @end
@@ -59,6 +60,8 @@
     for (int i = 0; i < btnArray.count; i++) {
         NSString * imageStr = btnArray[i];
         UIButton * btn = [[UIButton alloc] init];
+        btn.tag = i;
+        [btn addTarget:self action:@selector(shareClick:) forControlEvents:UIControlEventTouchUpInside];
         [btn setImage:IMAGE(imageStr) forState:UIControlStateNormal];
         [self.topView addSubview:btn];
         [btn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -67,6 +70,27 @@
         }];
     }
 
+}
+
+- (void)shareClick:(UIButton *)btn{
+    SharePlatformType type ;
+    switch (btn.tag) {
+        case 0:
+            type = SharePlatformTypeForWeChat;
+            break;
+        case 1:
+            type = SharePlatformTypeForWechatTimeline;
+            break;
+        case 2:
+            type = SharePlatformTypeForQQ;
+            break;
+        case 3:
+            type = SharePlatformTypeForQQZone;
+            break;
+        default:
+            break;
+    }
+      [ShareManager shareWithPlatformType:type title:@"12" shareText:@"23" image:@"d23" shareUrl:@"431" location:nil presenteController:nil completion:nil];
 }
 
 @end

@@ -9,7 +9,7 @@
 #import "PMHomeSubViewController.h"
 #import "PMGoodsItem.h"
 #import "PMGoodsCell.h"
-
+#import "DCGoodBaseViewController.h"
 #import <SDCycleScrollView.h>
 #import "SAButton.h"
 #import "PMHomeSubModel.h"
@@ -64,7 +64,7 @@
 }
 - (void)initFilterView {
     
-    [self requestPOST:API_Dogfood_specifications parameters:@{@"user_id":[SAApplication userID],@"zl":@"2"} success:^(__kindof SARequest *request, id responseObject) {
+    [self requestPOST:API_Dogfood_specifications parameters:@{@"user_id":[SAApplication userID],@"zl":@"2",@"type":[SAApplication sharedApplication].userType} success:^(__kindof SARequest *request, id responseObject) {
         self.subModel = [PMHomeSubModel mj_objectWithKeyValues:responseObject[@"result"]];
         [self fectchSubViews];
         
@@ -221,7 +221,7 @@
 
 #pragma mark - Request
 - (void)fetchData {
-    [self requestMethod:GARequestMethodPOST URLString:API_Dogfood_condition parameters:@{@"pagenum":@(self.page),@"pagesize":@"10"} resKeyPath:@"result" resArrayClass:[PMGoodsItem class] retry:YES success:^(__kindof SARequest *request, id responseObject) {
+    [self requestMethod:GARequestMethodPOST URLString:API_Dogfood_condition parameters:@{@"pagenum":@(self.page),@"pagesize":@"10",@"type":[SAApplication sharedApplication].userType} resKeyPath:@"result" resArrayClass:[PMGoodsItem class] retry:YES success:^(__kindof SARequest *request, id responseObject) {
         self.dataArray = responseObject;
         [self setItems:self.dataArray];
     } failure:NULL];
@@ -236,4 +236,11 @@
     } failure:NULL];
 }
 
+- (void)didSelectCellWithItem:(id<STCommonTableRowItem>)item{
+    PMGoodsItem * goodsItem = (PMGoodsItem *)item;
+    DCGoodBaseViewController * vc = [[DCGoodBaseViewController alloc] init];
+    vc.goods_id = goodsItem.goodId;
+    vc.list_id  = goodsItem.list_id;
+    [self.navigationController pushViewController:vc  animated:YES];
+}
 @end

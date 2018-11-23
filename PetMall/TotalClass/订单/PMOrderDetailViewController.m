@@ -14,23 +14,16 @@
 #import "PMSendCommentViewController.h"
 @interface PMOrderDetailViewController ()
 @property(nonatomic, strong) PMOrderDetailHeaderView *headerView;
+@property(nonatomic, strong) PMOrderDetailBottomView * bottomView;
 
-@property(nonatomic, strong) NSMutableArray *dataArray;
+@property(nonatomic, strong) NSArray *dataArray;
 
 @end
 
 @implementation PMOrderDetailViewController
-- (NSMutableArray *)dataArray{
+- (NSArray *)dataArray{
     if (_dataArray == nil) {
-        _dataArray = [NSMutableArray array];
-        PMOrderDetailItem *recommendItem = [[PMOrderDetailItem alloc] init];
-        recommendItem.image_url = @"https://img.alicdn.com/imgextra/i2/108613394/TB2mlYjm5MnBKNjSZFoXXbOSFXa_!!0-saturn_solar.jpg_210x210.jpg";
-        recommendItem.goods_title = @"GO狗粮 抗敏美毛系列全 牧羊犬全新配方 25磅";
-        recommendItem.nature = @"3.06kg  牛肉味";
-        recommendItem.price = @"158";
-        recommendItem.people_count = @"2";
-        [_dataArray addObject:recommendItem];
-
+        _dataArray = [NSArray array];
     }
     return _dataArray;
 }
@@ -52,6 +45,7 @@
     };
     self.tableView.tableHeaderView = self.headerView;
     PMOrderDetailBottomView * bottomView = [[PMOrderDetailBottomView alloc] initWithFrame:CGRectMake(0, 0, kMainBoundsWidth, 174)];
+    self.bottomView = bottomView;
     bottomView.copyBlcok = ^{
         [self showSuccess:@"复制成功!"];
     };
@@ -63,7 +57,14 @@
 }
 
 - (void)fetchData {
-    [self setItems:self.dataArray];
+    [self requestPOST:API_user_details parameters:@{@"user_id":[SAApplication userID],@"order_no":self.order_no} success:^(__kindof SARequest *request, id responseObject) {
+        PMOrderDetailModel * detailModel = [PMOrderDetailModel mj_objectWithKeyValues:responseObject[@"result"]];
+        self.dataArray = detailModel.goods;
+        [self setItems:self.dataArray];
+        self.headerView.detailModel = detailModel;
+        self.bottomView.infoModel = detailModel.order;
+    } failure:NULL];
+    
 }
 
 @end

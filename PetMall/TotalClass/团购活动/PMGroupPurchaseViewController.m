@@ -41,7 +41,7 @@
 #pragma mark - Request
 
 - (void)fetchData {
-    [self requestPOST:API_Dogfood_grouppurchase parameters:@{@"pagenum":@(self.page),@"pagesize":@(10)} success:^(__kindof SARequest *request, id responseObject) {
+    [self requestPOST:API_Dogfood_grouppurchase parameters:@{@"pagenum":@(self.page),@"pagesize":@(10),@"type":[SAApplication sharedApplication].userType} success:^(__kindof SARequest *request, id responseObject) {
         self.dataArray = [PMGroupModel mj_objectArrayWithKeyValuesArray:responseObject[@"result"][@"data"]];
         [self setItems:self.dataArray];
         NSMutableArray * imageArray = [@[] mutableCopy];
@@ -62,15 +62,18 @@
 }
 
 - (void)cellDidAddGroup:(PMGroupModel *)item{
+    PMGroupPurchaserDetailViewController * vc = [PMGroupPurchaserDetailViewController new];
+    vc.goods_id = item.groupId;
+    [self.navigationController pushViewController:vc animated:YES];
 //    PMConfirmOrderViewController *vc = [[PMConfirmOrderViewController alloc] init];
 //    vc.order_id = item.groupId;
 //    vc.cart_id = item.list_id;
 //    [self.navigationController pushViewController:vc animated:YES];
     
-    [self requestPOST:API_Classification_purchase parameters:@{@"goods_id":item.groupId,@"user_id":[SAApplication userID],@"list_id":item.list_id,@"shul":@"1",@"type":@"1",@"flag":@"1"} success:^(__kindof SARequest *request, id responseObject) {
-        [self showSuccess:responseObject[@"msg"]];
-//        PMIntegralResultViewController * vc = [PMIntegralResultViewController new];
-//        [self pushViewController:vc];
-    } failure:NULL];
+//    [self requestPOST:API_Classification_purchase parameters:@{@"goods_id":item.groupId,@"user_id":[SAApplication userID],@"list_id":item.list_id,@"shul":@"1",@"type":@"1",@"flag":@"1"} success:^(__kindof SARequest *request, id responseObject) {
+//        [self showSuccess:responseObject[@"msg"]];
+////        PMIntegralResultViewController * vc = [PMIntegralResultViewController new];
+////        [self pushViewController:vc];
+//    } failure:NULL];
 }
 @end

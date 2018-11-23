@@ -115,7 +115,7 @@ static NSString *const DCBrandSortCellID = @"DCBrandSortCell";
 
 #pragma mark - 加载数据
 - (void)setUpData{
-    [self requestPOST:API_Classification_fication parameters:nil success:^(__kindof SARequest *request, id responseObject) {
+    [self requestPOST:API_Classification_fication parameters:@{@"type":[SAApplication sharedApplication].userType} success:^(__kindof SARequest *request, id responseObject) {
         self.titleItem = [DCClassMianItem mj_objectArrayWithKeyValuesArray:responseObject[@"result"]];
         [self.tableView reloadData];
         //默认选择第一行（注意一定要在加载完数据之后）

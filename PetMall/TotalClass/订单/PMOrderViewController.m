@@ -10,6 +10,7 @@
 #import "PMOrderListItem.h"
 #import "PMOrderDetailViewController.h"
 #import "PMSendCommentViewController.h"
+#import "PMConfirmPayViewController.h"
 @interface PMOrderViewController ()
 
 @end
@@ -34,6 +35,12 @@
     vc3.type = PMOrderOrderTypeComment;
     vc3.title = @"待评价";
     self.viewControllers = @[vc0, vc1, vc2,vc3];
+    if (self.type == PMOrderOrderTypeComment) {
+         [self.segment setSelectedSegmentIndex:3 animated:YES];
+    }else{
+         [self.segment setSelectedSegmentIndex:self.type animated:YES];
+    }
+   
 }
 
 - (void)initSegment {
@@ -52,32 +59,6 @@
 - (NSMutableArray *)dataArray{
     if (_dataArray == nil) {
         _dataArray = [NSMutableArray array];
-//        PMOrderListItem *recommendItem = [[PMOrderListItem alloc] init];
-//        recommendItem.image_url = @"https://img.alicdn.com/imgextra/i2/108613394/TB2mlYjm5MnBKNjSZFoXXbOSFXa_!!0-saturn_solar.jpg_210x210.jpg";
-//        recommendItem.goods_title = @"GO狗粮 抗敏美毛系列全 牧羊犬全新配方 25磅";
-//        recommendItem.nature = @"3.06kg  牛肉味";
-//        recommendItem.price = @"158";
-//        recommendItem.people_count = @"2";
-//        [_dataArray addObject:recommendItem];
-//
-//
-//        recommendItem.image_url = @"https://img.alicdn.com/imgextra/i2/108613394/TB2mlYjm5MnBKNjSZFoXXbOSFXa_!!0-saturn_solar.jpg_210x210.jpg";
-//                recommendItem.goods_title = @"GO猫粮 抗敏美毛系列全 全新包装营养配方 25磅";
-//                recommendItem.nature = @"3.06kg  牛肉味";
-//                recommendItem.price = @"158";
-//                recommendItem.people_count = @"2";
-//            recommendItem.orderNo = @"1234818510";
-//            recommendItem.statusText = @"买家已付款";
-//                [_dataArray addObject:recommendItem];
-//
-//        recommendItem.image_url = @"https://img.alicdn.com/imgextra/i2/108613394/TB2mlYjm5MnBKNjSZFoXXbOSFXa_!!0-saturn_solar.jpg_210x210.jpg";
-//        recommendItem.goods_title = @"GO猫粮 抗敏美毛系列全 全新包装营养配方 25磅";
-//        recommendItem.nature = @"3.06kg  牛肉味";
-//        recommendItem.price = @"158";
-//        recommendItem.people_count = @"2";
-//        recommendItem.orderNo = @"1234851310";
-//        recommendItem.statusText = @"买家已付款";
-//        [_dataArray addObject:recommendItem];
     }
     return _dataArray;
 }
@@ -132,10 +113,29 @@
 
 #pragma mark - Override SAInfoListViewController
 
-- (void)didSelectCellWithItem:(PMOrderListItem *)item {
+- (void)didSelectCellWithItem:(PMOrderItem *)item {
     PMOrderDetailViewController *vc = [[PMOrderDetailViewController alloc] init];
-
+    vc.order_no = item.order_no;
     [self pushViewController:vc];
+}
+//退款
+- (void)PMOrderListCellClickRefund:(PMOrderListCell *)cell{
+    [self requestPOST:API_User_refund parameters:@{@"id":cell.item.order_no} success:^(__kindof SARequest *request, id responseObject) {
+        [self fetchData];
+    } failure:NULL];
+}
+//取消
+- (void)PMOrderListCellClickCancle:(PMOrderListCell *)cell{
+    [self requestPOST:API_Goods_cancellation parameters:@{@"order_id":cell.item.order_no} success:^(__kindof SARequest *request, id responseObject) {
+        [self fetchData];
+    } failure:NULL];
+}
+//支付
+- (void)PMOrderListCellClickPay:(PMOrderListCell *)cell{
+    PMConfirmPayViewController * vc = [[PMConfirmPayViewController alloc] init];
+    vc.order_no = cell.item.order_no;
+    vc.price = [NSString stringWithFormat:@"%@",cell.item.pay_price];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 

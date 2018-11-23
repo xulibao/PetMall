@@ -38,12 +38,13 @@
     [super tableView:tableView configViewWithData:data AtIndexPath:indexPath];
     NSString *text0;
     PMOrderListItem * firstItem = [data.order_list firstObject];
+    self.item = data;
     if (firstItem.order_no) {
         text0 = [@"订单编号：" stringByAppendingString:firstItem.order_no];
     }
     
     self.topView.attStr_label0 = [text0 attributedStingWithAttributes:nil];
-   self.topView.attStr_label1 = [data.statusText attributedStingWithAttributes:nil];
+    self.topView.attStr_label1 = [data.statusText attributedStingWithAttributes:@{NSForegroundColorAttributeName:kColorFF5554}];
     float totalPrice = 0.f;
     for (int i = 0; i < data.order_list.count; i++) {
         PMOrderListItem *item = data.order_list[i];
@@ -59,13 +60,50 @@
             make.left.right.mas_equalTo(self.contentView);
             make.height.mas_equalTo(95);
         }];
+        UIButton * goodsBtn = [[UIButton alloc] init];
+        goodsBtn.hidden = YES;
+        [goodsBtn setTitle:@"退款" forState:UIControlStateNormal];
+        [goodsBtn setTitleColor:[UIColor colorWithHexStr:@"#999999"] forState:UIControlStateNormal];
+        goodsBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+        goodsBtn.layer.cornerRadius = 10;
+        goodsBtn.layer.borderColor = [UIColor colorWithHexStr:@"#999999"].CGColor;
+        goodsBtn.layer.borderWidth = 1;
+        goodsBtn.layer.masksToBounds = YES;
+        [goodsBtn addTarget:self action:@selector(goodsBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        [goodView addSubview:goodsBtn];
+        [goodsBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.mas_equalTo(goodView).mas_offset(-5);
+            make.right.mas_equalTo(goodView).mas_offset(-5);
+            make.size.mas_equalTo(CGSizeMake(50, 20));
+        }];
+        switch ([self.item.status integerValue]) {
+            case 1:
+                break;
+            case 2:
+                goodsBtn.hidden = NO;
+                break;
+                
+                
+            default:
+                break;
+        }
+        
     }
     
     _bottomView.tags = data.tagsText;
+    @weakify(self)
     _bottomView.tagBtnClick = ^(NSInteger tag) {
-        if ([self.cellDelegate respondsToSelector:@selector(PMOrderListCellClick)]) {
-            [self.cellDelegate PMOrderListCellClick];
+        @strongify(self)
+        if (tag == 0) { //取消订单
+            if ([self.cellDelegate respondsToSelector:@selector(PMOrderListCellClickCancle:)]) {
+                [self.cellDelegate PMOrderListCellClickCancle:self];
+            }
+        }else{ //付款
+            if ([self.cellDelegate respondsToSelector:@selector(PMOrderListCellClickPay:)]) {
+                [self.cellDelegate PMOrderListCellClickPay:self];
+            }
         }
+      
     };
     _bottomView.label0.text = [NSString stringWithFormat:@"共%lu件商品 合计：¥%@",(unsigned long)data.order_list.count,@(totalPrice)];
     [_bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -75,9 +113,14 @@
         make.height.mas_equalTo(40);
     }];
 //    [_bottomView setNeedsLayout];
-    
-  
 }
+
+- (void)goodsBtnClick{
+    if ([self.cellDelegate respondsToSelector:@selector(PMOrderListCellClickRefund:)]) {
+        [self.cellDelegate PMOrderListCellClickRefund:self];
+    }
+}
+
 - (void)initViews{
     self.contentView.backgroundColor = [UIColor colorWithHexStr:@"#f2f2f2"];
     _topView = [[SATruckInfoBaseTopView alloc] init];

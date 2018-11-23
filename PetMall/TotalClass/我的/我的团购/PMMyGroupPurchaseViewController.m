@@ -8,14 +8,16 @@
 
 #import "PMMyGroupPurchaseViewController.h"
 #import "PMHomeModel.h"
+#import "PMGoodsGroupCell.h"
 #import "PMGroupPurchaserDetailViewController.h"
-@interface PMMyGroupPurchaseViewController()
+@interface PMMyGroupPurchaseViewController()<PMGoodsGroupCellDelegate>
 @property(nonatomic, strong) NSMutableArray *dataArray;
 @end
 @implementation PMMyGroupPurchaseViewController
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"我的团购";
+    self.viewModel.cellDelegate = self;
     [self fetchData];
 }
 
@@ -43,5 +45,12 @@
     vc.goods_id = goodsItem.groupId;
 //    vc.list_id  = goodsItem.list_id;
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)cellDidAddGroup:(PMGroupModel *)item{
+    PMGroupPurchaserDetailViewController * vc = [PMGroupPurchaserDetailViewController new];
+    vc.goods_id = item.groupId;
+    [self.navigationController pushViewController:vc animated:YES];
+    
 }
 @end

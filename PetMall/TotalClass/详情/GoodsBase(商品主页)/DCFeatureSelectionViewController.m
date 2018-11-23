@@ -200,8 +200,7 @@ static NSString *const DCFeatureChoseTopCellID = @"DCFeatureChoseTopCell";
 }
 
 #pragma mark - 底部按钮点击
-- (void)buttomButtonClick:(UIButton *)button
-{
+- (void)buttomButtonClick:(UIButton *)button{
     if (!self.selectPriceModel) {//未选择全属性警告
         [self showWaring:@"请选择全属性"];
         return;
@@ -224,8 +223,7 @@ static NSString *const DCFeatureChoseTopCellID = @"DCFeatureChoseTopCell";
 }
 
 #pragma mark - <UITableViewDataSource>
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 1;
 }
 

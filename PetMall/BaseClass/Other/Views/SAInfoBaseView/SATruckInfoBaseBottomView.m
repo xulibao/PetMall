@@ -48,11 +48,13 @@
         [self.tagViews removeAllSubviews];
         [tags enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(NSAttributedString * _Nonnull tag, NSUInteger idx, BOOL * _Nonnull stop) {
             SAGhostButton *tagButton;
-            tagButton.tag = idx;
             tagButton = [[SAGhostButton alloc] init];
-            tagButton.cornerRadius = 4;
-            tagButton.size = CGSizeMake(tag.length *15+8, 25);
-            [tagButton.titleLabel setFont:UIFontMake(13)];
+            tagButton.tag = idx;
+            CGSize size = [tag.string sizeWithAttributes:tag.attributes];
+            tagButton.size = CGSizeMake(size.width + 10, size.height + 5);
+            tagButton.cornerRadius = tagButton.size.height * 0.5;
+
+//            [tagButton.titleLabel setFont:UIFontMake(13)];
             tagButton.ghostColor = [tag attribute:NSForegroundColorAttributeName
                                           atIndex:(tag.length-1)
                                    effectiveRange:nil];

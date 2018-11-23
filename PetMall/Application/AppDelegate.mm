@@ -5,9 +5,11 @@
 //  Created by 徐礼宝 on 2018/8/28.
 //  Copyright © 2018年 ios@xulibao. All rights reserved.
 //
-
+#import "WXPayClient.h"
+#import "WeiXinConfiging.h"
 #import "AppDelegate.h"
 #import "GADebugWindow.h" // debug 框架
+#import "ShareManager.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +19,10 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    //微信 - 支付使用
+    [WXApi registerApp:WXAppId];
+    //注册友盟分享
+    [ShareManager resgisterShareBusiness];
     // 初始化app
     SAApplication *app = [SAApplication sharedApplication];
     _window = app.window;

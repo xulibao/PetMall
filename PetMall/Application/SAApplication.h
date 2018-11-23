@@ -13,6 +13,11 @@
 //#define DEVELOPER_TEST_VIEWCONTROLLER @"PMLoginViewController"
 #endif
 
+typedef enum {
+    PMUserTypeDog,
+    PMUserTypeCat
+}PMUserType;
+
 @class SALotPriceInfoEntity;
 @protocol SAPriceUpdateDelegate <NSObject>
 
@@ -37,7 +42,7 @@
 //@property(nonatomic, strong) UINavigationController *navigationController;
 @property(nonatomic, strong) STTabBarController *mainTabBarController;
 @property(nonatomic, strong) PMLoginViewController *signInController;
-
+@property(nonatomic, copy) NSString *userType;
 @property(nonatomic, strong) SAUserInfoEntity *userInfo;
 
 @end

@@ -127,6 +127,9 @@ static dispatch_queue_t conversationsJoinSerialQueue = NULL;
 //    } failure:NULL];
 //}
 
+- (NSString *)userType{
+    return @"1";
+}
 #pragma mark - 更新
 - (void)alertViewUpdata{
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.updateUrl]];

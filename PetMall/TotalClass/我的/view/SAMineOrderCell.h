@@ -10,17 +10,12 @@
 #import "SAMineModel.h"
 #import "SABaseCell.h"
 #import "SAPersonCenterModel.h"
-typedef NS_ENUM(NSUInteger, SAMineOrderType) {
-    SAMineOrderTypeAll = -1,           // 全部订单
-    SAMineOrderTypeConfirming = 3,           // 待确认
-    SAMineOrderTypePayment = 7,           // 待付款
-    SAMineOrderTypeTransfer = 10,           // 待过户
-    SAMineOrderTypeComplete = 12,           // 已完成
-    SAMineOrderTypeFail = 6            // 已失败
-};
+#import "PMOrderDetailItem.h"
+#import "PMOrderListItem.h"
+
 @protocol SAMineOrderDelegate <NSObject>
 
-- (void)mineOrderClickWithType:(SAMineOrderType)type;
+- (void)mineOrderClickWithType:(PMOrderOrderType)type;
 
 @end
 

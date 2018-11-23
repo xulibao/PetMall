@@ -10,10 +10,8 @@
 
 @interface SAWXPayRequest : SARequest
 
-@property(nonatomic, copy) NSString *userId;
-@property(nonatomic, copy) NSString *money;
-@property(nonatomic, copy) NSString *payType;
-@property(nonatomic, copy) NSString *rechargeType;
-@property(nonatomic, copy) NSString *targetId;
+@property(nonatomic, copy) NSString *body;
+@property(nonatomic, copy) NSString *totalFee;
+@property(nonatomic, copy) NSString *orderId;
 
 @end

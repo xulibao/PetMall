@@ -28,7 +28,7 @@
 #pragma mark - Request
 
 - (void)fetchData {
-    [self requestMethod:GARequestMethodPOST URLString:API_Classification_sort parameters:@{@"pagenum":@(self.page),@"pagesize":@"10"} resKeyPath:@"result" resArrayClass:[PMGoodsItem class] retry:YES success:^(__kindof SARequest *request, id responseObject) {
+    [self requestMethod:GARequestMethodPOST URLString:API_Classification_sort parameters:@{@"pagenum":@(self.page),@"pagesize":@"10",@"type":[SAApplication sharedApplication].userType} resKeyPath:@"result" resArrayClass:[PMGoodsItem class] retry:YES success:^(__kindof SARequest *request, id responseObject) {
         self.dataArray = responseObject;
         [self setItems:self.dataArray];
 

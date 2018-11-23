@@ -75,6 +75,7 @@
 @property (nonatomic, strong) STCoverView *coverBtn;
 @property(nonatomic, strong) PMShareView *shareView;
 @property(nonatomic, strong) DCFeatureSelectionViewController *dcFeaVc;
+@property(nonatomic, strong) PMGoodDetailPriceModel * priceModel;
 @end
 
 //header
@@ -201,7 +202,10 @@ static NSArray *lastSeleArray_;
     self.commentsItem =  self.detailModel.comment;
     self.goodTip = self.detailModel.package_sale;
     self.goodImageView = [self.detailModel.goodsImageArray firstObject];
-    [self.webView loadHTMLString:self.detailModel.goods_content baseURL:nil];
+    if (self.detailModel.goods_content) {
+        [self.webView loadHTMLString:self.detailModel.goods_content baseURL:nil];
+    }
+    
 }
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -310,7 +314,7 @@ static NSArray *lastSeleArray_;
     _dcObj = [[NSNotificationCenter defaultCenter]addObserverForName:SHOPITEMSELECTBACK object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
         
         PMGoodDetailPriceModel * priceModel = note.userInfo[@"price"];
-
+        self.priceModel = priceModel;
         NSString *buttonTag = priceModel.Tag;
         lastNum_ = priceModel.shul;
         [weakSelf.tableView reloadData];
@@ -398,10 +402,10 @@ static NSArray *lastSeleArray_;
     }else if (indexPath.section == 1){
             DCShowTypeOneCell *cell = [tableView dequeueReusableCellWithIdentifier:DCShowTypeOneCellID forIndexPath:indexPath];
 
-            NSString *result = [NSString stringWithFormat:@"%@ %@件",[lastSeleArray_ componentsJoinedByString:@"，"],lastNum_];
+        NSString *result = self.priceModel ? [NSString stringWithFormat:@"%@，%@件",self.priceModel.goods_spec,self.priceModel.shul] : @"请选择该商品属性";
             
-            cell.leftTitleLable.text = (lastSeleArray_.count == 0) ? @"规格" : @"已选";
-            cell.contentLabel.text = (lastSeleArray_.count == 0) ? @"请选择该商品属性" : result;
+            cell.leftTitleLable.text = self.priceModel ? @"已选" : @"规格";
+            cell.contentLabel.text = result;
             gridcell = cell;
     }else if (indexPath.section == 2){
         DCCommentsCntCell *cell = [tableView dequeueReusableCellWithIdentifier:DCCommentsCntCellID forIndexPath:indexPath];

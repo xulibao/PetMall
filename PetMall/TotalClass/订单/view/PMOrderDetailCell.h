@@ -9,5 +9,5 @@
 #import "STCommonTableViewCell.h"
 #import "PMOrderDetailItem.h"
 @interface PMOrderDetailCell : STCommonTableViewCell
-@property(nonatomic, strong) PMOrderDetailItem *item;
+@property(nonatomic, strong) PMOrderDetailGoodsItem *item;
 @end

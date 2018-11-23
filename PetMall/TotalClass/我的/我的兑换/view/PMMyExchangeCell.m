@@ -7,8 +7,6 @@
 //
 
 #import "PMMyExchangeCell.h"
-
-#import "PMMyExchangeItem.h"
 #import <UIImageView+WebCache.h>
 
 @interface PMMyExchangeCell ()
@@ -43,6 +41,7 @@
 
 - (void)tableView:(UITableView *)tableView configViewWithData:(PMMyExchangeItem *)data AtIndexPath:(NSIndexPath *)indexPath {
     [super tableView:tableView configViewWithData:data AtIndexPath:indexPath];
+    self.item = data;
     [_goodsImageView sd_setImageWithURL:[NSURL URLWithString:data.goods_logo]];
     _priceLabel.text = [NSString stringWithFormat:@"%@积分",data.selling_price];
     //中划线
@@ -90,7 +89,7 @@
     _rightButton.layer.borderColor = [UIColor colorWithHexStr:@"#FF3945"].CGColor;
     _rightButton.layer.cornerRadius = 15;
     _rightButton.clipsToBounds = YES;
-    [_rightButton addTarget:self action:@selector(lookSameGoods) forControlEvents:UIControlEventTouchUpInside];
+    [_rightButton addTarget:self action:@selector(rightButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:_rightButton];
     UIView * lineView = [[UIView alloc] init];
     lineView.backgroundColor = [UIColor colorWithHexStr:@"#FAFAFA"];
@@ -130,6 +129,11 @@
         make.top.mas_equalTo(_priceLabel).mas_offset(4);
         make.size.mas_equalTo(CGSizeMake(80, 30));
     }];
+}
+- (void)rightButtonClick{
+    if ([self.cellDelegate respondsToSelector:@selector(PMMyExchangeCellDidClick:)]) {
+        [self.cellDelegate PMMyExchangeCellDidClick:self];
+    }
 }
 
 @end

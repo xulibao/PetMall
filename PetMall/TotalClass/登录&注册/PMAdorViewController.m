@@ -8,6 +8,7 @@
 
 #import "PMAdorViewController.h"
 #import "PMBindingPhoneViewController.h"
+#import "SAUserInfoEntity.h"
 @interface PMAdorViewController()
 
 @end
@@ -84,9 +85,13 @@
     }else{
         zt = @"0";
     }
-    [self requestPOST:API_user_choice parameters:@{@"user_phone":self.user_phone,@"zt":zt} success:^(__kindof SARequest *request, id responseObject) {
+    [self requestPOST:API_user_choice parameters:@{@"user_id":[SAApplication userID],@"zt":zt} success:^(__kindof SARequest *request, id responseObject) {
+        [SAApplication sharedApplication].userType = zt;
         [self showSuccess:responseObject[@"result"]];
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        if (self.callBack) {
+            self.callBack(self);
+        }
+//        [self.navigationController popToRootViewControllerAnimated:YES];
     } failure:NULL];
     
 //    PMBindingPhoneViewController * vc = [PMBindingPhoneViewController new];

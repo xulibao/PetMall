@@ -7,9 +7,20 @@
 //
 
 #import "STCommonTableViewBaseItem.h"
+typedef NS_ENUM(NSUInteger, PMOrderOrderType) {
+    PMOrderOrderTypeAll = -1,           // 全部订单
+    PMOrderOrderTypePayment = 1,           // 待付款
+    PMOrderOrderTypeTransfer = 2,           // 待发货
+    PMOrderOrderTypeComment = 4,           // 待评价
+    PMOrderOrderTypeFail = 6,           // 失败
+
+};
 @interface PMOrderItem : STCommonBaseTableRowItem
 
 @property(nonatomic, strong) NSArray *order_list;
+@property(nonatomic, copy) NSString *order_no;//    订单编号    string
+@property(nonatomic, copy) NSString *status;//    string
+@property(nonatomic, copy) NSString *pay_price;//   钱
 
 @property(nonatomic, strong) NSString *statusText;
 @property(nonatomic, strong) NSArray<NSAttributedString*> *tagsText;

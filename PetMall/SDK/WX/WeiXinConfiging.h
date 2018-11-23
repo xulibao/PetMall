@@ -15,7 +15,7 @@
  *
  */
 //#define WXAppId @"wxd930ea5d5a258f4f"//测试----
-#define WXAppId @"wxeafc0af48fb22f59"
+#define WXAppId @"wx0502314bc0c647b4"
 
 /**
  * 微信开放平台和商户约定的支付密钥9

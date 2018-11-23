@@ -11,5 +11,5 @@
 @interface PMShareView : UIView
 
 @property(nonatomic, strong) NSArray *btnArray;
-@property(nonatomic, copy) void (^cancel)();
+@property(nonatomic, copy) void (^cancel)(void);
 @end

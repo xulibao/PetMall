@@ -24,7 +24,8 @@
 /** 电话号码 */
 @property (nonatomic , strong) UILabel *phoneNum;
 /** 地址 */
-@property (nonatomic , strong) UILabel *address;
+@property (nonatomic, strong) UILabel *address;
+@property (nonatomic, strong) UILabel *statueLabel;
 @end
 
 @implementation PMOrderDetailHeaderView
@@ -129,6 +130,7 @@
     [self addSubview:topView];
     
     UILabel * statueLabel = [[UILabel alloc] init];
+    self.statueLabel = statueLabel;
     statueLabel.text = @"卖家已发货 运输中...";
     statueLabel.textColor = [UIColor whiteColor];
     [topView addSubview:statueLabel];
@@ -217,8 +219,14 @@
         make.centerY.mas_equalTo(middleView);
         make.right.mas_equalTo(-15);
     }];
-    
-    
 }
 
+- (void)setDetailModel:(PMOrderDetailModel *)detailModel{
+    _detailModel = detailModel;
+    PMOrderDetailAdressItem * addressItem = [detailModel.address firstObject];
+    self.statueLabel.text = detailModel.statusText;
+    self.phoneNum.text = addressItem.user_phone;
+    self.address.text = [NSString stringWithFormat:@"收货地址：%@%@",addressItem.user_address,addressItem.user_add];
+    self.receiver.text = [NSString stringWithFormat:@"收货人：%@",addressItem.user_name];
+}
 @end

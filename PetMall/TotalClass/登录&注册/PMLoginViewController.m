@@ -10,6 +10,7 @@
 #import "SABaseInputValidTextField.h"
 #import "SPForgotPasswordViewController.h"
 #import "SPRegisterViewController.h"
+#import "PMAdorViewController.h"
 #import "SAUserInfoEntity.h"
 @interface PMLoginViewController ()
 @property(nonatomic, strong) SABaseInputValidTextField * loginField;
@@ -208,7 +209,14 @@
                 SAUserInfoEntity * userInfo = [SAUserInfoEntity mj_objectWithKeyValues:data];
                 [app storeUserInfo:userInfo];
                 [self showSuccess:@"登录成功"];
-                !self.callBack ?: self.callBack(self);
+                
+                PMAdorViewController * vc = [[PMAdorViewController alloc] init];
+                [self.navigationController pushViewController:vc animated:YES];
+                
+                vc.callBack = ^(PMAdorViewController *viewController) {
+                    !self.callBack ?: self.callBack(self);
+
+                };
             }
         }
     } failure:NULL];

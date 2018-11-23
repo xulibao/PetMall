@@ -130,6 +130,9 @@ static NSString * const API_Goods_application =  @"pet/index.php/index/Goods/app
 
 //申请退款信息
 static NSString * const API_Goods_refund =  @"pet/index.php/index/Goods/refund";
+//申请退款
+static NSString * const API_User_refund =  @"pet/index.php/index/User/refund";
+
 //退款/售后
 static NSString * const API_Goods_aftersale =  @"pet/index.php/index/Goods/aftersale";
 //取消订单
@@ -168,5 +171,10 @@ static NSString * const API_user_notification =  @"pet/index.php/index/user/noti
 static NSString * const API_Alipay_pay = @"pet/index.php/index/Alipay/pay";
 // 微信
 static NSString * const API_wechat_pay = @"pet/index.php/index/wechat/pay";
+//支付宝回调
+static NSString * const API_Alipay_callBackPay = @"http://47.93.19.163/pet/index.php/index/Alipay/upay";
+
+//新人专享
+static NSString * const API_NewUser = @"http://47.93.19.163/pet/index.php/index/exclusive";
 
 #endif

@@ -7,30 +7,47 @@
 //
 
 #import "STCommonTableViewBaseItem.h"
+@interface PMOrderDetailAdressItem : NSObject
 
-@interface PMOrderDetailItem : STCommonBaseTableRowItem
+@property(nonatomic, copy) NSString *user_add;
+@property(nonatomic, copy) NSString *user_address;
+@property(nonatomic, copy) NSString *user_phone;
+@property(nonatomic, copy) NSString *user_name;
 
-@property(nonatomic, copy) NSString *orderNo;//    订单编号    string
+@end
+
+@interface PMOrderDetailInfoModel : NSObject
+
+@property(nonatomic, copy) NSString *order_no;
+@property(nonatomic, copy) NSString *logistics;
+@property(nonatomic, copy) NSString *pay_no;
+@property(nonatomic, copy) NSString *time;
+@property(nonatomic, copy) NSString *pay_price;
+@property(nonatomic, copy) NSString *timeb;
+@property(nonatomic, copy) NSString *goods_shul;
+@property(nonatomic, copy) NSString *timea;
+@property(nonatomic, copy) NSString *express_title;
+
+@end
+
+@interface PMOrderDetailGoodsItem : STCommonBaseTableRowItem
+
+@property(nonatomic, copy) NSString *status;
+@property(nonatomic, copy) NSString *order_id;
+@property(nonatomic, copy) NSString *goods_id;
+@property(nonatomic, copy) NSString *pay_price;
+@property(nonatomic, copy) NSString *goods_spec;
+@property(nonatomic, copy) NSString *postage;
+@property(nonatomic, copy) NSString *jifen;
+@property(nonatomic, copy) NSString *goods_logo;
+@property(nonatomic, copy) NSString *goods_title;
+
+@end
+
+@interface PMOrderDetailModel : NSObject
+@property(nonatomic, strong) NSArray *address;
+@property(nonatomic, strong) NSArray *goods;
+@property(nonatomic, strong) PMOrderDetailInfoModel *order;
 @property(nonatomic, strong) NSString *statusText;
 @property(nonatomic, strong) NSArray<NSAttributedString*> *tagsText;
-/** 图片URL */
-@property (nonatomic, copy ) NSString *image_url;
-/** 商品标题 */
-@property (nonatomic, copy ) NSString *main_title;
-/** 商品小标题 */
-@property (nonatomic, copy ) NSString *goods_title;
-/** 商品价格 */
-@property (nonatomic, copy ) NSString *price;
-/** 剩余 */
-@property (nonatomic, copy ,readonly) NSString *stock;
-/** 属性 */
-@property (nonatomic, copy ) NSString *nature;
-/** cantuanrenshy */
-@property(nonatomic, strong) NSString *people_count;
-/** 折扣 */
-@property(nonatomic, strong) NSString *discount;
-/* 头部轮播 */
-@property (copy , nonatomic , readonly)NSArray *images;
-
-@property(nonatomic, assign) BOOL isSelect;
 @end

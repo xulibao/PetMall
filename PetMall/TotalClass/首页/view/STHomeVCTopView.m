@@ -27,8 +27,12 @@
         [self addSubview:_messageBtn];
         //
         _cityBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_cityBtn addTarget:self action:@selector(cityBtnClick) forControlEvents:UIControlEventTouchUpInside];
-        [_cityBtn setTitle:@"狗站" forState:UIControlStateNormal];
+//        [_cityBtn addTarget:self action:@selector(cityBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        if ([[SAApplication sharedApplication].userType integerValue] == 0) {
+            [_cityBtn setTitle:@"狗站" forState:UIControlStateNormal];
+        }else{
+            [_cityBtn setTitle:@"猫站" forState:UIControlStateNormal];
+        }
         [_cityBtn setTitleColor:[UIColor colorWithHexStr:@"#333333"] forState:UIControlStateNormal];
         _cityBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
         _cityBtn.titleLabel.font = [UIFont systemFontOfSize:15];

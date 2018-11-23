@@ -41,7 +41,7 @@
 #pragma mark - Request
 
 - (void)fetchData {
-    [self requestPOST:API_Dogfood_presale parameters:@{@"pagenum":@(self.page),@"pagesize":@(10),@"fenl":@"2"} success:^(__kindof SARequest *request, id responseObject) {
+    [self requestPOST:API_Dogfood_presale parameters:@{@"pagenum":@(self.page),@"pagesize":@(10),@"fenl":@"2",@"type":[SAApplication sharedApplication].userType} success:^(__kindof SARequest *request, id responseObject) {
         self.dataArray = [PMGoodSaleItem mj_objectArrayWithKeyValuesArray:responseObject[@"result"][@"data"]];
         [self setItems:self.dataArray];
         NSMutableArray * imageArray = [@[] mutableCopy];

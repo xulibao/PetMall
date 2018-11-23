@@ -79,26 +79,26 @@
     self.bottomView = bottomView;
     [self.contentView addSubview:bottomView];
     
-    // 待确认
+    // 待付款
     UIView * bottomView0 = [self bottomViewTopImage:@"mine_daifukuan" bottomText:@"待付款"];
     [bottomView0 handleTapActionWithBlock:^(UIView *sender) {
         if ([self.delegate respondsToSelector:@selector(mineOrderClickWithType:)]) {
-            [self.delegate mineOrderClickWithType:SAMineOrderTypeConfirming];
+            [self.delegate mineOrderClickWithType:PMOrderOrderTypePayment];
         }
     }];
-    // 待付款
+    // 待发货
     UIView * bottomView1 = [self bottomViewTopImage:@"mine_daifahuo" bottomText:@"待发货"];
     [bottomView1 handleTapActionWithBlock:^(UIView *sender) {
         if ([self.delegate respondsToSelector:@selector(mineOrderClickWithType:)]) {
-            [self.delegate mineOrderClickWithType:SAMineOrderTypePayment];
+            [self.delegate mineOrderClickWithType:PMOrderOrderTypeTransfer];
         }
     }];
     
-    // 待过户
+    // 待收货
     UIView * bottomView2 = [self bottomViewTopImage:@"mine_daishouhuo" bottomText:@"待收货"];
     [bottomView2 handleTapActionWithBlock:^(UIView *sender) {
         if ([self.delegate respondsToSelector:@selector(mineOrderClickWithType:)]) {
-            [self.delegate mineOrderClickWithType:SAMineOrderTypeTransfer];
+            [self.delegate mineOrderClickWithType:PMOrderOrderTypeTransfer];
         }
 
     }];
@@ -106,7 +106,7 @@
     UIView * bottomView3 = [self bottomViewTopImage:@"mine_daipinlun" bottomText:@"待评价"];
     [bottomView3 handleTapActionWithBlock:^(UIView *sender) {
         if ([self.delegate respondsToSelector:@selector(mineOrderClickWithType:)]) {
-            [self.delegate mineOrderClickWithType:SAMineOrderTypeComplete];
+            [self.delegate mineOrderClickWithType:PMOrderOrderTypeComment];
         }
     }];
     
@@ -114,7 +114,7 @@
     UIView * bottomView4 = [self bottomViewTopImage:@"mine_tuikuan" bottomText:@"退款/售后"];
     [bottomView4 handleTapActionWithBlock:^(UIView *sender) {
         if ([self.delegate respondsToSelector:@selector(mineOrderClickWithType:)]) {
-            [self.delegate mineOrderClickWithType:SAMineOrderTypeFail];
+            [self.delegate mineOrderClickWithType:PMOrderOrderTypeFail];
         }
     }];
 

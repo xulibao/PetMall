@@ -315,10 +315,15 @@
         }else{
 //            selectModel.content = @"无优惠券";
         }
-
-        NSString * countStr = [NSString stringWithFormat:@"合计：¥%.2f",[self.goodInfo.market_price floatValue] + [self.selectExpress.express_price floatValue] - [self.selectVoucher.coupon_jiazhi floatValue]];
+        float totalPrice = 0.00f;
+        for (PMOrderListItem * goods in self.goodsArray) {
+            totalPrice +=([goods.market_price floatValue] *[goods.goods_shul integerValue]);
+            
+        }
+        
+        NSString * countStr = [NSString stringWithFormat:@"合计：¥%.2f",totalPrice + [self.selectExpress.express_price floatValue] - [self.selectVoucher.coupon_jiazhi floatValue]];
         NSMutableAttributedString * str = [[NSMutableAttributedString alloc] initWithString:countStr];
-        [str addAttributes:@{NSForegroundColorAttributeName:kColorFF5554,NSFontAttributeName:[UIFont boldSystemFontOfSize:16]} range:[countStr rangeOfString:[NSString stringWithFormat:@"¥%.2f",[self.goodInfo.market_price floatValue] + [self.selectExpress.express_price floatValue] - [self.selectVoucher.coupon_jiazhi floatValue]]]];
+        [str addAttributes:@{NSForegroundColorAttributeName:kColorFF5554,NSFontAttributeName:[UIFont boldSystemFontOfSize:16]} range:[countStr rangeOfString:[NSString stringWithFormat:@"¥%.2f",totalPrice + [self.selectExpress.express_price floatValue] - [self.selectVoucher.coupon_jiazhi floatValue]]]];
         self.totalPriceLabel.attributedText = str;
         [self.tableView reloadData];
     } failure:NULL];
@@ -501,7 +506,12 @@
 - (void)commitBtnClick{
     NSMutableDictionary * dictDataM = [NSMutableDictionary dictionary];
     
-    float totalPrice = [self.goodInfo.market_price floatValue] + [self.selectExpress.express_price floatValue] - [self.selectVoucher.coupon_jiazhi floatValue];
+    float totalPrice = 0.00f;
+    for (PMOrderListItem * goods in self.goodsArray) {
+        totalPrice +=([goods.market_price floatValue] *[goods.goods_shul integerValue]);
+        
+    }
+    totalPrice = totalPrice + [self.selectExpress.express_price floatValue] - [self.selectVoucher.coupon_jiazhi floatValue];
     [dictDataM setObject:[NSString stringWithFormat:@"%.2f",totalPrice] forKey:@"price"];
     
     if (self.order_id) { //购物车

@@ -141,15 +141,14 @@
             return;
     }
     if (1 == [self.payType integerValue]) { //微信
-            [self rechargeOrPaySuccess];
             if ([WXApi isWXAppInstalled] == NO) {
                 [self showErrow:@"您没有安装微信客户端，建议您使用支付宝支付"];
                 return;
             }
             SAWXPayRequest *wxRequest = [[SAWXPayRequest alloc] init];
-            wxRequest.userId = [SAApplication userID];
-            wxRequest.payType = self.payType;
-            wxRequest.money = self.moneyTextField.text;
+            wxRequest.body = @"猫粮";
+            wxRequest.totalFee = self.payType;
+            wxRequest.orderId = self.order_no;
             wxRequest.shouldDisplayRetryView = YES;
             wxRequest.shouldDisplayLoadingView = YES;
             [wxRequest addAccessory:self];
@@ -173,8 +172,9 @@
             [self requestPOST:API_Alipay_pay parameters:@{@"body":@"商品",@"totalFee":self.price,@"orderId":self.order_no} success:^(__kindof SARequest *request, id responseObject) {
                 SAAlipayToolModel * model = [[SAAlipayToolModel alloc] init];
                 model.orderNo = responseObject[@"result"][@"order_id"];
+                model.alipayCallBackUrl = API_Alipay_callBackPay;
                 model.price = self.price;
-                [[SAAlipayTool sharedSAAlipayTool] payByAilPay:responseObject];
+                [[SAAlipayTool sharedSAAlipayTool] payByAilPay:model];
                 [SAAlipayTool sharedSAAlipayTool].ailPaySucessedCallBack = ^(){
                     [self rechargeOrPaySuccess];
                 };

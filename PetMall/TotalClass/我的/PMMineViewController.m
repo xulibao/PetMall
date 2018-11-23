@@ -406,10 +406,17 @@
     [self needLogin];
 }
 
-- (void)mineOrderClickWithType:(SAMineOrderType)type{
-    
-    PMOrderViewController * vc = [PMOrderViewController new];
-    [self.navigationController pushViewController:vc animated:YES];
+- (void)mineOrderClickWithType:(PMOrderOrderType)type{
+    if (type == PMOrderOrderTypeFail) {
+        PMOrderListViewController * vc = [[PMOrderListViewController alloc] init];
+        vc.type = PMOrderOrderTypeFail;
+        vc.title = @"退款/售后";
+        [self.navigationController pushViewController:vc animated:YES];
+    }else{
+        PMOrderViewController * vc = [PMOrderViewController new];
+        vc.type = type;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 //    PMLogisticsInformationViewController * vc = [PMLogisticsInformationViewController new];
 //    [self.navigationController pushViewController:vc animated:YES];
 }
@@ -423,8 +430,9 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)mineHeadViewClickXinren{
-    PMNewUserViewController * vc= [PMNewUserViewController new];
-    [self.navigationController pushViewController:vc animated:YES];
+    PMBaseWebViewController * webView = [[PMBaseWebViewController alloc] init];
+    webView.jumpUrl = [NSURL URLWithString:API_NewUser];
+    [self.navigationController pushViewController:webView animated:YES];
 }
 
 @end

@@ -11,7 +11,6 @@
 #import "SPInputMsgBaseCell.h"
 #import "SPVerificationBaseModel.h"
 #import "SPVerificationBaseCell.h"
-#import "PMAdorViewController.h"
 @interface SPRegisterViewController ()<UITableViewDelegate,UITableViewDataSource,SPVerificationBaseCellDelegate>
 
 @property(nonatomic, strong) STCommonTableViewModel *viewModel;
@@ -126,9 +125,10 @@
         }
     }
     [self requestPOST:API_user_regist parameters:parametersDict success:^(__kindof SARequest *request, id responseObject) {
-        PMAdorViewController * vc = [PMAdorViewController new];
-        [self pushViewController:vc];
-        [vc showSuccess:@"注册成功"];
+//        PMAdorViewController * vc = [PMAdorViewController new];
+//        [self pushViewController:vc];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        [self showSuccess:@"注册成功"];
     } failure:NULL];
     
     

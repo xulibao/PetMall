@@ -9,5 +9,4 @@
 #import "DCGoodBaseViewController.h"
 
 @interface PMIntegralMallDetailViewController : DCGoodBaseViewController
-@property(nonatomic, copy) NSString *list_id;
 @end

@@ -130,13 +130,13 @@
 #define CITIES    @"expiredCities"//请使用STBigJsonSingleton/cityKey
 
 //===============友盟分享=====================
-#define YOUMENG_APPKEY @"566e68ea67e58e0c0b000a57"
+#define YOUMENG_APPKEY @"5bf0b7c0f1f5566e450004f9"
 
-#define Share_QQ_APPID @"1104939263"
-#define Share_QQ_APPKEY @"WKl68ZZABq6mGtxS"
+#define Share_QQ_APPID @"1107785747"
+#define Share_QQ_APPKEY @"pW6Eltrzs0936xFC"
 
-#define Share_WeiXin_APPID  @"wx41983c4c43a605fb"
-#define Share_WeiXin_AppSecret @"3cba82b5074d44d10c06e74e4e45a4de"
+#define Share_WeiXin_APPID  @"wx0502314bc0c647b4"
+#define Share_WeiXin_AppSecret @"3baf1193c85774b3fd9d18447d76cab0"
 
 // -------------友盟统计--------------
 #define UMAPPKEY  @"5ab2182df29d9873d1000094"

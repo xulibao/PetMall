@@ -39,6 +39,8 @@ PODS:
   - UMengUShare/Core (6.4.6):
     - UMengUShare/Network
   - UMengUShare/Network (6.4.6)
+  - UMengUShare/Social/ReducedQQ (6.4.6):
+    - UMengUShare/Core
   - UMengUShare/Social/ReducedWeChat (6.4.6):
     - UMengUShare/Core
   - UMengUShare/Social/WeChat (6.4.6):
@@ -66,6 +68,7 @@ DEPENDENCIES:
   - SDWebImage
   - SSKeychain
   - "UITableView+FDTemplateLayoutCell"
+  - UMengUShare/Social/ReducedQQ
   - UMengUShare/Social/WeChat (= 6.4.6)
   - YTKNetwork
   - YYKit
@@ -116,6 +119,6 @@ SPEC CHECKSUMS:
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
   ZYQAssetPickerController: dc692a6fb421c0dc0efcabd43eb260cfb073f7fd
 
-PODFILE CHECKSUM: 58e0b3e33a51b9d362ec45cd1ca6e6cf6954da64
+PODFILE CHECKSUM: bd667318fa457b1ef4e8b573e1fa69de2f8c6912
 
 COCOAPODS: 1.5.0

@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "PMOrderDetailItem.h"
 @interface PMOrderDetailBottomView : UIView
-@property(nonatomic, copy) void (^copyBlcok)();
-@property(nonatomic, copy) void (^commentBlcok)();
+@property(nonatomic, strong) PMOrderDetailInfoModel *infoModel;
+@property(nonatomic, copy) void (^copyBlcok)(void);
+@property(nonatomic, copy) void (^commentBlcok)(void);
 @end

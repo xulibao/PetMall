@@ -9,6 +9,7 @@
 #import "PMMyCollectionViewController.h"
 #import "PMMyCollectionItem.h"
 #import "PMMyCollectionCell.h"
+#import "DCGoodBaseViewController.h"
 @interface PMMyCollectionViewController ()<PMMyCollectionCellDelegate>
 @property(nonatomic, strong) NSMutableArray *dataArray;
 @end
@@ -44,5 +45,13 @@
         [self showSuccess:responseObject[@"msg"]];
         [self fetchData];
     } failure:NULL];
+}
+
+- (void)didSelectCellWithItem:(id<STCommonTableRowItem>)item{
+    PMMyCollectionItem * selectItem = (PMMyCollectionItem *)item;
+    DCGoodBaseViewController * vc = [[DCGoodBaseViewController alloc] init];
+    vc.goods_id = selectItem.collectionId;
+    vc.list_id  = selectItem.list_id;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 @end

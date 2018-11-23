@@ -41,6 +41,7 @@
 
 - (void)tableView:(UITableView *)tableView configViewWithData:(PMGroupModel *)data AtIndexPath:(NSIndexPath *)indexPath {
     [super tableView:tableView configViewWithData:data AtIndexPath:indexPath];
+    self.item = data;
     [_goodsImageView sd_setImageWithURL:[NSURL URLWithString:data.goods_logo]];
     _priceLabel.text = [NSString stringWithFormat:@"¥%@",data.selling_price];
     //中划线

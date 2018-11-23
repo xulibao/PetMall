@@ -9,6 +9,12 @@
 #import "PMOrderDetailBottomView.h"
 @interface PMOrderDetailBottomView()
 @property(nonatomic, strong) UILabel *orderNoLabel;
+@property(nonatomic, strong) UILabel *label1;
+@property(nonatomic, strong) UILabel *label2;
+@property(nonatomic, strong) UILabel *label3;
+@property(nonatomic, strong) UILabel *label4;
+@property(nonatomic, strong) UIButton *tagBtn;
+@property(nonatomic, strong) UIButton *tagBtn1;
 @end
 @implementation PMOrderDetailBottomView
 
@@ -34,24 +40,28 @@
     [bgView addSubview:label0];
     
     UILabel * label1 = [[UILabel alloc] init];
+    self.label1 = label1;
     label1.text = @"支付宝交易号：201805121235168351012409";
     label1.textColor = kColor333333;
     label1.font = [UIFont systemFontOfSize:12];
     [bgView addSubview:label1];
     
     UILabel * label2 = [[UILabel alloc] init];
+    self.label2 = label2;
     label2.text = @"下单时间：2018-07-10  12:23:47";
     label2.textColor = kColor333333;
     label2.font = [UIFont systemFontOfSize:12];
     [bgView addSubview:label2];
     
     UILabel * label3 = [[UILabel alloc] init];
+    self.label3 = label3;
     label3.text = @"付款时间：2018-07-10  12:32:12";
     label3.textColor = kColor333333;
     label3.font = [UIFont systemFontOfSize:12];
     [bgView addSubview:label3];
     
     UILabel * label4 = [[UILabel alloc] init];
+    self.label4 = label4;
     label4.text = @"发货时间：2018-07-10  14:08:36";
     label4.textColor = kColor333333;
     label4.font = [UIFont systemFontOfSize:12];
@@ -109,6 +119,7 @@
     [self addSubview:bottomView];
     
     UIButton * tagBtn = [[UIButton alloc] init];
+    self.tagBtn = tagBtn;
     [tagBtn setTitle:@"确认收货" forState:UIControlStateNormal];
     [tagBtn setTitleColor:kColorFF3945 forState:UIControlStateNormal];
     tagBtn.titleLabel.font = [UIFont systemFontOfSize:12];
@@ -119,6 +130,7 @@
     [bottomView addSubview:tagBtn];
     
     UIButton * tagBtn1 = [[UIButton alloc] init];
+    self.tagBtn1 = tagBtn1;
     [tagBtn1 setTitle:@"评价" forState:UIControlStateNormal];
     [tagBtn1 setTitleColor:kColor999999 forState:UIControlStateNormal];
     [tagBtn1 addTarget:self action:@selector(comment) forControlEvents:UIControlEventTouchUpInside];
@@ -146,6 +158,15 @@
         make.right.mas_equalTo(tagBtn1.mas_left).mas_offset(-15);
         make.size.mas_equalTo(CGSizeMake(85, 30));
     }];
+}
+
+- (void)setInfoModel:(PMOrderDetailInfoModel *)infoModel{
+    _infoModel = infoModel;
+    self.orderNoLabel.text = [NSString stringWithFormat:@"订单号：%@",infoModel.order_no];
+    self.label1.text = [NSString stringWithFormat:@"支付宝交易号：%@",infoModel.pay_no];
+    self.label2.text = [NSString stringWithFormat:@"下单时间：%@",infoModel.time];
+    self.label3.text = [NSString stringWithFormat:@"付款时间：%@",infoModel.timea];
+    self.label4.text = [NSString stringWithFormat:@"发货时间：%@",infoModel.timeb];
 }
 
 - (void)copyClick{

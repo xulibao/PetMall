@@ -404,6 +404,13 @@
 		5AA918AE21A02DCA00FF9C64 /* SAAlipayTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA918AA21A02DCA00FF9C64 /* SAAlipayTool.m */; };
 		5AA918AF21A02DCA00FF9C64 /* SAAlipayToolModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA918AB21A02DCA00FF9C64 /* SAAlipayToolModel.m */; };
 		5AA918B221A0321800FF9C64 /* SAWXPayRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA918B121A0321800FF9C64 /* SAWXPayRequest.m */; };
+		5AA918C121A3F93700FF9C64 /* ShareItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA918B421A3F93700FF9C64 /* ShareItem.m */; };
+		5AA918C221A3F93700FF9C64 /* ShareMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA918B521A3F93700FF9C64 /* ShareMenuView.m */; };
+		5AA918C321A3F93700FF9C64 /* ShareMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA918B721A3F93700FF9C64 /* ShareMainView.m */; };
+		5AA918C421A3F93700FF9C64 /* ShareButtomBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA918BB21A3F93700FF9C64 /* ShareButtomBar.m */; };
+		5AA918C521A3F93700FF9C64 /* STShareComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA918BD21A3F93700FF9C64 /* STShareComponent.m */; };
+		5AA918C621A3F93700FF9C64 /* images.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5AA918BF21A3F93700FF9C64 /* images.bundle */; };
+		5AA918C721A3F93700FF9C64 /* ShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA918C021A3F93700FF9C64 /* ShareManager.m */; };
 		5AC465A6213FEC56006F0AC5 /* PMSpecialClearanceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC465A5213FEC56006F0AC5 /* PMSpecialClearanceCell.m */; };
 		5AC465A9213FEE64006F0AC5 /* PMSpecialClearanceSubCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC465A8213FEE64006F0AC5 /* PMSpecialClearanceSubCell.m */; };
 		5AC95CA92135206C00BDA95D /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC95CA82135206C00BDA95D /* HMSegmentedControl.m */; };
@@ -1395,6 +1402,19 @@
 		5AA918AD21A02DCA00FF9C64 /* SAAlipayToolModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SAAlipayToolModel.h; sourceTree = "<group>"; };
 		5AA918B021A0321700FF9C64 /* SAWXPayRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SAWXPayRequest.h; sourceTree = "<group>"; };
 		5AA918B121A0321800FF9C64 /* SAWXPayRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SAWXPayRequest.m; sourceTree = "<group>"; };
+		5AA918B421A3F93700FF9C64 /* ShareItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareItem.m; sourceTree = "<group>"; };
+		5AA918B521A3F93700FF9C64 /* ShareMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareMenuView.m; sourceTree = "<group>"; };
+		5AA918B621A3F93700FF9C64 /* STShareComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STShareComponent.h; sourceTree = "<group>"; };
+		5AA918B721A3F93700FF9C64 /* ShareMainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareMainView.m; sourceTree = "<group>"; };
+		5AA918B821A3F93700FF9C64 /* ShareButtomBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareButtomBar.h; sourceTree = "<group>"; };
+		5AA918B921A3F93700FF9C64 /* ShareManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareManager.h; sourceTree = "<group>"; };
+		5AA918BA21A3F93700FF9C64 /* ShareItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareItem.h; sourceTree = "<group>"; };
+		5AA918BB21A3F93700FF9C64 /* ShareButtomBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareButtomBar.m; sourceTree = "<group>"; };
+		5AA918BC21A3F93700FF9C64 /* ShareMainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareMainView.h; sourceTree = "<group>"; };
+		5AA918BD21A3F93700FF9C64 /* STShareComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STShareComponent.m; sourceTree = "<group>"; };
+		5AA918BE21A3F93700FF9C64 /* ShareMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareMenuView.h; sourceTree = "<group>"; };
+		5AA918BF21A3F93700FF9C64 /* images.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = images.bundle; sourceTree = "<group>"; };
+		5AA918C021A3F93700FF9C64 /* ShareManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareManager.m; sourceTree = "<group>"; };
 		5AC465A4213FEC56006F0AC5 /* PMSpecialClearanceCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMSpecialClearanceCell.h; sourceTree = "<group>"; };
 		5AC465A5213FEC56006F0AC5 /* PMSpecialClearanceCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMSpecialClearanceCell.m; sourceTree = "<group>"; };
 		5AC465A7213FEE64006F0AC5 /* PMSpecialClearanceSubCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMSpecialClearanceSubCell.h; sourceTree = "<group>"; };
@@ -3653,20 +3673,41 @@
 		5AA918A821A02DCA00FF9C64 /* alipayBussiness */ = {
 			isa = PBXGroup;
 			children = (
+				5AA918A921A02DCA00FF9C64 /* AlipaySdkConfig.h */,
+				5AA918AC21A02DCA00FF9C64 /* SAAlipayTool.h */,
+				5AA918AA21A02DCA00FF9C64 /* SAAlipayTool.m */,
+				5AA918AD21A02DCA00FF9C64 /* SAAlipayToolModel.h */,
+				5AA918AB21A02DCA00FF9C64 /* SAAlipayToolModel.m */,
 				5AA918B021A0321700FF9C64 /* SAWXPayRequest.h */,
 				5AA918B121A0321800FF9C64 /* SAWXPayRequest.m */,
-				5AA918A921A02DCA00FF9C64 /* AlipaySdkConfig.h */,
-				5AA918AA21A02DCA00FF9C64 /* SAAlipayTool.m */,
-				5AA918AB21A02DCA00FF9C64 /* SAAlipayToolModel.m */,
-				5AA918AC21A02DCA00FF9C64 /* SAAlipayTool.h */,
-				5AA918AD21A02DCA00FF9C64 /* SAAlipayToolModel.h */,
 			);
 			path = alipayBussiness;
+			sourceTree = "<group>";
+		};
+		5AA918B321A3F93700FF9C64 /* Shares */ = {
+			isa = PBXGroup;
+			children = (
+				5AA918B421A3F93700FF9C64 /* ShareItem.m */,
+				5AA918B521A3F93700FF9C64 /* ShareMenuView.m */,
+				5AA918B621A3F93700FF9C64 /* STShareComponent.h */,
+				5AA918B721A3F93700FF9C64 /* ShareMainView.m */,
+				5AA918B821A3F93700FF9C64 /* ShareButtomBar.h */,
+				5AA918B921A3F93700FF9C64 /* ShareManager.h */,
+				5AA918BA21A3F93700FF9C64 /* ShareItem.h */,
+				5AA918BB21A3F93700FF9C64 /* ShareButtomBar.m */,
+				5AA918BC21A3F93700FF9C64 /* ShareMainView.h */,
+				5AA918BD21A3F93700FF9C64 /* STShareComponent.m */,
+				5AA918BE21A3F93700FF9C64 /* ShareMenuView.h */,
+				5AA918BF21A3F93700FF9C64 /* images.bundle */,
+				5AA918C021A3F93700FF9C64 /* ShareManager.m */,
+			);
+			path = Shares;
 			sourceTree = "<group>";
 		};
 		5AC95CA52135204B00BDA95D /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				5AA918B321A3F93700FF9C64 /* Shares */,
 				5AA918A821A02DCA00FF9C64 /* alipayBussiness */,
 				5AF24CB2214E589300EDDD27 /* NSStringSplicingTool */,
 				5AEA6C7F214D13AA00A2E6E8 /* YWChooseAddress */,
@@ -4491,6 +4532,7 @@
 				5A54CB862143CABA00971D83 /* addressData.plist in Resources */,
 				5AEA6BE4214A4A5300A2E6E8 /* mapapi.bundle in Resources */,
 				5A54CA462142288400971D83 /* ClasiftyGoods.plist in Resources */,
+				5AA918C621A3F93700FF9C64 /* images.bundle in Resources */,
 				5AA61143219D7DFF00CC9F75 /* yitu_not_user_audio.mp3 in Resources */,
 				5AA61146219D7DFF00CC9F75 /* Image.bundle in Resources */,
 				5A54CAEF2143C5F500971D83 /* DCCommentsCntCell.xib in Resources */,
@@ -4778,6 +4820,7 @@
 				5A54CA2721418AA900971D83 /* DCClassGoodsItem.m in Sources */,
 				5A4AF56F2134F9FA00F8190B /* UIControl+SAControl.m in Sources */,
 				5A54CADA2143C5F500971D83 /* DCContentItem.m in Sources */,
+				5AA918C521A3F93700FF9C64 /* STShareComponent.m in Sources */,
 				5A4AF5B72134F9FA00F8190B /* SARequest.m in Sources */,
 				5AA918B221A0321800FF9C64 /* SAWXPayRequest.m in Sources */,
 				5A4AF58C2134F9FA00F8190B /* STGroupListView.m in Sources */,
@@ -4792,6 +4835,7 @@
 				5A4AF6B02134FDD400F8190B /* NSString+GHExtension.m in Sources */,
 				5A6ACF9F213D220F001FB644 /* DCCustionButton.m in Sources */,
 				5A54CB602143C73800971D83 /* XWFilterAnimator+XWFlash.m in Sources */,
+				5AA918C121A3F93700FF9C64 /* ShareItem.m in Sources */,
 				5A4AF57F2134F9FA00F8190B /* SAFloatLayoutView.m in Sources */,
 				5A54CADE2143C5F500971D83 /* DCHeaderReusableView.m in Sources */,
 				5AEA6BFB214A655F00A2E6E8 /* OKLogisticModel.m in Sources */,
@@ -4884,6 +4928,7 @@
 				5A54CBA02143CC0100971D83 /* UIColor+DCColorChange.m in Sources */,
 				5AEA6C62214D000000A2E6E8 /* PMMyAddressViewController.m in Sources */,
 				5AEA6C39214C7D3500A2E6E8 /* PMOrderDetailItem.m in Sources */,
+				5AA918C721A3F93700FF9C64 /* ShareManager.m in Sources */,
 				5A4AF5A12134F9FA00F8190B /* SACustomStepView.m in Sources */,
 				5A86853F2185DC9A00C38B0B /* PMMessageDetailCell.m in Sources */,
 				5A4AF57E2134F9FA00F8190B /* SAGridView.m in Sources */,
@@ -4933,10 +4978,12 @@
 				5A690BEA2182FBE500775B00 /* PMGoodsItem.m in Sources */,
 				5A8685232184740100C38B0B /* PMIntegralMallItem.m in Sources */,
 				5A4AF6662134FA0F00F8190B /* ABCrashReport.m in Sources */,
+				5AA918C221A3F93700FF9C64 /* ShareMenuView.m in Sources */,
 				5AEA6BBC2149388E00A2E6E8 /* PMPayResultViewController.m in Sources */,
 				5A4AF6602134FA0F00F8190B /* GARequest.m in Sources */,
 				5A54CB0A2143C5F500971D83 /* DCShareItemCell.m in Sources */,
 				5AC95CC321352C0300BDA95D /* PMAdorViewController.m in Sources */,
+				5AA918C321A3F93700FF9C64 /* ShareMainView.m in Sources */,
 				5A4AF5732134F9FA00F8190B /* SACommonCountDownItem.m in Sources */,
 				5AC95CCF21352E8D00BDA95D /* PMGroupPurchaseViewController.m in Sources */,
 				5AEA6B742145678300A2E6E8 /* SAMineModel.m in Sources */,
@@ -5019,6 +5066,7 @@
 				5A4AF56C2134F9FA00F8190B /* UIScrollView+SAScrollView.m in Sources */,
 				5A4AF65D2134FA0F00F8190B /* GAUITestViewFrame.m in Sources */,
 				5AA570E7214FC4E5009015D9 /* PMSetViewController.m in Sources */,
+				5AA918C421A3F93700FF9C64 /* ShareButtomBar.m in Sources */,
 				5A54CAF42143C5F500971D83 /* DCFeatureChoseTopCell.m in Sources */,
 				5AEA6BF8214A655F00A2E6E8 /* OKTableCellContentView.m in Sources */,
 				5A54CA2A21418AA900971D83 /* DCGoodsSortCell.m in Sources */,
@@ -5265,7 +5313,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 2J3847Y745;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5363,9 +5411,10 @@
 					"-weak_framework",
 					"\"WebKit\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.chongwu.Mall.qiye;
+				PRODUCT_BUNDLE_IDENTIFIER = com.iningke.nidingchongwu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "bca4c152-354b-4b69-8394-36348467ee36";
+				PROVISIONING_PROFILE_SPECIFIER = chongwuDev;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -5375,9 +5424,9 @@
 			baseConfigurationReference = 0E979792571ED119576C1EDB /* Pods-PetMall.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = R6Y8Z77244;
+				DEVELOPMENT_TEAM = 2J3847Y745;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5475,10 +5524,10 @@
 					"-weak_framework",
 					"\"WebKit\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.chongwu.Mall.qiye;
+				PRODUCT_BUNDLE_IDENTIFIER = com.iningke.nidingchongwu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "04506076-48f7-4dab-a9a0-f72679ce7858";
-				PROVISIONING_PROFILE_SPECIFIER = mall;
+				PROVISIONING_PROFILE = "bca4c152-354b-4b69-8394-36348467ee36";
+				PROVISIONING_PROFILE_SPECIFIER = chongwuDev;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

@@ -171,6 +171,11 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
     }
     return _goodsArray;
 }
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self fecthData];
+}
+
 
 - (void)viewDidLoad{
     [super viewDidLoad];
@@ -181,7 +186,12 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
 }
 
 - (void)fecthData{
-    [self requestPOST:API_Goods_broadcast parameters:nil success:^(__kindof SARequest *request, id responseObject) {
+    NSMutableDictionary * dictM = [@{} mutableCopy];
+    [dictM setValue:[SAApplication sharedApplication].userType forKey:@"type"];
+    if ([SAApplication userID]) {
+        [dictM setValue:[SAApplication userID] forKey:@"user_id"];
+    }
+    [self requestPOST:API_Goods_broadcast parameters:dictM success:^(__kindof SARequest *request, id responseObject) {
         self.homeModel = [PMHomeModel mj_objectWithKeyValues:responseObject[@"result"]];
         [self fecthSubViews];
         
@@ -290,10 +300,9 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
     else if (indexPath.section == 3) {//团购活动
         PMGoodsGroupCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DCGoodsYouLikeCellID forIndexPath:indexPath];
         cell.callBack = ^(PMGroupModel *groupModel) {
-            PMConfirmOrderViewController * vc = [[PMConfirmOrderViewController alloc] init];
+            PMGroupPurchaserDetailViewController * vc = [PMGroupPurchaserDetailViewController new];
             vc.goods_id = groupModel.groupId;
-            vc.price = groupModel.selling_price;
-            vc.list_id = groupModel.list_id;
+            //        vc.list_id = item.list_id;
             [self.navigationController pushViewController:vc animated:YES];
         };
         cell.groupModel = self.homeModel.group[indexPath.row];

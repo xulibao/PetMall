@@ -39,25 +39,25 @@
 
 #pragma mark - STCommonTableViewItemConfigProtocol
 
-- (void)tableView:(UITableView *)tableView configViewWithData:(PMOrderDetailItem *)data AtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView configViewWithData:(PMOrderDetailGoodsItem *)data AtIndexPath:(NSIndexPath *)indexPath {
     [super tableView:tableView configViewWithData:data AtIndexPath:indexPath];
     NSString *text0;
-    if (data.orderNo) {
-        text0 = [@"订单编号：" stringByAppendingString:data.orderNo];
-    }
+//    if (data.order_id) {
+//        text0 = [@"订单编号：" stringByAppendingString:data.orderNo];
+//    }
     _bottomView.backgroundColor = kColorEEEEEE;
-    _bottomView.tags = data.tagsText;
-    NSString * bottomStr = @"实付款：¥158";
+//    _bottomView.tags = data.tagsText;
+    NSString * bottomStr = [NSString stringWithFormat:@"实付款：¥%@",data.pay_price];
     NSMutableAttributedString * bottomAttStr = [[NSMutableAttributedString alloc] initWithString:bottomStr];
     [bottomAttStr addAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexStr:@"#FF3945"]} range:[bottomStr rangeOfString:@"¥158"]];
                                   self.bottomLabel.attributedText = bottomAttStr;
     _bottomView.label0.attributedText = nil;
     
-    [self.cartImageView sd_setImageWithURL:[NSURL URLWithString:data.image_url] placeholderImage:nil];
+    [self.cartImageView sd_setImageWithURL:[NSURL URLWithString:data.goods_logo] placeholderImage:nil];
     self.cartTitleLabel.text = data.goods_title;
-    self.cartNatureLabel.text = data.nature;
-    self.cartPriceLabel.text = [NSString stringWithFormat:@"¥%@",data.price];
-    self.cartCountLabel.text = [NSString stringWithFormat:@"x%@",data.people_count];
+    self.cartNatureLabel.text = data.goods_spec;
+    self.cartPriceLabel.text = [NSString stringWithFormat:@"¥%@",data.pay_price];
+    self.cartCountLabel.text = [NSString stringWithFormat:@"x%@",@"1"];
 }
 - (void)initViews{
     self.contentView.backgroundColor = [UIColor whiteColor];;

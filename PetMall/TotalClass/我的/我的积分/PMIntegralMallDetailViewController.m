@@ -9,6 +9,7 @@
 #import "PMIntegralMallDetailViewController.h"
 #import "SAAlertController.h"
 #import "PMIntegralResultViewController.h"
+#import "PMConfirmOrderViewController.h"
 @interface PMIntegralMallDetailViewController ()
 
 @end
@@ -62,11 +63,17 @@
                                                                                  message:@"确定用积分兑换此商品吗\n兑换将自动扣除相应积分"
                                                                           preferredStyle:SAAlertControllerStyleAlert];
         SAAlertAction *action = [SAAlertAction actionWithTitle:@"兑换" style:SAAlertActionStyleDefault handler:^(SAAlertAction *action) {
-            [self requestPOST:API_Classification_purchase parameters:@{@"goods_id":self.detailModel.goodId,@"user_id":[SAApplication userID],@"list_id":self.list_id,@"shul":@"1",@"type":@"2",@"flag":@"1"} success:^(__kindof SARequest *request, id responseObject) {
-                [self showSuccess:responseObject[@"msg"]];
-                PMIntegralResultViewController * vc = [PMIntegralResultViewController new];
-                [self pushViewController:vc];
-            } failure:NULL];
+            
+            PMConfirmOrderViewController * vc = [[PMConfirmOrderViewController alloc] init];
+            vc.goods_id = self.goods_id;
+            vc.list_id = self.list_id;
+            vc.price = self.detailModel.market_price;
+            [self.navigationController pushViewController:vc animated:YES];
+//            [self requestPOST:API_Classification_purchase parameters:@{@"goods_id":self.detailModel.goodId,@"user_id":[SAApplication userID],@"list_id":self.list_id,@"shul":@"1",@"type":@"2",@"flag":@"1"} success:^(__kindof SARequest *request, id responseObject) {
+//                [self showSuccess:responseObject[@"msg"]];
+//                PMIntegralResultViewController * vc = [PMIntegralResultViewController new];
+//                [self pushViewController:vc];
+//            } failure:NULL];
        
         }];
         [alertController addAction:action];

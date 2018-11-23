@@ -123,7 +123,7 @@ DEFINE_SINGLETON_FOR_CLASS(SAAlipayTool)
     // NOTE: 如果加签成功，则继续执行支付
     if (signedString != nil) {
         //应用注册scheme,在AliSDKDemo-Info.plist定义URL types
-        NSString *appScheme = @"com.snailauction.www.alipay";
+        NSString *appScheme = @"com.chongwu.Mall.alipay";
         
         // NOTE: 将签名成功字符串格式化为订单字符串,请严格按照该格式
         NSString *orderString = [NSString stringWithFormat:@"%@&sign=%@",

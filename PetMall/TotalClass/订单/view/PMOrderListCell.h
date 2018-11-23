@@ -8,13 +8,16 @@
 
 #import "STCommonTableViewCell.h"
 #import "PMOrderListItem.h"
+@class PMOrderListCell;
 @protocol PMOrderListCellDelegate <STCommonTableViewCellDelegate>
 
 @optional
-- (void)PMOrderListCellClick;
+- (void)PMOrderListCellClickRefund:(PMOrderListCell *)cell;
+- (void)PMOrderListCellClickPay:(PMOrderListCell *)cell;
+- (void)PMOrderListCellClickCancle:(PMOrderListCell *)cell;
 @end
 @interface PMOrderListCell : STCommonTableViewCell
 
-@property(nonatomic, strong) PMOrderListItem *item;
+@property(nonatomic, strong) PMOrderItem *item;
 @property(nonatomic, weak) <PMOrderListCellDelegate> cellDelegate;
 @end
