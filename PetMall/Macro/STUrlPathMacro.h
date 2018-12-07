@@ -33,6 +33,8 @@ static NSString * const API_Classification_fication =  @"pet/index.php/index/Cla
 static NSString * const API_Classification_ficationa =  @"pet/index.php/index/Classification/ficationa";
 //关键词搜索
 static NSString * const API_Classification_search =  @"pet/index.php/index/Classification/search";
+//热门搜索
+static NSString * const API_Dogfood_search =  @"pet/index.php/index/Dogfood/search";
 //条件排序
 static NSString * const API_Classification_sort =  @"pet/index.php/index/Classification/sort";
 //立即购买
@@ -88,6 +90,8 @@ static NSString * const API_user_useraddress =  @"pet/index.php/index/user/usera
 
 //修改地址
 static NSString * const API_user_addressdel =  @"pet/index.php/index/user/addressdel";
+//删除地址
+static NSString * const API_user_deladdress = @"pet/index.php/index/user/deladdress";
 
 //优惠券信息
 static NSString * const API_user_coupon =  @"pet/index.php/index/user/coupon";

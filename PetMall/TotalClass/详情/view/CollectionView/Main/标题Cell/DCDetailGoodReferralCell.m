@@ -64,7 +64,7 @@
     _goodSubPriceLabel.textColor = [UIColor grayColor];
     //中划线
     NSDictionary *attribtDic = @{NSStrikethroughStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle]};
-    NSMutableAttributedString *attribtStr = [[NSMutableAttributedString alloc]initWithString:@"¥28" attributes:attribtDic];
+    NSMutableAttributedString *attribtStr = [[NSMutableAttributedString alloc] initWithString:@"¥28" attributes:attribtDic];
     _goodSubPriceLabel.attributedText = attribtStr;
     [self addSubview:_goodSubPriceLabel];
 
@@ -76,7 +76,7 @@
 
     
     _goodSubtitleLabel = [[UILabel alloc] init];
-    _goodSubtitleLabel.text = @"优惠7.2元";
+//    _goodSubtitleLabel.text = @"优惠7.2元";
     _goodSubtitleLabel.font = PFR10Font;
     _goodSubtitleLabel.numberOfLines = 0;
     _goodSubtitleLabel.textAlignment = NSTextAlignmentCenter;
@@ -159,7 +159,7 @@
         lastPoint = CGPointMake(10 + (int)sz.width % (int)linesSz.width,linesSz.height - sz.height + 48);
     }
 
-    _goodSubtitleLabel.frame = CGRectMake(lastPoint.x + 10, lastPoint.y + 3, 70, 16);
+//    _goodSubtitleLabel.frame = CGRectMake(lastPoint.x + 10, lastPoint.y + 3, 70, 16);
 }
 
 

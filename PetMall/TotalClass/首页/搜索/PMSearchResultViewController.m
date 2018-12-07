@@ -18,6 +18,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if (self.filterParameters.count == 0) {
+        [self.filterParameters setValue:@(self.page) forKey:@"pagenum"];
+        [self.filterParameters setValue:@(10) forKey:@"pagesize"];
+        [self.filterParameters setValue:[SAApplication sharedApplication].userType forKey:@"type"];
+        
+    }
+    if(self.keyword){
+        self.searchBar.text = self.keyword;
+        [self.filterParameters setValue:self.keyword forKey:@"search"];
+    }
+   
     [self fetchData];
 }
 
@@ -28,7 +39,13 @@
 #pragma mark - Request
 
 - (void)fetchData {
-    [self requestMethod:GARequestMethodPOST URLString:API_Classification_sort parameters:@{@"pagenum":@(self.page),@"pagesize":@"10",@"type":[SAApplication sharedApplication].userType} resKeyPath:@"result" resArrayClass:[PMGoodsItem class] retry:YES success:^(__kindof SARequest *request, id responseObject) {
+    NSString * url;
+    if (self.isClassic) {
+        url = API_Classification_search;
+    }else{
+        url = API_Classification_sort;
+    }
+    [self requestMethod:GARequestMethodPOST URLString:url parameters:self.filterParameters resKeyPath:@"result" resArrayClass:[PMGoodsItem class] retry:YES success:^(__kindof SARequest *request, id responseObject) {
         self.dataArray = responseObject;
         [self setItems:self.dataArray];
 
@@ -47,6 +64,24 @@
     } failure:NULL];
 }
 - (void)updateFilterWithParameters:(NSDictionary *)parameters {
+    [self.filterParameters setValue:@(self.page) forKey:@"pagenum"];
+    [self.filterParameters setValue:@(10) forKey:@"pagesize"];
+    [self.filterParameters setValue:[SAApplication sharedApplication].userType forKey:@"type"];
+    [self fetchData];
     
+}
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
+    if (searchBar.text.length > 0) {
+         [self.filterParameters setValue:searchBar.text forKey:@"search"];
+    }else{
+        [self.filterParameters removeObjectForKey:@"search"];
+    }
+   
+    [self fetchData];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    [self.filterParameters setValue:searchBar.text forKey:@"search"];
+    [self fetchData];
 }
 @end

@@ -60,7 +60,7 @@
 #pragma mark - Request
 
 - (void)fetchData {
-    [self requestMethod:GARequestMethodPOST URLString:API_user_coupon parameters:@{@"user_id":@"1",@"zt":@(self.type)} resKeyPath:@"result" resArrayClass:[PMMyCouponItem class] retry:YES success:^(__kindof SARequest *request, id responseObject) {
+    [self requestMethod:GARequestMethodPOST URLString:API_user_coupon parameters:@{@"user_id":[SAApplication userID],@"zt":@(self.type)} resKeyPath:@"result" resArrayClass:[PMMyCouponItem class] retry:YES success:^(__kindof SARequest *request, id responseObject) {
         self.dataArray = responseObject;
         [self setItems:self.dataArray];
     } failure:NULL];

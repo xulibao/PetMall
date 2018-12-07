@@ -183,7 +183,7 @@
 - (void)showEmptyView {
     if (!self.emptyView) {
         self.emptyView = [[STEmptyView alloc] initWithFrame:self.view.bounds];
-        YYImage *image = [YYImage imageNamed:@"common_loading_icon"];
+        YYImage *image = [YYImage imageNamed:@"common_nodata"];
         YYAnimatedImageView *imageView = [[YYAnimatedImageView alloc] initWithImage:image];
         imageView.size = CGSizeMake(image.size.width /2 , image.size.height /2);
         self.emptyView.loadingView = (id)imageView;

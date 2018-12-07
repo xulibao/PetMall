@@ -46,8 +46,7 @@
     return self;
 }
 
-- (void)setUpUI
-{
+- (void)setUpUI{
     self.backgroundColor = [UIColor whiteColor];
     _timeLabel = [[UILabel alloc] init];
     _timeLabel.text = @"12点场";
@@ -167,6 +166,20 @@
         self.secsLabel.text = secsStr;
 
     })
+}
+
+- (void)setModel:(PMHomeTimelimitModel *)model{
+    
+    _model = model;
+    _timeLabel.text = [NSString stringWithFormat:@"%@点场",model.active_cc];
+    NSDate *nowDate = [NSDate date]; // 当前日期
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyy-MM-dd HH-mm-ss";
+    NSDate *creat = [formatter dateFromString:model.active_time_d];
+    NSTimeInterval delta = [creat timeIntervalSinceDate:nowDate]; // 计算出相差多少秒
+
+    _countdownEpisode.countDown = delta * 1000;
+    _countdownEpisode.countDownInterval = 1;
 }
 
 - (void)episodeExpiredEvent:(SACountdownEpisode *)episode {

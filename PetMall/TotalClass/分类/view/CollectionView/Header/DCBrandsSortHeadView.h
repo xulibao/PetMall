@@ -13,5 +13,6 @@
 
 /* 头部标题 */
 @property (strong , nonatomic)DCClassMianItem *headTitle;
+@property(nonatomic, copy) void (^callBack)(NSString * searchStr);
 
 @end

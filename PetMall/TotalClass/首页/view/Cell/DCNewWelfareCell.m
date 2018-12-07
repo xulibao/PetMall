@@ -98,9 +98,9 @@ static NSString *const DCGoodsHandheldCellID = @"DCGoodsHandheldCell";
 
 #pragma mark - item点击
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-    NSLog(@"第%zd个item",indexPath.row);
-    
+    if (self.cellDidSellect) {
+        self.cellDidSellect();
+    }
 }
 
 

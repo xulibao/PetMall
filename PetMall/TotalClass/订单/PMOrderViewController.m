@@ -31,15 +31,20 @@
     PMOrderListViewController *vc2 = [[PMOrderListViewController alloc] init];
     vc2.type = PMOrderOrderTypeTransfer;
     vc2.title = @"待发货";
+    
     PMOrderListViewController *vc3 = [[PMOrderListViewController alloc] init];
-    vc3.type = PMOrderOrderTypeComment;
-    vc3.title = @"待评价";
-    self.viewControllers = @[vc0, vc1, vc2,vc3];
-    if (self.type == PMOrderOrderTypeComment) {
-         [self.segment setSelectedSegmentIndex:3 animated:YES];
-    }else{
+    vc3.type = PMOrderOrderTypeReceive;
+    vc3.title = @"待收货";
+    
+    PMOrderListViewController *vc4 = [[PMOrderListViewController alloc] init];
+    vc4.type = PMOrderOrderTypeComment;
+    vc4.title = @"待评价";
+    self.viewControllers = @[vc0, vc1, vc2, vc3,vc4];
+//    if (self.type == PMOrderOrderTypeComment) {
+//         [self.segment setSelectedSegmentIndex:3 animated:YES];
+//    }else{
          [self.segment setSelectedSegmentIndex:self.type animated:YES];
-    }
+//    }
    
 }
 

@@ -75,7 +75,7 @@
 #pragma mark - Setter Getter Methods
 - (void)setSubItem:(DCCalssSubItem *)subItem{
     _subItem = subItem;
-    [_goodsImageView sd_setImageWithURL:[NSURL URLWithString:subItem.img]];
+    [_goodsImageView sd_setImageWithURL:[NSURL URLWithString:subItem.img] placeholderImage:IMAGE(@"common_normal")];
     _goodsTitleLabel.text = subItem.cate_title;
 }
 

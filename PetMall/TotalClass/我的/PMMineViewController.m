@@ -192,7 +192,7 @@
         [self needLogin];
         PMBaseWebViewController * vc = [[PMBaseWebViewController alloc] init];
         vc.webTitle = @"帮助/问题";
-        vc.jumpUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@?id=%@",[STNetworking host],API_user_help,@"1"]];
+        vc.jumpUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@?id=%@",[STNetworking host],API_user_help,[SAApplication userID]]];
         [self.navigationController pushViewController:vc animated:YES];
     };
     [self.dataArray addObject:model];
@@ -407,6 +407,8 @@
 }
 
 - (void)mineOrderClickWithType:(PMOrderOrderType)type{
+    [self needLogin];
+
     if (type == PMOrderOrderTypeFail) {
         PMOrderListViewController * vc = [[PMOrderListViewController alloc] init];
         vc.type = PMOrderOrderTypeFail;
@@ -421,15 +423,21 @@
 //    [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)mineHeadViewClickYouhui{
+    [self needLogin];
+
     PMMyCouponViewController * vc = [[PMMyCouponViewController alloc] init];
     [self pushViewController:vc];
 }
 
 - (void)mineHeadViewClickJifeng{
+    [self needLogin];
+
     PMMyIntegralViewController * vc = [PMMyIntegralViewController new];
     [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)mineHeadViewClickXinren{
+    [self needLogin];
+
     PMBaseWebViewController * webView = [[PMBaseWebViewController alloc] init];
     webView.jumpUrl = [NSURL URLWithString:API_NewUser];
     [self.navigationController pushViewController:webView animated:YES];

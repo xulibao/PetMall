@@ -9,12 +9,15 @@
 #import "STBaseNonSystemNavViewController.h"
 #import "PMConfirmOrderViewController.h"
 #import "PMGoodDetailModel.h"
+#import "DCCommentsItem.h"
 
 @interface DCGoodBaseViewController : STBaseNonSystemNavViewController
 
 @property(nonatomic, copy) NSString *goods_id;
 
 @property(nonatomic, copy) NSString *list_id;
+
+@property(nonatomic, strong) NSArray *commentsItem;
 
 /** 更改标题 */
 @property (nonatomic , copy) void(^changeTitleBlock)(BOOL isChange);

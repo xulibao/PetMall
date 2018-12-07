@@ -69,6 +69,8 @@
 @property (nonatomic, weak) id <SADropDownMenuDelegate> delegate;
 @property(nonatomic, assign) BOOL isSaled;
 @property(nonatomic, assign) BOOL isShuaiXuan;
+@property(nonatomic, assign) BOOL isBtnSelected;
+
 @property(nonatomic, strong) NSMutableArray *exterRecordArray; // 外部标签
 
 @property (nonatomic, strong) UIColor *indicatorColor;

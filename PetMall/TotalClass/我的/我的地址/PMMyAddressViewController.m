@@ -92,6 +92,13 @@
     NSInteger  index = [self.dataArray indexOfObject:addressItem];
     PMAddNewAddressViewController * vc = [[PMAddNewAddressViewController alloc] init];
     vc.model = addressItem;
+    vc.deleteAddress = ^{
+        [self requestPOST:API_user_deladdress parameters:@{@"user_id":[SAApplication userID],@"id":addressItem.address_id} success:^(__kindof SARequest *request, id responseObject) {
+            [self showSuccess:@"删除地址成功"];
+            [self.dataArray removeObjectAtIndex:index];
+            [self setItems:self.dataArray];
+        } failure:NULL];
+    };
     vc.addressBlock = ^(PMMyAddressItem *model) {
         NSMutableDictionary *dict = [model mj_keyValuesWithKeys:@[@"user_id",@"user_phone",@"user_name",@"user_address",@"user_add",@"zt"]];
         [dict setObject:model.address_id forKey:@"address_id"];

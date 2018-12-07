@@ -9,5 +9,5 @@
 #import "SPInfoListFilterViewController.h"
 
 @interface PMHomeSubViewController : SPInfoListFilterViewController
-
+@property(nonatomic, copy) NSString *zl;
 @end

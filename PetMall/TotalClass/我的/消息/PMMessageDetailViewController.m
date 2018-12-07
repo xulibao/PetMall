@@ -35,13 +35,13 @@
 - (void)fetchData {
     if ([self.type integerValue] == 1) {
         self.title = @"系统通知";
-        [self requestMethod:GARequestMethodPOST URLString:API_user_service parameters:@{@"user_id":@"1"} resKeyPath:@"result" resArrayClass:[PMMessageDetailItem class] retry:YES success:^(__kindof SARequest *request, id responseObject) {
+        [self requestMethod:GARequestMethodPOST URLString:API_user_service parameters:@{@"user_id":[SAApplication userID]} resKeyPath:@"result" resArrayClass:[PMMessageDetailItem class] retry:YES success:^(__kindof SARequest *request, id responseObject) {
             self.dataArray = responseObject;
             [self setItems:self.dataArray];
         } failure:NULL];
     }else{
         self.title = @"客服消息";
-        [self requestMethod:GARequestMethodPOST URLString:API_user_customer parameters:@{@"user_id":@"1"} resKeyPath:@"result" resArrayClass:[NSDictionary class] retry:YES success:^(__kindof SARequest *request, id responseObject) {
+        [self requestMethod:GARequestMethodPOST URLString:API_user_customer parameters:@{@"user_id":[SAApplication userID]} resKeyPath:@"result" resArrayClass:[NSDictionary class] retry:YES success:^(__kindof SARequest *request, id responseObject) {
             for (NSDictionary *dict in responseObject) {
                 PMMessageDetailItem * item = [PMMessageDetailItem new];
                 item.name = dict[@"content"];

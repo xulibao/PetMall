@@ -10,4 +10,5 @@
 
 @interface DCNewWelfareCell : UICollectionViewCell
 @property(nonatomic, strong) NSArray *dataArray;
+@property(nonatomic, copy) void(^cellDidSellect)(void);
 @end

@@ -12,7 +12,9 @@
 /** 搜索栏 */
 @property (nonatomic, weak) UISearchBar *searchBar;
 
-@property (nonatomic, strong) NSArray *tagsArray;
+@property (nonatomic, strong) NSMutableArray *tagsArray;
+
+@property(nonatomic, assign) BOOL isClassic;
 
 @property(nonatomic, copy) void (^dismissCall)();
 @end

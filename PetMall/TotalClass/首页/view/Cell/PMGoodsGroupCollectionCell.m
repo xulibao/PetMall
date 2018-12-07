@@ -85,13 +85,13 @@
     [self addSubview:bottomView];
     
     [_goodsImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(15);
+        make.left.mas_equalTo(50);
         [make.centerY.mas_equalTo(self)setOffset:-5];
-        make.size.mas_equalTo(CGSizeMake(120 , 120));
+        make.size.mas_equalTo(CGSizeMake(55 , 95));
     }];
     
     [_goodsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(_goodsImageView.mas_right).mas_offset(15);
+        make.left.mas_equalTo(self.goodsImageView.mas_right).mas_offset(50);
         make.right.mas_equalTo(-20);
         make.top.mas_equalTo(20);
     }];
@@ -134,7 +134,7 @@
     NSDictionary *attribtDic = @{NSStrikethroughStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle]};
     NSMutableAttributedString *attribtStr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"¥%@",groupModel.market_price] attributes:attribtDic];
     _originLabel.attributedText = attribtStr;
-    _peopleCountLabel.text = [NSString stringWithFormat:@"已%@人参团",groupModel.sum];
+    _peopleCountLabel.text = [NSString stringWithFormat:@"已%@人参团",groupModel.sum ? groupModel.sum : @"0"];
     _goodsLabel.text = groupModel.goods_title;
 }
 

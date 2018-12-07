@@ -27,13 +27,11 @@
     [self fetchData];
 }
 
-
-
 #pragma mark - Request
 
 - (void)fetchData {
     
-    [self requestMethod:GARequestMethodPOST URLString:API_user_collection parameters:@{@"user_id":@"1",@"pagesize":@"10",@"pagenum":@(self.page)} resKeyPath:@"result" resArrayClass:[PMMyCollectionItem class] retry:YES success:^(__kindof SARequest *request, id responseObject) {
+    [self requestMethod:GARequestMethodPOST URLString:API_user_collection parameters:@{@"user_id":[SAApplication userID],@"pagesize":@"10",@"pagenum":@(self.page)} resKeyPath:@"result" resArrayClass:[PMMyCollectionItem class] retry:YES success:^(__kindof SARequest *request, id responseObject) {
         self.dataArray = responseObject;
         [self setItems:self.dataArray];
     } failure:NULL];
@@ -41,7 +39,7 @@
 
 
 - (void)cellDidClickDeleteCollection:(PMMyCollectionItem *)item{
-    [self requestPOST:API_user_collectiondel parameters:@{@"user_id":@"1",@"goods_id":item.collectionId} success:^(__kindof SARequest *request, id responseObject) {
+    [self requestPOST:API_user_collectiondel parameters:@{@"user_id":[SAApplication userID],@"goods_id":item.collectionId} success:^(__kindof SARequest *request, id responseObject) {
         [self showSuccess:responseObject[@"msg"]];
         [self fetchData];
     } failure:NULL];

@@ -60,7 +60,7 @@
     [bgView addSubview:maoBtn];
     
     UIButton * gouBtn = [[UIButton alloc] init];
-    maoBtn.tag = 2;
+    gouBtn.tag = 2;
     [gouBtn setImage:IMAGE(@"login_logo_gou") forState:UIControlStateNormal];
     [bgView addSubview:gouBtn];
     

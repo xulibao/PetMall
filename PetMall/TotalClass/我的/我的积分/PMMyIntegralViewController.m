@@ -29,7 +29,7 @@
 
 - (void)fecthData{
     [self requestMethod:GARequestMethodPOST URLString:API_user_mypoints parameters:@{@"user_id":[SAApplication userID]} success:^(__kindof SARequest *request, id responseObject) {
-        self.jifengLabel.text = [responseObject[@"result"][@"user"] stringValue];
+        self.jifengLabel.text = [responseObject[@"result"][@"user"] integerValue] > 0 ? [responseObject[@"result"][@"user"] stringValue] : @"0";
         self.dataArray = [PMMyIntegralModel mj_objectArrayWithKeyValuesArray:responseObject[@"result"][@"integral"]];
         [self.tableView reloadData];
     } failure:NULL];

@@ -31,16 +31,16 @@
     label0.textColor = kColorTextBlack;
     [topView addSubview:label0];
     
-//    UILabel * label1 = [[UILabel alloc] init];
-//    label1.text = @"全部订单";
-//    label1.font = [UIFont systemFontOfSize:14];
-//    label1.textColor = kColor878787;
-//    [topView addSubview:label1];
-//    [label1 handleTapActionWithBlock:^(UIView *sender) {
-//        if ([self.delegate respondsToSelector:@selector(mineOrderClickWithType:)]) {
-//            [self.delegate mineOrderClickWithType:SAMineOrderTypeAll];
-//        }
-//    }];
+    UILabel * label1 = [[UILabel alloc] init];
+    label1.text = @"全部订单";
+    label1.font = [UIFont systemFontOfSize:14];
+    label1.textColor = kColor878787;
+    [topView addSubview:label1];
+    [label1 handleTapActionWithBlock:^(UIView *sender) {
+        if ([self.delegate respondsToSelector:@selector(mineOrderClickWithType:)]) {
+            [self.delegate mineOrderClickWithType:PMOrderOrderTypeAll];
+        }
+    }];
 
     
     UIImageView * imageView1 = [[UIImageView alloc] init];
@@ -62,10 +62,10 @@
         make.centerY.mas_equalTo(imageView0);
     }];
     
-//    [label1 mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerY.mas_equalTo(imageView0);
-//        make.right.mas_equalTo(topView).mas_offset(-22);
-//    }];
+    [label1 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.mas_equalTo(imageView0);
+        make.right.mas_equalTo(topView).mas_offset(-22);
+    }];
     
     [imageView1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(topView).mas_offset(-15);
@@ -98,7 +98,7 @@
     UIView * bottomView2 = [self bottomViewTopImage:@"mine_daishouhuo" bottomText:@"待收货"];
     [bottomView2 handleTapActionWithBlock:^(UIView *sender) {
         if ([self.delegate respondsToSelector:@selector(mineOrderClickWithType:)]) {
-            [self.delegate mineOrderClickWithType:PMOrderOrderTypeTransfer];
+            [self.delegate mineOrderClickWithType:PMOrderOrderTypeReceive];
         }
 
     }];

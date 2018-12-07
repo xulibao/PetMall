@@ -182,9 +182,28 @@
 
 - (void)setItem:(PMMyAddressItem *)item{
     _item = item;
-    self.address.text = [NSString stringWithFormat:@"%@%@",item.user_address,item.user_add];
-    self.phoneNum.text = item.user_phone;
-    self.receiver.text = item.user_name;
+    if (item) {
+        [self.receiver mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.position.mas_right).offset(15);
+            make.top.equalTo(self).offset(15);
+        }];
+        self.address.hidden = NO;
+        self.phoneNum.hidden = NO;
+        self.arrow.hidden = NO;
+        self.address.text = [NSString stringWithFormat:@"%@%@",item.user_address,item.user_add];
+        self.phoneNum.text = item.user_phone;
+        self.receiver.text = item.user_name;
+    }else{
+        [self.receiver mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.position.mas_right).offset(15);
+            make.centerY.mas_equalTo(self.position);
+        }];
+        self.receiver.text = @"请选择收货地址";
+        self.address.hidden = YES;
+        self.phoneNum.hidden = YES;
+        self.arrow.hidden = YES;
+    }
+ 
 }
 
 @end

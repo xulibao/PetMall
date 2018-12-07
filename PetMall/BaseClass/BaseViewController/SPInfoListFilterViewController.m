@@ -16,7 +16,6 @@
 
 @end
 @interface SPInfoListFilterViewController ()
-@property(nonatomic, strong) UISearchBar *searchBar;
 @end
 
 @implementation SPInfoListFilterViewController
@@ -145,23 +144,36 @@
     [array addObject:model];
     filterModel.dataList= array;
     @weakify(filterModel)
-    filterModel.tapClick = ^{
+    filterModel.tapClick = ^(BOOL isSelect){
         @strongify(filterModel)
         [self.filterView showOrDismissWithIndex:0];
     };
     filterModel.cellDidSelect = ^(SADropDownIndexPath *indexPath){
         @strongify(filterModel)
- 
+        SAMenuRecordModel * selectModel = filterModel.dataList[indexPath.row];
+        
         [self.filterView showOrDismissWithIndex:indexPath.column];
+        [self.filterParameters removeObjectForKey:@"price"];
+        [self.filterParameters removeObjectForKey:@"volume"];
+        [self.filterParameters setValue:selectModel.serveID forKey:selectModel.serveKey];
+        [self requestDirectRecordArray:self.filterParameters];
     };
     //销量
     filterModel = [[SPInfoListFilterModel alloc] init];
 //    filterModel.imageStr = @"home_shangxia_nomal";
     [self.dataList addObject:filterModel];
     filterModel.title = @"销量";
-    filterModel.tapClick = ^{
-        
-        
+    filterModel.tapClick = ^(BOOL isSelect){
+        if (isSelect) {
+            [self.filterParameters removeObjectForKey:@"price"];
+            [self.filterParameters setValue:@"1" forKey:@"volume"];
+            
+        }else{
+            [self.filterParameters removeObjectForKey:@"volume"];
+        }
+        [self requestDirectRecordArray:self.filterParameters];
+
+
     };
     
     //价格
@@ -173,8 +185,15 @@
     filterModel.imageSelectStr = @"home_shangxia_select";
 
     filterModel.dataList = [NSMutableArray array];
-    filterModel.tapClick = ^{
-          [self requestDirectRecordArray:[self directParameters]];
+    filterModel.tapClick = ^(BOOL isSelect){
+        if (isSelect) {
+            [self.filterParameters setValue:@"2" forKey:@"price"];
+        }else{
+            [self.filterParameters setValue:@"1" forKey:@"price"];
+        }
+        [self.filterParameters removeObjectForKey:@"volume"];
+        [self.filterParameters setValue:@"1" forKey:@"price"];
+        [self requestDirectRecordArray:self.filterParameters];
     };
   
     self.filterView.delegate = self;
@@ -195,7 +214,7 @@
 - (void)menu:(SADropDownMenu *)menu tabIndex:(NSInteger)currentTapIndex{
     SPInfoListFilterModel * model = self.dataList[currentTapIndex];
     if (model.tapClick) {
-        model.tapClick();
+        model.tapClick(menu.isBtnSelected);
     }
     
 }
@@ -240,7 +259,7 @@
 // 筛选
 - (void)menuDidConfirm:(SADropDownMenu *)menu recordArray:(NSArray *)recordArray{
   
-    [self requestDirectRecordArray:[self directParameters]];
+    [self requestDirectRecordArray:self.filterParameters];
 }
 
 
@@ -256,18 +275,25 @@
 }
 
 
-- (NSMutableDictionary *)directParameters{
-    NSMutableDictionary * directParameters = [NSMutableDictionary dictionary];
-    return directParameters;
+- (NSMutableDictionary *)filterParameters{
+    
+    if (_filterParameters == nil) {
+        _filterParameters = [NSMutableDictionary dictionary];
+    }
+    return _filterParameters;
 }
-
 
 - (void)requestDirectRecordArray:(NSDictionary *)directParameters{
     //需要重写
-    self.filterParameters = directParameters;
     [self updateFilterWithParameters:self.filterParameters];
 }
+#pragma mark - UISearchBarDelegate
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    
+}
 
-- (void)updateFilterWithParameters:(NSDictionary *)parameters {}
+- (void)updateFilterWithParameters:(NSDictionary *)parameters {
+    
+}
 
 @end

@@ -28,7 +28,7 @@
     return _dataArray;
 }
 - (void)fetchData {
-    [self requestMethod:GARequestMethodPOST URLString:API_user_myevaluation parameters:@{@"user_id":@"1",@"pagenum":@(self.page),@"pagesize":@"10"} resKeyPath:@"result" resArrayClass:[PMMyCommentItem class] retry:YES success:^(__kindof SARequest *request, id responseObject) {
+    [self requestMethod:GARequestMethodPOST URLString:API_user_myevaluation parameters:@{@"user_id":[SAApplication userID],@"pagenum":@(self.page),@"pagesize":@"10"} resKeyPath:@"result" resArrayClass:[PMMyCommentItem class] retry:YES success:^(__kindof SARequest *request, id responseObject) {
         self.dataArray = responseObject;
         [self setItems:self.dataArray];
 

@@ -411,6 +411,7 @@
 		5AA918C521A3F93700FF9C64 /* STShareComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA918BD21A3F93700FF9C64 /* STShareComponent.m */; };
 		5AA918C621A3F93700FF9C64 /* images.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5AA918BF21A3F93700FF9C64 /* images.bundle */; };
 		5AA918C721A3F93700FF9C64 /* ShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA918C021A3F93700FF9C64 /* ShareManager.m */; };
+		5AB4600E21AEE73500A18ED2 /* PMSubHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AB4600D21AEE73500A18ED2 /* PMSubHeaderView.m */; };
 		5AC465A6213FEC56006F0AC5 /* PMSpecialClearanceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC465A5213FEC56006F0AC5 /* PMSpecialClearanceCell.m */; };
 		5AC465A9213FEE64006F0AC5 /* PMSpecialClearanceSubCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC465A8213FEE64006F0AC5 /* PMSpecialClearanceSubCell.m */; };
 		5AC95CA92135206C00BDA95D /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC95CA82135206C00BDA95D /* HMSegmentedControl.m */; };
@@ -1415,6 +1416,8 @@
 		5AA918BE21A3F93700FF9C64 /* ShareMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareMenuView.h; sourceTree = "<group>"; };
 		5AA918BF21A3F93700FF9C64 /* images.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = images.bundle; sourceTree = "<group>"; };
 		5AA918C021A3F93700FF9C64 /* ShareManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareManager.m; sourceTree = "<group>"; };
+		5AB4600C21AEE73500A18ED2 /* PMSubHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMSubHeaderView.h; sourceTree = "<group>"; };
+		5AB4600D21AEE73500A18ED2 /* PMSubHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMSubHeaderView.m; sourceTree = "<group>"; };
 		5AC465A4213FEC56006F0AC5 /* PMSpecialClearanceCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMSpecialClearanceCell.h; sourceTree = "<group>"; };
 		5AC465A5213FEC56006F0AC5 /* PMSpecialClearanceCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMSpecialClearanceCell.m; sourceTree = "<group>"; };
 		5AC465A7213FEE64006F0AC5 /* PMSpecialClearanceSubCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMSpecialClearanceSubCell.h; sourceTree = "<group>"; };
@@ -3146,6 +3149,8 @@
 			children = (
 				5A690BE82182FBE400775B00 /* PMGoodsItem.h */,
 				5A690BE92182FBE400775B00 /* PMGoodsItem.m */,
+				5AB4600C21AEE73500A18ED2 /* PMSubHeaderView.h */,
+				5AB4600D21AEE73500A18ED2 /* PMSubHeaderView.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -4937,6 +4942,7 @@
 				5AF24CB1214E560700EDDD27 /* SPVerificationBaseCell.m in Sources */,
 				5AC465A6213FEC56006F0AC5 /* PMSpecialClearanceCell.m in Sources */,
 				5A54CAFA2143C5F500971D83 /* DCShowTypeFourCell.m in Sources */,
+				5AB4600E21AEE73500A18ED2 /* PMSubHeaderView.m in Sources */,
 				5A4AF5A22134F9FA00F8190B /* SADropDownMenuTableCell.m in Sources */,
 				5A54CAF62143C5F500971D83 /* DCFeatureItemCell.m in Sources */,
 				5A54CAE62143C5F500971D83 /* DCGoodBaseViewController.m in Sources */,

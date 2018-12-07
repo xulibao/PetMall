@@ -16,4 +16,5 @@ typedef void(^AddressBlock)(PMMyAddressItem *model);
 
 /** 保存收货地址信息后的地址信息回调 **/
 @property (nonatomic, copy) AddressBlock                   addressBlock;
+@property (nonatomic, copy) void(^deleteAddress)(void);
 @end

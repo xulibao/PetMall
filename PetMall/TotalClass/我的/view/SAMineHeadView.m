@@ -157,7 +157,7 @@
         [self.userName removeGestureRecognizer:self.singleRecognizer];
         self.userName.text = self.model.user_name;
         [self.avatar sd_setImageWithURL:[NSURL URLWithString:self.model.img] placeholderImage:[UIImage imageNamed:@"mine_morenzhaopian"]];
-        [self.jifengBtn setTitle:[NSString stringWithFormat:@"%@\n积分",self.model.user_jf] forState:UIControlStateNormal];
+        [self.jifengBtn setTitle:[NSString stringWithFormat:@"%@\n积分",[self.model.user_jf integerValue] > 0? self.model.user_jf : @"0"] forState:UIControlStateNormal];
         [self.youhuiBtn setTitle:[NSString stringWithFormat:@"%@\n优惠券",self.model.coupon] forState:UIControlStateNormal];
     }else{
         self.userName.text = @"点击登录";

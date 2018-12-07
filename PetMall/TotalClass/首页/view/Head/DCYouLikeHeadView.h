@@ -18,6 +18,6 @@ typedef enum : NSUInteger {
 @property (strong , nonatomic)UILabel *titleLabel;
 
 @property(nonatomic, assign) PMHeaderDetailType type;
-@property(nonatomic, copy) void(^more)();
+@property(nonatomic, copy) void(^more)(void);
 
 @end

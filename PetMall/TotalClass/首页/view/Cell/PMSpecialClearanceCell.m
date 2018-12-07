@@ -108,6 +108,7 @@ static NSString *const PMSpecialClearanceSubCellID = @"PMSpecialClearanceSubCell
 
 - (void)setDataArray:(NSArray *)dataArray{
     _dataArray = dataArray;
+    [self.collectionView reloadData];
 }
 
 @end

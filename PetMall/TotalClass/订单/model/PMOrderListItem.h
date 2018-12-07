@@ -8,9 +8,10 @@
 
 #import "STCommonTableViewBaseItem.h"
 typedef NS_ENUM(NSUInteger, PMOrderOrderType) {
-    PMOrderOrderTypeAll = -1,           // 全部订单
+    PMOrderOrderTypeAll = 0,           // 全部订单
     PMOrderOrderTypePayment = 1,           // 待付款
     PMOrderOrderTypeTransfer = 2,           // 待发货
+    PMOrderOrderTypeReceive = 3,           // 待收货
     PMOrderOrderTypeComment = 4,           // 待评价
     PMOrderOrderTypeFail = 6,           // 失败
 

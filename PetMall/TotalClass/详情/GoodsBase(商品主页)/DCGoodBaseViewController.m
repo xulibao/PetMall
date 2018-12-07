@@ -18,7 +18,6 @@
 #import "DCGoodCommentViewController.h"
 // Views
 #import "DCLIRLButton.h"
-#import "DCCommentsItem.h"
 #import "DCDetailShufflingHeadView.h" //头部轮播
 #import "DCDetailGoodReferralCell.h"  //商品标题价格介绍
 #import "DCDetailShowTypeCell.h"      //种类
@@ -71,7 +70,6 @@
 /* 通知 */
 @property (weak ,nonatomic) id dcObj;
 
-@property(nonatomic, strong) NSArray *commentsItem;
 @property (nonatomic, strong) STCoverView *coverBtn;
 @property(nonatomic, strong) PMShareView *shareView;
 @property(nonatomic, strong) DCFeatureSelectionViewController *dcFeaVc;
@@ -186,7 +184,12 @@ static NSArray *lastSeleArray_;
 }
 
 - (void)fecthData{
-    [self requestPOST:API_Dogfood_details parameters:@{@"goods_id":self.goods_id,@"user_id":[SAApplication userID]} success:^(__kindof SARequest *request, id responseObject) {
+    NSMutableDictionary * dictM = [NSMutableDictionary dictionary];
+    [dictM setValue:self.goods_id forKey:@"goods_id"];
+    if ([SAApplication userID]) {
+        [dictM setValue:[SAApplication userID] forKey:@"user_id"];
+    }
+    [self requestPOST:API_Dogfood_details parameters:dictM success:^(__kindof SARequest *request, id responseObject) {
         PMGoodDetailModel * model = [PMGoodDetailModel mj_objectWithKeyValues:responseObject[@"result"]];
         self.detailModel = model;
         [self initViewData];
@@ -387,6 +390,12 @@ static NSArray *lastSeleArray_;
             
             cell.goodTitleLabel.text = _goodTitle;
             cell.goodPriceLabel.text = [NSString stringWithFormat:@"¥ %@",_goodPrice];
+            if (self.detailModel) {
+                //中划线
+                NSDictionary *attribtDic = @{NSStrikethroughStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle]};
+                NSMutableAttributedString *attribtStr = [[NSMutableAttributedString alloc] initWithString:self.detailModel.market_price attributes:attribtDic];
+                cell.goodSubPriceLabel.attributedText = attribtStr;
+            }
             if (self.goodTip) {
                 cell.shouHuoCount.text = _goodTip;
             }
@@ -417,7 +426,7 @@ static NSArray *lastSeleArray_;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     if (section == 0) {
-        DCDetailShufflingHeadView *headerView = [[DCDetailShufflingHeadView alloc] initWithFrame:CGRectMake(0, 0, kMainBoundsWidth, ScreenH * 0.55)];
+        DCDetailShufflingHeadView *headerView = [[DCDetailShufflingHeadView alloc] initWithFrame:CGRectMake(0, 0, kMainBoundsWidth, ScreenH * 0.45)];
         headerView.shufflingArray = self.goodsImageArray;
         return headerView;
 
@@ -457,7 +466,7 @@ static NSArray *lastSeleArray_;
 #pragma mark - head宽高
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
         if (0 == section) {
-            return ScreenH * 0.55;
+            return ScreenH * 0.45;
         }else if (2 == section){
             return 50;
         }
@@ -476,7 +485,7 @@ static NSArray *lastSeleArray_;
         [self chageUserAdress]; //跟换地址
     }else if (indexPath.section == 1){ //属性选择
         DCFeatureSelectionViewController *dcFeaVc =
-        [DCFeatureSelectionViewController new];
+        [ [DCFeatureSelectionViewController alloc] init];
         self.dcFeaVc = dcFeaVc;
         dcFeaVc.choice = self.detailModel.choice;
         self.dcFeaVc.price = self.detailModel.price;
@@ -620,7 +629,7 @@ static NSArray *lastSeleArray_;
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         button.tag = i + 2;
         [button setTitle:titles[i] forState:UIControlStateNormal];
-        button.backgroundColor = (i == 0) ? [UIColor colorWithHexStr:@"#FFC3C7"] : kColorFF3945;
+       button.backgroundColor = (i == 0) ? [UIColor colorWithHexStr:@"#FFC3C7"] : kColorFF3945;
         [button addTarget:self action:@selector(bottomRightButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         CGFloat buttonX = ScreenW * 0.2 + (buttonW * i);
         button.frame = CGRectMake(buttonX, buttonY, buttonW, buttonH);
@@ -631,7 +640,7 @@ static NSArray *lastSeleArray_;
 - (void)bottomLeftButtonClick:(UIButton *)button{
     if (button.tag == 0) {//收藏
         if (button.selected) {
-            [self requestPOST:API_user_collectiondel parameters:@{@"user_id":@"1",@"goods_id":self.goods_id} success:^(__kindof SARequest *request, id responseObject) {
+            [self requestPOST:API_user_collectiondel parameters:@{@"user_id":[SAApplication userID],@"goods_id":self.goods_id} success:^(__kindof SARequest *request, id responseObject) {
                 [self showSuccess:responseObject[@"msg"]];
                 button.selected = !button.selected;
             } failure:NULL];
@@ -646,6 +655,9 @@ static NSArray *lastSeleArray_;
 }
 
 - (void)bottomRightButtonClick:(UIButton *)button{
+    if ([SAApplication needSignTool]) {
+        return;
+    }
     if (2 == button.tag) { // 加入购物车
         [self requestPOST:API_Dogfood_cart parameters:@{@"goods_id":self.detailModel.goodId,@"user_id":[SAApplication userID],@"type":@"1",@"list_id":self.list_id,@"shul":@"1"} success:^(__kindof SARequest *request, id responseObject) {
             [self showSuccess:@"加入购物车成功！"];

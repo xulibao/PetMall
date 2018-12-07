@@ -96,4 +96,11 @@
     return _goods_logo;
 }
 
+- (NSString *)goods_shul{
+    if (_goods_shul == nil) {
+        _goods_shul = @"1";
+    }
+    return _goods_shul;
+}
+
 @end

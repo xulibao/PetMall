@@ -159,7 +159,7 @@ static NSString *const DCFeatureChoseTopCellID = @"DCFeatureChoseTopCell";
         UIButton *buttton = [UIButton buttonWithType:UIButtonTypeCustom];
         buttton1 = buttton;
         [buttton setTitle:titles[i] forState:0];
-        buttton.backgroundColor = (i == 0) ? [UIColor colorWithHexStr:@"#FFC3C7"] : kColorFF3945;
+        buttton.backgroundColor = ([SAApplication userID]) ? kColorFF3945 : [UIColor colorWithHexStr:@"#FFC3C7"];
         CGFloat buttonX = buttonW * i;
         buttton.tag = i;
         buttton.frame = CGRectMake(buttonX, buttonY, buttonW, buttonH);

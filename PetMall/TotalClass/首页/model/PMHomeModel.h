@@ -96,6 +96,7 @@
 @property(nonatomic, copy) NSString *market_price;
 @property(nonatomic, copy) NSString *selling_price;
 @property(nonatomic, copy) NSString *goods_pir;
+@property(nonatomic, copy) NSString *list_id;
 
 @end
 

@@ -10,6 +10,8 @@
 #import "PMConfirmOrderViewController.h"
 #import "DCRecommendItem.h"
 #import "PMCartCell.h"
+#import "SARefreshHeader.h"
+
 static NSString *const PMCartCellID = @"PMCartCell";
 
 @interface PMCartViewController ()<UITableViewDelegate,UITableViewDataSource>
@@ -22,6 +24,7 @@ static NSString *const PMCartCellID = @"PMCartCell";
 @property(nonatomic, strong) NSMutableArray *dataArray;
 @property(nonatomic, assign) float totalPrice;
 @property(nonatomic, assign) BOOL isCartEdit;
+@property(nonatomic, strong) UIButton * signBtn;
 @end
 
 @implementation PMCartViewController
@@ -32,54 +35,50 @@ static NSString *const PMCartCellID = @"PMCartCell";
     }
     return _dataArray;
 }
-
-//- (NSMutableArray *)dataArray{
-//    if (_dataArray == nil) {
-//        _dataArray = [NSMutableArray array];
-//        PMCartItem * item = [[PMCartItem alloc] init];
-//        DCRecommendItem *recommendItem = [[DCRecommendItem alloc] init];
-//        recommendItem.isSelect = YES;
-//        recommendItem.cellLocationType = PMCellLocationTypeSingle;
-//        recommendItem.image_url = @"https://img.alicdn.com/imgextra/i2/108613394/TB2mlYjm5MnBKNjSZFoXXbOSFXa_!!0-saturn_solar.jpg_210x210.jpg";
-//        recommendItem.goods_title = @"GO狗粮 抗敏美毛系列全 犬配方25磅";
-//        recommendItem.nature = @"3.06kg  牛肉味";
-//        recommendItem.price = @"158";
-//        recommendItem.people_count = @"2";
-//        item.order_list = [@[recommendItem] mutableCopy];
-//        [_dataArray addObject:item];
-//        item = [[PMCartItem alloc] init];
-//        item.order_list = [@[] mutableCopy];
-//        recommendItem = [[DCRecommendItem alloc] init];
-//        recommendItem.image_url = @"https://img.alicdn.com/imgextra/i2/108613394/TB2mlYjm5MnBKNjSZFoXXbOSFXa_!!0-saturn_solar.jpg_210x210.jpg";
-//        recommendItem.goods_title = @"NOW大型成犬粮火鸡+鸭 肉+三文鱼";
-//        recommendItem.nature = @"3.06kg  鸭肉";
-//        recommendItem.price = @"128";
-//        recommendItem.people_count = @"2";
-//        recommendItem.isSelect = NO;
-//        recommendItem.cellLocationType = PMCellLocationTypeTop;
-//        [item.order_list addObject:recommendItem];
-//        recommendItem = [[DCRecommendItem alloc] init];
-//        recommendItem.image_url = @"https://img.alicdn.com/imgextra/i2/108613394/TB2mlYjm5MnBKNjSZFoXXbOSFXa_!!0-saturn_solar.jpg_210x210.jpg";
-//        recommendItem.goods_title = @"NOW大型成犬粮火鸡+鸭 肉+三文鱼";
-//        recommendItem.nature = @"3.06kg  三文鱼";
-//        recommendItem.price = @"128";
-//        recommendItem.people_count = @"2";
-//        recommendItem.cellLocationType = PMCellLocationTypeBottom;
-//        [item.order_list addObject:recommendItem];
-//        [_dataArray addObject:item];
-//
-//    }
-//    return _dataArray;
-//}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"购物车";
     self.view.backgroundColor = kColorFAFAFA;
-    [self fecthNavView];
-    [self fecthTableView];
-    [self fecthBottomView];
-    self.isCartEdit = YES;
+    if ([SAApplication userID] == nil) {
+        [self fecthOffLine];
+    }else{
+        [self fecthNavView];
+        [self fecthTableView];
+        [self fecthBottomView];
+        self.isCartEdit = YES;
+        [self.tableView reloadData];
+    }
+}
+
+- (void)fecthOffLine{
+    UIButton * signBtn = [UIButton new];
+    self.signBtn = signBtn;
+    [signBtn addTarget:self action:@selector(signBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [signBtn setTitle:@"登录" forState:UIControlStateNormal];
+    [signBtn setTitleColor:kColorTextGay forState:UIControlStateNormal];
+    signBtn.layer.cornerRadius = 15;
+    signBtn.layer.borderColor = kColorTextGay.CGColor;
+    signBtn.layer.borderWidth = 1;
+    [self.view addSubview:signBtn];
+    [signBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.mas_equalTo(self.view);
+        make.centerY.mas_equalTo(self.view);
+        make.size.mas_equalTo(CGSizeMake(70, 30));
+    }];
+}
+
+- (void)signBtnClick{
+    PMLoginViewController *loginVc = [[PMLoginViewController alloc] init];
+    loginVc.callBack = ^(PMLoginViewController *viewController) {
+        [viewController.navigationController popToRootViewControllerAnimated:YES];
+        [self.signBtn removeFromSuperview];
+        [self fecthNavView];
+        [self fecthTableView];
+        [self fecthBottomView];
+        self.isCartEdit = YES;
+        [self fecthData];
+    };
+    [self.navigationController pushViewController:loginVc animated:YES];
 
 }
 
@@ -90,8 +89,13 @@ static NSString *const PMCartCellID = @"PMCartCell";
 
 -  (void)fecthData{
     [self requestMethod:GARequestMethodPOST URLString:API_Dogfood_cartlist parameters:@{@"pagenum":@"1",@"user_id":[SAApplication userID],@"pagesize":@"10"} resKeyPath:@"result" resArrayClass:[PMCartItem class] retry:YES success:^(__kindof SARequest *request, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
         self.dataArray = responseObject;
-        [self.tableView reloadData];
+        if (self.dataArray.count == 0) {
+            [self showEmptyView];
+        }else{
+            [self.tableView reloadData];
+        }
     } failure:NULL];
 }
 
@@ -106,6 +110,8 @@ static NSString *const PMCartCellID = @"PMCartCell";
     tableView.delegate = self;
     tableView.dataSource = self;
     self.tableView = tableView;
+        self.tableView.mj_header = [SARefreshHeader headerWithRefreshingTarget:self
+                                                          refreshingAction:@selector(refreshingAction)];
     
     tableView.tableFooterView = nil;
     [tableView registerClass:[PMCartCell class] forCellReuseIdentifier:PMCartCellID];
@@ -114,6 +120,9 @@ static NSString *const PMCartCellID = @"PMCartCell";
         make.top.left.right.mas_equalTo(self.view);
         make.bottom.mas_equalTo(-44);
     }];
+}
+- (void)refreshingAction{
+    [self fecthData];
 }
 - (void)fecthBottomView{
     UIView * bottomView = [[UIView alloc] init];
@@ -320,6 +329,9 @@ static NSString *const PMCartCellID = @"PMCartCell";
 
 //收藏
 - (void)collectBtnClick{
+    if ([SAApplication needSignTool]) {
+        return;
+    }
     BOOL isGoodsSelect = NO;
     NSMutableArray *goodsIds = [NSMutableArray array];
     for (PMCartItem  *cartItem in self.dataArray) {
@@ -369,6 +381,9 @@ static NSString *const PMCartCellID = @"PMCartCell";
 }
 //结算
 - (void)balanceBtnClick{
+    if ([SAApplication needSignTool]) {
+        return;
+    }
     BOOL isGoodsSelect = NO;
     NSMutableArray *goodsIds = [NSMutableArray array];
     for (PMCartItem  *cartItem in self.dataArray) {

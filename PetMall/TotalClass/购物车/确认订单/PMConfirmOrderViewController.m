@@ -19,6 +19,7 @@
 #import "PMMyAddressViewController.h"
 #import "PMOrderListItem.h"
 #import "DCRecommendItem.h"
+#import "SAAlertController.h"
 @interface PMConfirmOrderViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property(nonatomic, strong) UITableView *tableView;
 @property(nonatomic, strong) PMConfirmOrderHeaderView *headerView;
@@ -297,7 +298,13 @@
         }
         self.goodPriceLabel.text = [NSString stringWithFormat:@"¥%@",[@(goodsPrice) stringValue]];;
         self.voucherArray = [PMMyCouponItem mj_objectArrayWithKeyValuesArray:responseObject[@"result"][@"coupona"]];
-        self.headerView.item = [self.addressArray firstObject];
+        if (self.addressArray.count > 0) {
+            self.headerView.item = [self.addressArray firstObject];
+        }else{
+            self.headerView.item = nil;
+            self.headerView.height = 70;
+        }
+        
         self.selectExpress = [self.expressArray firstObject];
         self.selectVoucher = [self.voucherArray firstObject];
         self.selectAddressItem = [self.addressArray firstObject];
@@ -321,7 +328,7 @@
             
         }
         
-        NSString * countStr = [NSString stringWithFormat:@"合计：¥%.2f",totalPrice + [self.selectExpress.express_price floatValue] - [self.selectVoucher.coupon_jiazhi floatValue]];
+        NSString * countStr = [NSString stringWithFormat:@"合计：¥%.2f",totalPrice + [self.goodInfo.postage floatValue] - [self.selectVoucher.coupon_jiazhi floatValue]];
         NSMutableAttributedString * str = [[NSMutableAttributedString alloc] initWithString:countStr];
         [str addAttributes:@{NSForegroundColorAttributeName:kColorFF5554,NSFontAttributeName:[UIFont boldSystemFontOfSize:16]} range:[countStr rangeOfString:[NSString stringWithFormat:@"¥%.2f",totalPrice + [self.selectExpress.express_price floatValue] - [self.selectVoucher.coupon_jiazhi floatValue]]]];
         self.totalPriceLabel.attributedText = str;
@@ -504,6 +511,31 @@
 }
 //确认订单
 - (void)commitBtnClick{
+
+    if (!self.selectAddressItem) {
+        @weakify(self)
+        SAAlertController *alertController = [SAAlertController alertControllerWithTitle:@"提醒"
+                                                                                 message:@"请您选择收货地址"
+                                                                          preferredStyle:SAAlertControllerStyleAlert];
+        SAAlertAction *action = [SAAlertAction actionWithTitle:@"选择收货地址" style:SAAlertActionStyleDefault handler:^(SAAlertAction *action) {
+            @strongify(self)
+            PMMyAddressViewController *vc = [PMMyAddressViewController new];
+            vc.callBack = ^(PMMyAddressItem *item) {
+                self.headerView.height = 103;
+                self.headerView.item = item;
+                [self.tableView reloadData];
+                [self.navigationController popViewControllerAnimated:YES];
+            };
+            [self.navigationController pushViewController:vc animated:YES];
+        }];
+        [alertController addAction:action];
+        action = [SAAlertAction actionWithTitle:@"取消" style:SAAlertActionStyleCancel handler:^(SAAlertAction *action) {
+        }];
+        [alertController addAction:action];
+        
+        [alertController showWithAnimated:YES];
+        return;
+    }
     NSMutableDictionary * dictDataM = [NSMutableDictionary dictionary];
     
     float totalPrice = 0.00f;

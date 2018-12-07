@@ -46,11 +46,13 @@
 
 - (NSMutableArray *)goodsImageArray{
     if (_goodsImageArray == nil) {
-        NSArray *picArray = [self.goods_image componentsSeparatedBySthString:@"|"];
+        NSArray *picArray = [self.goods_logo componentsSeparatedBySthString:@"|"];
         _goodsImageArray = [NSMutableArray array];
         for (NSString * imageStr in picArray) {
             if (![imageStr hasPrefix:[STNetworking host]]) {
                 [_goodsImageArray addObject:[NSString stringWithFormat:@"%@%@",[STNetworking host],imageStr]];
+            }else{
+                [_goodsImageArray addObject:imageStr];
             }
         }
     }

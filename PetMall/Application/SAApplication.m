@@ -128,7 +128,10 @@ static dispatch_queue_t conversationsJoinSerialQueue = NULL;
 //}
 
 - (NSString *)userType{
-    return @"1";
+    if (_userType == nil) {
+        _userType = @"0";
+    }
+    return _userType;
 }
 #pragma mark - 更新
 - (void)alertViewUpdata{
@@ -253,6 +256,22 @@ static dispatch_queue_t conversationsJoinSerialQueue = NULL;
     BOOL isSign = kUserID ? YES : NO;
     return isSign;
 }
+
++ (BOOL)needSignTool{
+    if ([self userID] == nil) {
+        PMLoginViewController *loginVc = [[PMLoginViewController alloc] init];
+        loginVc.callBack = ^(PMLoginViewController *viewController) {
+            [viewController dismissViewControllerAnimated:YES completion:nil];
+        };
+        UIViewController *vc = [[SAApplication sharedApplication].mainTabBarController selectedViewController];
+        STNavigationController * nav = [[STNavigationController alloc] initWithRootViewController:loginVc];
+        [vc presentViewController:nav animated:YES completion:nil];
+        return YES;
+    }else{
+        return NO;
+    }
+}
+
 
 - (void)signIn {
     [self signInWithCallBack:NULL];

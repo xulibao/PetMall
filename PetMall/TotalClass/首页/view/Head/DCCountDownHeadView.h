@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "PMHomeModel.h"
 @interface DCCountDownHeadView : UICollectionReusableView
-
+@property(nonatomic, strong) PMHomeTimelimitModel *model;
 @end

@@ -54,6 +54,7 @@
     [moreBtn setImage:[UIImage imageNamed:@"home_youjiantou"] forState:UIControlStateNormal];
     [moreBtn setTitleColor:[UIColor colorWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1] forState:UIControlStateNormal];
     [moreBtn setTitle:@"更多" forState:UIControlStateNormal];
+    [moreBtn addTarget:self action:@selector(moreClick) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:moreBtn];
     
     [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -67,6 +68,12 @@
     //    }];
     
     moreBtn.frame =  CGRectMake(self.width - 55, 0, 55, self.height);
+}
+
+- (void)moreClick{
+    if (self.callBack) {
+        self.callBack(self.headTitle.cate_title);
+    }
 }
 
 #pragma mark - Setter Getter Methods

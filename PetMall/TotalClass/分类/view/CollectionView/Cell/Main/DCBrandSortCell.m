@@ -64,7 +64,7 @@
 - (void)setSubItem:(DCCalssSubItem *)subItem
 {
     _subItem = subItem;
-    [_brandImageView sd_setImageWithURL:[NSURL URLWithString:subItem.img]];
+    [_brandImageView sd_setImageWithURL:[NSURL URLWithString:subItem.img] placeholderImage:IMAGE(@"common_normal")];
 }
 
 @end

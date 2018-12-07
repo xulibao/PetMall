@@ -13,6 +13,7 @@
 #import <SDCycleScrollView.h>
 #import "SAButton.h"
 #import "PMHomeSubModel.h"
+#import "PMSubHeaderView.h"
 #import <SDWebImage/UIButton+WebCache.h>
 @interface PMHomeSubViewController ()<SDCycleScrollViewDelegate,PMGoodsCellDelegate>
 @property(nonatomic, strong) NSMutableArray *dataArray;
@@ -55,6 +56,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.viewModel.cellDelegate = self;
+    self.tableView.tag = 10000;
+    if (self.filterParameters.count == 0) {
+        [self.filterParameters setValue:@(self.page) forKey:@"pagenum"];
+        [self.filterParameters setValue:@(10) forKey:@"pagesize"];
+        [self.filterParameters setValue:[SAApplication sharedApplication].userType forKey:@"type"];
+
+    }
     [self fetchData];
 }
 - (void)layoutTableView {
@@ -63,8 +71,11 @@
 - (void)layoutFilterView {
 }
 - (void)initFilterView {
-    
-    [self requestPOST:API_Dogfood_specifications parameters:@{@"user_id":[SAApplication userID],@"zl":@"2",@"type":[SAApplication sharedApplication].userType} success:^(__kindof SARequest *request, id responseObject) {
+    NSMutableDictionary *dict = [@{@"zl":[NSString stringWithFormat:@"%ld",[self.zl integerValue] + 1],@"type":[SAApplication sharedApplication].userType} mutableCopy];
+    if ([SAApplication userID]) {
+        [dict setValue:[SAApplication userID] forKey:@"user_id"];
+    }
+    [self requestPOST:API_Dogfood_specifications parameters:dict success:^(__kindof SARequest *request, id responseObject) {
         self.subModel = [PMHomeSubModel mj_objectWithKeyValues:responseObject[@"result"]];
         [self fectchSubViews];
         
@@ -72,8 +83,9 @@
 }
 
 - (void)fectchSubViews{
-    UIView * headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainBoundsWidth, 370)];
+    PMSubHeaderView * headerView = [[PMSubHeaderView alloc] initWithFrame:CGRectMake(0, 0, kMainBoundsWidth, 370)];
     headerView.backgroundColor = [UIColor whiteColor];
+    headerView.userInteractionEnabled = YES;
     self.tableView.tableHeaderView = headerView;
     //轮播图
     _cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, kMainBoundsWidth, 150) delegate:self placeholderImage:nil];
@@ -114,6 +126,8 @@
         NSInteger lieshu = i % 3;
         CGFloat top = 10 + hangshu * (50 +titel2Margin);
         SAButton * btn = [[SAButton alloc] init];
+        btn.tag = i;
+        [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
         btn.layer.cornerRadius = 5;
         btn.clipsToBounds = YES;
         titel2Btn = btn;
@@ -136,9 +150,14 @@
             make.height.mas_equalTo(50);
         }];
     }
-    
     CGFloat fliterViewY = 325;
+//    if (self.subModel.classification.count > 3) {
+//        fliterViewY = 325;
+//    }else{
+//        fliterViewY = 225;
+//    }
     SADropDownMenu *fliterView = [[SADropDownMenu alloc] initWithOrigin:CGPointMake(0, fliterViewY) andHeight:45];
+    headerView.tableView = fliterView.tableView;
     fliterView.delegate = self;
     fliterView.backgroundColor = [UIColor whiteColor];
     fliterView.layer.shadowColor = [UIColor blackColor].CGColor;
@@ -157,36 +176,55 @@
     filterModel.imageNomalStr = @"home_xia_nomal";
     NSMutableArray * array = [NSMutableArray array];
     SAMenuRecordModel * model = [SAMenuRecordModel new];
+    model.serveKey = @"compre";
+    model.serveID = @"1";
     model.name = @"综合";
     [array addObject:model];
     model = [SAMenuRecordModel new];
+    model.serveKey = @"compre";
+    model.serveID = @"2";
     model.name = @"最新上架";
     [array addObject:model];
     model = [SAMenuRecordModel new];
+    model.serveKey = @"compre";
+    model.serveID = @"3";
     model.name = @"好评从高到低";
     [array addObject:model];
     model = [SAMenuRecordModel new];
+    model.serveKey = @"compre";
+    model.serveID = @"4";
     model.name = @"评论数从高到低";
     [array addObject:model];
     filterModel.dataList= array;
     @weakify(filterModel)
-    filterModel.tapClick = ^{
-        @strongify(filterModel)
+    filterModel.tapClick = ^(BOOL isSelect){
         [self.filterView showOrDismissWithIndex:0];
     };
     filterModel.cellDidSelect = ^(SADropDownIndexPath *indexPath){
         @strongify(filterModel)
-        
+        SAMenuRecordModel * selectModel = filterModel.dataList[indexPath.row];
+
         [self.filterView showOrDismissWithIndex:indexPath.column];
+        [self.filterParameters removeObjectForKey:@"price"];
+        [self.filterParameters removeObjectForKey:@"volume"];
+        [self.filterParameters setValue:selectModel.serveID forKey:selectModel.serveKey];
+        [self requestDirectRecordArray:self.filterParameters];
+
     };
     //销量
     filterModel = [[SPInfoListFilterModel alloc] init];
     //    filterModel.imageStr = @"home_shangxia_nomal";
     [self.dataList addObject:filterModel];
     filterModel.title = @"销量";
-    filterModel.tapClick = ^{
-        
-        
+    filterModel.tapClick = ^(BOOL isSelect){
+        if (isSelect) {
+            [self.filterParameters removeObjectForKey:@"price"];
+            [self.filterParameters setValue:@"1" forKey:@"volume"];
+
+        }else{
+              [self.filterParameters removeObjectForKey:@"volume"];
+        }
+        [self requestDirectRecordArray:self.filterParameters];
     };
     filterModel.cellDidSelect = ^(SADropDownIndexPath *indexPath){
     };
@@ -200,47 +238,79 @@
     filterModel.imageSelectStr = @"home_shangxia_select";
     
     filterModel.dataList = [NSMutableArray array];
-    filterModel.tapClick = ^{
-        
-        
+    filterModel.tapClick = ^(BOOL isSelect){
+        if (isSelect) {
+            [self.filterParameters setValue:@"2" forKey:@"price"];
+        }else{
+            [self.filterParameters setValue:@"1" forKey:@"price"];
+        }
+        [self.filterParameters removeObjectForKey:@"volume"];
+        [self.filterParameters setValue:@"1" forKey:@"price"];
+        [self requestDirectRecordArray:self.filterParameters];
     };
     
     self.filterView.delegate = self;
     self.filterView.dataSource = self;
+}
 
+- (void)btnClick:(SAButton *)btn{
+    PMHomeSubNavigationModel * model = self.subModel.classification[btn.tag];
+    [self.filterParameters setValue:model.pid forKey:@"lzl"];
+    [self requestDirectRecordArray:self.filterParameters];
 }
 
 - (void)fecthHeaderView{
    
-    
+ 
 }
 
-- (void)refreshingAction {
+- (void)refreshingAction{
     [self fetchData];
 }
 
 #pragma mark - Request
-- (void)fetchData {
-    [self requestMethod:GARequestMethodPOST URLString:API_Dogfood_condition parameters:@{@"pagenum":@(self.page),@"pagesize":@"10",@"type":[SAApplication sharedApplication].userType} resKeyPath:@"result" resArrayClass:[PMGoodsItem class] retry:YES success:^(__kindof SARequest *request, id responseObject) {
+- (void)fetchData{
+    [self requestMethod:GARequestMethodPOST URLString:API_Dogfood_condition parameters:self.filterParameters resKeyPath:@"result" resArrayClass:[PMGoodsItem class] retry:YES success:^(__kindof SARequest *request, id responseObject) {
         self.dataArray = responseObject;
         [self setItems:self.dataArray];
     } failure:NULL];
- 
-
 }
 
 - (void)cellDidAddCart:(PMGoodsItem *)item{
+    if ([SAApplication needSignTool]){
+        return;
+    }
+    
     [self requestPOST:API_Dogfood_cart parameters:@{@"goods_id":item.goodId,@"user_id":[SAApplication userID],@"type":@"1",@"list_id":item.list_id,@"shul":@"1"} success:^(__kindof SARequest *request, id responseObject) {
         [self showSuccess:@"加入购物车成功！"];
-        
     } failure:NULL];
 }
 
-- (void)didSelectCellWithItem:(id<STCommonTableRowItem>)item{
-    PMGoodsItem * goodsItem = (PMGoodsItem *)item;
-    DCGoodBaseViewController * vc = [[DCGoodBaseViewController alloc] init];
-    vc.goods_id = goodsItem.goodId;
-    vc.list_id  = goodsItem.list_id;
-    [self.navigationController pushViewController:vc  animated:YES];
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (tableView.tag == 10000) {
+        PMGoodsItem * goodsItem = self.dataArray[indexPath.row];
+        DCGoodBaseViewController * vc = [[DCGoodBaseViewController alloc] init];
+        vc.goods_id = goodsItem.goodId;
+        vc.list_id  = goodsItem.list_id;
+        [self.navigationController pushViewController:vc  animated:YES];
+    }
 }
+
+//- (void)didSelectCellWithItem:(id<STCommonTableRowItem>)item{
+//
+//}
+
+- (void)requestDirectRecordArray:(NSDictionary *)directParameters{
+    //需要重写
+    [self updateFilterWithParameters:self.filterParameters];
+}
+
+- (void)updateFilterWithParameters:(NSDictionary *)parameters {
+    [self.filterParameters setValue:@(self.page) forKey:@"pagenum"];
+    [self.filterParameters setValue:@(10) forKey:@"pagesize"];
+    [self.filterParameters setValue:[SAApplication sharedApplication].userType forKey:@"type"];
+    [self fetchData];
+    
+}
+
 @end

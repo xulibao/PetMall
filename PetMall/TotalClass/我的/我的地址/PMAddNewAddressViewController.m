@@ -38,8 +38,23 @@
     [self initUserDataSource];
     [self initUserInterface];
     [self initBottomView];
+  
 }
 
+- (void)editRightBtn{
+    UIButton * rightBtn = [[UIButton alloc] init];
+    rightBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    [rightBtn setTitle:@"删除" forState:UIControlStateNormal];
+    [rightBtn addTarget:self action:@selector(editBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [rightBtn setTitleColor:kColorFF5554 forState:UIControlStateNormal];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+}
+- (void)editBtnClick{
+    if (self.deleteAddress) {
+        self.deleteAddress();
+    }
+    [self.navigationController popViewControllerAnimated:YES];
+}
 - (void)initBottomView{
     UIButton * addAddressBtn = [UIButton new];
     [self.view addSubview:addAddressBtn];
@@ -68,6 +83,7 @@
     self.title = @"添加新地址";
     if (_model) {
         self.title = @"编辑地址";
+        [self editRightBtn];
     } else {
         _model = [[PMMyAddressItem alloc] init];
         _model.user_address = @"请选择";

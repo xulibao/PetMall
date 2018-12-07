@@ -48,7 +48,7 @@
     NSDictionary *attribtDic = @{NSStrikethroughStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle]};
     NSMutableAttributedString *attribtStr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"¥%@",data.market_price] attributes:attribtDic];
     _originLabel.attributedText = attribtStr;
-    _peopleCountLabel.text = [NSString stringWithFormat:@"已%@人参团",data.goods_shul];
+    _peopleCountLabel.text = [NSString stringWithFormat:@"已%@人参团",data.goods_shul ? data.goods_shul : @"0"];
     _goodsLabel.text = data.goods_title;
     
   
@@ -97,13 +97,15 @@
         make.left.right.top.mas_equalTo(self.contentView);
     }];
     [_goodsImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.bottom.mas_equalTo(self.contentView);
-        make.top.mas_equalTo(lineView.mas_bottom);
-        make.size.mas_equalTo(CGSizeMake(120 , 120));
+        make.top.mas_equalTo(lineView.mas_bottom).mas_offset(35);
+        make.bottom.mas_offset(-24);
+        make.left.mas_equalTo(50);
+        make.size.mas_equalTo(CGSizeMake(54 , 93));
+
     }];
     
     [_goodsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(_goodsImageView.mas_right).mas_offset(15);
+        make.left.mas_equalTo(_goodsImageView.mas_right).mas_offset(50);
         make.right.mas_equalTo(-20);
         make.top.mas_equalTo(20);
     }];

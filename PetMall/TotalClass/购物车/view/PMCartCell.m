@@ -95,12 +95,14 @@
     }];
     
     [cartImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(110);
-        make.left.top.bottom.mas_equalTo(bgView);
+        make.top.mas_equalTo(18);
+        make.bottom.mas_offset(-18);
+        make.left.mas_equalTo(28);
+        make.size.mas_equalTo(CGSizeMake(54 , 93));
     }];
     
     [cartTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(cartImageView.mas_right);
+        make.left.mas_equalTo(cartImageView.mas_right).mas_offset(28);
         make.top.mas_equalTo(15);
         make.right.mas_equalTo(-20);
     }];

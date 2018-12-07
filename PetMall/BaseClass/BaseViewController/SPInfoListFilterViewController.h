@@ -16,7 +16,7 @@
 @property(nonatomic, copy) NSString *imageSelectStr;
 @property(nonatomic, strong) NSMutableArray *dataList;
 @property(nonatomic, assign) BOOL isShuaiXuan;
-@property(nonatomic, copy) void (^tapClick)();
+@property(nonatomic, copy) void (^tapClick)(BOOL isSelect);
 
 @property(nonatomic, copy) void (^cellDidSelect)(SADropDownIndexPath *indexPath);
 @end
@@ -24,8 +24,9 @@
 @interface SPInfoListFilterViewController : SAInfoListViewController<SADropDownMenuDataSource,SADropDownMenuDelegate,UISearchBarDelegate>
 @property (nonatomic,strong) NSMutableArray * dataList;
 @property(nonatomic, strong) SADropDownMenu *filterView;
+@property(nonatomic, strong) UISearchBar *searchBar;
 
-@property(nonatomic, copy) NSDictionary *filterParameters;
+@property(nonatomic, strong) NSMutableDictionary *filterParameters;
 @end
 
 @interface SPInfoListFilterViewController (SubclassingHooks)

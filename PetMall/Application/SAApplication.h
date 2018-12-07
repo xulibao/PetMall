@@ -50,7 +50,7 @@ typedef enum {
 @interface SAApplication (User)
 
 + (NSString *)userID;
-
++ (BOOL)needSignTool;
 + (BOOL)isSign;
 - (void)signIn;
 - (void)signInWithCallBack:(void (^)(BOOL succeeded, NSError *error))callBack;

@@ -8,10 +8,8 @@
 #define tableViewH  95
 
 #import "DCRecommendItem.h"
-#import "DCGoodBaseViewController.h"
-
 #import "PMCategoryViewController.h"
-
+#import "PMSearchResultViewController.h"
 // Models
 #import "DCClassMianItem.h"
 #import "DCCalssSubItem.h"
@@ -21,6 +19,7 @@
 #import "DCGoodsSortCell.h"
 #import "DCBrandSortCell.h"
 #import "DCBrandsSortHeadView.h"
+#import "PMSearchViewController.h"
 // Vendors
 #import <MJExtension.h>
 // Categories
@@ -120,7 +119,7 @@ static NSString *const DCBrandSortCellID = @"DCBrandSortCell";
         [self.tableView reloadData];
         //默认选择第一行（注意一定要在加载完数据之后）
         [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionTop];
-        self.tableSelect = 1;
+        self.tableSelect = 0;
         [self fecthItems:[self.titleItem firstObject]];
     } failure:NULL];
 }
@@ -206,6 +205,12 @@ static NSString *const DCBrandSortCellID = @"DCBrandSortCell";
     UICollectionReusableView *reusableview = nil;
     if (kind == UICollectionElementKindSectionHeader){
         DCBrandsSortHeadView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:DCBrandsSortHeadViewID forIndexPath:indexPath];
+        headerView.callBack = ^(NSString *searchStr) {
+            PMSearchResultViewController * vc = [PMSearchResultViewController new];
+            vc.keyword = searchStr;
+            vc.isClassic = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        };
         DCClassMianItem * item = self.titleItem[self.tableSelect];
         headerView.headTitle = item;
         reusableview = headerView;
@@ -229,17 +234,28 @@ static NSString *const DCBrandSortCellID = @"DCBrandSortCell";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     DCCalssSubItem * item = _mainItem[indexPath.row];
-    DCGoodBaseViewController * vc = [[DCGoodBaseViewController alloc] init];
-    vc.goods_id = item.cate_id;
-//    vc.list_id  = item.list_id;
+    PMSearchResultViewController * vc = [PMSearchResultViewController new];
+    vc.isClassic = YES;
+    vc.keyword = item.cate_title;
     [self.navigationController pushViewController:vc  animated:YES];
 }
 
 
 #pragma mark - 搜索点击
-- (void)searchButtonClick
-{
-    
+- (void)searchButtonClick{
+    PMSearchViewController * vc = [[PMSearchViewController alloc ] init];
+    vc.isClassic = YES;
+    STNavigationController * nav = [[STNavigationController alloc] initWithRootViewController:vc];
+    [self presentViewController:nav animated:YES completion:^{
+    }];
+
+}
+
+- (void)searchResult{
+    PMSearchResultViewController * vc = [PMSearchResultViewController new];
+//    vc.keyword = keyword;
+    [self.navigationController pushViewController:vc animated:YES];
+
 }
 
 #pragma mark - 语音点击

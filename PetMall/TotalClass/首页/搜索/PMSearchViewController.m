@@ -31,37 +31,14 @@
 @end
 
 @implementation PMSearchViewController
-//
-//- (MLSearchResultsTableViewController *)searchSuggestionVC
-//{
-//    if (!_searchSuggestionVC) {
-//        MLSearchResultsTableViewController *searchSuggestionVC = [[MLSearchResultsTableViewController alloc] initWithStyle:UITableViewStylePlain];
-//        __weak typeof(self) _weakSelf = self;
-//        searchSuggestionVC.didSelectText = ^(NSString *didSelectText) {
-//
-//            if ([didSelectText isEqualToString:@""]) {
-//                [self.searchBar resignFirstResponder];
-//            }
-//            else
-//            {
-//                // 设置搜索信息
-//                _weakSelf.searchBar.text = didSelectText;
-//
-//                // 缓存数据并且刷新界面
-//                [_weakSelf saveSearchCacheAndRefreshView];
-//            }
-//
-//
-//        };
-//        searchSuggestionVC.view.frame = CGRectMake(0, 64, self.view.mj_w, self.view.mj_h);
-//        searchSuggestionVC.view.backgroundColor = [UIColor whiteColor];
-//
-//        [self.view addSubview:searchSuggestionVC.view];
-//        [self addChildViewController:searchSuggestionVC];
-//        _searchSuggestionVC = searchSuggestionVC;
-//    }
-//    return _searchSuggestionVC;
-//}
+
+- (NSMutableArray *)tagsArray{
+    if (_tagsArray == nil) {
+        _tagsArray = [NSMutableArray array];
+    }
+    return _tagsArray;
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
@@ -76,17 +53,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.tagsArray = @[@"全犬通用狗粮", @"金属狗笼子", @"狗狗外出背包", @"狗狗外出背包", @"全自动饮水器", @"玩具飞盘"];
-    
-    self.searchHistories = [@[@"狗食",
-                             @"狗狗洗澡用具",
-                             @"小猫食",
-                             @"狗窝豪华窝",
-                              @"猫狗拉绳",
-                              @"猫毛线玩具"
-                              ] mutableCopy];
+
     self.searchHistoriesCount = 20;
 
+    [self fecthHotResult];
+    
+    
     // 创建搜索框
     UISearchBar *searchBar = [[UISearchBar alloc] init];
     searchBar.placeholder = @"搜索关键词";
@@ -162,11 +134,23 @@
     
 }
 
+- (void)fecthHotResult{
+    [self requestPOST:API_Dogfood_search parameters:@{@"type":[SAApplication sharedApplication].userType} success:^(__kindof SARequest *request, id responseObject) {
+        if ([responseObject[@"result"] count] > 0) {
+            for (NSDictionary *dict in responseObject[@"result"]) {
+                [self.tagsArray addObject:dict[@"name"]];
+            }
+            [self.tableView reloadData];
+        }
+    } failure:NULL];
+}
+
 - (void)tagsViewWithTag{
     CGFloat allLabelWidth = 0;
     CGFloat allLabelHeight = 0;
     int rowHeight = 0;
     
+    [self.tagsView removeAllSubviews];
     for (int i = 0; i < self.searchHistories.count; i++) {
         
         
@@ -196,6 +180,7 @@
         rectangleTagLabel.font = [UIFont systemFontOfSize:14];
         rectangleTagLabel.textColor = [UIColor whiteColor];
         rectangleTagLabel.backgroundColor = [UIColor lightGrayColor];
+        rectangleTagLabel.tag = i;
         rectangleTagLabel.text = self.searchHistories[i];
         rectangleTagLabel.textAlignment = NSTextAlignmentCenter;
         [rectangleTagLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tagDidCLick:)]];
@@ -219,7 +204,7 @@
 
 /** 选中标签 */
 - (void)tagDidCLick:(UITapGestureRecognizer *)gr{
-    [self resultResult];
+    [self resultResult:self.searchHistories[gr.view.tag]];
 }
 
 
@@ -303,8 +288,9 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [self resultResult];
- 
+    NSString * titleStr = self.tagsArray[indexPath.row];
+    [self saveSearchCacheStr:titleStr];
+    [self resultResult:titleStr];
 }
 
 - (CGFloat)getWidthWithTitle:(NSString *)title font:(UIFont *)font {
@@ -342,14 +328,14 @@
 }
 
 /** 进入搜索状态调用此方法 */
-- (void)saveSearchCacheAndRefreshView
+- (void)saveSearchCacheStr:(NSString *)cacheStr
 {
     UISearchBar *searchBar = self.searchBar;
     // 回收键盘
     [searchBar resignFirstResponder];
     // 先移除再刷新
-    [self.searchHistories removeObject:searchBar.text];
-    [self.searchHistories insertObject:searchBar.text atIndex:0];
+    [self.searchHistories removeObject:cacheStr];
+    [self.searchHistories insertObject:cacheStr atIndex:0];
     
     // 移除多余的缓存
     if (self.searchHistories.count > self.searchHistoriesCount) {
@@ -358,7 +344,7 @@
     }
     // 保存搜索信息
     [NSKeyedArchiver archiveRootObject:self.searchHistories toFile:self.searchHistoriesCachePath];
-    
+    [self tagsViewWithTag];
     [self.tableView reloadData];
 }
 
@@ -377,20 +363,15 @@
 
 #pragma mark - UISearchBarDelegate
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-    [self resultResult];
+    [self saveSearchCacheStr:searchBar.text];
+
+    [self resultResult:searchBar.text];
 }
 
-- (void)resultResult{
-    
-//    [self dismissViewControllerAnimated:NO completion:^{
-//        if (self.dismissCall) {
-//            self.dismissCall();
-//        }
-//    };
-
-//    STNavigationController * nav = [[STNavigationController alloc] ini]
-    
+- (void)resultResult:(NSString *)keyword{
     PMSearchResultViewController * vc = [PMSearchResultViewController new];
+    vc.keyword = keyword;
+    vc.isClassic = self.isClassic;
     [self.navigationController pushViewController:vc animated:YES];
 }
 @end

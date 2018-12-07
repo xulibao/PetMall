@@ -9,5 +9,6 @@
 #import "SPInfoListFilterViewController.h"
 
 @interface PMSearchResultViewController : SPInfoListFilterViewController
-
+@property(nonatomic, copy) NSString *keyword;
+@property(nonatomic, assign) BOOL isClassic;
 @end

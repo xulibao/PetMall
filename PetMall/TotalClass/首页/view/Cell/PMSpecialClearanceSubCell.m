@@ -41,7 +41,7 @@
 - (void)setUpUI
 {
     _goodsImageView = [[UIImageView alloc] init];
-    _goodsImageView.contentMode = UIViewContentModeScaleAspectFill;
+    _goodsImageView.contentMode = UIViewContentModeScaleAspectFit;
     [self addSubview:_goodsImageView];
     
     _priceLabel = [[UILabel alloc] init];
@@ -73,15 +73,15 @@
     
     [_goodsImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(self);
-        make.top.mas_equalTo(self);
-        make.width.mas_equalTo(self).multipliedBy(0.7);
-        make.height.mas_equalTo(self.width * 0.7);
+        make.top.mas_equalTo(15);
+        make.width.mas_equalTo(50);
+        make.height.mas_equalTo(70);
     }];
     
     [_stockLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         [make.top.mas_equalTo(_natureLabel.mas_bottom)setOffset:5];
         make.centerX.mas_equalTo(self);
-        make.size.mas_equalTo(CGSizeMake(35, 15));
+        make.size.mas_equalTo(CGSizeMake(40, 15));
     }];
     [_priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         [make.top.mas_equalTo(_stockLabel.mas_bottom)setOffset:9];
@@ -103,7 +103,7 @@
     
     _priceLabel.text = [NSString stringWithFormat:@"¥%@",clearingModel.selling_price];
     
-    _stockLabel.text = [NSString stringWithFormat:@"%@折",clearingModel.goods_pir];
+    _stockLabel.text = [NSString stringWithFormat:@"%.2f折",[clearingModel.goods_pir floatValue]];
     _natureLabel.text = clearingModel.goods_title;
 }
 

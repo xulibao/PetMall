@@ -44,6 +44,7 @@
 #import "PMGroupPurchaserDetailViewController.h"
 #import "PMHomeModel.h"
 #import "PMConfirmOrderViewController.h"
+#import "PMAdorViewController.h"
 /* cell */
 static NSString *const DCGoodsCountDownCellID = @"DCGoodsCountDownCell";
 static NSString *const DCNewWelfareCellID = @"DCNewWelfareCell";
@@ -64,6 +65,7 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
 
 @interface PMHomeViewController ()
 @property(nonatomic, strong) STHomeVCTopView *topView;
+@property(nonatomic, strong) PMHomeSubViewController *vc1;
 
 @end
 
@@ -74,22 +76,36 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
     [self fecthNavTopView];
     self.statusBarView.backgroundColor = [UIColor whiteColor];
     self.navgationBar.navigationBarBg.backgroundColor = [UIColor whiteColor];
-    
     PMHomeListViewController *vc0 = [[PMHomeListViewController alloc] init];
     vc0.title = @"首页";
 
     PMHomeSubViewController *vc1 = [[PMHomeSubViewController alloc] init];
-    vc1.title = @"狗粮";
+    self.vc1 = vc1;
+    if ([[SAApplication sharedApplication].userType intValue] == 0) { // 狗站
+        self.vc1.title = @"狗粮";
+        vc1.zl = @"0";
+    }else{
+        self.vc1.title = @"猫粮";
+        vc1.zl = @"1";
+    }
+ 
     
     PMHomeSubViewController *vc2 = [[PMHomeSubViewController alloc] init];
     vc2.title = @"零食";
+    vc2.zl = @"3";
     
     PMHomeSubViewController *vc3 = [[PMHomeSubViewController alloc] init];
     vc3.title = @"玩具";
+    vc3.zl = @"4";
+    
     PMHomeSubViewController *vc4 = [[PMHomeSubViewController alloc] init];
     vc4.title = @"出行";
+    vc4.zl = @"5";
+    
     PMHomeSubViewController *vc5 = [[PMHomeSubViewController alloc] init];
     vc5.title = @"医疗";
+    vc5.zl = @"6";
+    
     self.viewControllers = @[vc0,
                              vc1,
                              vc2,
@@ -97,14 +113,13 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
                              vc4,
                              vc5
                              ];
-    
-   
-    
 }
 
 #pragma mark - 导航栏处理
 - (void)fecthNavTopView{
    self.topView = [[STHomeVCTopView alloc] initWithFrame:CGRectMake(0, 0, UI_SCREEN_WIDTH, 44)];
+   self.topView.userType = [SAApplication sharedApplication].userType
+    ;
     @weakify(self)
     self.topView.searchClick = ^{
         @strongify(self)
@@ -118,6 +133,22 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
         @strongify(self)
         PMMessageViewController * vc = [PMMessageViewController new];
         [self pushViewController:vc];
+    };
+    _topView.chongwuChanged = ^{
+        @strongify(self)
+        PMAdorViewController * vc = [[PMAdorViewController alloc] init];
+        vc.callBack = ^(PMAdorViewController *viewController) {
+            [viewController.navigationController popViewControllerAnimated:YES];
+            self.topView.userType = [SAApplication sharedApplication].userType;
+            if ([[SAApplication sharedApplication].userType intValue] == 0) { // 狗站
+                self.vc1.title = @"狗粮";
+            }else{
+                self.vc1.title = @"猫粮";
+            }
+            
+            [self.vc1 initFilterView];
+        };
+        [self.navigationController pushViewController:vc animated:YES];
     };
     [self.navgationBar addSubview:_topView];
 
@@ -153,8 +184,7 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
 @implementation PMHomeListViewController
 - (NSMutableArray *)recommendArray{
     if (_recommendArray == nil) {
-        _recommendArray =  @[@"http://gfs8.gomein.net.cn/T1LnWvBsAg1RCvBVdK.jpg",@"http://gfs6.gomein.net.cn/T1CLLvBQbv1RCvBVdK.jpg",@"http://gfs6.gomein.net.cn/T1CCx_B5CT1RCvBVdK.jpg",@"http://gfs7.gomein.net.cn/T17QxvB7b_1RCvBVdK.jpg",@"http://gfs8.gomein.net.cn/T17CWsBmKT1RCvBVdK.jpg",@"http://gfs7.gomein.net.cn/T1nabsBCxT1RCvBVdK.jpg",@"http://gfs7.gomein.net.cn/T199_gBCDT1RCvBVdK.jpg",@"http://gfs7.gomein.net.cn/T1H.VsBKZT1RCvBVdK.jpg",@"http://gfs6.gomein.net.cn/T1JRW_BmLT1RCvBVdK.jpg"];
-        
+        _recommendArray = [NSMutableArray array];
     }
     return _recommendArray;
 }
@@ -167,22 +197,22 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
 }
 - (NSMutableArray *)goodsArray{
     if (_goodsArray == nil) {
-        _goodsArray = @[@"http://gfs5.gomein.net.cn/T1blDgB5CT1RCvBVdK.jpg",@"http://gfs1.gomein.net.cn/T1loYvBCZj1RCvBVdK.jpg",@"http://gfs1.gomein.net.cn/T1w5bvB7K_1RCvBVdK.jpg",@"http://gfs1.gomein.net.cn/T1w5bvB7K_1RCvBVdK.jpg",@"http://gfs6.gomein.net.cn/T1L.VvBCxv1RCvBVdK.jpg",@"http://gfs9.gomein.net.cn/T1joLvBKhT1RCvBVdK.jpg",@"http://gfs5.gomein.net.cn/T1AoVvB7_v1RCvBVdK.jpg"];
+        _goodsArray = [NSMutableArray array];
     }
     return _goodsArray;
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self fecthData];
 }
 
 
 - (void)viewDidLoad{
     [super viewDidLoad];
-//    [self setUpBase];
-    [self setUpGoodsData];
+    _gridItem = [DCGridItem mj_objectArrayWithFilename:@"GoodsGrid.plist"];
+
+    [self configCollectionView];
     [self fecthData];
-    
+
 }
 
 - (void)fecthData{
@@ -192,43 +222,20 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
         [dictM setValue:[SAApplication userID] forKey:@"user_id"];
     }
     [self requestPOST:API_Goods_broadcast parameters:dictM success:^(__kindof SARequest *request, id responseObject) {
+        [self.collectionView.mj_header endRefreshing];
         self.homeModel = [PMHomeModel mj_objectWithKeyValues:responseObject[@"result"]];
-        [self fecthSubViews];
-        
+        [self.collectionView reloadData];
+
     } failure:NULL];
 }
-#pragma mark - 设置头部header
-- (void)fecthSubViews{
-    [self.collectionView reloadData];
-   
-}
-
-#pragma mark - 刷新
-- (void)setUpRecData
-{
-//    WEAKSELF
-//    [DCSpeedy dc_callFeedback]; //触动
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ //手动延迟
-//        [weakSelf.collectionView.mj_header endRefreshing];
-//    });
-}
-
-- (void)setUpGoodsData
-{
-    _gridItem = [DCGridItem mj_objectArrayWithFilename:@"GoodsGrid.plist"];
-    _youLikeItem = [DCRecommendItem mj_objectArrayWithFilename:@"HomeHighGoods.plist"];
-}
-
 #pragma mark - LazyLoad
-- (UICollectionView *)collectionView
-{
-    if (!_collectionView) {
+- (void)configCollectionView{
         UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
         _collectionView = [[UICollectionView alloc]initWithFrame:CGRectZero collectionViewLayout:layout];
         _collectionView.backgroundColor = [UIColor whiteColor];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
-        _collectionView.frame = CGRectMake(0, 0, kMainBoundsWidth, kMainBoundsHeight - 64 -44-44);
+        _collectionView.frame = CGRectMake(0, 0, kMainBoundsWidth, kMainBoundsHeight - 64 -44-44 - 44);
         _collectionView.showsVerticalScrollIndicator = NO;        //注册
         [_collectionView registerClass:[DCGoodsCountDownCell class] forCellWithReuseIdentifier:DCGoodsCountDownCellID];
         [_collectionView registerClass:[DCGoodsHandheldCell class] forCellWithReuseIdentifier:DCGoodsHandheldCellID];
@@ -248,9 +255,11 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
         [_collectionView registerClass:[DCCountDownHeadView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:DCCountDownHeadViewID];
         
         [self.view addSubview:_collectionView];
-         _collectionView.mj_header = [MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(fecthData)];
-    }
-    return _collectionView;
+    _collectionView.mj_header = [SARefreshHeader headerWithRefreshingTarget:self
+                                                                                      refreshingAction:@selector(refreshingAction)];
+}
+- (void)refreshingAction{
+    [self fecthData];
 }
 #pragma mark - <UICollectionViewDataSource>
 - (NSInteger) numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -260,8 +269,18 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     if (section == 0) { //10属性
         return _gridItem.count;
-    }else if (section == 1 || section == 2 ) { //限时秒杀  潮品预售
-        return 1;
+    }else if (section == 1){//限时秒杀
+        if (self.homeModel.secondkill.count > 0) {
+            return 1;
+        }else{
+            return 0;
+        }
+    }else if (section == 2 ) { // 潮品预售
+        if (self.homeModel.presale.count > 0) {
+            return 1;
+        }else{
+            return 0;
+        }
     }else if (3 == section){ // 团购活动
         return [self.homeModel.group count];
     }else if (section == 4) { //特价清仓
@@ -273,6 +292,7 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
 
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"indexPath------%@",indexPath);
     UICollectionViewCell *gridcell = nil;
     if (indexPath.section == 0) {//10
         DCGoodsGridCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DCGoodsGridCellID forIndexPath:indexPath];
@@ -295,6 +315,9 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
     else if (indexPath.section == 2) {//商品预售
         DCNewWelfareCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DCNewWelfareCellID forIndexPath:indexPath];
         cell.dataArray = self.homeModel.presale;
+        cell.cellDidSellect = ^{
+            [self chaopingyushou];
+        };
         gridcell = cell;
     }
     else if (indexPath.section == 3) {//团购活动
@@ -315,7 +338,7 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
         cell.cellDidSelectItem = ^(PMClearingModel *model) {
             DCGoodBaseViewController * vc = [[DCGoodBaseViewController alloc] init];
             vc.goods_id = model.clearingId;
-//            vc.list_id = model.list_id;
+            vc.list_id = model.list_id;
             [self.navigationController pushViewController:vc  animated:YES];
         };
         gridcell = cell;
@@ -341,14 +364,25 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
             headerView.imageGroupArray = self.bannersArray;
             reusableview = headerView;
         }else if (indexPath.section == 1){
-            DCCountDownHeadView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:DCCountDownHeadViewID forIndexPath:indexPath];
+              DCCountDownHeadView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:DCCountDownHeadViewID forIndexPath:indexPath];
+            if (self.homeModel.secondkill.count == 0) {
+                headerView.hidden = YES;
+            }else{
+                headerView.hidden = NO;
+                headerView.model = self.homeModel.timelimit;
+            }
             reusableview = headerView;
-        }else if (indexPath.section == 2){
+        }else if (indexPath.section == 2){// 潮品预售
             DCYouLikeHeadView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:DCYouLikeHeadViewID forIndexPath:indexPath];
             headerView.more = ^{
-                [self moreGoods];
+                [self chaopingyushou];
             };
-            headerView.titleLabel.text = @"潮品预售";
+            if (self.homeModel.presale.count == 0) {
+                headerView.hidden = YES;
+            }else{
+                headerView.hidden = NO;
+                headerView.titleLabel.text = @"潮品预售";
+            }
             reusableview = headerView;
         }else if (indexPath.section == 3){
             DCYouLikeHeadView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:DCYouLikeHeadViewID forIndexPath:indexPath];
@@ -397,12 +431,17 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
         return CGSizeMake(kMainBoundsWidth/5, kMainBoundsWidth/5 + 10);
     }
     if (indexPath.section == 1) {//计时
-        return CGSizeMake(kMainBoundsWidth, 360);
+//        if (self.homeModel.secondkill.count == 0) {
+//            return CGSizeMake(kMainBoundsWidth, 0);
+//        }else{
+            return CGSizeMake(kMainBoundsWidth, 360);
+
+//        }
     }
-    if (indexPath.section == 2) {//团购活动
+    if (indexPath.section == 2) {//
         return CGSizeMake(kMainBoundsWidth, 180 *self.homeModel.presale.count);
     }
-    if (indexPath.section == 3) {//
+    if (indexPath.section == 3) {//团购活动
             return CGSizeMake(kMainBoundsWidth, 155);
     }
     if (indexPath.section == 4) {//推荐组
@@ -431,9 +470,20 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
     
     if (section == 0) {
         return CGSizeMake(kMainBoundsWidth, 149); //图片滚动的宽高
+    }else if (section == 1){
+        if (self.homeModel.secondkill.count == 0) {
+             return CGSizeMake(kMainBoundsWidth, CGFLOAT_MIN);
+        }else{
+            return CGSizeMake(kMainBoundsWidth, 44);  //推荐适合的宽高
+        }
+    }else if(section == 2){
+        if (self.homeModel.presale.count == 0) {
+            return CGSizeMake(kMainBoundsWidth, CGFLOAT_MIN);
+        }else{
+            return CGSizeMake(kMainBoundsWidth, 44);  //推荐适合的宽高
+        }
     }else{
-        return CGSizeMake(kMainBoundsWidth, 44);  //推荐适合的宽高
-
+          return CGSizeMake(kMainBoundsWidth, 44);  //推荐适合的宽高
     }
 }
 
@@ -441,8 +491,12 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
     if (section == 0) {
         return CGSizeMake(kMainBoundsWidth, 85);  //Top头条的宽高
-    }else{
-        return CGSizeMake(kMainBoundsWidth, 10);  //Top头条的宽高
+    }else if(section == 2){
+        if (self.homeModel.presale.count == 0) {
+            return CGSizeZero;
+        }else{
+            return CGSizeMake(kMainBoundsWidth, 10);  //Top头条的宽高
+        }        
     }
     return CGSizeZero;
 }
@@ -450,11 +504,11 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
 #pragma mark - <UICollectionViewDelegateFlowLayout>
 #pragma mark - X间距
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-    return  0;
+    return  CGFLOAT_MIN;
 }
 #pragma mark - Y间距
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    return 0;
+    return CGFLOAT_MIN;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -580,6 +634,10 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
 - (void)cancelBtnClick{
     [self.coverBtn removeFromSuperview];
     [self.youhuiView removeFromSuperview];
+}
+- (void)chaopingyushou{
+    PMGoodSaleViewController * vc = [[PMGoodSaleViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)moreGoods{

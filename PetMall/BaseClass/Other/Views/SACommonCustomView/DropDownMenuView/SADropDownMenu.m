@@ -264,6 +264,7 @@
     }
     NSInteger tapIndex = selectBtn.tag;
     self.currentSelectedMenudIndex = tapIndex;
+    self.isBtnSelected = selectBtn.selected;
     if ([self.delegate respondsToSelector:@selector(menu:tabIndex:)]) {
         [self.delegate menu:self tabIndex:tapIndex];
     }else{
@@ -654,5 +655,6 @@
 //        //TODO: delegate is nil
 //    }
 }
+
 
 @end

@@ -27,12 +27,7 @@
         [self addSubview:_messageBtn];
         //
         _cityBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//        [_cityBtn addTarget:self action:@selector(cityBtnClick) forControlEvents:UIControlEventTouchUpInside];
-        if ([[SAApplication sharedApplication].userType integerValue] == 0) {
-            [_cityBtn setTitle:@"狗站" forState:UIControlStateNormal];
-        }else{
-            [_cityBtn setTitle:@"猫站" forState:UIControlStateNormal];
-        }
+        [_cityBtn addTarget:self action:@selector(cityBtnClick) forControlEvents:UIControlEventTouchUpInside];
         [_cityBtn setTitleColor:[UIColor colorWithHexStr:@"#333333"] forState:UIControlStateNormal];
         _cityBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
         _cityBtn.titleLabel.font = [UIFont systemFontOfSize:15];
@@ -87,6 +82,15 @@
     _messageBtn.messageCount = messageCount;
 }
 
+- (void)setUserType:(NSString *)userType{
+    _userType = userType;
+    if ([userType integerValue] == 0) {
+        [_cityBtn setTitle:@"狗站" forState:UIControlStateNormal];
+    }else{
+        [_cityBtn setTitle:@"猫站" forState:UIControlStateNormal];
+    }
+
+}
 
 // 点击搜索按钮
 - (void)searchButtonClick{
@@ -101,6 +105,11 @@
     }
 }
 
+- (void)cityBtnClick{
+    if (self.chongwuChanged) {
+        self.chongwuChanged();
+    }
+}
 @end
 
 
