@@ -141,7 +141,7 @@
     self.selectBtn.selected = !self.selectBtn.selected;
     self.item.isSelect = self.selectBtn.selected;
     if (self.calculateCallBack) {
-        self.calculateCallBack(self.cartCountLabel.text);
+        self.calculateCallBack(self.cartCountLabel.text,nil);
     }
 }
 
@@ -151,7 +151,7 @@
     self.cartCountLabel.text = [NSString stringWithFormat:@"%d", num];
     if (self.calculateCallBack) {
         self.item.goods_shul = self.cartCountLabel.text;
-        self.calculateCallBack(self.cartCountLabel.text);
+        self.calculateCallBack(self.cartCountLabel.text,@"1");
     }
 }
 
@@ -165,7 +165,7 @@
     }
     if (self.calculateCallBack) {
         self.item.goods_shul = self.cartCountLabel.text;
-        self.calculateCallBack(self.cartCountLabel.text);
+        self.calculateCallBack(self.cartCountLabel.text,@"0");
     }
 }
 

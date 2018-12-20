@@ -76,35 +76,65 @@
             make.right.mas_equalTo(goodView).mas_offset(-5);
             make.size.mas_equalTo(CGSizeMake(50, 20));
         }];
+        _bottomView.tags = data.tagsText;
+
         switch ([self.item.status integerValue]) {
-            case 1:
+            case 1:{
+                @weakify(self)
+                _bottomView.tagBtnClick = ^(NSInteger tag) {
+                    @strongify(self)
+                    if (tag == 0) { //取消订单
+                        if ([self.cellDelegate respondsToSelector:@selector(PMOrderListCellClickCancle:)]) {
+                            [self.cellDelegate PMOrderListCellClickCancle:self];
+                        }
+                    }else{ //付款
+                        if ([self.cellDelegate respondsToSelector:@selector(PMOrderListCellClickPay:)]) {
+                            [self.cellDelegate PMOrderListCellClickPay:self];
+                        }
+                    }
+                    
+                };
+            }
                 break;
-            case 2:
-                goodsBtn.hidden = NO;
+            case 2:{
+                @weakify(self)
+                _bottomView.tagBtnClick = ^(NSInteger tag) {
+                    @strongify(self)
+                    if (tag == 0) { //取消订单
+                        if ([self.cellDelegate respondsToSelector:@selector(PMOrderListCellClickCancle:)]) {
+                            [self.cellDelegate PMOrderListCellClickCancle:self];
+                        }
+                    }
+                    
+                };
+            }
                 break;
-                
+            case 4:{
+                @weakify(self)
+                _bottomView.tagBtnClick = ^(NSInteger tag) {
+                    @strongify(self)
+                    if (tag == 0) { //确认收货
+                        if ([self.cellDelegate respondsToSelector:@selector(PMOrderListCellClickConfirm:)]) {
+                            [self.cellDelegate PMOrderListCellClickConfirm:self];
+                        }
+                    }else{ //评论
+                        if ([self.cellDelegate respondsToSelector:@selector(PMOrderListCellClickComment:)]) {
+                            [self.cellDelegate PMOrderListCellClickComment:self];
+                        }
+                    }
+                    
+                };
+            }
+                break;
                 
             default:
                 break;
         }
         
+        
     }
     
-    _bottomView.tags = data.tagsText;
-    @weakify(self)
-    _bottomView.tagBtnClick = ^(NSInteger tag) {
-        @strongify(self)
-        if (tag == 0) { //取消订单
-            if ([self.cellDelegate respondsToSelector:@selector(PMOrderListCellClickCancle:)]) {
-                [self.cellDelegate PMOrderListCellClickCancle:self];
-            }
-        }else{ //付款
-            if ([self.cellDelegate respondsToSelector:@selector(PMOrderListCellClickPay:)]) {
-                [self.cellDelegate PMOrderListCellClickPay:self];
-            }
-        }
-      
-    };
+    
     _bottomView.label0.text = [NSString stringWithFormat:@"共%lu件商品 合计：¥%@",(unsigned long)data.order_list.count,@(totalPrice)];
     [_bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.mas_equalTo(self.contentView);

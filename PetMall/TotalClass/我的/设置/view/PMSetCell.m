@@ -53,6 +53,7 @@
     [self.contentView addSubview:lineView];
     
     [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.userTitleLabel.mas_bottom);
         make.height.mas_equalTo(10);
         make.left.right.bottom.mas_equalTo(self.contentView);
     }];

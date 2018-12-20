@@ -79,6 +79,10 @@
     [gouBtn addTarget:self action:@selector(adorSelect:) forControlEvents:UIControlEventTouchUpInside];
 }
 - (void)adorSelect:(UIButton *)btn{
+    if ([SAApplication userID] == nil) {
+        [self showWaring:@"请先登录"];
+        return;
+    }
     NSString * zt;
     if (btn.tag == 1) { //mao
         zt = @"1";

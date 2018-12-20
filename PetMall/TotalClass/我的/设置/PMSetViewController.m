@@ -69,6 +69,10 @@
    
     recommendItem.title = @"修改密码";
     recommendItem.itemSelect = ^{
+        if ([SAApplication userID] == nil) {
+            [self showWaring:@"请先登录"];
+            return;
+        }
         SPForgotPasswordViewController * vc = [[SPForgotPasswordViewController alloc] init];
         [self pushViewController:vc];
     };
@@ -77,6 +81,10 @@
     recommendItem = [PMSetItem new];
     recommendItem.title = @"联系我们";
     recommendItem.itemSelect = ^{
+        if ([SAApplication userID] == nil) {
+            [self showWaring:@"请先登录"];
+            return;
+        }
         PMContactUsViewController * vc = [PMContactUsViewController new];
         [self pushViewController:vc];
     };

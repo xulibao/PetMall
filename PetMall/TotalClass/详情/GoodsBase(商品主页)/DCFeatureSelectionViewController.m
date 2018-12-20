@@ -115,14 +115,14 @@ static NSString *const DCFeatureChoseTopCellID = @"DCFeatureChoseTopCell";
     self.collectionView.frame = CGRectMake(0, self.tableView.dc_bottom ,ScreenW , NowScreenH - 200);
 
     //默认选择第一个属性
-    for (PMGoodDetailChoiceModel * choiceModel in self.featureAttr) {
-        for (int i = 0; i < choiceModel.specifications.count; i++) {
-            PMGoodDetailSpecificationModel * model = choiceModel.specifications[i];
-            if (0 == i) {
-                model.isSelect = YES;
-            }
-        }
-    }
+//    for (PMGoodDetailChoiceModel * choiceModel in self.featureAttr) {
+//        for (int i = 0; i < choiceModel.specifications.count; i++) {
+//            PMGoodDetailSpecificationModel * model = choiceModel.specifications[i];
+//            if (0 == i) {
+//                model.isSelect = YES;
+//            }
+//        }
+//    }
     [self configSelectPrice];
     [self.tableView reloadData];
     [self.collectionView reloadData];

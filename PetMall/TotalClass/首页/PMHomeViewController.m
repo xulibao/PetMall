@@ -45,6 +45,7 @@
 #import "PMHomeModel.h"
 #import "PMConfirmOrderViewController.h"
 #import "PMAdorViewController.h"
+#import "SAAlertController.h"
 /* cell */
 static NSString *const DCGoodsCountDownCellID = @"DCGoodsCountDownCell";
 static NSString *const DCNewWelfareCellID = @"DCNewWelfareCell";
@@ -105,6 +106,12 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
     PMHomeSubViewController *vc5 = [[PMHomeSubViewController alloc] init];
     vc5.title = @"医疗";
     vc5.zl = @"6";
+//    NSMutableArray * array = [NSMutableArray array];
+//    for (int i = 0; i < 5; i++) {
+//        SAInfoListViewController * vc = [SAInfoListViewController new];
+//        vc.title = [@(i) stringValue];
+//        [array addObject:vc];
+//    }
     
     self.viewControllers = @[vc0,
                              vc1,
@@ -113,6 +120,7 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
                              vc4,
                              vc5
                              ];
+//    self.viewControllers = array;
 }
 
 #pragma mark - 导航栏处理
@@ -386,14 +394,26 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
             reusableview = headerView;
         }else if (indexPath.section == 3){
             DCYouLikeHeadView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:DCYouLikeHeadViewID forIndexPath:indexPath];
-            headerView.titleLabel.text = @"团购活动";
+            
+            if (self.homeModel.group.count == 0) {
+                headerView.hidden = YES;
+            }else{
+                headerView.hidden = NO;
+                headerView.titleLabel.text = @"团购活动";
+            }
             headerView.more = ^{
                 [self tugouGoods];
             };
             reusableview = headerView;
         }else if (indexPath.section == 4){
             DCYouLikeHeadView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:DCYouLikeHeadViewID forIndexPath:indexPath];
-            headerView.titleLabel.text = @"特价清仓";
+            if (self.homeModel.clearing.count == 0) {
+                headerView.hidden = YES;
+            }else{
+                headerView.hidden = NO;
+                headerView.titleLabel.text = @"特价清仓";
+            }
+
             headerView.more = ^{
                 [self tejiaQingcang];
             };
@@ -514,6 +534,21 @@ static NSString *const DCLineFootViewID = @"DCLineFootView";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {//10
         if (indexPath.row == 0) {//限时秒杀
+            if (self.homeModel.secondkill.count == 0) {
+                SAAlertController *alertController = [SAAlertController alertControllerWithTitle:nil
+                                                                                         message:@"暂无秒杀敬请期待"
+                                                                                  preferredStyle:SAAlertControllerStyleAlert];
+                SAAlertAction *action = [SAAlertAction actionWithTitle:@"确定" style:SAAlertActionStyleDefault handler:^(SAAlertAction *action) {
+                    
+                }];
+                [alertController addAction:action];
+                action = [SAAlertAction actionWithTitle:@"取消" style:SAAlertActionStyleCancel handler:^(SAAlertAction *action) {
+                }];
+//                [alertController addAction:action];
+                
+                [alertController showWithAnimated:YES];
+                return;
+            }
             PMTimeLimitViewController * vc = [[PMTimeLimitViewController alloc] init];
             [self pushViewController:vc];
         }else if (1 == indexPath.row){//潮品预

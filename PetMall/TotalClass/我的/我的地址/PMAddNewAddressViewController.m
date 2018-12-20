@@ -152,6 +152,7 @@
 
 #pragma mark *** 弹出选择地区视图 ***
 - (void)chooseAddress {
+    [self.view endEditing:YES];
     @weakify(self)
     [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
         @strongify(self);

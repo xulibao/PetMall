@@ -1,15 +1,16 @@
 //
-//  PMCommonGoodsCell.m
+//  PMTimeLimitCell.m
 //  PetMall
 //
-//  Created by 徐礼宝 on 2018/9/15.
-//  Copyright © 2018年 ios@xulibao. All rights reserved.
+//  Created by 徐礼宝 on 2018/12/18.
+//  Copyright © 2018 ios@xulibao. All rights reserved.
 //
 
-#import "PMGoodsGroupCell.h"
+#import "PMTimeLimitCell.h"
+
 #import <UIImageView+WebCache.h>
 
-@interface PMGoodsGroupCell ()
+@interface PMTimeLimitCell ()
 /* 图片 */
 @property (strong , nonatomic)UIImageView *goodsImageView;
 /* 标题 */
@@ -27,7 +28,7 @@
 @property (strong , nonatomic)UIButton *rightButton;
 
 @end
-@implementation PMGoodsGroupCell
+@implementation PMTimeLimitCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
@@ -39,19 +40,19 @@
 
 #pragma mark - STCommonTableViewItemConfigProtocol
 
-- (void)tableView:(UITableView *)tableView configViewWithData:(PMGroupModel *)data AtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView configViewWithData:(PMTimeLimitItem *)data AtIndexPath:(NSIndexPath *)indexPath {
     [super tableView:tableView configViewWithData:data AtIndexPath:indexPath];
     self.item = data;
     [_goodsImageView sd_setImageWithURL:[NSURL URLWithString:data.goods_logo]];
     _priceLabel.text = [NSString stringWithFormat:@"¥%@",data.selling_price];
     //中划线
     NSDictionary *attribtDic = @{NSStrikethroughStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle]};
-    NSMutableAttributedString *attribtStr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"¥%@",data.market_price] attributes:attribtDic];
+    NSMutableAttributedString *attribtStr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"市场价：¥%@",data.market_price] attributes:attribtDic];
     _originLabel.attributedText = attribtStr;
-    _peopleCountLabel.text = [NSString stringWithFormat:@"已%@人参团",data.sum ? data.sum : @"0"];
+    //    _peopleCountLabel.text = [NSString stringWithFormat:@"已%@人参团",data.people_count];
     _goodsLabel.text = data.goods_title;
     
-  
+    
 }
 - (void)initViews{
     self.contentView.backgroundColor = [UIColor whiteColor];
@@ -83,7 +84,7 @@
     _rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _rightButton.titleLabel.font = [UIFont systemFontOfSize:13];
     [_rightButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_rightButton setTitle:@"立即参团" forState:UIControlStateNormal];
+    [_rightButton setTitle:@"立即抢购" forState:UIControlStateNormal];
     _rightButton.backgroundColor = [UIColor colorWithHexStr:@"#FF3945"];
     _rightButton.layer.cornerRadius = 15;
     _rightButton.clipsToBounds = YES;
@@ -101,7 +102,7 @@
         make.bottom.mas_offset(-24);
         make.left.mas_equalTo(50);
         make.size.mas_equalTo(CGSizeMake(54 , 93));
-
+        
     }];
     
     [_goodsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -116,8 +117,8 @@
     }];
     
     [_originLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(_priceLabel.mas_right).mas_offset(10);
-        make.centerY.mas_equalTo(_priceLabel);
+        make.left.mas_equalTo(_priceLabel);
+        make.top.mas_equalTo(_priceLabel.mas_bottom).mas_offset(15);
     }];
     
     [_peopleCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -132,8 +133,9 @@
 }
 
 - (void)rightButtonClick{
-    if ([self.cellDelegate respondsToSelector:@selector(cellDidAddGroup:)]) {
-        [self.cellDelegate cellDidAddGroup:self.item];
+    
+    if ([self.cellDelegate respondsToSelector:@selector(PMTimeLimitCellDidClick:)]) {
+        [self.cellDelegate PMTimeLimitCellDidClick:self];
     }
 }
 @end

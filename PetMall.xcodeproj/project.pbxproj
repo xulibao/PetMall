@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A28715621C8885500192DE1 /* PMTimeLimitItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A28715521C8885500192DE1 /* PMTimeLimitItem.m */; };
+		5A28715A21C8886E00192DE1 /* PMTimeLimitCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A28715921C8886E00192DE1 /* PMTimeLimitCell.m */; };
+		5A28715F21CA460400192DE1 /* PMSpeacilePriceItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A28715E21CA460400192DE1 /* PMSpeacilePriceItem.m */; };
+		5A28716221CA461000192DE1 /* PMSpeacilePriceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A28716121CA461000192DE1 /* PMSpeacilePriceCell.m */; };
 		5A2C1E05218C2AA1008FD62C /* PMGoodDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2C1E04218C2AA1008FD62C /* PMGoodDetailModel.m */; };
 		5A2C1E0D218DB6A8008FD62C /* STWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2C1E08218DB6A8008FD62C /* STWebViewController.m */; };
 		5A2C1E0E218DB6A8008FD62C /* UIViewController+STWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2C1E0A218DB6A8008FD62C /* UIViewController+STWebViewController.m */; };
@@ -566,6 +570,14 @@
 		2152ED3BF8DBA0E2D69B0DB6 /* libPods-PetMallUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PetMallUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AB288C1C83F291F8A9D0676 /* Pods-PetMall.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PetMall.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PetMall/Pods-PetMall.debug.xcconfig"; sourceTree = "<group>"; };
 		530ABD7CB8455FCD53A6840E /* Pods-PetMallUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PetMallUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PetMallUITests/Pods-PetMallUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		5A28715421C8885500192DE1 /* PMTimeLimitItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMTimeLimitItem.h; sourceTree = "<group>"; };
+		5A28715521C8885500192DE1 /* PMTimeLimitItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMTimeLimitItem.m; sourceTree = "<group>"; };
+		5A28715821C8886E00192DE1 /* PMTimeLimitCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMTimeLimitCell.h; sourceTree = "<group>"; };
+		5A28715921C8886E00192DE1 /* PMTimeLimitCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMTimeLimitCell.m; sourceTree = "<group>"; };
+		5A28715D21CA460400192DE1 /* PMSpeacilePriceItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMSpeacilePriceItem.h; sourceTree = "<group>"; };
+		5A28715E21CA460400192DE1 /* PMSpeacilePriceItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMSpeacilePriceItem.m; sourceTree = "<group>"; };
+		5A28716021CA461000192DE1 /* PMSpeacilePriceCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMSpeacilePriceCell.h; sourceTree = "<group>"; };
+		5A28716121CA461000192DE1 /* PMSpeacilePriceCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMSpeacilePriceCell.m; sourceTree = "<group>"; };
 		5A2C1E03218C2AA1008FD62C /* PMGoodDetailModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMGoodDetailModel.h; sourceTree = "<group>"; };
 		5A2C1E04218C2AA1008FD62C /* PMGoodDetailModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMGoodDetailModel.m; sourceTree = "<group>"; };
 		5A2C1E07218DB6A8008FD62C /* UIViewController+STWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+STWebViewController.h"; sourceTree = "<group>"; };
@@ -1694,6 +1706,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5A28715721C8885A00192DE1 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				5A28715821C8886E00192DE1 /* PMTimeLimitCell.h */,
+				5A28715921C8886E00192DE1 /* PMTimeLimitCell.m */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		5A28715B21CA45D800192DE1 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				5A28715D21CA460400192DE1 /* PMSpeacilePriceItem.h */,
+				5A28715E21CA460400192DE1 /* PMSpeacilePriceItem.m */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		5A28715C21CA45DD00192DE1 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				5A28716021CA461000192DE1 /* PMSpeacilePriceCell.h */,
+				5A28716121CA461000192DE1 /* PMSpeacilePriceCell.m */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
 		5A2C1E06218DB6A8008FD62C /* webController */ = {
 			isa = PBXGroup;
 			children = (
@@ -3423,6 +3462,8 @@
 		5AA5717421509C98009015D9 /* 特价清仓 */ = {
 			isa = PBXGroup;
 			children = (
+				5A28715C21CA45DD00192DE1 /* view */,
+				5A28715B21CA45D800192DE1 /* model */,
 				5AA5717521509CE9009015D9 /* PMSpeacilePriceViewController.h */,
 				5AA5717621509CEA009015D9 /* PMSpeacilePriceViewController.m */,
 			);
@@ -4285,8 +4326,11 @@
 		5AF24C8E214DF8DC00EDDD27 /* 限时秒杀 */ = {
 			isa = PBXGroup;
 			children = (
+				5A28715721C8885A00192DE1 /* view */,
 				5AF24C8F214DF8F500EDDD27 /* PMTimeLimitViewController.h */,
 				5AF24C90214DF8F500EDDD27 /* PMTimeLimitViewController.m */,
+				5A28715421C8885500192DE1 /* PMTimeLimitItem.h */,
+				5A28715521C8885500192DE1 /* PMTimeLimitItem.m */,
 			);
 			path = "限时秒杀";
 			sourceTree = "<group>";
@@ -4720,6 +4764,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A4AF59E2134F9FA00F8190B /* SABaseInputValidTextField.m in Sources */,
+				5A28715F21CA460400192DE1 /* PMSpeacilePriceItem.m in Sources */,
 				5A54CB572143C73800971D83 /* UINavigationController+XWTransition.m in Sources */,
 				5A4AF6562134FA0F00F8190B /* GADebugUserDefaultView.m in Sources */,
 				5A4AF5A72134F9FA00F8190B /* SAButton.m in Sources */,
@@ -4874,6 +4919,7 @@
 				5A4AF6B62134FDD400F8190B /* UIScrollView+GHExtension.m in Sources */,
 				5A4AF6542134FA0F00F8190B /* GADebugCrash.m in Sources */,
 				5A4AF59B2134F9FA00F8190B /* SAEventHandleLabel.m in Sources */,
+				5A28716221CA461000192DE1 /* PMSpeacilePriceCell.m in Sources */,
 				5AA570EF214FC566009015D9 /* PMSetCell.m in Sources */,
 				5A4AF64F2134FA0F00F8190B /* KMCGeigerCounter.m in Sources */,
 				5AA61123219D7DFE00CC9F75 /* openssl_wrapper.m in Sources */,
@@ -5062,6 +5108,7 @@
 				5A4AF6B92134FDD400F8190B /* UIImageView+GHExtension.m in Sources */,
 				5AA61124219D7DFE00CC9F75 /* APRSASigner.m in Sources */,
 				5A54CAEC2143C5F500971D83 /* DCCommentsItem.m in Sources */,
+				5A28715A21C8886E00192DE1 /* PMTimeLimitCell.m in Sources */,
 				5A4AF5952134F9FA00F8190B /* SAMarqueeLabel.m in Sources */,
 				5AC95CD221352E9D00BDA95D /* PMMineViewController.m in Sources */,
 				5A54CADD2143C5F500971D83 /* DCFooterReusableView.m in Sources */,
@@ -5083,6 +5130,7 @@
 				5A4AF5A42134F9FA00F8190B /* SADropDownCollectionModel.m in Sources */,
 				5AEA6C6D214D121100A2E6E8 /* PMAddNewAddressViewController.m in Sources */,
 				5AEA6BA12148BB7D00A2E6E8 /* PMConfirmPayViewController.m in Sources */,
+				5A28715621C8885500192DE1 /* PMTimeLimitItem.m in Sources */,
 				5AA5716F21509864009015D9 /* PMNewUserViewController.m in Sources */,
 				5A54CB6D2143C73800971D83 /* XWCoolAnimator+XWMiddlePageFlip.m in Sources */,
 				5A4AF5752134F9FA00F8190B /* STTabBtnModel.m in Sources */,
@@ -5421,7 +5469,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "bca4c152-354b-4b69-8394-36348467ee36";
 				PROVISIONING_PROFILE_SPECIFIER = chongwuDev;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -5534,7 +5582,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "bca4c152-354b-4b69-8394-36348467ee36";
 				PROVISIONING_PROFILE_SPECIFIER = chongwuDev;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

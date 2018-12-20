@@ -229,6 +229,10 @@
 
 //忘记密码
 - (void)fogotPasswordBtnClick{
+    if ([SAApplication userID] == nil) {
+        [self showWaring:@"请先登录"];
+        return;
+    }
     SPForgotPasswordViewController * vc = [SPForgotPasswordViewController new];
     [self pushViewController:vc];
 }

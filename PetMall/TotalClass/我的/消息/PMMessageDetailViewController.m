@@ -33,6 +33,10 @@
 #pragma mark - Request
 
 - (void)fetchData {
+    if ([SAApplication userID] == nil) {
+        [self showWaring:@"请先登录"];
+        return;
+    }
     if ([self.type integerValue] == 1) {
         self.title = @"系统通知";
         [self requestMethod:GARequestMethodPOST URLString:API_user_service parameters:@{@"user_id":[SAApplication userID]} resKeyPath:@"result" resArrayClass:[PMMessageDetailItem class] retry:YES success:^(__kindof SARequest *request, id responseObject) {

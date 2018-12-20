@@ -64,9 +64,9 @@
     _leftBarButton = [UIButton buttonWithType:UIButtonTypeSystem];
     // 项目都是ios7以上版本，故写死
     [_leftBarButton setImage:[UIImage imageNamed:@"nav_Back_normal"] forState:UIControlStateNormal];
-//    [_leftBarButton setImage:[UIImage imageNamed:@"nav_Back_normal"] forState:UIControlStateHighlighted];
+    //    [_leftBarButton setImage:[UIImage imageNamed:@"nav_Back_normal"] forState:UIControlStateHighlighted];
     [_leftBarButton setTintColor:[UIColor blackColor]];
-//    _leftBarButton.adjustsImageWhenHighlighted =NO;
+    //    _leftBarButton.adjustsImageWhenHighlighted =NO;
     [self addSubview:_leftBarButton];
 }
 

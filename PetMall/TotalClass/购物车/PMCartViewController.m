@@ -84,7 +84,9 @@ static NSString *const PMCartCellID = @"PMCartCell";
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self fecthData];
+    if ([SAApplication userID]) {
+        [self fecthData];
+    }
 }
 
 -  (void)fecthData{
@@ -243,8 +245,14 @@ static NSString *const PMCartCellID = @"PMCartCell";
     
     PMCartItem  * item = self.dataArray[indexPath.section];
     DCRecommendItem * subItem = item.order_list[indexPath.row];
-    cell.calculateCallBack = ^(NSString *goodsCount) {
+    cell.calculateCallBack = ^(NSString *goodsCount,NSString *zt) {
         [self calculateTotal];
+        if (zt) {
+            [self requestPOST:API_Dogfood_shopping parameters:@{@"cart_id":subItem.cart_id,@"zt":zt} success:^(__kindof SARequest *request, id responseObject) {
+                [self fecthData];
+            } failure:NULL];
+        }
+ 
     };
     cell.item = subItem;
     return cell;
@@ -363,7 +371,7 @@ static NSString *const PMCartCellID = @"PMCartCell";
         for (DCRecommendItem *recommendItem in cartItem.order_list) {
             if (recommendItem.isSelect) {
                 isGoodsSelect = YES;
-                [goodsIds addObject:recommendItem.goodId];
+                [goodsIds addObject:recommendItem.cart_id];
             }
         }
     }

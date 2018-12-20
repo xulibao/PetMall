@@ -13,5 +13,6 @@
 
 @end
 @interface PMTimeLimitListViewController : SAInfoListViewController
-//@property(nonatomic, assign) PMMyCouponType type;
+@property(nonatomic, copy) NSString *timeLimitNavId;
+@property(nonatomic, strong) NSMutableArray *dataArray;
 @end

@@ -115,10 +115,7 @@
     self.tagsView.mj_x = 10;
     self.tagsView.mj_y = titleLabel.mj_y+30;
     self.tagsView.mj_w = kScreenWidth-20;
-    
     [self.headerView addSubview:self.tagsView];
-    
-    
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;

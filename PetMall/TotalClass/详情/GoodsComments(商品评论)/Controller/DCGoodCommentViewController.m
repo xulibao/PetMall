@@ -77,6 +77,11 @@ static NSString *const DCCommentsCntCellID = @"DCCommentsCntCell";
 }
 
 - (void)fecthData{
+    if ([SAApplication userID] == nil) {
+        [self showWaring:@"请先登录"];
+        return;
+    }   
+
     [self requestPOST:API_Dogfood_evaluation parameters:@{@"pagenum":@"1",@"user_id":[SAApplication userID],@"pagesize":@"10",@"user_goods":self.user_goods} success:^(__kindof SARequest *request, id responseObject) {
         self.headView.tipLabel.text =  [NSString stringWithFormat:@"%@%%好评",responseObject[@"result"][@"shul"][@"package_ok"]];
         self.headView.percentageLabel.text = [NSString stringWithFormat:@"(%@)",responseObject[@"result"][@"shul"][@"package_pl"]];

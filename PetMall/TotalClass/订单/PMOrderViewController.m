@@ -120,6 +120,8 @@
 
 - (void)didSelectCellWithItem:(PMOrderItem *)item {
     PMOrderDetailViewController *vc = [[PMOrderDetailViewController alloc] init];
+    vc.pay_price = item.pay_price;
+    vc.status = item.status;
     vc.order_no = item.order_no;
     [self pushViewController:vc];
 }
@@ -142,6 +144,18 @@
     vc.price = [NSString stringWithFormat:@"%@",cell.item.pay_price];
     [self.navigationController pushViewController:vc animated:YES];
 }
+//确认收货
+- (void)PMOrderListCellClickConfirm:(PMOrderListCell *)cell{
+    [self requestPOST:API_user_receip parameters:@{@"order_no":cell.item.order_no,@"user_id":[SAApplication userID]} success:^(__kindof SARequest *request, id responseObject) {
+        [self fetchData];
+    } failure:NULL];
+}
+//评论
+- (void)PMOrderListCellClickComment:(PMOrderListCell *)cell{
+    PMSendCommentViewController * vc =[PMSendCommentViewController new];
+    [self pushViewController:vc];
+}
+
 
 
 @end

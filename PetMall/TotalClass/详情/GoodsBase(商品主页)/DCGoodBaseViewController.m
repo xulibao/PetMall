@@ -638,6 +638,10 @@ static NSArray *lastSeleArray_;
     }
 }
 - (void)bottomLeftButtonClick:(UIButton *)button{
+    if ([SAApplication userID] == nil) {
+        [self showWaring:@"请先登录"];
+        return;
+    }
     if (button.tag == 0) {//收藏
         if (button.selected) {
             [self requestPOST:API_user_collectiondel parameters:@{@"user_id":[SAApplication userID],@"goods_id":self.goods_id} success:^(__kindof SARequest *request, id responseObject) {
@@ -659,7 +663,7 @@ static NSArray *lastSeleArray_;
         return;
     }
     if (2 == button.tag) { // 加入购物车
-        [self requestPOST:API_Dogfood_cart parameters:@{@"goods_id":self.detailModel.goodId,@"user_id":[SAApplication userID],@"type":@"1",@"list_id":self.list_id,@"shul":@"1"} success:^(__kindof SARequest *request, id responseObject) {
+        [self requestPOST:API_Dogfood_cart parameters:@{@"goods_id":self.detailModel.goodId,@"user_id":[SAApplication userID],@"type":@"1",@"list_id":self.detailModel.list_id,@"shul":@"1"} success:^(__kindof SARequest *request, id responseObject) {
             [self showSuccess:@"加入购物车成功！"];
             
         } failure:NULL];

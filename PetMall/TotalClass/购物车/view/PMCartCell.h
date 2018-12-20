@@ -12,5 +12,5 @@
 
 @property(nonatomic, strong) DCRecommendItem *item;
 
-@property(nonatomic, copy) void (^calculateCallBack)(NSString * goodsCount);
+@property(nonatomic, copy) void (^calculateCallBack)(NSString * goodsCount,NSString *zt);
 @end

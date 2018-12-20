@@ -255,7 +255,7 @@
 - (void)showTableEmptyView {
     if (0 == [self.viewModel numberOfRowsInSection:0]) {
         NSString *tableEmptyText = [self tableEmptyText];
-        [self showEmptyViewWithImage:[UIImage imageNamed:@"empty_icon"]
+        [self showEmptyViewWithImage:[UIImage imageNamed:@"common_nodata"]
                                 text:tableEmptyText
                           detailText:nil
                          buttonTitle:nil

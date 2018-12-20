@@ -22,8 +22,6 @@
     [self fetchData];
 }
 
-
-
 #pragma mark - Request
 
 - (void)fetchData {

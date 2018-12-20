@@ -47,10 +47,16 @@
 //    }
     _bottomView.backgroundColor = kColorEEEEEE;
 //    _bottomView.tags = data.tagsText;
-    NSString * bottomStr = [NSString stringWithFormat:@"实付款：¥%@",data.pay_price];
+    NSString * bottomStr = [NSString stringWithFormat:@"运费：+%@\n实付款：¥%.2f",data.postage,[data.pay_price floatValue] + [data.postage floatValue]];
     NSMutableAttributedString * bottomAttStr = [[NSMutableAttributedString alloc] initWithString:bottomStr];
-    [bottomAttStr addAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexStr:@"#FF3945"]} range:[bottomStr rangeOfString:@"¥158"]];
-                                  self.bottomLabel.attributedText = bottomAttStr;
+    [bottomAttStr addAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexStr:@"#FF3945"]} range:[bottomStr rangeOfString:[NSString stringWithFormat:@"¥%@",data.pay_price]]];
+    
+    NSMutableParagraphStyle * paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle setLineSpacing:10];
+    
+    [bottomAttStr addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [bottomStr length])];
+    
+    self.bottomLabel.attributedText = bottomAttStr;
     _bottomView.label0.attributedText = nil;
     
     [self.cartImageView sd_setImageWithURL:[NSURL URLWithString:data.goods_logo] placeholderImage:nil];
@@ -119,9 +125,10 @@
     
     UILabel *bottomLabel = [[UILabel alloc] init];
     self.bottomLabel = bottomLabel;
+    bottomLabel.numberOfLines = 0;
     bottomLabel.font = [UIFont systemFontOfSize:12];
     bottomLabel.textColor = [UIColor colorWithHexStr:@"#999999"];
-    bottomLabel.textAlignment = NSTextAlignmentCenter;
+    bottomLabel.textAlignment = NSTextAlignmentRight;
     [self.contentView addSubview:bottomLabel];
     
     

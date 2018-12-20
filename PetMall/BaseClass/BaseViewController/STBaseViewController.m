@@ -226,7 +226,7 @@
     CGFloat inset = (self.view.width-self.view.width*150.0/375.0)/2;
     self.emptyView.contentViewInsets = UIEdgeInsetsMake(0, inset, 0, inset);
     self.emptyView.textLabelInsets = UIEdgeInsetsMake(0, 0, 20, 0);
-    self.emptyView.contentView.backgroundColor = kColorBackground;
+    self.emptyView.contentView.backgroundColor = [UIColor clearColor];
     CALayer *layer = self.emptyView.contentView.layer;
     layer.cornerRadius = 20;
     layer.shadowColor = [UIColor blackColor].CGColor;

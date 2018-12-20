@@ -65,13 +65,13 @@
     }
     [self fetchData];
 }
-- (void)layoutTableView {
-    
-}
-- (void)layoutFilterView {
-}
+//- (void)layoutTableView {
+//
+//}
+//- (void)layoutFilterView {
+//}
 - (void)initFilterView {
-    NSMutableDictionary *dict = [@{@"zl":[NSString stringWithFormat:@"%ld",[self.zl integerValue] + 1],@"type":[SAApplication sharedApplication].userType} mutableCopy];
+    NSMutableDictionary *dict = [@{@"zl":self.zl,@"type":[SAApplication sharedApplication].userType} mutableCopy];
     if ([SAApplication userID]) {
         [dict setValue:[SAApplication userID] forKey:@"user_id"];
     }
@@ -83,10 +83,14 @@
 }
 
 - (void)fectchSubViews{
-    PMSubHeaderView * headerView = [[PMSubHeaderView alloc] initWithFrame:CGRectMake(0, 0, kMainBoundsWidth, 370)];
+    int navCount = self.subModel.navigation.count / 4  + 1;
+    int classiCount = self.subModel.classification.count / 3 + 1;
+    CGFloat headH = navCount * 15 + 10 + classiCount * 50 + 10 + 150 +55;
+    PMSubHeaderView * headerView = [[PMSubHeaderView alloc] initWithFrame:CGRectMake(0, 0, kMainBoundsWidth, headH)];
     headerView.backgroundColor = [UIColor whiteColor];
     headerView.userInteractionEnabled = YES;
     self.tableView.tableHeaderView = headerView;
+
     //轮播图
     _cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, kMainBoundsWidth, 150) delegate:self placeholderImage:nil];
     _cycleScrollView.bannerImageViewContentMode = UIViewContentModeScaleAspectFill;
@@ -96,7 +100,11 @@
     }
     _cycleScrollView.imageURLStringsGroup = self.bannersArray;
     [headerView addSubview:_cycleScrollView];
-    
+    [_cycleScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.left.mas_equalTo(0);
+        make.width.mas_equalTo(kMainBoundsWidth);
+        make.height.mas_equalTo(150);
+    }];
     CGFloat titelW = 50;
     CGFloat titelMargin = (kMainBoundsWidth - self.titleArray1.count *titelW)/8 ;
     UIButton * titelBtn;
@@ -110,13 +118,13 @@
         [btn setTitleColor:kColor333333 forState:UIControlStateNormal];
         [headerView addSubview:btn];
         [btn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(self.cycleScrollView.mas_bottom).mas_offset(10);
-            make.left.mas_equalTo(titelMargin + i *(titelMargin * 2 + titelW));
-            make.width.mas_equalTo(titelW);
-            make.height.mas_equalTo(15);
-        }];
+                make.top.mas_equalTo(self.cycleScrollView.mas_bottom).mas_offset(10);
+                make.left.mas_equalTo(titelMargin + i *(titelMargin * 2 + titelW));
+                make.width.mas_equalTo(titelW);
+                make.height.mas_equalTo(15);
+            }];
     }
-    
+    CGFloat top;
     CGFloat titel2W = 105;
     CGFloat titel2Margin = (kMainBoundsWidth - 3 *titel2W)/6 ;
     UIButton * titel2Btn;
@@ -124,7 +132,7 @@
         PMHomeSubNavigationModel * model = self.subModel.classification[i];
         NSInteger hangshu = i / 3;
         NSInteger lieshu = i % 3;
-        CGFloat top = 10 + hangshu * (50 +titel2Margin);
+        top = 10 + hangshu * (50 +titel2Margin);
         SAButton * btn = [[SAButton alloc] init];
         btn.tag = i;
         [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -144,19 +152,20 @@
  
         [headerView addSubview:btn];
         [btn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(titelBtn.mas_bottom).mas_offset(top);
-            make.left.mas_equalTo(titel2Margin + lieshu *(titel2Margin * 2 + titel2W));
-            make.width.mas_equalTo(titel2W);
-            make.height.mas_equalTo(50);
-        }];
+                make.top.mas_equalTo(titelBtn.mas_bottom).mas_offset(top);
+                make.left.mas_equalTo(titel2Margin + lieshu *(titel2Margin * 2 + titel2W));
+                make.width.mas_equalTo(titel2W);
+                make.height.mas_equalTo(50);
+            }];
     }
-    CGFloat fliterViewY = 325;
+//    headerView.height = top + 50;
+//    CGFloat fliterViewY =  headerView.height + 10;
 //    if (self.subModel.classification.count > 3) {
 //        fliterViewY = 325;
 //    }else{
 //        fliterViewY = 225;
 //    }
-    SADropDownMenu *fliterView = [[SADropDownMenu alloc] initWithOrigin:CGPointMake(0, fliterViewY) andHeight:45];
+    SADropDownMenu *fliterView = [[SADropDownMenu alloc] initWithOrigin:CGPointMake(0, 0) andHeight:45];
     headerView.tableView = fliterView.tableView;
     fliterView.delegate = self;
     fliterView.backgroundColor = [UIColor whiteColor];
@@ -166,7 +175,17 @@
     fliterView.layer.shadowRadius = 3.f;
     self.filterView = fliterView;
     [headerView addSubview:fliterView];
-    
+    [fliterView mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        if (titel2Btn) {
+            make.top.mas_equalTo(titel2Btn.mas_bottom).mas_offset(10);
+        }else{
+            make.top.mas_equalTo(titelBtn.mas_bottom).mas_offset(10);
+        }
+        make.left.right.mas_equalTo(headerView);
+        make.height.mas_equalTo(45);
+    }];
+
     self.dataList = [NSMutableArray array];
     //综合
     SPInfoListFilterModel * filterModel = [[SPInfoListFilterModel alloc] init];

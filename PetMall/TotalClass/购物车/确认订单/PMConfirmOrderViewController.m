@@ -292,11 +292,11 @@
         self.goodInfo = [self.goodsArray firstObject];
         self.goodExpressLabel.text = [NSString stringWithFormat:@"+¥%@",self.goodInfo.postage];
         self.infoLabel.text = [NSString stringWithFormat:@"交易成功可获得%@积分",self.goodInfo.jifen];
-        float goodsPrice = 0.f;
+        float goodsPrice = 0.00f;
         for (PMOrderListItem * item in self.goodsArray) {
-            goodsPrice += [item.market_price floatValue];
+            goodsPrice += ([item.market_price floatValue] *[item.goods_shul integerValue]);
         }
-        self.goodPriceLabel.text = [NSString stringWithFormat:@"¥%@",[@(goodsPrice) stringValue]];;
+        self.goodPriceLabel.text = [NSString stringWithFormat:@"¥%.2f",goodsPrice];;
         self.voucherArray = [PMMyCouponItem mj_objectArrayWithKeyValuesArray:responseObject[@"result"][@"coupona"]];
         if (self.addressArray.count > 0) {
             self.headerView.item = [self.addressArray firstObject];
@@ -328,9 +328,10 @@
             
         }
         
-        NSString * countStr = [NSString stringWithFormat:@"合计：¥%.2f",totalPrice + [self.goodInfo.postage floatValue] - [self.selectVoucher.coupon_jiazhi floatValue]];
+        float totalFlot = totalPrice + [self.goodInfo.postage floatValue] - [self.selectVoucher.coupon_jiazhi floatValue];
+        NSString * countStr = [NSString stringWithFormat:@"合计：¥%.2f",totalFlot];
         NSMutableAttributedString * str = [[NSMutableAttributedString alloc] initWithString:countStr];
-        [str addAttributes:@{NSForegroundColorAttributeName:kColorFF5554,NSFontAttributeName:[UIFont boldSystemFontOfSize:16]} range:[countStr rangeOfString:[NSString stringWithFormat:@"¥%.2f",totalPrice + [self.selectExpress.express_price floatValue] - [self.selectVoucher.coupon_jiazhi floatValue]]]];
+        [str addAttributes:@{NSForegroundColorAttributeName:kColorFF5554,NSFontAttributeName:[UIFont boldSystemFontOfSize:16]} range:[countStr rangeOfString:[NSString stringWithFormat:@"¥%.2f",totalFlot]]];
         self.totalPriceLabel.attributedText = str;
         [self.tableView reloadData];
     } failure:NULL];
@@ -543,7 +544,7 @@
         totalPrice +=([goods.market_price floatValue] *[goods.goods_shul integerValue]);
         
     }
-    totalPrice = totalPrice + [self.selectExpress.express_price floatValue] - [self.selectVoucher.coupon_jiazhi floatValue];
+    totalPrice = totalPrice +[self.goodInfo.postage floatValue] - [self.selectVoucher.coupon_jiazhi floatValue];
     [dictDataM setObject:[NSString stringWithFormat:@"%.2f",totalPrice] forKey:@"price"];
     
     if (self.order_id) { //购物车

@@ -100,7 +100,7 @@ DEFINE_SINGLETON_FOR_CLASS(SAAlipayTool)
     // NOTE: 商品数据
     order.biz_content = [APBizContent new];
     order.biz_content.body = @"我是测试数据";
-    order.biz_content.seller_id = SellerID;
+//    order.biz_content.seller_id = SellerID;
     order.biz_content.subject = @"1";
     order.biz_content.out_trade_no = model.orderNo; //订单ID（由商家自行制定）
     order.biz_content.timeout_express = @"30m"; //超时时间设置

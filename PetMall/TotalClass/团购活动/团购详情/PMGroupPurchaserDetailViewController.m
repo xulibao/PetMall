@@ -17,7 +17,14 @@
 @implementation PMGroupPurchaserDetailViewController
 - (void)initViewData{
     [super initViewData];
-    self.goodTip = [NSString stringWithFormat:@"%@人参团 还差%@人",self.detailModel.goods_shul ? self.detailModel.goods_shul : @"0",self.detailModel.groupa ? self.detailModel.groupa :@"0"];
+    int peopleCount = [self.detailModel.groupa intValue] - [self.detailModel.goods_shul intValue];
+    NSString * groupStr;
+    if (peopleCount > 0) {
+        groupStr = [NSString stringWithFormat:@"还差%d人",peopleCount];
+    }else{
+        groupStr = @"已成团";
+    }
+    self.goodTip = [NSString stringWithFormat:@"%@人参团 %@",self.detailModel.goods_shul ? self.detailModel.goods_shul : @"0",groupStr];
 }
 #pragma mark - 加入购物车 立即购买
 - (void)setUpRightTwoButton{

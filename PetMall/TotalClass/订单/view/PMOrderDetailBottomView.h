@@ -10,6 +10,9 @@
 #import "PMOrderDetailItem.h"
 @interface PMOrderDetailBottomView : UIView
 @property(nonatomic, strong) PMOrderDetailInfoModel *infoModel;
+@property(nonatomic, strong) UIButton *tagBtn;
+@property(nonatomic, strong) UIButton *tagBtn1;
 @property(nonatomic, copy) void (^copyBlcok)(void);
-@property(nonatomic, copy) void (^commentBlcok)(void);
+@property(nonatomic, copy) void (^tagBtnBlcok)(void);
+@property(nonatomic, copy) void (^tagBtn1Blcok)(void);
 @end

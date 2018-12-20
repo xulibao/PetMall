@@ -282,6 +282,7 @@
         _show = NO;
         _hadSelected = NO;
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(self.frame.size.width, self.frame.origin.y + self.frame.size.height, 0, 0) style:UITableViewStylePlain];
+        
         _tableView.rowHeight = 38;
         _tableView.separatorColor = [UIColor colorWithRed:220.f/255.0f green:220.f/255.0f blue:220.f/255.0f alpha:1.0];
         _tableView.dataSource = self;

@@ -15,6 +15,10 @@
 - (void)PMOrderListCellClickRefund:(PMOrderListCell *)cell;
 - (void)PMOrderListCellClickPay:(PMOrderListCell *)cell;
 - (void)PMOrderListCellClickCancle:(PMOrderListCell *)cell;
+- (void)PMOrderListCellClickConfirm:(PMOrderListCell *)cell;
+- (void)PMOrderListCellClickComment:(PMOrderListCell *)cell;
+
+
 @end
 @interface PMOrderListCell : STCommonTableViewCell
 

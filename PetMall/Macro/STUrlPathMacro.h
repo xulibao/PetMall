@@ -71,6 +71,8 @@ static NSString * const API_Dogfood_evaluation =  @"pet/index.php/index/Dogfood/
 static NSString * const API_Dogfood_deletion =  @"pet/index.php/index/Dogfood/deletion";
 //购物车列表
 static NSString * const API_Dogfood_cartlist =  @"pet/index.php/index/Dogfood/cartlist";
+//购物车数量加减
+static NSString * const API_Dogfood_shopping =  @"pet/index.php/index/Dogfood/shopping";
 //确认订单
 static NSString * const API_Dogfood_confirmation =  @"pet/index.php/index/Dogfood/confirmation";
 //提交订单

@@ -9,6 +9,8 @@
 #import "SAInfoListViewController.h"
 
 @interface PMOrderDetailViewController : SAInfoListViewController
+@property(nonatomic, copy) NSString *status;
 @property(nonatomic, copy) NSString *user_id;
 @property(nonatomic, copy) NSString *order_no;
+@property(nonatomic, copy) NSString *pay_price;
 @end

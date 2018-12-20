@@ -13,8 +13,7 @@
 @property(nonatomic, strong) UILabel *label2;
 @property(nonatomic, strong) UILabel *label3;
 @property(nonatomic, strong) UILabel *label4;
-@property(nonatomic, strong) UIButton *tagBtn;
-@property(nonatomic, strong) UIButton *tagBtn1;
+
 @end
 @implementation PMOrderDetailBottomView
 
@@ -120,7 +119,8 @@
     
     UIButton * tagBtn = [[UIButton alloc] init];
     self.tagBtn = tagBtn;
-    [tagBtn setTitle:@"确认收货" forState:UIControlStateNormal];
+//    [tagBtn setTitle:@"确认收货" forState:UIControlStateNormal];
+    [tagBtn addTarget:self action:@selector(tagBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [tagBtn setTitleColor:kColorFF3945 forState:UIControlStateNormal];
     tagBtn.titleLabel.font = [UIFont systemFontOfSize:12];
     tagBtn.layer.cornerRadius = 15;
@@ -131,9 +131,9 @@
     
     UIButton * tagBtn1 = [[UIButton alloc] init];
     self.tagBtn1 = tagBtn1;
-    [tagBtn1 setTitle:@"评价" forState:UIControlStateNormal];
+//    [tagBtn1 setTitle:@"评价" forState:UIControlStateNormal];
     [tagBtn1 setTitleColor:kColor999999 forState:UIControlStateNormal];
-    [tagBtn1 addTarget:self action:@selector(comment) forControlEvents:UIControlEventTouchUpInside];
+    [tagBtn1 addTarget:self action:@selector(tagBtn1Click) forControlEvents:UIControlEventTouchUpInside];
     tagBtn1.titleLabel.font = [UIFont systemFontOfSize:14];
     tagBtn1.layer.cornerRadius = 15;
     tagBtn1.layer.borderColor = kColor999999.CGColor;
@@ -165,8 +165,18 @@
     self.orderNoLabel.text = [NSString stringWithFormat:@"订单号：%@",infoModel.order_no];
     self.label1.text = [NSString stringWithFormat:@"支付宝交易号：%@",infoModel.pay_no];
     self.label2.text = [NSString stringWithFormat:@"下单时间：%@",infoModel.time];
-    self.label3.text = [NSString stringWithFormat:@"付款时间：%@",infoModel.timea];
-    self.label4.text = [NSString stringWithFormat:@"发货时间：%@",infoModel.timeb];
+    if (infoModel.timea) {
+         self.label3.text = [NSString stringWithFormat:@"付款时间：%@",infoModel.timea];
+    }else{
+        self.label3.hidden = YES;
+    }
+    if (infoModel.timeb) {
+         self.label4.text = [NSString stringWithFormat:@"发货时间：%@",infoModel.timeb];
+    }else{
+        self.label4.hidden = YES;
+    }
+
+   
 }
 
 - (void)copyClick{
@@ -176,10 +186,14 @@
         self.copyBlcok();
     }
 }
-
-- (void)comment{
-    if (self.commentBlcok) {
-        self.commentBlcok();
+- (void)tagBtnClick{
+    if (self.tagBtnBlcok) {
+        self.tagBtnBlcok();
+    }
+}
+- (void)tagBtn1Click{
+    if (self.tagBtn1Blcok) {
+        self.tagBtn1Blcok();
     }
 }
 @end

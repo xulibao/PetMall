@@ -83,10 +83,11 @@
     [nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(12);
         make.top.mas_equalTo(10);
+        make.right.mas_equalTo(phoneLabel.mas_left).mas_offset(-10);
     }];
     
     [phoneLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(100);
+        make.left.mas_equalTo(150);
         make.centerY.mas_equalTo(nameLabel);
     }];
     [addressLabel mas_makeConstraints:^(MASConstraintMaker *make) {

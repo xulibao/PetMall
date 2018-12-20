@@ -7,7 +7,9 @@
 //
 
 #import "PMTimeLimitViewController.h"
-#import "PMCommonGoodsItem.h"
+#import "PMTimeLimitItem.h"
+#import "PMTimeLimitCell.h"
+#import "DCGoodBaseViewController.h"
 @interface PMTimeLimitViewController ()
 
 @end
@@ -17,35 +19,35 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"限时秒杀";
- 
-    PMTimeLimitListViewController *vc0 = [[PMTimeLimitListViewController alloc] init];
-//    vc0.type = PMMyCouponType_notUsed;
-    vc0.title = @"08:00\n已结束";
-    PMTimeLimitListViewController *vc1 = [[PMTimeLimitListViewController alloc] init];
-    vc1.title = @"10:00\n已结束";
-//    vc1.type = PMMyCouponType_Used;
-    PMTimeLimitListViewController *vc2 = [[PMTimeLimitListViewController alloc] init];
-//    vc2.type = PMMyCouponType_Expired;
-    vc2.title = @"12:00\n秒杀中";
-    PMTimeLimitListViewController *vc3 = [[PMTimeLimitListViewController alloc] init];
-    //    vc2.type = PMMyCouponType_Expired;
-    vc3.title = @"14:00\n即将开始";
-    PMTimeLimitListViewController *vc4 = [[PMTimeLimitListViewController alloc] init];
-    //    vc2.type = PMMyCouponType_Expired;
-    vc4.title = @"16:00\n即将开始";
-    self.viewControllers = @[vc0, vc1, vc2,vc3,vc4];
-    self.segment.selectedSegmentIndex = 2;
+    [self requestPOST:API_Dogfood_presale parameters:@{@"pagenum":@(1),@"pagesize":@(10),@"fenl":@"1",@"type":[SAApplication sharedApplication].userType} success:^(__kindof SARequest *request, id responseObject) {
+        NSArray * navArray = [PMTimeLimitNavItem mj_objectArrayWithKeyValuesArray:responseObject[@"result"][@"hour"]];
+        NSMutableArray * vcList = [NSMutableArray array];
+        int selectIndex = 0;
+        for (int i = 0; i < navArray.count; i++) {
+            PMTimeLimitNavItem * navItme = navArray[i];
+            PMTimeLimitListViewController *vc = [[PMTimeLimitListViewController alloc] init];
+            if ([navItme.zt intValue] == 0) {
+                vc.title = [NSString stringWithFormat:@"%@\n已结束",navItme.time];
+            }else if ([navItme.zt intValue] == 1){
+                vc.title = [NSString stringWithFormat:@"%@\n秒杀中",navItme.time];
+                selectIndex = i;
+                vc.dataArray = [PMTimeLimitItem mj_objectArrayWithKeyValuesArray:responseObject[@"result"][@"data"]];
+            }else if ([navItme.zt intValue] == 2){
+                vc.title = [NSString stringWithFormat:@"%@\n即将开始",navItme.time];
+            }
+            vc.timeLimitNavId = navItme.timeLimitNavId;
+            [vcList addObject:vc];
+        }
+        self.viewControllers = vcList;
+        [self.segment setSelectedSegmentIndex:selectIndex animated:YES];
+
+        
+    } failure:NULL];
+
 }
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-//    NSString * title = @"08:00\n已结束";
-//
-//    self.titles = @[attStr,
-//                    attStr,
-//                    attStr,
-//                    attStr,
-//                    attStr
-//                    ];
+
 }
 
 - (void)initSegment {
@@ -76,15 +78,21 @@
 //                                            };
 }
 @end
-@interface PMTimeLimitListViewController()
+@interface PMTimeLimitListViewController() <PMTimeLimitCellDelegate>
 
-@property(nonatomic, strong) NSMutableArray *dataArray;
+
 @end
 @implementation PMTimeLimitListViewController
 
 - (void)viewDidLoad{
     [super viewDidLoad];
-    [self fetchData];
+    self.viewModel.cellDelegate = self;
+    if ([self.dataArray count] > 0) {
+        [self setItems:self.dataArray];
+    }else{
+        [self fetchData];
+    }
+    
     self.tableView.mj_header.hidden = YES;
 }
 
@@ -92,12 +100,28 @@
     [self fetchData];
 }
 
-
-
 #pragma mark - Request
 
 - (void)fetchData {
-    self.dataArray = [PMCommonGoodsItem mj_objectArrayWithFilename:@"HomeHighGoods.plist"];
-    [self setItems:self.dataArray];
+    [self requestMethod:GARequestMethodPOST URLString:API_Dogfood_interval parameters:@{@"id":self.timeLimitNavId,@"pagenum":@(self.page),@"pagesize":@(10),@"type":[SAApplication sharedApplication].userType} resKeyPath:@"result" resArrayClass:[PMTimeLimitItem class] retry:YES success:^(__kindof SARequest *request, id responseObject) {
+        [self setItems:responseObject];
+    } failure:NULL];
+    
 }
+
+- (void)PMTimeLimitCellDidClick:(PMTimeLimitCell *)cell{
+    DCGoodBaseViewController * vc = [[DCGoodBaseViewController alloc] init];
+    vc.goods_id = cell.item.timeLimitId;
+//    vc.list_id  = cell.item.list_id;
+    [self.navigationController pushViewController:vc  animated:YES];
+}
+
+- (void)didSelectCellWithItem:(id<STCommonTableRowItem>)item{
+    PMTimeLimitItem * limitItem = (PMTimeLimitItem *)item;
+    DCGoodBaseViewController * vc = [[DCGoodBaseViewController alloc] init];
+    vc.goods_id = limitItem.timeLimitId;
+//    vc.list_id  = limitItem.list_id;
+    [self.navigationController pushViewController:vc  animated:YES];
+}
+
 @end

@@ -57,7 +57,7 @@
             segment.segmentEdgeInset = UIEdgeInsetsMake(0, 10, 0, 10);
         }
     }
-//    segment.segmentWidthStyle = HMSegmentedControlSegmentWidthStyleDynamic;
+    //    segment.segmentWidthStyle = HMSegmentedControlSegmentWidthStyleDynamic;
     segment.shouldAnimateUserSelection = YES;
     segment.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
     segment.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;

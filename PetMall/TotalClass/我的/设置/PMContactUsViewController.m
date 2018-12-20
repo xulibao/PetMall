@@ -114,6 +114,10 @@
 }
 
 -(void)commit{
+    if ([self.textField.text length] == 0 || [self.textField1.text length] == 0) {
+        [self showWaring:@"请填写内容"];
+        return;
+    }
     [self requestPOST:API_user_submission parameters:@{@"user_id":[SAApplication userID],@"content":self.textField.text,@"phone":self.textField1.text} success:^(__kindof SARequest *request, id responseObject) {
         [self showSuccess:@"提交成功"];
         [self performSelector:@selector(popView) withObject:nil/*可传任意类型参数*/ afterDelay:1.0];

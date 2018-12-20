@@ -140,8 +140,7 @@
     model.titleName = @"我的团购";
     [self.dataArray addObject:model];
     model.cellAction = ^(SAMineModel *model) {
-        [self needLogin];
-        PMMyGroupPurchaseViewController * vc = [[PMMyGroupPurchaseViewController alloc] init];
+if ([self needLogin]) return;        PMMyGroupPurchaseViewController * vc = [[PMMyGroupPurchaseViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     };
     
@@ -150,8 +149,7 @@
     model.titleName = @"我的兑换";
     [self.dataArray addObject:model];
     model.cellAction = ^(SAMineModel *model) {
-        [self needLogin];
-        PMMyExchangeViewController *vc = [[PMMyExchangeViewController alloc] init];
+if ([self needLogin]) return;        PMMyExchangeViewController *vc = [[PMMyExchangeViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     };
     
@@ -160,8 +158,7 @@
     model.titleName = @"我的收藏";
     [self.dataArray addObject:model];
     model.cellAction = ^(SAMineModel *model) {
-        [self needLogin];
-        PMMyCollectionViewController *vc = [[PMMyCollectionViewController alloc] init];
+if ([self needLogin]) return;        PMMyCollectionViewController *vc = [[PMMyCollectionViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     };
     
@@ -170,7 +167,7 @@
     model.titleName = @"我的评价";
     [self.dataArray addObject:model];
     model.cellAction = ^(SAMineModel *model) {
-        [self needLogin];
+if ([self needLogin]) return;
         PMMyCommentViewController *vc = [[PMMyCommentViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     };
@@ -180,7 +177,7 @@
     model.titleName = @"我的地址";
     [self.dataArray addObject:model];
     model.cellAction = ^(SAMineModel *model) {
-        [self needLogin];
+if ([self needLogin]) return;
         PMMyAddressViewController * vc = [[PMMyAddressViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     };
@@ -189,7 +186,7 @@
     model.iconImage = @"mine_bangzhu";
     model.titleName = @"帮助/问题";
     model.cellAction = ^(SAMineModel *model) {
-        [self needLogin];
+        if ([self needLogin]) return;
         PMBaseWebViewController * vc = [[PMBaseWebViewController alloc] init];
         vc.webTitle = @"帮助/问题";
         vc.jumpUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@?id=%@",[STNetworking host],API_user_help,[SAApplication userID]]];
@@ -204,8 +201,7 @@
     model.titleName = @"分享";
         //
     model.cellAction = ^(SAMineModel *model) {
-            [self needLogin];
-
+            if ([self needLogin]) return;
             [self share];
         };
     
@@ -214,8 +210,7 @@
     model.iconImage = @"mine_lianxikefu";
     model.titleName = @"联系客服";
     model.cellAction = ^(SAMineModel *model) {
-        [self needLogin];
-
+        if ([self needLogin]) return;
     };
 
     [self.dataArray addObject:model];
@@ -386,9 +381,9 @@
     }
 }
 
-- (void)needLogin{
+- (BOOL)needLogin{
     if ([SAApplication userID]) {
-        return;
+        return NO;
     }
     PMLoginViewController *loginVc = [[PMLoginViewController alloc] init];
     loginVc.callBack = ^(PMLoginViewController *viewController) {
@@ -398,17 +393,18 @@
     UIViewController *vc = [[SAApplication sharedApplication].mainTabBarController selectedViewController];
     STNavigationController * nav = [[STNavigationController alloc] initWithRootViewController:loginVc];
     [vc presentViewController:nav animated:YES completion:nil];
+    return YES;
 }
 
 #pragma mark - mineHeadViewDelegate
 
 - (void)mineHeadViewClickSignButton{
-    [self needLogin];
+if ([self needLogin]) return;
+    
 }
 
 - (void)mineOrderClickWithType:(PMOrderOrderType)type{
-    [self needLogin];
-
+if ([self needLogin]) return;
     if (type == PMOrderOrderTypeFail) {
         PMOrderListViewController * vc = [[PMOrderListViewController alloc] init];
         vc.type = PMOrderOrderTypeFail;
@@ -423,7 +419,7 @@
 //    [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)mineHeadViewClickYouhui{
-    [self needLogin];
+    if ([self needLogin]) return;
 
     PMMyCouponViewController * vc = [[PMMyCouponViewController alloc] init];
     [self pushViewController:vc];
