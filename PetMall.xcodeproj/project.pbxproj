@@ -2813,9 +2813,9 @@
 		5A54CA982143C5F500971D83 /* view */ = {
 			isa = PBXGroup;
 			children = (
-				5A54CA992143C5F500971D83 /* TableView */,
 				5A54CA9C2143C5F500971D83 /* CollectionView */,
 				5A54CAD32143C5F500971D83 /* CustionView */,
+				5A54CA992143C5F500971D83 /* TableView */,
 			);
 			path = view;
 			sourceTree = "<group>";

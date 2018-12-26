@@ -22,7 +22,7 @@ typedef NS_ENUM(NSUInteger, PMOrderOrderType) {
 @property(nonatomic, copy) NSString *order_no;//    订单编号    string
 @property(nonatomic, copy) NSString *status;//    string
 @property(nonatomic, copy) NSString *pay_price;//   钱
-
+@property(nonatomic, copy) NSString *freight_price;//   钱
 @property(nonatomic, strong) NSString *statusText;
 @property(nonatomic, strong) NSArray<NSAttributedString*> *tagsText;
 
@@ -48,7 +48,7 @@ typedef NS_ENUM(NSUInteger, PMOrderOrderType) {
 /** 数量 */
 @property(nonatomic, strong) NSString *goods_shul;
 
-@property(nonatomic, strong) NSString *postage;
+@property(nonatomic, copy) NSString *freight_price;
 
 @property(nonatomic, strong) NSString *jifen;
 

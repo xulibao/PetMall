@@ -30,7 +30,7 @@
     
     SAEventHandleLabel  *label0 = [[SAEventHandleLabel alloc] init];
     self.label0 = label0;
-    label0.font = UIFontMake(13);
+    label0.font = UIFontMake(12);
     label0.text = @"开始时间：2018年 6月 5日";
     [self addSubview:label0];
     

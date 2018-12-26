@@ -48,7 +48,7 @@
     float totalPrice = 0.f;
     for (int i = 0; i < data.order_list.count; i++) {
         PMOrderListItem *item = data.order_list[i];
-        totalPrice +=[item.pay_price floatValue];
+        totalPrice += ([item.pay_price floatValue] * [item.goods_shul intValue]);
         PMOrderGoodView * goodView = [[PMOrderGoodView alloc] init];
         if (i == data.order_list.count - 1) {
             self.bgView = goodView;
@@ -135,7 +135,7 @@
     }
     
     
-    _bottomView.label0.text = [NSString stringWithFormat:@"共%lu件商品 合计：¥%@",(unsigned long)data.order_list.count,@(totalPrice)];
+    _bottomView.label0.text = [NSString stringWithFormat:@"共%lu件商品 合计:¥%.2f(含运费¥%.2f)",(unsigned long)data.order_list.count,totalPrice,[data.freight_price floatValue]];
     [_bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.mas_equalTo(self.contentView);
         make.bottom.mas_equalTo(-10);

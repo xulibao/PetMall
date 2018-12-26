@@ -83,9 +83,9 @@
 }
 
 - (void)fectchSubViews{
-    int navCount = self.subModel.navigation.count / 4  + 1;
-    int classiCount = self.subModel.classification.count / 3 + 1;
-    CGFloat headH = navCount * 15 + 10 + classiCount * 50 + 10 + 150 +55;
+    int navCount = self.subModel.navigation.count > 0 ? (self.subModel.navigation.count / 4  + 1 ): 0;
+    int classiCount = self.subModel.classification.count > 0 ? (self.subModel.classification.count / 3 + 1 ): 0;
+    CGFloat headH = navCount * 15 + (navCount > 0 ? 10 : 0 )+ classiCount * 50 + (classiCount > 0 ? 10 : 0) + 150 + 55;
     PMSubHeaderView * headerView = [[PMSubHeaderView alloc] initWithFrame:CGRectMake(0, 0, kMainBoundsWidth, headH)];
     headerView.backgroundColor = [UIColor whiteColor];
     headerView.userInteractionEnabled = YES;

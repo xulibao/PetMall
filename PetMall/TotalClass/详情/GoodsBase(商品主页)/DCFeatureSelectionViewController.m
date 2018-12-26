@@ -130,6 +130,7 @@ static NSString *const DCFeatureChoseTopCellID = @"DCFeatureChoseTopCell";
 
 - (void)configSelectPrice{
     NSMutableString * signStr = [NSMutableString new];
+    NSMutableArray * priceArray = [NSMutableArray array];
     for (PMGoodDetailChoiceModel * choiceModel in self.featureAttr) {
         for (int i = 0; i < choiceModel.specifications.count; i++) {
             PMGoodDetailSpecificationModel * model = choiceModel.specifications[i];
@@ -140,10 +141,16 @@ static NSString *const DCFeatureChoseTopCellID = @"DCFeatureChoseTopCell";
     }
     self.selectPriceModel = nil;
     for (PMGoodDetailPriceModel*priceModel in self.price) {
+        [priceArray addObject:priceModel.selling_price];
         if ([priceModel.list_fen isEqualToString:signStr]) {
             self.selectPriceModel = priceModel;
-            return;
         }
+    }
+    if (self.selectPriceModel == nil) {// 未选择属性情况
+        self.selectPriceModel = [PMGoodDetailPriceModel new];
+        CGFloat maxPrice = [[priceArray valueForKeyPath:@"@max.floatValue"] floatValue];
+        CGFloat minPrice = [[priceArray valueForKeyPath:@"@min.floatValue"] floatValue];
+        self.selectPriceModel.selling_price = [NSString stringWithFormat:@"%.2f-%.2f",minPrice,maxPrice];
     }
 
 }
@@ -287,7 +294,13 @@ static NSString *const DCFeatureChoseTopCellID = @"DCFeatureChoseTopCell";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     PMGoodDetailChoiceModel * choiceModel = self.featureAttr[indexPath.section];
     PMGoodDetailSpecificationModel * model = choiceModel.specifications[indexPath.row];
-    model.isSelect = !model.isSelect;
+    for (PMGoodDetailSpecificationModel * specificationModel in choiceModel.specifications) {
+        if ([model.sign isEqualToString:specificationModel.sign]) {
+            model.isSelect = !model.isSelect;
+        }else{
+            specificationModel.isSelect = NO;
+        }
+    }
     [self configSelectPrice];
     //刷新tableView和collectionView
     [self.collectionView reloadData];

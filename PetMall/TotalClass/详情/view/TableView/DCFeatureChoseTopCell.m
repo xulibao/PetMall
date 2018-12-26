@@ -103,7 +103,12 @@
     _priceModel = priceModel;
     self.goodPriceLabel.text = [NSString stringWithFormat:@"¥ %@",priceModel.selling_price];
     self.chooseAttLabel.text = [NSString stringWithFormat:@"已选属性：%@",priceModel.goods_spec ? priceModel.goods_spec : @"请选择"] ;
-    self.goodNumberLabel.text = [NSString stringWithFormat:@"商品编号：%@",priceModel.number] ;
+    if (priceModel.number) {
+        self.goodNumberLabel.hidden = NO;
+        self.goodNumberLabel.text = [NSString stringWithFormat:@"商品编号：%@",priceModel.number] ;
+    }else{
+        self.goodNumberLabel.hidden = YES;
+    }
 }
 
 @end

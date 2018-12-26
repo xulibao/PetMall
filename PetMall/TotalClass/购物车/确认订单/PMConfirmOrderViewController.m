@@ -290,7 +290,7 @@
         self.expressArray = [PMExpressModel mj_objectArrayWithKeyValuesArray:responseObject[@"result"][@"distribution"]];
         self.goodsArray = [PMOrderListItem mj_objectArrayWithKeyValuesArray:responseObject[@"result"][@"goods"]];
         self.goodInfo = [self.goodsArray firstObject];
-        self.goodExpressLabel.text = [NSString stringWithFormat:@"+¥%@",self.goodInfo.postage];
+        self.goodExpressLabel.text = [NSString stringWithFormat:@"+¥%@",self.goodInfo.freight_price];
         self.infoLabel.text = [NSString stringWithFormat:@"交易成功可获得%@积分",self.goodInfo.jifen];
         float goodsPrice = 0.00f;
         for (PMOrderListItem * item in self.goodsArray) {
@@ -328,7 +328,7 @@
             
         }
         
-        float totalFlot = totalPrice + [self.goodInfo.postage floatValue] - [self.selectVoucher.coupon_jiazhi floatValue];
+        float totalFlot = totalPrice + [self.goodInfo.freight_price floatValue] - [self.selectVoucher.coupon_jiazhi floatValue];
         NSString * countStr = [NSString stringWithFormat:@"合计：¥%.2f",totalFlot];
         NSMutableAttributedString * str = [[NSMutableAttributedString alloc] initWithString:countStr];
         [str addAttributes:@{NSForegroundColorAttributeName:kColorFF5554,NSFontAttributeName:[UIFont boldSystemFontOfSize:16]} range:[countStr rangeOfString:[NSString stringWithFormat:@"¥%.2f",totalFlot]]];
@@ -544,7 +544,7 @@
         totalPrice +=([goods.market_price floatValue] *[goods.goods_shul integerValue]);
         
     }
-    totalPrice = totalPrice +[self.goodInfo.postage floatValue] - [self.selectVoucher.coupon_jiazhi floatValue];
+    totalPrice = totalPrice +[self.goodInfo.freight_price floatValue] - [self.selectVoucher.coupon_jiazhi floatValue];
     [dictDataM setObject:[NSString stringWithFormat:@"%.2f",totalPrice] forKey:@"price"];
     
     if (self.order_id) { //购物车

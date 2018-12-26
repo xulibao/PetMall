@@ -86,5 +86,23 @@
     }
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 0) { //商品详情
+        return   100;
+    }else if (indexPath.section == 1){//商品属性选择
+        return  0;
+    }else if (indexPath.section == 2){//商品评价部分展示
+        DCCommentsItem * item = self.commentsItem[indexPath.row];
+        return  item.cellHeight;
+    }
+    return 0;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    if (1 == section) {
+        return CGFLOAT_MIN;
+    }
+    return 10;
+}
 
 @end
